@@ -1,8 +1,8 @@
 body {
-	font: normal .8em/1.5em Arial, Helvetica, sans-serif;
+	font: normal .9em/1.5em Arial, Helvetica, sans-serif;
 	background: #ebebeb;
 	width: 90%;
-	margin: 100px auto;
+	margin: 3px auto;
 	color: #666;
 	direction:rtl;
 }
@@ -15,7 +15,8 @@ a {
 	padding: 7px 6px 0;
 	background: #7d7d7d url(images/gradient.png) repeat-x 0 -110px;
 	line-height: 100%;
-
+    position:relative;
+    top:6px;
 	border-radius: 2em;
 	-webkit-border-radius: 2em;
 	-moz-border-radius: 2em;
@@ -159,4 +160,9 @@ html[xmlns] #nav {
  
 * html #nav {
 	height: 1%;
+}
+
+#Logo
+{
+    height:100px;
 }

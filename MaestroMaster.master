@@ -10,6 +10,7 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
+    <a href = "Default.aspx"><img id = "Logo" src="images/MaestroLogo.png" /></a>
     <form id="form1" runat="server">
     <div>
         <ul id="nav">
