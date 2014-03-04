@@ -1,7 +1,7 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="false" CodeFile="UserManagement.aspx.vb" Inherits="Default2" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true" CodeFile="UserManagement.aspx.cs" Inherits="Default2" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" Runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" Runat="Server">
 </asp:Content>
 
