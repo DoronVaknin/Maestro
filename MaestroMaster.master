@@ -37,8 +37,8 @@
             <li id = "UserManagement" ><a href="UserManagement.aspx">ניהול משתמשים</a></li>
         </ul>
     </div>
-    </form>
     <asp:ContentPlaceHolder ID="ContentPlaceHolder3" runat="server">
     </asp:ContentPlaceHolder>
+    </form>
 </body>
 </html>
