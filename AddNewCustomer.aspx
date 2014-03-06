@@ -139,7 +139,7 @@
         <table class="style1">
             <tr>
                 <td align="left" class="style6">
-                    <asp:Button ID="Button1" runat="server" Text="שמור" />
+                    <asp:Button ID="Button1" runat="server" Text="שמור" onclick="Button1_Click" />
                 </td>
                 <td align="right">
                     <asp:Button ID="Button2" runat="server" Text="ביטול" />
