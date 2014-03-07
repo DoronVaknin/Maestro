@@ -28,7 +28,7 @@
                     <li><a href="">צור קריאת שירות</a>
                         <ul>
                             <li><a href="">פרויקט קיים</a></li>
-                            <li><a href="">לקוח חיצוני</a></li>
+                            <li><a href="AddNewServiceCall.aspx">לקוח חיצוני</a></li>
                         </ul>
                     </li>
                     <li><a href="">רשימת קריאות שירות</a> </li>
