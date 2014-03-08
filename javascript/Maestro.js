@@ -9,6 +9,6 @@
 
 $(document).ready(function () {
     var sFileName = $(location).attr('href').replace(/^.*[\\\/]/, '');
-    sFileName = sFileName.substring(0, sFileName.length - 5)
+    sFileName = sFileName.substring(0, sFileName.length - 5);
     $("#" + sFileName).addClass("current");
 });
