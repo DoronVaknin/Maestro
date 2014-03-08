@@ -61,13 +61,15 @@
                 אזור
             </td>
             <td>
-                <asp:DropDownList ID="AreaTB" runat="server">
-                    <asp:ListItem Value="1">השרון</asp:ListItem>
-                    <asp:ListItem Value="2">השפלה</asp:ListItem>
-                    <asp:ListItem Value="3">צפון</asp:ListItem>
-                    <asp:ListItem Value="4">מרכז</asp:ListItem>
-                    <asp:ListItem Value="5">דרום</asp:ListItem>
+             
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+                    ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>" 
+                    SelectCommand="spGetRegion" SelectCommandType="StoredProcedure">
+                </asp:SqlDataSource>
+                <asp:DropDownList ID="AreaTB" runat="server" DataSourceID="SqlDataSource1" 
+                    DataTextField="RegionName" DataValueField="RegionID">
                 </asp:DropDownList>
+             
             </td>
         </tr>
         <tr>

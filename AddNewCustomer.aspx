@@ -90,7 +90,14 @@
                 <td align="right" class="style5">
                     אזור</td>
                 <td align="right">
-                    <asp:TextBox ID="CustomerArea" runat="server"></asp:TextBox>
+                    <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+                        ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>" 
+                        SelectCommand="spGetRegion" SelectCommandType="StoredProcedure">
+                    </asp:SqlDataSource>
+                    <asp:DropDownList ID="CustomerArea" runat="server" 
+                        DataSourceID="SqlDataSource1" DataTextField="RegionName" 
+                        DataValueField="RegionID">
+                    </asp:DropDownList>
                 </td>
             </tr>
             <tr>
