@@ -18,7 +18,7 @@
             <li class="current"><a href="Default.aspx">בית</a></li>
             <li id = "Customers" ><a href="Customers.aspx">לקוחות</a>
                 <ul>
-                    <li><a href="">צור לקוח חדש</a> </li>
+                    <li><a href="AddNewCustomer.aspx">צור לקוח חדש</a> </li>
                     <li><a href="">רשימת לקוחות</a> </li>
                 </ul>
             </li>

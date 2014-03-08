@@ -19,7 +19,7 @@ public partial class Default2 : System.Web.UI.Page
         sc.CellPhone1 = Convert.ToInt32( CustomerPhone.Text);
         sc.Adress1 = CustomerAdress.Text;
         sc.Description1 = ErrorDescription.Text;
-        sc.Area1 = 1;
+        sc.Area1 =Convert.ToInt32( AreaTB.SelectedItem.Value);
         if (IsUrgent.Checked)
         {
             sc.IsUrgent1 = true;
@@ -30,8 +30,8 @@ public partial class Default2 : System.Web.UI.Page
             sc.Warranty1 = true;
         else
             sc.Warranty1 = false;
+
+        //sc.insert(this);
     }
 }
 
-/*לסדר את השמירה של האזור לתוך העצם sc
- */

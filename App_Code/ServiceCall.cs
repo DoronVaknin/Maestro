@@ -65,5 +65,10 @@ public class ServiceCall
         set { Warranty = value; }
     }
 
+    public void insert(ServiceCall sc)
+    {
+        DBservices dbs = new DBservices();
+
+    }
 
 }

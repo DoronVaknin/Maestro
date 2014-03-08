@@ -18,8 +18,30 @@ public partial class Default2 : System.Web.UI.Page
     protected void Button1_Click(object sender, EventArgs e)
     {
         Customer c=new Customer();
-        c.Name=CustomerFirstName.Text;
-        c.insert();
+        c.Cid =Convert.ToInt32(  CustomerId.Text);
+        c.Fname = CustomerFirstName.Text;
+        c.Lname = CustomerLastName.Text;
+        c.City = CustomerCity.Text;
+        c.Adress = CustomerAdress.Text;
+        if (CustomerPhone.Text !=null)
+            c.Phone = Convert.ToInt32(CustomerPhone.Text);
+        else
+            c.Phone = 0;
+        if (CustomerCellPhone.Text != null)
+            c.Mobile = Convert.ToInt32(CustomerCellPhone.Text);
+        else
+            c.Mobile = 0;
+        if (CustomerFaxNumber.Text != null)
+            c.Fax = Convert.ToInt32(CustomerFaxNumber.Text);
+        else
+            c.Fax = 0;
+        c.Email = CustomerEmail.Text;
+        if (CustomerArea.Text != null)
+            c.Region = Convert.ToInt32(CustomerArea.Text);
+        else
+            c.Region = 0;
+        DBservices db = new DBservices();
+        db.insertcustomer(c);
 
 
 
