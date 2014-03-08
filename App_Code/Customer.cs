@@ -44,12 +44,12 @@ public class Customer
         get { return city; }
         set { city = value; }
     }
-    string adress;
+    string address;
 
-    public string Adress
+    public string Address
     {
-        get { return adress; }
-        set { adress = value; }
+        get { return address; }
+        set { address = value; }
     }
     int phone;
 

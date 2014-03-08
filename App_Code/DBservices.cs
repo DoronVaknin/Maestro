@@ -43,7 +43,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@fname", c.Fname);
                 sqlComm.Parameters.AddWithValue("@lname", c.Lname);
                 sqlComm.Parameters.AddWithValue("@city", c.City);
-                sqlComm.Parameters.AddWithValue("@aderss", c.Adress);
+                sqlComm.Parameters.AddWithValue("@address", c.Address);
                 sqlComm.Parameters.AddWithValue("@phone", c.Phone);
                 sqlComm.Parameters.AddWithValue("@mobile", c.Mobile);
                 sqlComm.Parameters.AddWithValue("@fax", c.Mobile);

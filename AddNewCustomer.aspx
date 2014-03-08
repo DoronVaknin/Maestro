@@ -72,7 +72,7 @@
                     &nbsp;&nbsp;&nbsp;
                     כתובת</td>
                 <td align="right" class="style3">
-                    <asp:TextBox ID="CustomerAdress" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="CustomerAddress" runat="server"></asp:TextBox>
                 </td>
                 <td align="right" class="style5">
                     כתובת דוא&quot;ל</td>
