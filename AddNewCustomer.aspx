@@ -44,7 +44,7 @@
             <tr>
                 <td align="right" class="style7">
                     &nbsp;&nbsp;&nbsp;
-                    שם</td>
+                    שם פרטי</td>
                 <td align="right" class="style3">
                     <asp:TextBox ID="CustomerFirstName" runat="server"></asp:TextBox>
                 </td>
