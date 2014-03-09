@@ -12,3 +12,7 @@ $(document).ready(function () {
     sFileName = sFileName.substring(0, sFileName.length - 5);
     $("#" + sFileName).addClass("current");
 });
+
+function ClickLoginBTN() {
+    $("#LoginBTN").click();
+}

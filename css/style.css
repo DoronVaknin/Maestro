@@ -260,3 +260,11 @@ a
         inset 0 0 5px rgba(0,0,0,0.3),
         inset 0 3px 4px rgba(0,0,0,0.3);
 }
+
+#ErrorLBL
+{
+    float:right;
+    color:Red;
+    position:relative;
+    top:20px;
+}
