@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Maestro", "D:\GitHub\Maestro\", "{83DC937E-44FE-4F80-97E3-1079B05D9F0D}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/Maestro"
+		Debug.AspNetCompiler.PhysicalPath = "D:\GitHub\Maestro\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\Maestro\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/Maestro"
+		Release.AspNetCompiler.PhysicalPath = "D:\GitHub\Maestro\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\Maestro\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "1989"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83DC937E-44FE-4F80-97E3-1079B05D9F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83DC937E-44FE-4F80-97E3-1079B05D9F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
