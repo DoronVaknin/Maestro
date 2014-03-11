@@ -17,7 +17,7 @@
         <img id="Logo" src="images/MaestroLogo.png" alt="" /></a>
     <form id="form2" runat="server">
     <div>
-        <div id = "WelcomeDiv">
+        <div id="WelcomeDiv">
             <a href="">
                 <img alt="" /></a><span id="Welcome" runat="server"></span>
             <asp:LinkButton ID="LogoutBTN" runat="server" OnClick="LogoutBTN_Click">התנתק<img id = "LogoutIcon" src="images/icons/logout.png" alt = "" /></asp:LinkButton>
@@ -27,7 +27,7 @@
                 <li id="Default"><a href="Default.aspx">בית</a></li>
                 <li id="Customers"><a>לקוחות</a>
                     <ul>
-                        <li><a href="AddNewCustomer.aspx">צור לקוח חדש</a> </li>
+                        <li><a href="NewCustomer.aspx">צור לקוח חדש</a> </li>
                         <li><a href="Customers.aspx">רשימת לקוחות</a></li>
                     </ul>
                 </li>
@@ -46,8 +46,9 @@
                 <li id="UserManagement"><a href="UserManagement.aspx">ניהול משתמשים</a></li>
             </ul>
         </div>
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder3" runat="server">
-        </asp:ContentPlaceHolder>
+    </div>
+    <asp:ContentPlaceHolder ID="ContentPlaceHolder3" runat="server">
+    </asp:ContentPlaceHolder>
     </form>
 </body>
 </html>

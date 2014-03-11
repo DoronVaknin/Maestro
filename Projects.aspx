@@ -11,7 +11,9 @@
     </asp:SqlDataSource>
 
     <asp:GridView ID="GridView1" runat="server" AllowPaging="True" 
-        AllowSorting="True" DataSourceID="SqlDataSource1" AutoGenerateColumns="false">
+        AllowSorting="True" DataSourceID="SqlDataSource1" 
+        AutoGenerateColumns="false" 
+        >
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
             <asp:BoundField DataField="fname" headertext="שם פרטי" />

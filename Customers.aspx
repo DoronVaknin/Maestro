@@ -12,7 +12,8 @@
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>"
         SelectCommand="SELECT * FROM [Customer]"></asp:SqlDataSource>
     <asp:GridView ID="GridView1" runat="server" AllowSorting="True" AutoGenerateColumns="False"
-        DataKeyNames="cID" DataSourceID="SqlDataSource1">
+        DataKeyNames="cID" DataSourceID="SqlDataSource1" 
+        onselectedindexchanged="GridView1_SelectedIndexChanged">
         <Columns>
             <asp:CommandField SelectText="<b>בחר</b>" ShowSelectButton="True" />
             <asp:BoundField DataField="cID" HeaderText="תעודת זהות" ReadOnly="True" SortExpression="cID" />

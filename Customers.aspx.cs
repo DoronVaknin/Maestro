@@ -11,4 +11,10 @@ public partial class Default2 : System.Web.UI.Page
     {
 
     }
+    protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        GridViewRow NewRow = GridView1.SelectedRow;
+        Session["ID"] = NewRow.Cells[1].Text;
+        Response.Redirect("http://localhost:3744/Maestro/ShowProjectsForCustomer.aspx");
+    }
 }
