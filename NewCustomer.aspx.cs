@@ -15,34 +15,41 @@ public partial class Default2 : System.Web.UI.Page
     {
 
     }
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void CreateCustomer_Click(object sender, EventArgs e)
     {
         Customer c = new Customer();
-        c.Cid = Convert.ToInt32(CustomerId.Text);
-        c.Fname = CustomerFirstName.Text;
-        c.Lname = CustomerLastName.Text;
-        c.City = CustomerCity.Text;
-        c.Address = CustomerAddress.Text;
-        if (CustomerPhone.Text != "")
-            c.Phone = Convert.ToInt32(CustomerPhone.Text);
+        c.Cid = Convert.ToInt32(CustomerId.Value);
+        c.Fname = CustomerFirstName.Value;
+        c.Lname = CustomerLastName.Value;
+        c.City = CustomerCity.Value;
+        c.Address = CustomerAddress.Value;
+        if (CustomerPhone.Value != "")
+            c.Phone = Convert.ToInt32(CustomerPhone.Value);
         else
             c.Phone = 0;
-        if (CustomerCellPhone.Text != "")
-            c.Mobile = Convert.ToInt32(CustomerCellPhone.Text);
+        if (CustomerCellPhone.Value != "")
+            c.Mobile = Convert.ToInt32(CustomerCellPhone.Value);
         else
             c.Mobile = 0;
-        if (CustomerFaxNumber.Text != "")
-            c.Fax = Convert.ToInt32(CustomerFaxNumber.Text);
+        if (CustomerFaxNumber.Value != "")
+            c.Fax = Convert.ToInt32(CustomerFaxNumber.Value);
         else
             c.Fax = 0;
-        c.Email = CustomerEmail.Text;
+        c.Email = CustomerEmail.Value;
         if (CustomerArea.Text != "")
             c.Region = Convert.ToInt32(CustomerArea.Text);
         else
             c.Region = 0;
         DBservices db = new DBservices();
-        db.insertcustomer(c);
+        try
+        {
+            db.insertcustomer(c);
 
+        }
+        catch
+        {
+
+        }
 
 
     }

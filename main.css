@@ -1,9 +1,12 @@
 body
 {
-    font: normal .9em/1.5em Arial, Helvetica, sans-serif;
+    font: normal 1.5em/1.5em Arial, Helvetica, sans-serif;
     background: #ddd url(images/bg.jpg) repeat;
     width: 90%;
-    margin: 3px auto;
+    position: relative;
+    margin-top: 3px;
+    margin-left: auto;
+    margin-right: auto;
     color: #666;
     direction: rtl;
 }
@@ -172,7 +175,7 @@ html[xmlns] #nav
 
 #Logo
 {
-    height: 100px;
+    height: 70px;
 }
 #LogoutIcon
 {
@@ -181,7 +184,30 @@ html[xmlns] #nav
 #WelcomeDiv
 {
     position: absolute;
-    top: 50px;
-    left: 100px;
+    top: 30px;
+    left: 20px;
     float: left;
+}
+
+.input-group
+{
+    direction: ltr;
+    width: 280px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.input-group-addon
+{
+    width: 88px;
+}
+
+#NewCustomerTBL td
+{
+    border-top: none;
+}
+
+.form-control
+{
+    direction: rtl;
 }

@@ -46,7 +46,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@address", c.Address);
                 sqlComm.Parameters.AddWithValue("@phone", c.Phone);
                 sqlComm.Parameters.AddWithValue("@mobile", c.Mobile);
-                sqlComm.Parameters.AddWithValue("@fax", c.Mobile);
+                sqlComm.Parameters.AddWithValue("@fax", c.Fax);
                 sqlComm.Parameters.AddWithValue("@email", c.Email);
                 sqlComm.Parameters.AddWithValue("@region", c.Region);
                 sqlComm.CommandTimeout = 600;
@@ -57,15 +57,11 @@ public class DBservices
                 throw (ex);
             }
 
-
             }
-
-
 
         }
     public SqlConnection connect(String conString)
     {
-
         string cStr = WebConfigurationManager.ConnectionStrings[conString].ConnectionString;
         SqlConnection con = new SqlConnection(cStr);
         con.Open();
