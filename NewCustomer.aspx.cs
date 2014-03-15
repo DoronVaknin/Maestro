@@ -43,7 +43,15 @@ public partial class Default2 : System.Web.UI.Page
         DBservices db = new DBservices();
         db.insertcustomer(c);
 
-
+        Session["customer"] = c;
+        try
+        {
+            Response.Redirect("ProjectInfo.aspx");
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
 
     }
 }

@@ -29,14 +29,14 @@
             <td class="style2" align="right" style="padding-right: 20px">
                 הערות</td>
             <td>
-                <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtComments" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>
             <td class="style2" align="right" style="padding-right: 20px">
                 סה&quot;כ עלות ללקוח</td>
             <td>
-                <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtPrice" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>
@@ -53,12 +53,50 @@
                 מספר פתחים
             </td>
             <td>
-                <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtHathes" runat="server" Width="62px"></asp:TextBox>
                 <br />
             </td>
         </tr>
+        <tr>
+        <td>שם הקבלן</td>
+        <td>
+            <asp:TextBox ID="txtContractorName" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+        <td>טלפון</td>
+        <td>
+            <asp:TextBox ID="txtContractorPhone" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+        <td>שם האדריכל</td>
+        <td>
+            <asp:TextBox ID="txtArchitectName" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+        <td>טלפון</td>
+        <td>
+            <asp:TextBox ID="txtArchitectPhone" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+        <td>שם המפקח</td>
+        <td>
+            <asp:TextBox ID="txtSupervisorName" runat="server"></asp:TextBox>
+            </td>
+        </tr>
+        <tr>
+        <td>טלפון</td>
+        <td>
+            <asp:TextBox ID="txtSupervisorPhone" runat="server"></asp:TextBox>
+            </td>
+        </tr>
     </table>
-    <br /><br />
+    <br />
+    <asp:Button ID="Button1" runat="server" Text="שלח" onclick="Button1_Click" />
+    <br />
 
    <script>
        function sendFileToServer(formData, status) {

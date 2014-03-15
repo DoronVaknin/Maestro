@@ -100,47 +100,7 @@
                     </asp:DropDownList>
                 </td>
             </tr>
-            <tr>
-                <td align="right" class="style7">
-                    &nbsp;&nbsp;&nbsp;
-                    שם הקבלן
-                </td>
-                <td align="right" class="style3">
-                    <asp:TextBox ID="ContractorName" runat="server"></asp:TextBox>
-                </td>
-                <td align="right" class="style5">
-                    טלפון נייד</td>
-                <td align="right">
-                    <asp:TextBox ID="ContractorPhone" runat="server"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td align="right" class="style7">
-                    &nbsp;&nbsp;&nbsp;
-                    שם האדריכל</td>
-                <td align="right" class="style3">
-                    <asp:TextBox ID="ArchitectName" runat="server"></asp:TextBox>
-                </td>
-                <td align="right" class="style5">
-                    טלפון נייד</td>
-                <td align="right">
-                    <asp:TextBox ID="ArchitectPhone" runat="server"></asp:TextBox>
-                </td>
-            </tr>
-            <tr>
-                <td align="right" class="style7">
-                    &nbsp;&nbsp;&nbsp;
-                    שם המפקח</td>
-                <td align="right" class="style3">
-                    <asp:TextBox ID="SupervisorName" runat="server"></asp:TextBox>
-                </td>
-                <td align="right" class="style5">
-                    טלפון נייד</td>
-                <td align="right">
-                    <asp:TextBox ID="SupervisorPhone" runat="server"></asp:TextBox>
-                </td>
-            </tr>
-        </table>
+            </table>
         <br /><br />
 
         <table class="style1">

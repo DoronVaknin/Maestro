@@ -9,6 +9,6 @@ public partial class Default2 : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        int id = Convert.ToInt32( Session["id"]);
+        int id = Convert.ToInt32( Session["ID"]);
     }
 }

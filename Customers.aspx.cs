@@ -15,6 +15,6 @@ public partial class Default2 : System.Web.UI.Page
     {
         GridViewRow NewRow = GridView1.SelectedRow;
         Session["ID"] = NewRow.Cells[1].Text;
-        Response.Redirect("http://localhost:3744/Maestro/ShowProjectsForCustomer.aspx");
+        Response.Redirect("ShowProjectsForCustomer.aspx");
     }
 }

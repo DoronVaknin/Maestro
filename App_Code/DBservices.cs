@@ -62,7 +62,103 @@ public class DBservices
 
 
 
+      }
+
+    public void InsertProjectInfo(Project p, int CId)
+    {
+        con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spInsertProjectInfo]", con))
+        {
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@id", CId);
+                sqlComm.Parameters.AddWithValue("@date", p.OpenedDate1);
+                sqlComm.Parameters.AddWithValue("@exdate", p.ExpirationDate1.AddDays(60));
+                sqlComm.Parameters.AddWithValue("@comment", p.Comment1);
+                sqlComm.Parameters.AddWithValue("@ContName", p.ContractorName1);
+                sqlComm.Parameters.AddWithValue("@contPhone", p.ContractorPhone1);
+                sqlComm.Parameters.AddWithValue("@ArchName", p.ArchitectName1);
+                sqlComm.Parameters.AddWithValue("@ArchPhone", p.ArchitectPhone1);
+                sqlComm.Parameters.AddWithValue("@superName", p.SupervisorName1);
+                sqlComm.Parameters.AddWithValue("@superPhone", p.SupervisorPhone1);
+                sqlComm.CommandTimeout = 600;
+                sqlComm.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
         }
+    }
+
+    public void CreateHatches(Project p ,int id)
+    {
+        con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spCreateHatches]", con))
+        {
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@NumOfHatches", p.HatchesNum1);
+                sqlComm.Parameters.AddWithValue("@ProjectID", id);
+                sqlComm.CommandTimeout = 600;
+                sqlComm.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
+    }
+
+    public int findid(int id)
+    {
+        con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spFindProjectID]", con))
+        {
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@customerid", id);
+
+                sqlComm.CommandTimeout = 600;
+                int value = (int)sqlComm.ExecuteScalar();
+                return value;
+
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+           
+        }
+            
+    }
+
+
+
+    
     public SqlConnection connect(String conString)
     {
 
