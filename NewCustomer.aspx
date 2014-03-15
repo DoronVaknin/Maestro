@@ -8,7 +8,7 @@
         <h1>
             לקוח חדש
         </h1>
-    </div>
+    </div>><br />
     <table id="NewCustomerTBL" class="table">
         <tr>
             <td>

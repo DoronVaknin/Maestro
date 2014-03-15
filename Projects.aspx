@@ -4,14 +4,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
-    <h1>
-        פרוייקטים</h1>
-    <br />
-    <br />
+    <div class = "cntr">
+        <h1>
+            פרויקטים</h1>
+    </div><br />
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>"
         SelectCommand="spShowAllProjects" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
     <asp:GridView ID="GridView1" runat="server" AllowPaging="True" AllowSorting="True"
-        DataSourceID="SqlDataSource1" AutoGenerateColumns="false">
+        CssClass = "DataTables" DataSourceID="SqlDataSource1" AutoGenerateColumns="false">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
             <asp:BoundField DataField="fname" HeaderText="שם פרטי" />

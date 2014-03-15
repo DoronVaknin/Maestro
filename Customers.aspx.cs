@@ -11,10 +11,11 @@ public partial class Default2 : System.Web.UI.Page
     {
 
     }
-    protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+    protected void Customers_SelectedIndexChanged(object sender, EventArgs e)
     {
-        GridViewRow NewRow = GridView1.SelectedRow;
-        Session["ID"] = NewRow.Cells[1].Text;
+        Session["ID"] = CustomersTBL.SelectedRow.Cells[1].Text;
+        Session["FirstName"] = CustomersTBL.SelectedRow.Cells[2].Text;
+        Session["LastName"] = CustomersTBL.SelectedRow.Cells[3].Text;
         Response.Redirect("ShowProjectsForCustomer.aspx");
     }
 }

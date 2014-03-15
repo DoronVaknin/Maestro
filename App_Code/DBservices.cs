@@ -18,7 +18,6 @@ public class DBservices
     public DataTable dt;
     SqlConnection con;
 
-
     public DBservices()
     {
         //
@@ -57,9 +56,9 @@ public class DBservices
                 throw (ex);
             }
 
-            }
+        }
 
-      }
+    }
 
     public void InsertProjectInfo(Project p, int CId)
     {
@@ -96,7 +95,7 @@ public class DBservices
         }
     }
 
-    public void CreateHatches(Project p ,int id)
+    public void CreateHatches(Project p, int id)
     {
         con = connect("igroup9_test1ConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spCreateHatches]", con))
@@ -113,15 +112,12 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@ProjectID", id);
                 sqlComm.CommandTimeout = 600;
                 sqlComm.ExecuteNonQuery();
-
             }
             catch (Exception ex)
             {
                 throw (ex);
             }
         }
-
-
     }
 
     public int findid(int id)
@@ -142,20 +138,15 @@ public class DBservices
                 sqlComm.CommandTimeout = 600;
                 int value = (int)sqlComm.ExecuteScalar();
                 return value;
-
             }
             catch (Exception ex)
             {
                 throw (ex);
             }
-           
         }
-            
     }
 
 
-
-    
     public SqlConnection connect(String conString)
     {
         string cStr = WebConfigurationManager.ConnectionStrings[conString].ConnectionString;
@@ -165,7 +156,7 @@ public class DBservices
     }
 }
 
-    
+
 
 
 
