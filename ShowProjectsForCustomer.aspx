@@ -18,6 +18,7 @@
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
         DataKeyNames="pID" DataSourceID="SqlDataSource1" AllowSorting="True" >
         <Columns>
+            <asp:CommandField ShowSelectButton="True"  SelectText="הצג פרטי פרויקט"/>
             <asp:BoundField DataField="pID" HeaderText="מספר פרויקט" InsertVisible="False" 
                 ReadOnly="True" SortExpression="pID" />
             <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" />

@@ -77,6 +77,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@id", CId);
                 sqlComm.Parameters.AddWithValue("@date", p.OpenedDate1);
                 sqlComm.Parameters.AddWithValue("@exdate", p.ExpirationDate1.AddDays(60));
+                sqlComm.Parameters.AddWithValue("@price", p.Price);
                 sqlComm.Parameters.AddWithValue("@comment", p.Comment1);
                 sqlComm.Parameters.AddWithValue("@ContName", p.ContractorName1);
                 sqlComm.Parameters.AddWithValue("@contPhone", p.ContractorPhone1);

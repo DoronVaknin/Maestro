@@ -58,6 +58,8 @@
             </td>
         </tr>
         <tr>
+        </tr>
+        <tr>
         <td>שם הקבלן</td>
         <td>
             <asp:TextBox ID="txtContractorName" runat="server"></asp:TextBox>
