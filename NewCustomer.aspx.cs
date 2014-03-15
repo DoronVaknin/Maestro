@@ -44,16 +44,12 @@ public partial class Default2 : System.Web.UI.Page
         try
         {
             db.insertcustomer(c);
-
-        Session["customer"] = c;
-        try
-        {
+            Session["customer"] = c;
             Response.Redirect("ProjectInfo.aspx");
         }
         catch (Exception ex)
         {
             throw ex;
         }
-
     }
 }

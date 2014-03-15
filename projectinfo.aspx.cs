@@ -33,7 +33,6 @@ public partial class Default2 : System.Web.UI.Page
         Customer temp = new Customer();
         if (Session["customer"] != null)
         {
-
             temp = (Customer)Session["customer"];
             int id = temp.Cid;
         }
