@@ -45,7 +45,7 @@ public partial class Default2 : System.Web.UI.Page
         {
             db.insertcustomer(c);
             Session["customer"] = c;
-            Response.Redirect("ProjectInfo.aspx");
+            Response.Redirect("NewProject.aspx");
         }
         catch (Exception ex)
         {

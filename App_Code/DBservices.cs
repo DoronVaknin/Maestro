@@ -57,9 +57,9 @@ public class DBservices
                 throw (ex);
             }
 
-            }
+        }
 
-      }
+    }
 
     public void InsertProjectInfo(Project p, int CId)
     {
@@ -97,7 +97,7 @@ public class DBservices
         }
     }
 
-    public void CreateHatches(Project p ,int id)
+    public void CreateHatches(Project p, int id)
     {
         con = connect("igroup9_test1ConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spCreateHatches]", con))
@@ -149,20 +149,52 @@ public class DBservices
             {
                 throw (ex);
             }
-           
+
         }
-            
+
     }
 
 
 
-    
+
     public SqlConnection connect(String conString)
     {
         string cStr = WebConfigurationManager.ConnectionStrings[conString].ConnectionString;
         SqlConnection con = new SqlConnection(cStr);
         con.Open();
         return con;
+    }
+
+
+    public DataTable GetCustomerInformation(int id)
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetCustomerInformation]", con))
+        {
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", id);
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+        }
+
     }
 }
 

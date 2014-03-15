@@ -11,4 +11,10 @@ public partial class Default2 : System.Web.UI.Page
     {
         int id = Convert.ToInt32( Session["ID"]);
     }
+    protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        GridViewRow NewRow = GridView1.SelectedRow;
+        Session["ProjectID"] = NewRow.Cells[1].Text;
+        Response.Redirect("ProjectInformation.aspx");
+    }
 }
