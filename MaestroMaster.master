@@ -26,8 +26,8 @@
     <div>
         <div id="WelcomeDiv">
             <a href="">
-                <img alt="" /></a><span id="Welcome" runat="server"></span>
-            <asp:LinkButton ID="LogoutBTN" runat="server" OnClick="LogoutBTN_Click">התנתק<img id = "LogoutIcon" src="images/icons/logout.png" alt = "" /></asp:LinkButton>
+                <img alt="" /></a><span id="Welcome" runat="server"></span>&nbsp;&nbsp;
+            <asp:LinkButton ID="LogoutBTN" runat="server" OnClick="LogoutBTN_Click"><img id = "LogoutIcon" src="images/icons/logout.png" alt = "" />התנתק</asp:LinkButton>
         </div>
         <div class="userNav">
             <ul id="nav">
