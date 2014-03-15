@@ -45,6 +45,14 @@ public partial class Default2 : System.Web.UI.Page
         {
             db.insertcustomer(c);
 
+<<<<<<< HEAD
+        }
+        catch
+        {
+
+        }
+
+=======
         Session["customer"] = c;
         try
         {
@@ -54,6 +62,7 @@ public partial class Default2 : System.Web.UI.Page
         {
             throw ex;
         }
+>>>>>>> b40a8f336386963c7c5979db1db9f72f550ca22f
 
     }
 }

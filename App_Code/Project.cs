@@ -95,4 +95,20 @@ public class Project
         set { Pid = value; }
     }
 
+    int price;
+
+    public int Price
+    {
+        get { return price; }
+        set { price = value; }
+    }
+
+    int HatchesNum;
+
+    public int HatchesNum1
+    {
+        get { return HatchesNum; }
+        set { HatchesNum = value; }
+    }
+
 }
