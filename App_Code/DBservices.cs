@@ -76,6 +76,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@id", CId);
                 sqlComm.Parameters.AddWithValue("@date", p.OpenedDate1);
                 sqlComm.Parameters.AddWithValue("@exdate", p.ExpirationDate1.AddDays(60));
+                sqlComm.Parameters.AddWithValue("@price", p.Price);
                 sqlComm.Parameters.AddWithValue("@comment", p.Comment1);
                 sqlComm.Parameters.AddWithValue("@ContName", p.ContractorName1);
                 sqlComm.Parameters.AddWithValue("@contPhone", p.ContractorPhone1);
@@ -153,6 +154,38 @@ public class DBservices
         SqlConnection con = new SqlConnection(cStr);
         con.Open();
         return con;
+    }
+
+
+    public DataTable GetCustomerInformation(int id)
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetCustomerInformation]", con))
+        {
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", id);
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+
+        }
+
     }
 }
 

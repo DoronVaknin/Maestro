@@ -16,6 +16,7 @@
     </asp:SqlDataSource>
     <asp:GridView ID="ProjectsPerCustomerTBL" runat="server" AutoGenerateColumns="False"
         CssClass="DataTables" DataKeyNames="pID" DataSourceID="SqlDataSource1" AllowSorting="True">
+        onselectedindexchanged="GridView1_SelectedIndexChanged" >
         <Columns>
             <asp:BoundField DataField="pID" HeaderText="מספר פרויקט" InsertVisible="False" ReadOnly="True"
                 SortExpression="pID" />
