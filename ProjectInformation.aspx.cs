@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Web.Configuration;
 using System.Text;
 using System.Configuration;
+using System.Windows.Forms;
 
 public partial class Default2 : System.Web.UI.Page
 {
@@ -37,7 +38,8 @@ public partial class Default2 : System.Web.UI.Page
         txtCustomerPhone.ReadOnly = true;
         txtEmail.ReadOnly = true;
         txtFirstName.ReadOnly = true;
-        txtID.ReadOnly = true;
+       // txtID.ReadOnly = true;
+        txtID.Attributes.Add("disabled", "disabled");
         txtLastName.ReadOnly = true;
     }
 
@@ -99,4 +101,24 @@ public partial class Default2 : System.Web.UI.Page
         c.Email = txtEmail.Text;
         db.UpdateCustomerInformation(c, CustomerInitialID);
     }
+
+    protected void DropDownDataBound(object sender, EventArgs e)
+    {
+        DBservices db = new DBservices();
+        string status= Convert.ToString(Session["ProjectStatus"]);
+        int statusnumber=db.StatusNumber(status);
+        DropDownList1.SelectedIndex = (statusnumber-1);
+        
+   }
+
+  
+    protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int x;
+    }
+    protected void SetProjectStatusVisible(object sender, EventArgs e)
+    {
+        DropDownList1.Enabled = true;
+    }
 }
+

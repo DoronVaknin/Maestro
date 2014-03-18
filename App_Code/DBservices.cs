@@ -223,6 +223,32 @@ public class DBservices
 
 
     }
+
+    public int StatusNumber ( string status)
+    {
+         con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectStatusNumber]", con))
+        {
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@status", status);
+
+                sqlComm.CommandTimeout = 600;
+                int value = (int)sqlComm.ExecuteScalar();
+                return value;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
 }
 
 

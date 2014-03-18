@@ -23,6 +23,9 @@
             width: 58px
         }
     </style>
+   
+
+       
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" Runat="Server">
     <p>
@@ -115,11 +118,39 @@
         </tr>
     </table>
     <br />
-    <asp:Button runat="server" Text="ערוך" ID="EditButton" 
-        onclick="Unnamed1_Click" />
-
+    
+    <input id="Button1" type="button" value="ערוך" onclick="ReadOnlyChanging()" />
+       
     <asp:Button ID="SaveCustomerNewInformation" runat="server" Text="שמור" 
         onclick="SaveCustomerNewInformation_Click1" />
+        <br />
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+        ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>" 
+        SelectCommand="spGetProjectStatusList" SelectCommandType="StoredProcedure">
+    </asp:SqlDataSource>
+    <br />
+    סטטוס הפרויקט :
+    <asp:DropDownList ID="DropDownList1" runat="server" 
+        DataSourceID="SqlDataSource1" DataTextField="psName" 
+        DataValueField="psName" 
+         OnDataBinding="DropDownDataBound" 
+    onselectedindexchanged="DropDownList1_SelectedIndexChanged" AutoPostBack="true" Enabled="false">
+    </asp:DropDownList>
+    &nbsp;&nbsp;&nbsp;
+    <asp:Button runat="server" Text="ערוך" id="edit" onclick="SetProjectStatusVisible"/>
+    <br />
+    <br />
+    מספר פתחים לפרויקט:  
+    <br />
+    <br />
+    סה&quot;כ עלות ללקוח:
+    <br />
+    <br />
+    הערות:<br />
+    <br />
+    
+    <br />
+
 
 </asp:Content>
 

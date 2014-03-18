@@ -18,6 +18,9 @@ public partial class Default2 : System.Web.UI.Page
     {
         GridViewRow NewRow = GridView1.SelectedRow;
         Session["ProjectID"] = NewRow.Cells[1].Text;
+        Session["ProjectStatus"] = NewRow.Cells[5].Text;
         Response.Redirect("ProjectInformation.aspx");
     }
+
+ 
 }
