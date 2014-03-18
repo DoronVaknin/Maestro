@@ -27,37 +27,19 @@ public partial class Default2 : System.Web.UI.Page
 
     public void SetAsReadOnly()
     {
-        txtAdress.ReadOnly = true;
-        txtArchitectMobile.ReadOnly = true;
-        txtArchitectName.ReadOnly = true;
-        txtCity.ReadOnly = true;
-        txtContractorMobile.ReadOnly = true;
-        txtContractorName.ReadOnly = true;
-        txtCustomerFax.ReadOnly = true;
-        txtCustomerMobile.ReadOnly = true;
-        txtCustomerPhone.ReadOnly = true;
-        txtEmail.ReadOnly = true;
-        txtFirstName.ReadOnly = true;
-       // txtID.ReadOnly = true;
+        txtAdress.Attributes.Add("disabled" , "disabled");
+        txtArchitectMobile.Attributes.Add("disabled", "disabled");
+        txtArchitectName.Attributes.Add("disabled", "disabled");
+        txtCity.Attributes.Add("disabled", "disabled");
+        txtContractorMobile.Attributes.Add("disabled", "disabled");
+        txtContractorName.Attributes.Add("disabled", "disabled");
+        txtCustomerFax.Attributes.Add("disabled", "disabled");
+        txtCustomerMobile.Attributes.Add("disabled", "disabled");
+        txtCustomerPhone.Attributes.Add("disabled", "disabled");
+        txtEmail.Attributes.Add("disabled", "disabled");
+        txtFirstName.Attributes.Add("disabled", "disabled");
         txtID.Attributes.Add("disabled", "disabled");
-        txtLastName.ReadOnly = true;
-    }
-
-    public void SetEditMode()
-    {
-        txtAdress.ReadOnly = false;
-        txtArchitectMobile.ReadOnly = false;
-        txtArchitectName.ReadOnly = false;
-        txtCity.ReadOnly = false;
-        txtContractorMobile.ReadOnly = false;
-        txtContractorName.ReadOnly = false;
-        txtCustomerFax.ReadOnly = false;
-        txtCustomerMobile.ReadOnly = false;
-        txtCustomerPhone.ReadOnly = false;
-        txtEmail.ReadOnly = false;
-        txtFirstName.ReadOnly = false;
-        txtID.ReadOnly = false;
-        txtLastName.ReadOnly = false;
+        txtLastName.Attributes.Add("disabled", "disabled");
     }
 
     public void SetCustomerValues (DataTable dt)
@@ -75,14 +57,8 @@ public partial class Default2 : System.Web.UI.Page
         txtArchitectMobile.Text = Convert.ToString(dt.Rows[0].ItemArray[10]);
         txtContractorName.Text = Convert.ToString(dt.Rows[0].ItemArray[11]);
         txtContractorMobile.Text = Convert.ToString(dt.Rows[0].ItemArray[12]);
-       
-
     }
 
-    protected void Unnamed1_Click(object sender, EventArgs e)
-    {
-        SetEditMode();
-    }
    
     protected void SaveCustomerNewInformation_Click1(object sender, EventArgs e)
     {

@@ -19,6 +19,20 @@ function ClickLoginBTN() {
 
 
 function ReadOnlyChanging() {
-    var text = document.getElementById('ContentPlaceHolder3_txtID').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtID').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtFirstName').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtLastName').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtArchitectName').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtContractorName').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtContractorMobile').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtArchitectMobile').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtCustomerFax').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtCustomerMobile').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtCustomerMobile').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtCustomerPhone').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtAdress').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtCity').removeAttribute('disabled', 'disabled');
+    document.getElementById('ContentPlaceHolder3_txtEmail').removeAttribute('disabled', 'disabled');
+
+
 }
-    
