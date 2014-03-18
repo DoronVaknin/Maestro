@@ -14,10 +14,11 @@
             <asp:SessionParameter DefaultValue="" Name="CustomerID" SessionField="ID" Type="Int32" />
         </SelectParameters>
     </asp:SqlDataSource>
-    <asp:GridView ID="ProjectsPerCustomerTBL" runat="server" AutoGenerateColumns="False"
-        CssClass="DataTables" DataKeyNames="pID" DataSourceID="SqlDataSource1" AllowSorting="True">
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
+        CssClass="DataTables" DataKeyNames="pID" DataSourceID="SqlDataSource1" AllowSorting="True"
         onselectedindexchanged="GridView1_SelectedIndexChanged" >
         <Columns>
+            <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
             <asp:BoundField DataField="pID" HeaderText="מספר פרויקט" InsertVisible="False" ReadOnly="True"
                 SortExpression="pID" />
             <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" />
