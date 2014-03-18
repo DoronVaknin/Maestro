@@ -17,9 +17,8 @@ function ClickLoginBTN() {
     $("#LoginBTN").click();
 }
 
-
-function ReadOnlyChanging() {
-    document.getElementById('ContentPlaceHolder3_txtID').removeAttribute('disabled', 'disabled');
+function EnableTextBoxes() {
+    $("#CustomerDetails input").removeAttr("ReadOnly");
     document.getElementById('ContentPlaceHolder3_txtFirstName').removeAttribute('disabled', 'disabled');
     document.getElementById('ContentPlaceHolder3_txtLastName').removeAttribute('disabled', 'disabled');
     document.getElementById('ContentPlaceHolder3_txtArchitectName').removeAttribute('disabled', 'disabled');
@@ -34,5 +33,6 @@ function ReadOnlyChanging() {
     document.getElementById('ContentPlaceHolder3_txtCity').removeAttribute('disabled', 'disabled');
     document.getElementById('ContentPlaceHolder3_txtEmail').removeAttribute('disabled', 'disabled');
 
-
+function EnableProjectStatus() {
+    $("#ContentPlaceHolder3_ProjectStatusDDL").removeAttr("disabled");
 }
