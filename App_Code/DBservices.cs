@@ -187,6 +187,68 @@ public class DBservices
         }
 
     }
+
+    public void UpdateCustomerInformation(Customer c, int OriginalCustomerID)
+    {
+
+        con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spUpdateCustomerInformation]", con))
+        {
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@OriginalID",Convert.ToInt32(OriginalCustomerID));
+                sqlComm.Parameters.AddWithValue("@NewID" , Convert.ToInt32(c.Cid));
+                sqlComm.Parameters.AddWithValue("@FirstNAme" ,c.Fname);
+                sqlComm.Parameters.AddWithValue("@LastName" , c.Lname);
+                sqlComm.Parameters.AddWithValue("@Phone", Convert.ToInt32(c.Phone));
+                sqlComm.Parameters.AddWithValue("@Mobile", Convert.ToInt32(c.Mobile));
+                sqlComm.Parameters.AddWithValue("@Fax" , Convert.ToInt32(c.Fax));
+                sqlComm.Parameters.AddWithValue("@Adress" , c.Address);
+                sqlComm.Parameters.AddWithValue("@City" , c.City);
+                sqlComm.Parameters.AddWithValue("@Email" , c.Email);
+                sqlComm.CommandTimeout = 600;
+                sqlComm.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+
+    }
+
+    public int StatusNumber ( string status)
+    {
+         con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectStatusNumber]", con))
+        {
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@status", status);
+
+                sqlComm.CommandTimeout = 600;
+                int value = (int)sqlComm.ExecuteScalar();
+                return value;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
 }
 
 

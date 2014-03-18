@@ -18,7 +18,7 @@
         CssClass="DataTables" DataKeyNames="pID" DataSourceID="SqlDataSource1" AllowSorting="True"
         onselectedindexchanged="GridView1_SelectedIndexChanged" >
         <Columns>
-            <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
+            <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
             <asp:BoundField DataField="pID" HeaderText="מספר פרויקט" InsertVisible="False" ReadOnly="True"
                 SortExpression="pID" />
             <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" />

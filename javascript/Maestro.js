@@ -16,3 +16,9 @@ $(document).ready(function () {
 function ClickLoginBTN() {
     $("#LoginBTN").click();
 }
+
+
+function ReadOnlyChanging() {
+    var text = document.getElementById('ContentPlaceHolder3_txtID').removeAttribute('disabled', 'disabled');
+}
+    
