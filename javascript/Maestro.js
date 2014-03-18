@@ -17,8 +17,10 @@ function ClickLoginBTN() {
     $("#LoginBTN").click();
 }
 
-
-function ReadOnlyChanging() {
-    var text = document.getElementById('ContentPlaceHolder3_txtID').removeAttribute('disabled', 'disabled');
+function EnableTextBoxes() {
+    $("#CustomerDetails input").removeAttr("ReadOnly");
 }
-    
+
+function EnableProjectStatus() {
+    $("#ContentPlaceHolder3_ProjectStatusDDL").removeAttr("disabled");
+}
