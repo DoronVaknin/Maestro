@@ -27,6 +27,7 @@ public partial class Default2 : System.Web.UI.Page
 
     public void SetAsReadOnly()
     {
+<<<<<<< HEAD
         txtAdress.Attributes.Add("disabled" , "disabled");
         txtArchitectMobile.Attributes.Add("disabled", "disabled");
         txtArchitectName.Attributes.Add("disabled", "disabled");
@@ -38,7 +39,21 @@ public partial class Default2 : System.Web.UI.Page
         txtCustomerPhone.Attributes.Add("disabled", "disabled");
         txtEmail.Attributes.Add("disabled", "disabled");
         txtFirstName.Attributes.Add("disabled", "disabled");
-        txtID.ReadOnly = true;
+=======
+        txtAdress.ReadOnly = true;
+        txtArchitectMobile.ReadOnly = true;
+        txtArchitectName.ReadOnly = true;
+        txtCity.ReadOnly = true;
+        txtContractorMobile.ReadOnly = true;
+        txtContractorName.ReadOnly = true;
+        txtCustomerFax.ReadOnly = true;
+        txtCustomerMobile.ReadOnly = true;
+        txtCustomerPhone.ReadOnly = true;
+        txtEmail.ReadOnly = true;
+        txtFirstName.ReadOnly = true;
+        // txtID.ReadOnly = true;
+>>>>>>> 3941910bb5538ecd5e15aeaa1cc510490ac24d48
+        txtID.Attributes.Add("disabled", "disabled");
         txtLastName.Attributes.Add("disabled", "disabled");
     }
 
@@ -57,10 +72,21 @@ public partial class Default2 : System.Web.UI.Page
         txtArchitectMobile.Text = Convert.ToString(dt.Rows[0].ItemArray[10]);
         txtContractorName.Text = Convert.ToString(dt.Rows[0].ItemArray[11]);
         txtContractorMobile.Text = Convert.ToString(dt.Rows[0].ItemArray[12]);
+<<<<<<< HEAD
+    }
+
+   
+=======
+
 
     }
 
+    protected void Unnamed1_Click(object sender, EventArgs e)
+    {
+        SetEditMode();
+    }
 
+>>>>>>> 3941910bb5538ecd5e15aeaa1cc510490ac24d48
     protected void SaveCustomerNewInformation_Click1(object sender, EventArgs e)
     {
         int CustomerInitialID = Convert.ToInt32(txtID.Text);

@@ -55,6 +55,7 @@
         </div>
     </div>
     <asp:ContentPlaceHolder ID="ContentPlaceHolder3" runat="server">
+        <script src="javascript/Maestro.js" type="text/javascript"></script>
     </asp:ContentPlaceHolder>
     </form>
 </body>

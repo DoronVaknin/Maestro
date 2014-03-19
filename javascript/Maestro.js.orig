@@ -17,8 +17,10 @@ function ClickLoginBTN() {
     $("#LoginBTN").click();
 }
 
-function EnableTextBoxes() {
-    $("#CustomerDetails input").removeAttr("ReadOnly");
+<<<<<<< HEAD
+
+function ReadOnlyChanging() {
+    document.getElementById('ContentPlaceHolder3_txtID').removeAttribute('disabled', 'disabled');
     document.getElementById('ContentPlaceHolder3_txtFirstName').removeAttribute('disabled', 'disabled');
     document.getElementById('ContentPlaceHolder3_txtLastName').removeAttribute('disabled', 'disabled');
     document.getElementById('ContentPlaceHolder3_txtArchitectName').removeAttribute('disabled', 'disabled');
@@ -33,6 +35,14 @@ function EnableTextBoxes() {
     document.getElementById('ContentPlaceHolder3_txtCity').removeAttribute('disabled', 'disabled');
     document.getElementById('ContentPlaceHolder3_txtEmail').removeAttribute('disabled', 'disabled');
 
+
+}
+=======
+function EnableTextBoxes() {
+    $("#CustomerDetails input").removeAttr("ReadOnly");
+}
+
 function EnableProjectStatus() {
     $("#ContentPlaceHolder3_ProjectStatusDDL").removeAttr("disabled");
 }
+>>>>>>> 3941910bb5538ecd5e15aeaa1cc510490ac24d48
