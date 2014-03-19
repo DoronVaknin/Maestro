@@ -38,8 +38,7 @@ public partial class Default2 : System.Web.UI.Page
         txtCustomerPhone.ReadOnly = true;
         txtEmail.ReadOnly = true;
         txtFirstName.ReadOnly = true;
-        // txtID.ReadOnly = true;
-        txtID.Attributes.Add("disabled", "disabled");
+        txtID.ReadOnly = true;
         txtLastName.ReadOnly = true;
     }
 
