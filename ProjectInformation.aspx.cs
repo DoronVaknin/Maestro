@@ -19,29 +19,12 @@ public partial class Default2 : System.Web.UI.Page
 
         if (!Page.IsPostBack)
         {
-            SetAsReadOnly();
+         
             SetCustomerValues(dt);
         }
 
     }
 
-    public void SetAsReadOnly()
-    {
-        txtAdress.Attributes.Add("disabled" , "disabled");
-        txtArchitectMobile.Attributes.Add("disabled", "disabled");
-        txtArchitectName.Attributes.Add("disabled", "disabled");
-        txtCity.Attributes.Add("disabled", "disabled");
-        txtContractorMobile.Attributes.Add("disabled", "disabled");
-        txtContractorName.Attributes.Add("disabled", "disabled");
-        txtCustomerFax.Attributes.Add("disabled", "disabled");
-        txtCustomerMobile.Attributes.Add("disabled", "disabled");
-        txtCustomerPhone.Attributes.Add("disabled", "disabled");
-        txtEmail.Attributes.Add("disabled", "disabled");
-        txtFirstName.Attributes.Add("disabled", "disabled");
-        // txtID.ReadOnly = true;
-        txtID.Attributes.Add("disabled", "disabled");
-        txtLastName.Attributes.Add("disabled", "disabled");
-    }
 
     public void SetCustomerValues(DataTable dt)
     {
@@ -58,6 +41,7 @@ public partial class Default2 : System.Web.UI.Page
         txtArchitectMobile.Text = Convert.ToString(dt.Rows[0].ItemArray[10]);
         txtContractorName.Text = Convert.ToString(dt.Rows[0].ItemArray[11]);
         txtContractorMobile.Text = Convert.ToString(dt.Rows[0].ItemArray[12]);
+
 
     }
 

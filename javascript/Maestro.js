@@ -17,22 +17,21 @@ function ClickLoginBTN() {
     $("#LoginBTN").click();
 }
 
+
+
 function EnableTextBoxes() {
-    $("#CustomerDetails input").removeAttr("ReadOnly");
-    document.getElementById('ContentPlaceHolder3_txtFirstName').removeAttribute('disabled', 'disabled');
-    document.getElementById('ContentPlaceHolder3_txtLastName').removeAttribute('disabled', 'disabled');
-    document.getElementById('ContentPlaceHolder3_txtArchitectName').removeAttribute('disabled', 'disabled');
-    document.getElementById('ContentPlaceHolder3_txtContractorName').removeAttribute('disabled', 'disabled');
-    document.getElementById('ContentPlaceHolder3_txtContractorMobile').removeAttribute('disabled', 'disabled');
-    document.getElementById('ContentPlaceHolder3_txtArchitectMobile').removeAttribute('disabled', 'disabled');
-    document.getElementById('ContentPlaceHolder3_txtCustomerFax').removeAttribute('disabled', 'disabled');
-    document.getElementById('ContentPlaceHolder3_txtCustomerMobile').removeAttribute('disabled', 'disabled');
-    document.getElementById('ContentPlaceHolder3_txtCustomerMobile').removeAttribute('disabled', 'disabled');
-    document.getElementById('ContentPlaceHolder3_txtCustomerPhone').removeAttribute('disabled', 'disabled');
-    document.getElementById('ContentPlaceHolder3_txtAdress').removeAttribute('disabled', 'disabled');
-    document.getElementById('ContentPlaceHolder3_txtCity').removeAttribute('disabled', 'disabled');
-    document.getElementById('ContentPlaceHolder3_txtEmail').removeAttribute('disabled', 'disabled');
+    $("#CustomerDetails input").removeAttr("disabled");
+}
 
 function EnableProjectStatus() {
     $("#ContentPlaceHolder3_ProjectStatusDDL").removeAttr("disabled");
 }
+
+
+
+$(document).ready(function () {
+    debugger;
+    $("#CustomerDetails input").prop("disabled", true);
+});
+
+
