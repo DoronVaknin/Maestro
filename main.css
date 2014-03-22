@@ -192,17 +192,18 @@ html[xmlns] #nav
 .input-group
 {
     direction: ltr;
-    width: 280px;
+    width: 300px;
     margin-right: auto;
     margin-left: auto;
 }
 
 .input-group-addon
 {
-    width: 88px;
+    width: 100px;
 }
 
-#NewCustomerTBL td
+#NewCustomerTBL td,
+#NewProjectTBL td
 {
     border-top: none;
 }
