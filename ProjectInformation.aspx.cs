@@ -55,9 +55,9 @@ public partial class Default2 : System.Web.UI.Page
         txtContractorName.Value = Convert.ToString(dt.Rows[0].ItemArray[11]);
         txtContractorPhone.Value = Convert.ToString(dt.Rows[0].ItemArray[12]);
         GridViewRow row = (GridViewRow)Session["selectedrow"];
-        txtHatchesNum.Text = row.Cells[8].Text;
-        txtProjectPrice.Text = row.Cells[7].Text;
-        txtProjectComment.Text = row.Cells[6].Text;
+        txtHatchesNum.Value = row.Cells[8].Text;
+        txtProjectPrice.Value = row.Cells[7].Text;
+        txtProjectComment.Value = row.Cells[6].Text;
         
         
     }
@@ -95,7 +95,7 @@ public partial class Default2 : System.Web.UI.Page
         DBservices db = new DBservices();
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         db.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectStatusDDL.SelectedIndex + 1);
-        db.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToInt32(txtProjectPrice.Text), txtProjectComment.Text);
+        db.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToInt32(txtProjectPrice.Value), txtProjectComment.Value);
     }
 
 }

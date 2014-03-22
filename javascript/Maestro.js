@@ -33,8 +33,9 @@ $(document).ready(function () {
     $("#ContentPlaceHolder3_txtHatchesNum").prop("disabled", true);
     $("#ContentPlaceHolder3_txtProjectPrice").prop("disabled", true);
     $("#ContentPlaceHolder3_txtProjectComment").prop("disabled", true);
-    
+
 });
+
 
 
 //this is the function of Drag & Drop - need to check it later
