@@ -8,33 +8,39 @@ using System.Web.Configuration;
 using System.Text;
 using System.Configuration;
 using System.Windows.Forms;
+using System.Web.UI.WebControls;
 
 public partial class Default2 : System.Web.UI.Page
 {
     
     protected void Page_Load(object sender, EventArgs e)
     {
-        int ProjectID = Convert.ToInt16(Session["ProjectID"]);
+        GridViewRow row = (GridViewRow)Session["selectedrow"];
+        int ProjectID =Convert.ToInt32(row.Cells[1].Text);
         
         DBservices db = new DBservices();
         DataTable dt = db.GetCustomerInformation(ProjectID);
 
         if (!Page.IsPostBack)
         {
-         
-            SetCustomerValues(dt);
-            SetProjectStatus();
+
+            SetPageDetails(dt);
+            SetProjCurrentStatus();
+            
         }
         
     }
 
-    public void SetProjectStatus()
+    public void SetProjCurrentStatus()
     {
-        txtHatchesNum.Text = Convert.ToString( Session["HatchesNum"]);
-
+        DBservices db = new DBservices();
+        GridViewRow row = (GridViewRow)Session["selectedrow"];
+        string status = Convert.ToString(row.Cells[5].Text);
+        int statusnumber = db.StatusNumber(status);
+        ProjectStatusDDL.SelectedIndex = (statusnumber - 1);
     }
 
-    public void SetCustomerValues(DataTable dt)
+    public void SetPageDetails(DataTable dt)
     {
         txtID.Text = Convert.ToString(dt.Rows[0].ItemArray[0]);
         txtFirstName.Text = Convert.ToString(dt.Rows[0].ItemArray[1]);
@@ -49,8 +55,21 @@ public partial class Default2 : System.Web.UI.Page
         txtArchitectMobile.Text = Convert.ToString(dt.Rows[0].ItemArray[10]);
         txtContractorName.Text = Convert.ToString(dt.Rows[0].ItemArray[11]);
         txtContractorMobile.Text = Convert.ToString(dt.Rows[0].ItemArray[12]);
-
+        GridViewRow row = (GridViewRow)Session["selectedrow"];
+        txtHatchesNum.Text = row.Cells[8].Text;
+        txtProjectPrice.Text = row.Cells[7].Text;
+        txtProjectComment.Text = row.Cells[6].Text;
+        
+        
     }
+
+    protected void DropDownDataBound(object sender, EventArgs e)
+    {
+
+   
+    }
+
+    
 
 
     protected void SaveCustomerNewInformation_Click1(object sender, EventArgs e)
@@ -70,20 +89,15 @@ public partial class Default2 : System.Web.UI.Page
         db.UpdateCustomerInformation(c, CustomerInitialID);
     }
 
-    protected void DropDownDataBound(object sender, EventArgs e)
-    {
-        DBservices db = new DBservices();
-        string status = Convert.ToString(Session["ProjectStatus"]);
-        int statusnumber = db.StatusNumber(status);
-        ProjectStatusDDL.SelectedIndex = (statusnumber - 1);
-    }
+
 
 
     protected void btnSaveProjDetails_Click(object sender, EventArgs e)
     {
         DBservices db = new DBservices();
-        db.UpdateProjectStatus(Convert.ToInt32(Session["ProjectID"]), ProjectStatusDDL.SelectedIndex + 1);
-        db.UpdateProjectDetails(Convert.ToInt32(Session["ProjectID"]),Convert.ToInt32( txtProjectPrice.Text),txtProjectComment.Text);
+        GridViewRow row = (GridViewRow)Session["selectedrow"];
+        db.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectStatusDDL.SelectedIndex + 1);
+        db.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToInt32(txtProjectPrice.Text), txtProjectComment.Text);
     }
 
 }

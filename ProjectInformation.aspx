@@ -141,13 +141,15 @@
         SelectCommand="spGetProjectStatusList" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
     <br />
     פרטי פרויקט:<br />
+
+
+
     <br />
     סטטוס הפרויקט:
-    <asp:DropDownList ID="ProjectStatusDDL" runat="server" DataSourceID="SqlDataSource1"
-        DataTextField="psName" DataValueField="psName" OnDataBinding="DropDownDataBound"
-       AutoPostBack="false" >
-    </asp:DropDownList>
     &nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:DropDownList ID="ProjectStatusDDL" runat="server" 
+        DataSourceID="SqlDataSource1" DataTextField="psName" DataValueField="psName" AutoPostBack="false">
+    </asp:DropDownList>
     <br />
     <br />
     מספר פתחים לפרויקט:&nbsp;&nbsp;
@@ -168,5 +170,6 @@
     <asp:Button 
         ID="btnSaveProjDetails" runat="server" Text="שמור" 
         onclick="btnSaveProjDetails_Click" />
+    <br />
     <br />
 </asp:Content>
