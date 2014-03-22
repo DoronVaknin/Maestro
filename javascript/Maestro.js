@@ -18,30 +18,23 @@ function ClickLoginBTN() {
     $("#LoginBTN").click();
 }
 
-
-
 function EnableTextBoxes() {
-    $("#CustomerDetails input").removeAttr("disabled");
+    $("#CustomerDetailsTBL input").removeAttr("disabled");
 }
 function EnableProjectStatus() {
     $("#ContentPlaceHolder3_ProjectStatusDDL").removeAttr("disabled");
     $("#ContentPlaceHolder3_txtProjectPrice").removeAttr("disabled");
     $("#ContentPlaceHolder3_txtProjectComment").removeAttr("disabled");
-    
 }
 
-
-
 $(document).ready(function () {
-    $("#CustomerDetails input").prop("disabled", true);
+    $("#CustomerDetailsTBL input").attr("disabled", "disabled");
     $("#ContentPlaceHolder3_ProjectStatusDDL").prop("disabled", true);
     $("#ContentPlaceHolder3_txtHatchesNum").prop("disabled", true);
     $("#ContentPlaceHolder3_txtProjectPrice").prop("disabled", true);
     $("#ContentPlaceHolder3_txtProjectComment").prop("disabled", true);
     
 });
-
-
 
 
 //this is the function of Drag & Drop - need to check it later

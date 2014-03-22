@@ -2,171 +2,176 @@
     CodeFile="ProjectInformation.aspx.cs" Inherits="Default2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
-    <style type="text/css">
-        .style1
-        {
-            width: 130px;
-        }
-        .style2
-        {
-            width: 113px;
-        }
-        .style4
-        {
-            width: 186px;
-        }
-        .style5
-        {
-            width: 166px;
-        }
-        .style6
-        {
-            width: 58px;
-        }
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
-    <p>
-        <br />
-        פרטי הלקוח:
-    </p>
-    <table id="CustomerDetails" class="nav-justified">
+    <div class="cntr">
+        <h1>
+            פרטי הלקוח
+        </h1>
+    </div>
+    <br />
+        <table id="CustomerDetailsTBL" class="table">
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txtID" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">ת.ז</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input id="txtAdress" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">כתובת</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txtFirstName" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">שם פרטי</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input id="txtCity" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">עיר</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txtLastName" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">שם משפחה</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input id="txtEmail" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">דוא"ל</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txtCustomerPhone" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">טלפון</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input id="txtCustomerFax" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">פקס</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txtCustomerMobile" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">טלפון נייד</span>
+                    </div>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txtArchitectName" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">שם האדריכל</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input id="txtArchitectMobile" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">טלפון אדריכל</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txtContractorName" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">שם הקבלן</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input id="txtContractorPhone" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">טלפון קבלן</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <input id="txtSupervisorName" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">שם המפקח</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="input-group">
+                        <input id="txtSupervisorPhone" type="text" class="form-control" runat="server">
+                        <span class="input-group-addon">טלפון מפקח</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    <div class="cntr">
+        <button id="EditCustomerDetailsBTN" runat="server" type="button" class="btn btn-default"
+            onclick="EnableTextBoxes()">
+            ערוך&nbsp;<span class="glyphicon glyphicon-pencil"></span>
+        </button>
+        <asp:Button ID="SaveCustomerNewInformation" runat="server" Text="שמור" class="btn btn-default"
+            OnClick="SaveCustomerNewInformation_Click1" Font-Bold="true" />
+    </div>
+    <br />
+    <div class="cntr">
+        <h1>
+            פרטי הפרויקט
+        </h1>
+    </div>
+    <table id="ProjectDetailsTBL" class="table">
         <tr>
-            <td class="style1">
-                תעודת זהות:
+            <td>
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>"
+                    SelectCommand="spGetProjectStatusList" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+                סטטוס הפרויקט:
+                <asp:DropDownList ID="ProjectStatusDDL" runat="server" CssClass="btn btn-default"
+                    DataSourceID="SqlDataSource1" DataTextField="psName" DataValueField="psName"
+                    OnDataBinding="DropDownDataBound" AutoPostBack="false">
+                </asp:DropDownList>
             </td>
-            <td class="style4">
-                <asp:TextBox ID="txtID" runat="server"></asp:TextBox>
-            </td>
-            <td class="style2">
-                טלפון
-            </td>
-            <td class="style5">
-                <asp:TextBox ID="txtCustomerPhone" runat="server"></asp:TextBox>
-            </td>
-            <td class="style6">
-                כתובת
-            </td>
-            <td dir="rtl">
-                <asp:TextBox ID="txtAdress" runat="server"></asp:TextBox>
+            <td>
+                <div class="input-group">
+                    <input id="txtProjectPrice" type="text" class="form-control" runat="server">
+                    <span class="input-group-addon">סה"כ עלות ללקוח</span>
+                </div>
             </td>
         </tr>
         <tr>
-            <td class="style1">
-                שם פרטי:
+            <td>
+                <div class="input-group">
+                    <input id="txtHatchesNum" type="text" class="form-control" runat="server">
+                    <span class="input-group-addon">מס' פתחים</span>
+                </div>
             </td>
-            <td class="style4">
-                <asp:TextBox ID="txtFirstName" runat="server"></asp:TextBox>
-            </td>
-            <td class="style2">
-                טלפון נייד
-            </td>
-            <td class="style5">
-                <asp:TextBox ID="txtCustomerMobile" runat="server"></asp:TextBox>
-            </td>
-            <td class="style6">
-                עיר
-            </td>
-            <td dir="rtl">
-                <asp:TextBox ID="txtCity" runat="server"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td class="style1">
-                שם משפחה:
-            </td>
-            <td class="style4">
-                <asp:TextBox ID="txtLastName" runat="server"></asp:TextBox>
-            </td>
-            <td class="style2">
-                פקס
-            </td>
-            <td class="style5">
-                <asp:TextBox ID="txtCustomerFax" runat="server"></asp:TextBox>
-            </td>
-            <td class="style6">
-                דוא&quot;ל
-            </td>
-            <td dir="rtl">
-                <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
-            </td>
-        </tr>
-        <tr>
-            <td class="style1">
-                שם האדריכל:
-            </td>
-            <td class="style4">
-                <asp:TextBox ID="txtArchitectName" runat="server"></asp:TextBox>
-            </td>
-            <td class="style2">
-                טלפון נייד
-            </td>
-            <td class="style5">
-                <asp:TextBox ID="txtArchitectMobile" runat="server"></asp:TextBox>
-            </td>
-            <td class="style6">
-                &nbsp;
-            </td>
-            <td dir="rtl">
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td class="style1">
-                שם הקבלן:
-            </td>
-            <td class="style4">
-                <asp:TextBox ID="txtContractorName" runat="server"></asp:TextBox>
-            </td>
-            <td class="style2">
-                טלפון נייד
-            </td>
-            <td class="style5">
-                <asp:TextBox ID="txtContractorMobile" runat="server"></asp:TextBox>
-            </td>
-            <td class="style6">
-                &nbsp;
-            </td>
-            <td dir="rtl">
-                &nbsp;
+            <td>
+                <div id="CommentContainer">
+                    <textarea id="txtProjectComment" runat="server" class="form-control" cols="10" rows="3"
+                        placeholder="הערות"></textarea>
+                </div>
             </td>
         </tr>
     </table>
-    <br />
-    <input id="Button1" type="button" value="ערוך פרטי לקוח" 
-        onclick="EnableTextBoxes()" />
-    <asp:Button ID="SaveCustomerNewInformation" runat="server" Text="שמור" OnClick="SaveCustomerNewInformation_Click1" />
-    <br />
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>"
-        SelectCommand="spGetProjectStatusList" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-    <br />
-    פרטי פרויקט:<br />
-    <br />
-    סטטוס הפרויקט:
-    <asp:DropDownList ID="ProjectStatusDDL" runat="server" DataSourceID="SqlDataSource1"
-        DataTextField="psName" DataValueField="psName" OnDataBinding="DropDownDataBound"
-       AutoPostBack="false" >
-    </asp:DropDownList>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <br />
-    <br />
-    מספר פתחים לפרויקט:&nbsp;&nbsp;
-    <asp:TextBox ID="txtHatchesNum" runat="server" Width="118px"></asp:TextBox>
-    <br />
-    <br />
-    סה&quot;כ עלות ללקוח:
-    <asp:TextBox ID="txtProjectPrice" runat="server"></asp:TextBox>
-    <br />
-    <br />
-    הערות:&nbsp;
-    <asp:TextBox ID="txtProjectComment" runat="server" TextMode="MultiLine" 
-        style="direction:rtl ; " ></asp:TextBox>
-    <br />
-    <br />
-    <input id="edit" type="button" value=" ערוך פרטי פרויקט" onclick="EnableProjectStatus()" />
-    &nbsp &nbsp;
-    <asp:Button 
-        ID="btnSaveProjDetails" runat="server" Text="שמור" 
-        onclick="btnSaveProjDetails_Click" />
-    <br />
+    <div class="cntr">
+        <button id="edit" runat="server" type="button" class="btn btn-default" onclick="EnableProjectStatus()">
+            ערוך&nbsp;<span class="glyphicon glyphicon-pencil"></span>
+        </button>
+        <asp:Button ID="btnSaveProjDetails" runat="server" Text="שמור" class="btn btn-default"
+            OnClick="btnSaveProjDetails_Click" Font-Bold="true" />
+    </div>
 </asp:Content>
