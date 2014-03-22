@@ -11,9 +11,11 @@ using System.Windows.Forms;
 
 public partial class Default2 : System.Web.UI.Page
 {
+    
     protected void Page_Load(object sender, EventArgs e)
     {
         int ProjectID = Convert.ToInt16(Session["ProjectID"]);
+        
         DBservices db = new DBservices();
         DataTable dt = db.GetCustomerInformation(ProjectID);
 
@@ -21,10 +23,16 @@ public partial class Default2 : System.Web.UI.Page
         {
          
             SetCustomerValues(dt);
+            SetProjectStatus();
         }
-
+        
     }
 
+    public void SetProjectStatus()
+    {
+        txtHatchesNum.Text = Convert.ToString( Session["HatchesNum"]);
+
+    }
 
     public void SetCustomerValues(DataTable dt)
     {
@@ -41,7 +49,6 @@ public partial class Default2 : System.Web.UI.Page
         txtArchitectMobile.Text = Convert.ToString(dt.Rows[0].ItemArray[10]);
         txtContractorName.Text = Convert.ToString(dt.Rows[0].ItemArray[11]);
         txtContractorMobile.Text = Convert.ToString(dt.Rows[0].ItemArray[12]);
-
 
     }
 
@@ -71,9 +78,13 @@ public partial class Default2 : System.Web.UI.Page
         ProjectStatusDDL.SelectedIndex = (statusnumber - 1);
     }
 
-    protected void ProjectStatusDDL_SelectedIndexChanged(object sender, EventArgs e)
+
+    protected void btnSaveProjDetails_Click(object sender, EventArgs e)
     {
-        int x;
+        DBservices db = new DBservices();
+        db.UpdateProjectStatus(Convert.ToInt32(Session["ProjectID"]), ProjectStatusDDL.SelectedIndex + 1);
+        db.UpdateProjectDetails(Convert.ToInt32(Session["ProjectID"]),Convert.ToInt32( txtProjectPrice.Text),txtProjectComment.Text);
     }
+
 }
 

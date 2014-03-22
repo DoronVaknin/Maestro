@@ -133,29 +133,40 @@
         </tr>
     </table>
     <br />
-    <input id="Button1" type="button" value="ערוך" onclick="EnableTextBoxes()" />
+    <input id="Button1" type="button" value="ערוך פרטי לקוח" 
+        onclick="EnableTextBoxes()" />
     <asp:Button ID="SaveCustomerNewInformation" runat="server" Text="שמור" OnClick="SaveCustomerNewInformation_Click1" />
     <br />
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>"
         SelectCommand="spGetProjectStatusList" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
     <br />
+    פרטי פרויקט:<br />
+    <br />
     סטטוס הפרויקט:
     <asp:DropDownList ID="ProjectStatusDDL" runat="server" DataSourceID="SqlDataSource1"
         DataTextField="psName" DataValueField="psName" OnDataBinding="DropDownDataBound"
-        OnSelectedIndexChanged="ProjectStatusDDL_SelectedIndexChanged" AutoPostBack="true"
-        Enabled="false">
+       AutoPostBack="false" >
     </asp:DropDownList>
-    &nbsp;&nbsp;&nbsp;
-    <input id="edit" type="button" value="ערוך" onclick="EnableProjectStatus()" />
+    &nbsp;&nbsp;&nbsp;&nbsp;
     <br />
     <br />
-    מספר פתחים לפרויקט:
+    מספר פתחים לפרויקט:&nbsp;&nbsp;
+    <asp:TextBox ID="txtHatchesNum" runat="server" Width="118px"></asp:TextBox>
     <br />
     <br />
     סה&quot;כ עלות ללקוח:
+    <asp:TextBox ID="txtProjectPrice" runat="server"></asp:TextBox>
     <br />
     <br />
-    הערות:<br />
+    הערות:&nbsp;
+    <asp:TextBox ID="txtProjectComment" runat="server" TextMode="MultiLine" 
+        style="direction:rtl ; " ></asp:TextBox>
     <br />
+    <br />
+    <input id="edit" type="button" value=" ערוך פרטי פרויקט" onclick="EnableProjectStatus()" />
+    &nbsp &nbsp;
+    <asp:Button 
+        ID="btnSaveProjDetails" runat="server" Text="שמור" 
+        onclick="btnSaveProjDetails_Click" />
     <br />
 </asp:Content>

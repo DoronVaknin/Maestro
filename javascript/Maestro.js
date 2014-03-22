@@ -25,13 +25,20 @@ function EnableTextBoxes() {
 
 function EnableProjectStatus() {
     $("#ContentPlaceHolder3_ProjectStatusDDL").removeAttr("disabled");
+    $("#ContentPlaceHolder3_txtProjectPrice").removeAttr("disabled");
+    $("#ContentPlaceHolder3_txtProjectComment").removeAttr("disabled");
+    
 }
 
 
 
 $(document).ready(function () {
-    debugger;
     $("#CustomerDetails input").prop("disabled", true);
+    $("#ContentPlaceHolder3_ProjectStatusDDL").prop("disabled", true);
+    $("#ContentPlaceHolder3_txtHatchesNum").prop("disabled", true);
+    $("#ContentPlaceHolder3_txtProjectPrice").prop("disabled", true);
+    $("#ContentPlaceHolder3_txtProjectComment").prop("disabled", true);
+    
 });
 
 

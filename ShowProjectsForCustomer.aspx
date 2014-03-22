@@ -20,6 +20,30 @@
         <Columns>
             <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
             <asp:BoundField DataField="pID" HeaderText="מספר פרויקט" InsertVisible="False" ReadOnly="True"
+                SortExpression="pID"  />
+            <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" />
+            <asp:BoundField DataField="lName" HeaderText="שם משפחה" SortExpression="lName" />
+            <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחת פרויקט" 
+                SortExpression="DateOpened" />
+            <asp:BoundField DataField="psName" HeaderText="סטטוס" 
+                SortExpression="psName" />
+            <asp:BoundField DataField="Comments" HeaderText="הערות" 
+                SortExpression="Comments" />
+            <asp:BoundField DataField="price" HeaderText="מחיר" SortExpression="price" />
+            <asp:BoundField DataField="NumOfHathes" HeaderText="מספר פתחים" 
+                ReadOnly="True" SortExpression="NumOfHathes" />
+        </Columns>
+    </asp:GridView>
+    <br />
+</asp:Content>
+
+
+<%--    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False"
+        CssClass="DataTables" DataKeyNames="pID" DataSourceID="SqlDataSource1" AllowSorting="True"
+        onselectedindexchanged="GridView1_SelectedIndexChanged" >
+        <Columns>
+            <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
+            <asp:BoundField DataField="pID" HeaderText="מספר פרויקט" InsertVisible="False" ReadOnly="True"
                 SortExpression="pID" />
             <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" />
             <asp:BoundField DataField="lName" HeaderText="שם משפחה" SortExpression="lName" />
@@ -28,6 +52,4 @@
             <asp:BoundField DataField="Comments" HeaderText="הערות" SortExpression="Comments" />
             <asp:BoundField DataField="NumOfHathes" HeaderText="מספר פתחים" ReadOnly="True" SortExpression="NumOfHathes" />
         </Columns>
-    </asp:GridView>
-    <br />
-</asp:Content>
+    </asp:GridView>--%>
