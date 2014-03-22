@@ -18,12 +18,21 @@ function ClickLoginBTN() {
     $("#LoginBTN").click();
 }
 
+
+
 function EnableTextBoxes() {
     $("#CustomerDetails input").removeAttr("disabled");
 }
 function EnableProjectStatus() {
     $("#ContentPlaceHolder3_ProjectStatusDDL").removeAttr("disabled");
 }
+
+
+
+$(document).ready(function () {
+    debugger;
+    $("#CustomerDetails input").prop("disabled", true);
+});
 
 
 
