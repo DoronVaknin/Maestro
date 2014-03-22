@@ -139,9 +139,6 @@
             <td>
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>"
                     SelectCommand="spGetProjectStatusList" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-
-
-
                 סטטוס הפרויקט:
                 <asp:DropDownList ID="ProjectStatusDDL" runat="server" CssClass="btn btn-default"
                     DataSourceID="SqlDataSource1" DataTextField="psName" DataValueField="psName"
@@ -170,6 +167,48 @@
             </td>
         </tr>
     </table>
+<<<<<<< HEAD
+    <br />
+    <input id="Button1" type="button" value="ערוך פרטי לקוח" 
+        onclick="EnableTextBoxes()" />
+    <asp:Button ID="SaveCustomerNewInformation" runat="server" Text="שמור" OnClick="SaveCustomerNewInformation_Click1" />
+    <br />
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>"
+        SelectCommand="spGetProjectStatusList" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+    <br />
+    פרטי פרויקט:<br />
+
+
+
+    <br />
+    סטטוס הפרויקט:
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <asp:DropDownList ID="ProjectStatusDDL" runat="server" 
+        DataSourceID="SqlDataSource1" DataTextField="psName" DataValueField="psName" AutoPostBack="false">
+    </asp:DropDownList>
+    <br />
+    <br />
+    מספר פתחים לפרויקט:&nbsp;&nbsp;
+    <asp:TextBox ID="txtHatchesNum" runat="server" Width="118px"></asp:TextBox>
+    <br />
+    <br />
+    סה&quot;כ עלות ללקוח:
+    <asp:TextBox ID="txtProjectPrice" runat="server"></asp:TextBox>
+    <br />
+    <br />
+    הערות:&nbsp;
+    <asp:TextBox ID="txtProjectComment" runat="server" TextMode="MultiLine" 
+        style="direction:rtl ; " ></asp:TextBox>
+    <br />
+    <br />
+    <input id="edit" type="button" value=" ערוך פרטי פרויקט" onclick="EnableProjectStatus()" />
+    &nbsp &nbsp;
+    <asp:Button 
+        ID="btnSaveProjDetails" runat="server" Text="שמור" 
+        onclick="btnSaveProjDetails_Click" />
+    <br />
+    <br />
+=======
     <div class="cntr">
         <button id="edit" runat="server" type="button" class="btn btn-default" onclick="EnableProjectStatus()">
             ערוך&nbsp;<span class="glyphicon glyphicon-pencil"></span>
@@ -177,4 +216,5 @@
         <asp:Button ID="btnSaveProjDetails" runat="server" Text="שמור" class="btn btn-default"
             OnClick="btnSaveProjDetails_Click" Font-Bold="true" />
     </div>
+>>>>>>> 6b4669c7a84983326cf51ae685e56f43dca162b7
 </asp:Content>
