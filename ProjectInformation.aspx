@@ -2,6 +2,12 @@
     CodeFile="ProjectInformation.aspx.cs" Inherits="Default2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
+    <style type="text/css">
+        .style1
+        {
+            height: 68px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
     <div class="cntr">
@@ -176,5 +182,168 @@
         </button>
         <asp:Button ID="btnSaveProjDetails" runat="server" Text="שמור" class="btn btn-default"
             OnClick="btnSaveProjDetails_Click" Font-Bold="true" />
+        <br />
+        <br />
+        הזמנות עבור פרוייקט<br />
+        <br />
+        <table class="nav-justified" id="OrderTable">
+            <tr>
+                <td>
+                    שם הפריט</td>
+                <td>
+                    כמות להזמנה</td>
+                <td>
+                    שם הספק</td>
+                <td>
+                    סטטוס</td>
+            </tr>
+            <tr>
+                <td>
+                    תריסים</td>
+                <td>
+                    <asp:DropDownList ID="ShuttersCount" runat="server">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="ShutterProvider" runat="server" Width="150px">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="ShutterAmount" runat="server">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td class="style1">
+                    נאספים</td>
+                <td class="style1">
+                    <asp:DropDownList ID="CollectedCount" runat="server">
+                    </asp:DropDownList>
+                </td>
+                <td class="style1">
+                    <asp:DropDownList ID="CollectedProvider" runat="server" value="2" Width="150px">
+                    </asp:DropDownList>
+                </td>
+                <td class="style1">
+                    <asp:DropDownList ID="CollectedAmount" runat="server">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    וואלים</td>
+                <td>
+                    <asp:DropDownList ID="ValimCount" runat="server">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="ValimProvider" runat="server" Width="150px">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="ValimAmount" runat="server">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    U</td>
+                <td>
+                    <asp:DropDownList ID="UCount" runat="server">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="UProvider" runat="server" Width="150px">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="Uamount" runat="server">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    פרזול</td>
+                <td>
+                    <asp:DropDownList ID="ShoeingCount" runat="server">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="ShoeingProvider" runat="server" Width="150px">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="ShoeingAmount" runat="server">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    מנועים</td>
+                <td>
+                    <asp:DropDownList ID="EnginCount" runat="server">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="EngineProvider" runat="server" Width="150px">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="EnginesAmount" runat="server">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    ממ&quot;ד</td>
+                <td>
+                    <asp:DropDownList ID="ProtectedSpaceCount" runat="server">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="ProtectedSpaceProvider" runat="server" Width="150px">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="ProtectedSpaceAmount" runat="server">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    זכוכית</td>
+                <td>
+                    <asp:DropDownList ID="GlassCount" runat="server">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="GlassProvider" runat="server" Width="150px">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="GlassAmount" runat="server">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    ארגזים</td>
+                <td>
+                    <asp:DropDownList ID="BoxesCount" runat="server">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="BoxesProvider" runat="server" Width="150px">
+                    </asp:DropDownList>
+                </td>
+                <td>
+                    <asp:DropDownList ID="BoxAmount" runat="server">
+                    </asp:DropDownList>
+                </td>
+            </tr>
+        </table>
     </div>
+    <br />
+    <asp:Button ID="Button1" runat="server" Text="שמור" />
+    <br />
 </asp:Content>

@@ -27,6 +27,8 @@ public partial class Default2 : System.Web.UI.Page
             SetProjCurrentStatus();
             
         }
+        LoadSuppliers();
+        GetOrderStatus();
 
     }
 
@@ -96,6 +98,36 @@ public partial class Default2 : System.Web.UI.Page
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         db.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectStatusDDL.SelectedIndex + 1);
         db.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToInt32(txtProjectPrice.Value), txtProjectComment.Value);
+    }
+
+
+    public void LoadSuppliers()
+    {
+        DBservices db=new DBservices();
+        db.LoadSuppliers(ShutterProvider, 1);
+        db.LoadSuppliers(CollectedProvider, 2);
+        db.LoadSuppliers(ValimProvider, 3);
+        db.LoadSuppliers(UProvider, 4);
+        db.LoadSuppliers(ShoeingProvider, 5);
+        db.LoadSuppliers(EngineProvider, 6);
+        db.LoadSuppliers(ProtectedSpaceProvider, 7);
+        db.LoadSuppliers(GlassProvider, 8);
+        db.LoadSuppliers(BoxesProvider, 9);
+        
+    }
+
+    public void GetOrderStatus()
+    {
+        DBservices db = new DBservices();
+        db.GetOrderStatus(ShutterAmount);
+        db.GetOrderStatus(CollectedAmount);
+        db.GetOrderStatus(ValimAmount);
+        db.GetOrderStatus(Uamount);
+        db.GetOrderStatus(ShoeingAmount);
+        db.GetOrderStatus(EnginesAmount);
+        db.GetOrderStatus(ProtectedSpaceAmount);
+        db.GetOrderStatus(GlassAmount);
+        db.GetOrderStatus(BoxAmount);
     }
 
 }

@@ -33,8 +33,25 @@ $(document).ready(function () {
     $("#ContentPlaceHolder3_txtHatchesNum").prop("disabled", true);
     $("#ContentPlaceHolder3_txtProjectPrice").prop("disabled", true);
     $("#ContentPlaceHolder3_txtProjectComment").prop("disabled", true);
-
 });
+
+$(document).ready(function () {
+
+    for (var i = 0; i < 51; i++) {
+        $('#ContentPlaceHolder3_ShuttersCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_CollectedCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_ValimCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_UCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_ShoeingCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_EnginCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_ProtectedSpaceCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_GlassCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_BoxesCount').append(new Option(i, i));
+    }
+});
+
+
+
 
 
 
