@@ -10,7 +10,9 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Page.User.Identity.Name == "ShimonY")
+        if (Page.User.Identity.Name == "Admin")
+            Welcome.InnerText = "שלום, אדמין";
+        else if (Page.User.Identity.Name == "ShimonY")
             Welcome.InnerText = "שלום, שמעון";
         else if (Page.User.Identity.Name == "MaliY")
             Welcome.InnerText = "שלום, מלי";

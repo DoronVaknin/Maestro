@@ -11,7 +11,7 @@ public partial class Default2 : System.Web.UI.Page
     {
         DateTB.Value = DateTime.Now.ToShortDateString();
     }
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void CreateProject_Click(object sender, EventArgs e)
     {
         Project p = new Project();
         p.OpenedDate1 = Convert.ToDateTime(DateTB.Value);
@@ -19,8 +19,8 @@ public partial class Default2 : System.Web.UI.Page
         p.Comment1 = txtComments.InnerText;
         if (txtPrice.Value != "")
             p.Price = Convert.ToInt16(txtPrice.Value);
-        if (txtHathes.Value != "")
-            p.HatchesNum1 = Convert.ToInt32(txtHathes.Value);
+        if (txtHatches.Value != "")
+            p.HatchesNum1 = Convert.ToInt32(txtHatches.Value);
         p.ArchitectName1 = txtArchitectName.Value;
         if (txtArchitectPhone.Value != "")
             p.ArchitectPhone1 = Convert.ToInt32(txtArchitectPhone.Value);

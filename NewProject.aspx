@@ -14,53 +14,38 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="DateTB" type="text" class="datepicker" runat="server">
+                    <input id="DateTB" type="text" class="form-control datepicker" runat="server">
                     <span class="input-group-addon">תאריך</span>
                 </div>
             </td>
             <td>
+                <div class="input-group">
+                    <input id="txtHatches" type="text" class="form-control" runat="server">
+                    <span class="input-group-addon">מספר פתחים</span>
+                </div>
             </td>
         </tr>
         <tr>
             <td>
-                הערות
-                <br />
-                <textarea id="txtComments" runat="server" cols="40"></textarea>
             </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
             <td>
                 <div class="input-group">
                     <input id="txtPrice" type="text" class="form-control" runat="server">
                     <span class="input-group-addon">סה"כ עלות ללקוח</span>
                 </div>
             </td>
-            <td>
-                <div id="status1">
-                </div>
-            </td>
         </tr>
         <tr>
+            <td>
+                <div class="TextAreaHolder">
+                    <textarea id="txtComments" runat="server" placeholder="הערות" class="form-control"
+                        rows="5" cols="10"></textarea></div>
+            </td>
             <td>
                 העלה קבצים
                 <br />
                 <div id="dragandrophandler">
                     Drag & Drop Files Here</div>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input id="txtHathes" type="text" class="form-control" runat="server">
-                    <span class="input-group-addon">מספר פתחים</span>
-                </div>
-            </td>
-            <td>
-                &nbsp;
             </td>
         </tr>
         <tr>
@@ -108,7 +93,8 @@
     </table>
     <br />
     <div class="cntr">
-        <asp:Button ID="Button1" runat="server" Text="צור פרויקט" class="btn btn-default"
-            Font-Bold="true" OnClick="Button1_Click" />
+        <input type="button" value="צור פרויקט" class="btn btn-default" onclick="ValidateNewProject()" />
+        <asp:Button ID="CreateProject" runat="server" Text="צור פרויקט" class="btn btn-default"
+            CssClass="HiddenButtons" Font-Bold="true" OnClick="CreateProject_Click" />
     </div>
 </asp:Content>

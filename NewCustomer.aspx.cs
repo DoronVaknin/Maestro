@@ -17,6 +17,8 @@ public partial class Default2 : System.Web.UI.Page
     }
     protected void CreateCustomer_Click(object sender, EventArgs e)
     {
+        //Page.RegisterClientScriptBlock("PopupScript", "<script type='text/javascript'>" +
+        //    "CopyToHiddenFields();</" + "script>");
         Customer c = new Customer();
         c.Cid = Convert.ToInt32(CustomerId.Value);
         c.Fname = CustomerFirstName.Value;

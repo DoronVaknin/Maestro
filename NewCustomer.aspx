@@ -8,12 +8,13 @@
         <h1>
             לקוח חדש
         </h1>
-    </div>><br />
+    </div>
+    ><br />
     <table id="NewCustomerTBL" class="table">
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="CustomerId" type="text" class="form-control" runat="server">
+                    <input id="CustomerId" type="text" class="form-control" runat="server" maxlength = "9">
                     <span class="input-group-addon">ת.ז</span>
                 </div>
             </td>
@@ -86,7 +87,9 @@
     </table>
     <br />
     <div class="cntr">
+        <input type="button" value="צור לקוח" class="btn btn-default"
+            onclick="ValidateNewCustomer()" />
         <asp:Button ID="CreateCustomer" runat="server" Text="צור לקוח" class="btn btn-default" Font-Bold = "true"
-            OnClick="CreateCustomer_Click" />
+             CssClass = "HiddenButtons" OnClick="CreateCustomer_Click" />
     </div>
 </asp:Content>
