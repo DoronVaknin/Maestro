@@ -95,9 +95,12 @@ $(document).ready(function () {
     $("#ContentPlaceHolder3_txtHatchesNum").prop("disabled", true);
     $("#ContentPlaceHolder3_txtProjectPrice").prop("disabled", true);
     $("#ContentPlaceHolder3_txtProjectComment").prop("disabled", true);
+<<<<<<< HEAD
+=======
 });
 
 $(document).ready(function () {
+
     for (var i = 0; i < 51; i++) {
         $('#ContentPlaceHolder3_ShuttersCount').append(new Option(i, i));
         $('#ContentPlaceHolder3_CollectedCount').append(new Option(i, i));
@@ -109,6 +112,7 @@ $(document).ready(function () {
         $('#ContentPlaceHolder3_GlassCount').append(new Option(i, i));
         $('#ContentPlaceHolder3_BoxesCount').append(new Option(i, i));
     }
+>>>>>>> 54a01b2f88684092b5e1ab40712c59fe4b232678
 });
 
 

@@ -7,6 +7,9 @@ using System.Data.SqlClient;
 using System.Web.Configuration;
 using System.Text;
 using System.Configuration;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
 
 
 /// <summary>
@@ -304,6 +307,65 @@ public class DBservices
                  throw (ex);
              }
          }
+    }
+
+
+    public void LoadSuppliers(DropDownList ddl , int num)
+    {
+        con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetSuppliers]", con))
+        {
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@RowMeterialID ", num);
+                sqlComm.CommandTimeout = 600;
+                IDataReader dr = sqlComm.ExecuteReader();
+                ddl.DataSource = dr;      
+                ddl.DataTextField = "sName";
+                ddl.DataValueField = "sName";
+                ddl.DataBind();
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+    }
+
+    public void GetOrderStatus( DropDownList ddl)
+    {
+          con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetOrderStatus]", con))
+        {
+            if (con.State != ConnectionState.Open)
+            {
+                con.Open();
+            }
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.CommandTimeout=600;
+                IDataReader dr = sqlComm.ExecuteReader();
+                ddl.DataSource = dr;   
+                ddl.DataTextField ="osName";
+                ddl.DataValueField="osID";
+                ddl.DataBind();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
     }
 
 
