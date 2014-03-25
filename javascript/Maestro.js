@@ -16,6 +16,76 @@ $(document).ready(function () {
     $(".datepicker").datepicker();
 });
 
+function ClickLoginBTN() {
+    $("#LoginBTN").click();
+}
+
+function EnableCustomerDetails() {
+    $("#CustomerDetailsTBL input").removeAttr("disabled");
+}
+
+function EnableProjectDetails() {
+    $("#ContentPlaceHolder3_ProjectInfoStatus").removeAttr("disabled");
+    $("#ContentPlaceHolder3_ProjectInfoPrice").removeAttr("disabled");
+    $("#ContentPlaceHolder3_ProjectInfoComments").removeAttr("disabled");
+}
+
+$(document).ready(function () {
+    $("#CustomerDetailsTBL input").attr("disabled", "disabled");
+    $("#ContentPlaceHolder3_ProjectInfoStatus").prop("disabled", true);
+    $("#ContentPlaceHolder3_ProjectInfoHatches").prop("disabled", true);
+    $("#ContentPlaceHolder3_ProjectInfoPrice").prop("disabled", true);
+    $("#ContentPlaceHolder3_ProjectInfoComments").prop("disabled", true);
+});
+
+$(document).ready(function () {
+    for (var i = 0; i < 51; i++) {
+        $('#ContentPlaceHolder3_ShuttersCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_CollectedCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_ValimCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_UCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_ShoeingCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_EnginCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_ProtectedSpaceCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_GlassCount').append(new Option(i, i));
+        $('#ContentPlaceHolder3_BoxesCount').append(new Option(i, i));
+    }
+});
+
+function ValidateNewCustomer() {
+    var bIsValid = true;
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerId", function (s) { return s.length < 8 || !isInteger(s); });
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerFirstName", function (s) { return s.length < 2; });
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerLastName", function (s) { return s.length < 2; });
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerAddress", function (s) { return s.length < 2; });
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerCity", function (s) { return s.length < 2; });
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerEmail", function (s) { return s != "" && !IsEmail(s); });
+    if (bIsValid)
+        $("#ContentPlaceHolder3_CreateCustomer").click();
+}
+
+function ValidateNewProject() {
+    var bIsValid = true;
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectDate", function (s) { return s != "" && !isValidDate(s); });
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectPrice", function (s) { return s.length == 0 || !isNumber(s); });
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectHatches", function (s) { return s.length == 0 || !isInteger(s); });
+    if (bIsValid)
+        $("#ContentPlaceHolder3_CreateProject").click();
+}
+
+function MarkInvalid(id, cb, bSelector) {
+    var sValue = $.trim($(id).val());
+    var bInvalid = cb(sValue);
+    if (bSelector) {
+        $(id).toggleClass("Invalid", bInvalid);
+        $(id).prev().find(".InvalidText").toggle(bInvalid);
+    } else {
+        $(id).toggleClass("Invalid", bInvalid);
+        $(id).parent().prev().find(".InvalidText").toggle(bInvalid);
+    }
+    return !bInvalid;
+}
+
 function IsEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
@@ -37,83 +107,10 @@ function isNumber(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
-function isInteger(number){
+function isInteger(number) {
     var intRegex = /^\d+$/;
     return intRegex.test(number);
 }
-
-function MarkInvalid(id, cb, bSelector) {
-    var sValue = $.trim($(id).val());
-    var bInvalid = cb(sValue);
-    if (bSelector) {
-        $(id).toggleClass("Invalid", bInvalid);
-        $(id).prev().find(".InvalidText").toggle(bInvalid);
-    } else {
-        $(id).toggleClass("Invalid", bInvalid);
-        $(id).parent().prev().find(".InvalidText").toggle(bInvalid);
-    }
-    return !bInvalid;
-}
-
-function ValidateNewCustomer() {
-    var bIsValid = true;
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerId", function (s) { return s.length < 8 || !isInteger(s); });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerFirstName", function (s) { return s.length < 2; });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerLastName", function (s) { return s.length < 2; });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerAddress", function (s) { return s.length < 2; });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerCity", function (s) { return s.length < 2; });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerEmail", function (s) { return !IsEmail(s); });
-    if (bIsValid)
-        $("#ContentPlaceHolder3_CreateCustomer").click();
-}
-
-function ValidateNewProject() {
-    var bIsValid = true;
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_DateTB", function (s) { return !isValidDate(s); });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_txtPrice", function (s) { return s.length == 0 || !isNumber(s); });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_txtHatches", function (s) { return s.length == 0 || !isInteger(s); });
-    if (bIsValid)
-        $("#ContentPlaceHolder3_CreateProject").click();
-}
-
-function ClickLoginBTN() {
-    $("#LoginBTN").click();
-}
-
-function EnableTextBoxes() {
-    $("#CustomerDetailsTBL input").removeAttr("disabled");
-}
-function EnableProjectStatus() {
-    $("#ContentPlaceHolder3_ProjectStatusDDL").removeAttr("disabled");
-    $("#ContentPlaceHolder3_txtProjectPrice").removeAttr("disabled");
-    $("#ContentPlaceHolder3_txtProjectComment").removeAttr("disabled");
-}
-
-$(document).ready(function () {
-    $("#CustomerDetailsTBL input").attr("disabled", "disabled");
-    $("#ContentPlaceHolder3_ProjectStatusDDL").prop("disabled", true);
-    $("#ContentPlaceHolder3_txtHatchesNum").prop("disabled", true);
-    $("#ContentPlaceHolder3_txtProjectPrice").prop("disabled", true);
-    $("#ContentPlaceHolder3_txtProjectComment").prop("disabled", true);
-});
-
-$(document).ready(function () {
-    for (var i = 0; i < 51; i++) {
-        $('#ContentPlaceHolder3_ShuttersCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_CollectedCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_ValimCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_UCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_ShoeingCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_EnginCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_ProtectedSpaceCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_GlassCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_BoxesCount').append(new Option(i, i));
-    }
-});
-
-
-
-
 
 
 //this is the function of Drag & Drop - need to check it later

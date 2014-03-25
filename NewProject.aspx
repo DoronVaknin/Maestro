@@ -14,13 +14,13 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="DateTB" type="text" class="form-control datepicker" runat="server">
+                    <input id="ProjectDate" type="text" class="form-control datepicker" runat="server">
                     <span class="input-group-addon">תאריך</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="txtHatches" type="text" class="form-control" runat="server">
+                    <input id="ProjectHatches" type="text" class="form-control" runat="server">
                     <span class="input-group-addon">מספר פתחים</span>
                 </div>
             </td>
@@ -30,15 +30,15 @@
             </td>
             <td>
                 <div class="input-group">
-                    <input id="txtPrice" type="text" class="form-control" runat="server">
-                    <span class="input-group-addon">סה"כ עלות ללקוח</span>
+                    <input id="ProjectPrice" type="text" class="form-control" runat="server">
+                    <span class="input-group-addon">סה"כ עלות</span>
                 </div>
             </td>
         </tr>
         <tr>
             <td>
                 <div class="TextAreaHolder">
-                    <textarea id="txtComments" runat="server" placeholder="הערות" class="form-control"
+                    <textarea id="ProjectComments" runat="server" placeholder="הערות" class="form-control"
                         rows="5" cols="10"></textarea></div>
             </td>
             <td>
@@ -51,13 +51,13 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="txtContractorName" type="text" class="form-control" runat="server">
+                    <input id="ProjectContractorName" type="text" class="form-control" runat="server">
                     <span class="input-group-addon">שם הקבלן</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="txtContractorPhone" type="text" class="form-control" runat="server">
+                    <input id="ProjectContractorPhone" type="text" class="form-control" runat="server">
                     <span class="input-group-addon">טלפון</span>
                 </div>
             </td>
@@ -65,13 +65,13 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="txtArchitectName" type="text" class="form-control" runat="server">
+                    <input id="ProjectArchitectName" type="text" class="form-control" runat="server">
                     <span class="input-group-addon">שם האדריכל</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="txtArchitectPhone" type="text" class="form-control" runat="server">
+                    <input id="ProjectArchitectPhone" type="text" class="form-control" runat="server">
                     <span class="input-group-addon">טלפון</span>
                 </div>
             </td>
@@ -79,13 +79,13 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="txtSupervisorName" type="text" class="form-control" runat="server">
+                    <input id="ProjectSupervisorName" type="text" class="form-control" runat="server">
                     <span class="input-group-addon">שם המפקח</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="txtSupervisorPhone" type="text" class="form-control" runat="server">
+                    <input id="ProjectSupervisorPhone" type="text" class="form-control" runat="server">
                     <span class="input-group-addon">טלפון</span>
                 </div>
             </td>
@@ -94,7 +94,7 @@
     <br />
     <div class="cntr">
         <input type="button" value="צור פרויקט" class="btn btn-default" onclick="ValidateNewProject()" />
-        <asp:Button ID="CreateProject" runat="server" Text="צור פרויקט" class="btn btn-default"
-            CssClass="HiddenButtons" Font-Bold="true" OnClick="CreateProject_Click" />
+        <asp:Button ID="CreateProject" runat="server" Text="צור פרויקט" CssClass="HiddenButtons"
+            OnClick="CreateProject_Click" />
     </div>
 </asp:Content>

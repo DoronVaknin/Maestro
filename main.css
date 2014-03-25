@@ -235,3 +235,8 @@ html[xmlns] #nav
     margin-right:auto;
     width:300px;   
 }
+
+div.cntr input[type=button]
+{
+    font-weight:bold;
+}

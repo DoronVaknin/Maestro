@@ -17,7 +17,7 @@ public partial class Default2 : System.Web.UI.Page
     protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
     {
         Session["selectedrow"] = GridView1.SelectedRow;
-        Response.Redirect("ProjectInformation.aspx");
+        Response.Redirect("ProjectDetails.aspx");
     }
 
  

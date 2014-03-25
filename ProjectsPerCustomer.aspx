@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true"
-    CodeFile="ShowProjectsForCustomer.aspx.cs" Inherits="Default2" %>
+    CodeFile="ProjectsPerCustomer.aspx.cs" Inherits="Default2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 </asp:Content>
@@ -30,8 +30,8 @@
             <asp:BoundField DataField="Comments" HeaderText="הערות" 
                 SortExpression="Comments" />
             <asp:BoundField DataField="price" HeaderText="מחיר" SortExpression="price" />
-            <asp:BoundField DataField="NumOfHathes" HeaderText="מספר פתחים" 
-                ReadOnly="True" SortExpression="NumOfHathes" />
+            <asp:BoundField DataField="NumOfHatches" HeaderText="מספר פתחים" 
+                ReadOnly="True" SortExpression="NumOfHatches" />
         </Columns>
     </asp:GridView>
     <br />
@@ -50,6 +50,6 @@
             <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened" />
             <asp:BoundField DataField="psName" HeaderText="סטטוס פרויקט" SortExpression="psName" />
             <asp:BoundField DataField="Comments" HeaderText="הערות" SortExpression="Comments" />
-            <asp:BoundField DataField="NumOfHathes" HeaderText="מספר פתחים" ReadOnly="True" SortExpression="NumOfHathes" />
+            <asp:BoundField DataField="NumOfHatches" HeaderText="מספר פתחים" ReadOnly="True" SortExpression="NumOfHatches" />
         </Columns>
     </asp:GridView>--%>

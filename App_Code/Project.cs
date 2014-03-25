@@ -16,14 +16,13 @@ public class Project
 	}
 
     string Comment;
-
     public string Comment1
     {
         get { return Comment; }
         set { Comment = value; }
     }
-    DateTime ExpirationDate;
 
+    DateTime ExpirationDate;
     public DateTime ExpirationDate1
     {
         get { return ExpirationDate; }
@@ -31,7 +30,6 @@ public class Project
     }
 
     DateTime OpenedDate;
-
     public DateTime OpenedDate1
     {
         get { return OpenedDate; }
@@ -39,56 +37,55 @@ public class Project
     }
 
     string ContractorName;
-
     public string ContractorName1
     {
         get { return ContractorName; }
         set { ContractorName = value; }
     }
-    int ContractorPhone;
 
+    int ContractorPhone;
     public int ContractorPhone1
     {
         get { return ContractorPhone; }
         set { ContractorPhone = value; }
     }
-    string ArchitectName;
 
+    string ArchitectName;
     public string ArchitectName1
     {
         get { return ArchitectName; }
         set { ArchitectName = value; }
     }
-    int ArchitectPhone;
 
+    int ArchitectPhone;
     public int ArchitectPhone1
     {
         get { return ArchitectPhone; }
         set { ArchitectPhone = value; }
     }
-    string SupervisorName;
 
+    string SupervisorName;
     public string SupervisorName1
     {
         get { return SupervisorName; }
         set { SupervisorName = value; }
     }
-    int SupervisorPhone;
 
+    int SupervisorPhone;
     public int SupervisorPhone1
     {
         get { return SupervisorPhone; }
         set { SupervisorPhone = value; }
     }
-    int Cid;
 
+    int Cid;
     public int Cid1
     {
         get { return Cid; }
         set { Cid = value; }
     }
-    int Pid;
 
+    int Pid;
     public int Pid1
     {
         get { return Pid; }
@@ -96,7 +93,6 @@ public class Project
     }
 
     int price;
-
     public int Price
     {
         get { return price; }
@@ -104,11 +100,9 @@ public class Project
     }
 
     int HatchesNum;
-
     public int HatchesNum1
     {
         get { return HatchesNum; }
         set { HatchesNum = value; }
     }
-
 }

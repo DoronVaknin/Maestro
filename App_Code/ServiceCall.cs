@@ -16,49 +16,48 @@ public class ServiceCall
 	}
 
     string CustomerName;
-
     public string CustomerName1
     {
         get { return CustomerName; }
         set { CustomerName = value; }
     }
-    Int32 CellPhone;
 
+    Int32 CellPhone;
     public Int32 CellPhone1
     {
         get { return CellPhone; }
         set { CellPhone = value; }
     }
-    string Adress;
 
-    public string Adress1
+    string Address;
+    public string Address1
     {
-        get { return Adress; }
-        set { Adress = value; }
+        get { return Address; }
+        set { Address = value; }
     }
-    string Description;
 
+    string Description;
     public string Description1
     {
         get { return Description; }
         set { Description = value; }
     }
-    int Area;
 
+    int Area;
     public int Area1
     {
         get { return Area; }
         set { Area = value; }
     }
-    bool IsUrgent;
 
+    bool IsUrgent;
     public bool IsUrgent1
     {
         get { return IsUrgent; }
         set { IsUrgent = value; }
     }
-    bool Warranty;
 
+    bool Warranty;
     public bool Warranty1
     {
         get { return Warranty; }
@@ -68,7 +67,5 @@ public class ServiceCall
     public void insert(ServiceCall sc)
     {
         DBservices dbs = new DBservices();
-
     }
-
 }

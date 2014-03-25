@@ -17,7 +17,7 @@ public partial class Default2 : System.Web.UI.Page
         ServiceCall sc = new ServiceCall();
         sc.CustomerName1 = CustomerName.Text;
         sc.CellPhone1 = Convert.ToInt32( CustomerPhone.Text);
-        sc.Adress1 = CustomerAdress.Text;
+        sc.Address1 = CustomerAdress.Text;
         sc.Description1 = ErrorDescription.Text;
         sc.Area1 =Convert.ToInt32( AreaTB.SelectedItem.Value);
         if (IsUrgent.Checked)

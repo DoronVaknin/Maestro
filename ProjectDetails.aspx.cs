@@ -12,11 +12,10 @@ using System.Web.UI.WebControls;
 
 public partial class Default2 : System.Web.UI.Page
 {
-
     protected void Page_Load(object sender, EventArgs e)
     {
         GridViewRow row = (GridViewRow)Session["selectedrow"];
-        int ProjectID =Convert.ToInt32(row.Cells[1].Text);
+        int ProjectID = Convert.ToInt32(row.Cells[1].Text);
 
         DBservices db = new DBservices();
         DataTable dt = db.GetCustomerInformation(ProjectID);
@@ -25,11 +24,9 @@ public partial class Default2 : System.Web.UI.Page
         {
             SetPageDetails(dt);
             SetProjCurrentStatus();
-            
         }
         LoadSuppliers();
         GetOrderStatus();
-
     }
 
     public void SetProjCurrentStatus()
@@ -38,30 +35,28 @@ public partial class Default2 : System.Web.UI.Page
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         string status = Convert.ToString(row.Cells[5].Text);
         int statusnumber = db.StatusNumber(status);
-        ProjectStatusDDL.SelectedIndex = (statusnumber - 1);
+        ProjectInfoStatus.SelectedIndex = (statusnumber - 1);
     }
 
     public void SetPageDetails(DataTable dt)
     {
-        txtID.Value = Convert.ToString(dt.Rows[0].ItemArray[0]);
-        txtFirstName.Value = Convert.ToString(dt.Rows[0].ItemArray[1]);
-        txtLastName.Value = Convert.ToString(dt.Rows[0].ItemArray[2]);
-        txtCustomerPhone.Value = Convert.ToString(dt.Rows[0].ItemArray[3]);
-        txtCustomerMobile.Value = Convert.ToString(dt.Rows[0].ItemArray[4]);
-        txtCustomerFax.Value = Convert.ToString(dt.Rows[0].ItemArray[5]);
-        txtAdress.Value = Convert.ToString(dt.Rows[0].ItemArray[6]);
-        txtCity.Value = Convert.ToString(dt.Rows[0].ItemArray[7]);
-        txtEmail.Value = Convert.ToString(dt.Rows[0].ItemArray[8]);
-        txtArchitectName.Value = Convert.ToString(dt.Rows[0].ItemArray[9]);
-        txtArchitectMobile.Value = Convert.ToString(dt.Rows[0].ItemArray[10]);
-        txtContractorName.Value = Convert.ToString(dt.Rows[0].ItemArray[11]);
-        txtContractorPhone.Value = Convert.ToString(dt.Rows[0].ItemArray[12]);
+        ProjectInfoID.Value = Convert.ToString(dt.Rows[0].ItemArray[0]);
+        ProjectInfoFirstName.Value = Convert.ToString(dt.Rows[0].ItemArray[1]);
+        ProjectInfoLastName.Value = Convert.ToString(dt.Rows[0].ItemArray[2]);
+        ProjectInfoPhone.Value = Convert.ToString(dt.Rows[0].ItemArray[3]);
+        ProjectInfoMobile.Value = Convert.ToString(dt.Rows[0].ItemArray[4]);
+        ProjectInfoFax.Value = Convert.ToString(dt.Rows[0].ItemArray[5]);
+        ProjectInfoAddress.Value = Convert.ToString(dt.Rows[0].ItemArray[6]);
+        ProjectInfoCity.Value = Convert.ToString(dt.Rows[0].ItemArray[7]);
+        ProjectInfoEmail.Value = Convert.ToString(dt.Rows[0].ItemArray[8]);
+        ProjectInfoArchitectName.Value = Convert.ToString(dt.Rows[0].ItemArray[9]);
+        ProjectInfoArchitectMobile.Value = Convert.ToString(dt.Rows[0].ItemArray[10]);
+        ProjectInfoContractorName.Value = Convert.ToString(dt.Rows[0].ItemArray[11]);
+        ProjectInfoContractorPhone.Value = Convert.ToString(dt.Rows[0].ItemArray[12]);
         GridViewRow row = (GridViewRow)Session["selectedrow"];
-        txtHatchesNum.Value = row.Cells[8].Text;
-        txtProjectPrice.Value = row.Cells[7].Text;
-        txtProjectComment.Value = row.Cells[6].Text;
-        
-        
+        ProjectInfoHatches.Value = row.Cells[8].Text;
+        ProjectInfoPrice.Value = row.Cells[7].Text;
+        ProjectInfoComments.Value = row.Cells[6].Text;
     }
 
     protected void DropDownDataBound(object sender, EventArgs e)
@@ -69,41 +64,34 @@ public partial class Default2 : System.Web.UI.Page
 
     }
 
-    
-
-
-    protected void SaveCustomerNewInformation_Click1(object sender, EventArgs e)
+    protected void SaveCustomerDetails_Click1(object sender, EventArgs e)
     {
-        int CustomerInitialID = Convert.ToInt32(txtID.Value);
+        int CustomerInitialID = Convert.ToInt32(ProjectInfoID.Value);
         DBservices db = new DBservices();
         Customer c = new Customer();
-        c.Cid = Convert.ToInt32(txtID.Value);
-        c.Fname = txtFirstName.Value;
-        c.Lname = txtLastName.Value;
-        c.Phone = Convert.ToInt32(txtCustomerPhone.Value);
-        c.Mobile = Convert.ToInt32(txtCustomerMobile.Value);
-        c.Fax = Convert.ToInt32(txtCustomerFax.Value);
-        c.Address = txtAdress.Value;
-        c.City = txtCity.Value;
-        c.Email = txtEmail.Value;
+        c.Cid = Convert.ToInt32(ProjectInfoID.Value);
+        c.Fname = ProjectInfoFirstName.Value;
+        c.Lname = ProjectInfoLastName.Value;
+        c.Phone = Convert.ToInt32(ProjectInfoPhone.Value);
+        c.Mobile = Convert.ToInt32(ProjectInfoMobile.Value);
+        c.Fax = Convert.ToInt32(ProjectInfoFax.Value);
+        c.Address = ProjectInfoAddress.Value;
+        c.City = ProjectInfoCity.Value;
+        c.Email = ProjectInfoEmail.Value;
         db.UpdateCustomerInformation(c, CustomerInitialID);
     }
 
-
-
-
-    protected void btnSaveProjDetails_Click(object sender, EventArgs e)
+    protected void SaveProjectDetails_Click(object sender, EventArgs e)
     {
         DBservices db = new DBservices();
         GridViewRow row = (GridViewRow)Session["selectedrow"];
-        db.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectStatusDDL.SelectedIndex + 1);
-        db.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToInt32(txtProjectPrice.Value), txtProjectComment.Value);
+        db.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectInfoStatus.SelectedIndex + 1);
+        db.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToInt32(ProjectInfoPrice.Value), ProjectInfoComments.Value);
     }
-
 
     public void LoadSuppliers()
     {
-        DBservices db=new DBservices();
+        DBservices db = new DBservices();
         db.LoadSuppliers(ShutterProvider, 1);
         db.LoadSuppliers(CollectedProvider, 2);
         db.LoadSuppliers(ValimProvider, 3);
@@ -113,7 +101,6 @@ public partial class Default2 : System.Web.UI.Page
         db.LoadSuppliers(ProtectedSpaceProvider, 7);
         db.LoadSuppliers(GlassProvider, 8);
         db.LoadSuppliers(BoxesProvider, 9);
-        
     }
 
     public void GetOrderStatus()
@@ -129,6 +116,5 @@ public partial class Default2 : System.Web.UI.Page
         db.GetOrderStatus(GlassAmount);
         db.GetOrderStatus(BoxAmount);
     }
-
 }
 

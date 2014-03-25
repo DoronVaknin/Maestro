@@ -16,14 +16,13 @@ public class ProjectStatus
 	}
 
     int statusnum;
-
     public int Statusnum
     {
         get { return statusnum; }
         set { statusnum = value; }
     }
-    string statusname;
 
+    string statusname;
     public string Statusname
     {
         get { return statusname; }

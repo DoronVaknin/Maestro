@@ -34,9 +34,7 @@ public class DBservices
         using (SqlCommand sqlComm = new SqlCommand("[spInsertNewCustomer]", con))
         {
             if (con.State != ConnectionState.Open)
-            {
                 con.Open();
-            }
 
             try
             {
@@ -58,9 +56,7 @@ public class DBservices
             {
                 throw (ex);
             }
-
         }
-
     }
 
     public void InsertProjectInfo(Project p, int CId)
@@ -69,9 +65,7 @@ public class DBservices
         using (SqlCommand sqlComm = new SqlCommand("[spInsertProjectInfo]", con))
         {
             if (con.State != ConnectionState.Open)
-            {
                 con.Open();
-            }
 
             try
             {
@@ -89,7 +83,6 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@superPhone", p.SupervisorPhone1);
                 sqlComm.CommandTimeout = 600;
                 sqlComm.ExecuteNonQuery();
-
             }
             catch (Exception ex)
             {
@@ -105,9 +98,7 @@ public class DBservices
         using (SqlCommand sqlComm = new SqlCommand("[spCreateHatches]", con))
         {
             if (con.State != ConnectionState.Open)
-            {
                 con.Open();
-            }
 
             try
             {
@@ -130,15 +121,12 @@ public class DBservices
         using (SqlCommand sqlComm = new SqlCommand("[spFindProjectID]", con))
         {
             if (con.State != ConnectionState.Open)
-            {
                 con.Open();
-            }
 
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@customerid", id);
-
                 sqlComm.CommandTimeout = 600;
                 int value = (int)sqlComm.ExecuteScalar();
                 return value;
@@ -150,7 +138,6 @@ public class DBservices
         }
     }
 
-
     public SqlConnection connect(String conString)
     {
         string cStr = WebConfigurationManager.ConnectionStrings[conString].ConnectionString;
@@ -158,7 +145,6 @@ public class DBservices
         con.Open();
         return con;
     }
-
 
     public DataTable GetCustomerInformation(int id)
     {
@@ -169,9 +155,7 @@ public class DBservices
         using (SqlCommand sqlComm = new SqlCommand("[spGetCustomerInformation]", con))
         {
             if (con.State != ConnectionState.Open)
-            {
                 con.Open();
-            }
 
             try
             {
@@ -186,14 +170,11 @@ public class DBservices
             {
                 throw (ex);
             }
-
         }
-
     }
 
     public void UpdateCustomerInformation(Customer c, int OriginalCustomerID)
     {
-
         con = connect("igroup9_test1ConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateCustomerInformation]", con))
         {
@@ -205,16 +186,16 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@OriginalID",Convert.ToInt32(OriginalCustomerID));
-                sqlComm.Parameters.AddWithValue("@NewID" , Convert.ToInt32(c.Cid));
-                sqlComm.Parameters.AddWithValue("@FirstNAme" ,c.Fname);
-                sqlComm.Parameters.AddWithValue("@LastName" , c.Lname);
+                sqlComm.Parameters.AddWithValue("@OriginalID", Convert.ToInt32(OriginalCustomerID));
+                sqlComm.Parameters.AddWithValue("@NewID", Convert.ToInt32(c.Cid));
+                sqlComm.Parameters.AddWithValue("@FirstNAme", c.Fname);
+                sqlComm.Parameters.AddWithValue("@LastName", c.Lname);
                 sqlComm.Parameters.AddWithValue("@Phone", Convert.ToInt32(c.Phone));
                 sqlComm.Parameters.AddWithValue("@Mobile", Convert.ToInt32(c.Mobile));
-                sqlComm.Parameters.AddWithValue("@Fax" , Convert.ToInt32(c.Fax));
-                sqlComm.Parameters.AddWithValue("@Adress" , c.Address);
-                sqlComm.Parameters.AddWithValue("@City" , c.City);
-                sqlComm.Parameters.AddWithValue("@Email" , c.Email);
+                sqlComm.Parameters.AddWithValue("@Fax", Convert.ToInt32(c.Fax));
+                sqlComm.Parameters.AddWithValue("@Address", c.Address);
+                sqlComm.Parameters.AddWithValue("@City", c.City);
+                sqlComm.Parameters.AddWithValue("@Email", c.Email);
                 sqlComm.CommandTimeout = 600;
                 sqlComm.ExecuteNonQuery();
             }
@@ -223,19 +204,15 @@ public class DBservices
                 throw (ex);
             }
         }
-
-
     }
 
-    public int StatusNumber ( string status)
+    public int StatusNumber(string status)
     {
-         con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_test1ConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetProjectStatusNumber]", con))
         {
             if (con.State != ConnectionState.Open)
-            {
                 con.Open();
-            }
 
             try
             {
@@ -253,23 +230,20 @@ public class DBservices
         }
     }
 
-
     public void UpdateProjectStatus(int ProjectID, int ProjectStatusNum)
     {
         con = connect("igroup9_test1ConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateProjectStatus]", con))
         {
             if (con.State != ConnectionState.Open)
-            {
                 con.Open();
-            }
 
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
                 sqlComm.Parameters.AddWithValue("@ProjectStatusNum", ProjectStatusNum);
-                
+
                 sqlComm.CommandTimeout = 600;
                 sqlComm.ExecuteNonQuery();
             }
@@ -278,39 +252,33 @@ public class DBservices
                 throw (ex);
             }
         }
-
     }
 
-    
-    public void UpdateProjectDetails(int ProjectID, int ProjPrice , string comment)
+    public void UpdateProjectDetails(int ProjectID, int ProjPrice, string comment)
     {
-         con = connect("igroup9_test1ConnectionString");
-         using (SqlCommand sqlComm = new SqlCommand("[spUpdateProjectDetails]", con))
-         {
-             if (con.State != ConnectionState.Open)
-             {
-                 con.Open();
-             }
+        con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spUpdateProjectDetails]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
 
-             try
-             {
-                 sqlComm.CommandType = CommandType.StoredProcedure;
-                 sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
-                 sqlComm.Parameters.AddWithValue("@ProjPrice", ProjPrice);
-                 sqlComm.Parameters.AddWithValue("@ProjectComment", comment);
-                 sqlComm.CommandTimeout = 600;
-                 sqlComm.ExecuteNonQuery();
-             }
-
-             catch (Exception ex)
-             {
-                 throw (ex);
-             }
-         }
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
+                sqlComm.Parameters.AddWithValue("@ProjPrice", ProjPrice);
+                sqlComm.Parameters.AddWithValue("@ProjectComment", comment);
+                sqlComm.CommandTimeout = 600;
+                sqlComm.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
     }
 
-
-    public void LoadSuppliers(DropDownList ddl , int num)
+    public void LoadSuppliers(DropDownList ddl, int num)
     {
         con = connect("igroup9_test1ConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetSuppliers]", con))
@@ -326,7 +294,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@RowMeterialID ", num);
                 sqlComm.CommandTimeout = 600;
                 IDataReader dr = sqlComm.ExecuteReader();
-                ddl.DataSource = dr;      
+                ddl.DataSource = dr;
                 ddl.DataTextField = "sName";
                 ddl.DataValueField = "sName";
                 ddl.DataBind();
@@ -337,27 +305,24 @@ public class DBservices
                 throw (ex);
             }
         }
-
     }
 
-    public void GetOrderStatus( DropDownList ddl)
+    public void GetOrderStatus(DropDownList ddl)
     {
-          con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_test1ConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetOrderStatus]", con))
         {
             if (con.State != ConnectionState.Open)
-            {
                 con.Open();
-            }
 
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.CommandTimeout=600;
+                sqlComm.CommandTimeout = 600;
                 IDataReader dr = sqlComm.ExecuteReader();
-                ddl.DataSource = dr;   
-                ddl.DataTextField ="osName";
-                ddl.DataValueField="osID";
+                ddl.DataSource = dr;
+                ddl.DataTextField = "osName";
+                ddl.DataValueField = "osID";
                 ddl.DataBind();
             }
             catch (Exception ex)
@@ -365,10 +330,7 @@ public class DBservices
                 throw (ex);
             }
         }
-
     }
-
-
 }
 
 

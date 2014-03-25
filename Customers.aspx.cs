@@ -16,6 +16,6 @@ public partial class Default2 : System.Web.UI.Page
         Session["ID"] = CustomersTBL.SelectedRow.Cells[1].Text;
         Session["FirstName"] = CustomersTBL.SelectedRow.Cells[2].Text;
         Session["LastName"] = CustomersTBL.SelectedRow.Cells[3].Text;
-        Response.Redirect("ShowProjectsForCustomer.aspx");
+        Response.Redirect("ProjectsPerCustomer.aspx");
     }
 }

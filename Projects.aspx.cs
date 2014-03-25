@@ -11,5 +11,12 @@ public partial class Default2 : System.Web.UI.Page
     {
 
     }
+    protected void ProjectsTBL_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        //Need to add conditions in ProjectDetails.aspx.cs because of the rows difference (Project vs ProjectsPerCustomer)
+
+        //Session["selectedrow"] = ProjectsTBL.SelectedRow;
+        //Response.Redirect("ProjectDetails.aspx");
+    }
    
 }
