@@ -20,7 +20,7 @@
             </td>
             <td>
                 <div class="input-group">
-                    <input id="CustomerPhone" type="text" class="form-control" runat="server">
+                    <input id="CustomerPhone" type="text" class="form-control" runat="server" maxlength = "10">
                     <span class="input-group-addon">טלפון</span>
                 </div>
             </td>
@@ -28,13 +28,13 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="CustomerFirstName" type="text" class="form-control" runat="server">
+                    <input id="CustomerFirstName" type="text" class="form-control" runat="server" maxlength = "20">
                     <span class="input-group-addon">שם פרטי</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="CustomerCellPhone" type="text" class="form-control" runat="server">
+                    <input id="CustomerCellPhone" type="text" class="form-control" runat="server" maxlength = "10">
                     <span class="input-group-addon">טלפון נייד</span>
                 </div>
             </td>
@@ -42,13 +42,13 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="CustomerLastName" type="text" class="form-control" runat="server">
+                    <input id="CustomerLastName" type="text" class="form-control" runat="server" maxlength = "20">
                     <span class="input-group-addon">שם משפחה</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="CustomerFaxNumber" type="text" class="form-control" runat="server">
+                    <input id="CustomerFaxNumber" type="text" class="form-control" runat="server" maxlength = "10">
                     <span class="input-group-addon">פקס</span>
                 </div>
             </td>
@@ -70,7 +70,7 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="CustomerCity" type="text" class="form-control" runat="server">
+                    <input id="CustomerCity" type="text" class="form-control" runat="server" maxlength = "15">
                     <span class="input-group-addon">עיר</span>
                 </div>
             </td>
@@ -79,7 +79,7 @@
                     SelectCommand="spGetRegion" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
                 <div class="cntr">
                     <asp:DropDownList ID="CustomerArea" runat="server" DataSourceID="SqlDataSource1"
-                        class="btn btn-default" DataTextField="RegionName" DataValueField="RegionID">
+                        CssClass="btn btn-default" DataTextField="RegionName" DataValueField="RegionID">
                     </asp:DropDownList>
                 </div>
             </td>
@@ -89,7 +89,7 @@
     <div class="cntr">
         <input type="button" value="צור לקוח" class="btn btn-default"
             onclick="ValidateNewCustomer()" />
-        <asp:Button ID="CreateCustomer" runat="server" Text="צור לקוח" class="btn btn-default" Font-Bold = "true"
-             CssClass = "HiddenButtons" OnClick="CreateCustomer_Click" />
+        <asp:Button ID="CreateCustomer" runat="server" Text="צור לקוח" CssClass="btn btn-default HiddenButtons" Font-Bold = "true"
+             OnClick="CreateCustomer_Click" />
     </div>
 </asp:Content>
