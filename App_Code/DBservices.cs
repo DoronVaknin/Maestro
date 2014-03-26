@@ -254,7 +254,7 @@ public class DBservices
         }
     }
 
-    public void UpdateProjectDetails(int ProjectID, int ProjPrice, string comment)
+    public void UpdateProjectDetails(int ProjectID, int ProjPrice, string Comments)
     {
         con = connect("igroup9_test1ConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateProjectDetails]", con))
@@ -267,7 +267,7 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
                 sqlComm.Parameters.AddWithValue("@ProjPrice", ProjPrice);
-                sqlComm.Parameters.AddWithValue("@ProjectComment", comment);
+                sqlComm.Parameters.AddWithValue("@ProjectComment", Comments);
                 sqlComm.CommandTimeout = 600;
                 sqlComm.ExecuteNonQuery();
             }
@@ -291,7 +291,7 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@RowMeterialID ", num);
+                sqlComm.Parameters.AddWithValue("@RawMaterialID ", num);
                 sqlComm.CommandTimeout = 600;
                 IDataReader dr = sqlComm.ExecuteReader();
                 ddl.DataSource = dr;

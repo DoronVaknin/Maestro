@@ -45,7 +45,7 @@
                 כתובת
             </td>
             <td>
-                <asp:TextBox ID="CustomerAdress" runat="server"></asp:TextBox>
+                <asp:TextBox ID="CustomerAddress" runat="server"></asp:TextBox>
             </td>
         </tr>
         <tr>

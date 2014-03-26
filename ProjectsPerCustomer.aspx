@@ -9,7 +9,7 @@
         </h1>
     </div><br />
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>"
-        SelectCommand="ShowProjectsForCustomer" SelectCommandType="StoredProcedure">
+        SelectCommand="spShowProjectsPerCustomer" SelectCommandType="StoredProcedure">
         <SelectParameters>
             <asp:SessionParameter DefaultValue="" Name="CustomerID" SessionField="ID" Type="Int32" />
         </SelectParameters>
