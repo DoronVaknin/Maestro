@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true"
-    CodeFile="ProjectDetails.aspx.cs" Inherits="Default2" %>
+    CodeFile="ProjectDetails.aspx.cs" Inherits="Default2" EnableEventValidation="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
     <style type="text/css">
@@ -341,6 +341,6 @@
         </table>
     </div>
     <br />
-    <asp:Button ID="Button1" runat="server" Text="שמור" />
+    <asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Button" />
     <br />
 </asp:Content>
