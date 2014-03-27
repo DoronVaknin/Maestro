@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true" 
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true"
     CodeFile="ProjectDetails.aspx.cs" Inherits="Default2" EnableEventValidation="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
@@ -20,13 +20,13 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoID" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoID" type="text" class="form-control" runat="server" maxlength = "9">
                         <span class="input-group-addon">ת.ז</span>
                     </div>
                 </td>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoAddress" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoAddress" type="text" class="form-control" runat="server" maxlength = "30">
                         <span class="input-group-addon">כתובת</span>
                     </div>
                 </td>
@@ -34,13 +34,13 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoFirstName" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoFirstName" type="text" class="form-control" runat="server" maxlength = "15">
                         <span class="input-group-addon">שם פרטי</span>
                     </div>
                 </td>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoCity" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoCity" type="text" class="form-control" runat="server" maxlength = "15">
                         <span class="input-group-addon">עיר</span>
                     </div>
                 </td>
@@ -48,7 +48,7 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoLastName" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoLastName" type="text" class="form-control" runat="server" maxlength = "15">
                         <span class="input-group-addon">שם משפחה</span>
                     </div>
                 </td>
@@ -62,13 +62,13 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoPhone" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoPhone" type="text" class="form-control" runat="server" maxlength = "10">
                         <span class="input-group-addon">טלפון</span>
                     </div>
                 </td>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoFax" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoFax" type="text" class="form-control" runat="server" maxlength = "10">
                         <span class="input-group-addon">פקס</span>
                     </div>
                 </td>
@@ -76,7 +76,7 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoMobile" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoMobile" type="text" class="form-control" runat="server" maxlength = "10">
                         <span class="input-group-addon">טלפון נייד</span>
                     </div>
                 </td>
@@ -86,13 +86,13 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoArchitectName" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoArchitectName" type="text" class="form-control" runat="server" maxlength = "15">
                         <span class="input-group-addon">שם האדריכל</span>
                     </div>
                 </td>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoArchitectMobile" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoArchitectMobile" type="text" class="form-control" runat="server" maxlength = "10">
                         <span class="input-group-addon">טלפון אדריכל</span>
                     </div>
                 </td>
@@ -100,13 +100,13 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoContractorName" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoContractorName" type="text" class="form-control" runat="server" maxlength = "15">
                         <span class="input-group-addon">שם הקבלן</span>
                     </div>
                 </td>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoContractorPhone" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoContractorPhone" type="text" class="form-control" runat="server" maxlength = "10">
                         <span class="input-group-addon">טלפון קבלן</span>
                     </div>
                 </td>
@@ -114,13 +114,13 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoSupervisorName" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoSupervisorName" type="text" class="form-control" runat="server" maxlength = "15">
                         <span class="input-group-addon">שם המפקח</span>
                     </div>
                 </td>
                 <td>
                     <div class="input-group">
-                        <input id="ProjectInfoSupervisorPhone" type="text" class="form-control" runat="server">
+                        <input id="ProjectInfoSupervisorPhone" type="text" class="form-control" runat="server" maxlength = "10">
                         <span class="input-group-addon">טלפון מפקח</span>
                     </div>
                 </td>
@@ -161,7 +161,7 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="ProjectInfoHatches" type="text" class="form-control" runat="server">
+                    <input id="ProjectInfoHatches" type="text" class="form-control" runat="server" maxlength = "2">
                     <span class="input-group-addon">מס' פתחים</span>
                 </div>
             </td>

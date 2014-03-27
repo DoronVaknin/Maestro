@@ -59,44 +59,49 @@ function isPostBack() { //function to check if page is a postback-ed one
 
 function ValidateNewCustomer() {
     var bIsValid = true;
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerId", function (s) { return s.length < 8 || !isInteger(s); });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerFirstName", function (s) { return s.length < 2; });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerLastName", function (s) { return s.length < 2; });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerAddress", function (s) { return s.length < 2; });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerCity", function (s) { return s.length < 2; });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerEmail", function (s) { return s != "" && !IsEmail(s); });
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerId", function (s) { return s.length < 8 || !isInteger(s); },false,"יש להזין מספר ת.ז תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerFirstName", function (s) { return s.length < 2; }, false, "השם הפרטי קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerLastName", function (s) { return s.length < 2; }, false, "שם המשפחה קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerAddress", function (s) { return s.length < 2; }, false, "כתובת המגורים קצרה מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerCity", function (s) { return s.length < 2; }, false, "שם העיר קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerEmail", function (s) { !IsEmail(s); }, false, "יש להזין כתובת דוא&#34;ל חוקית");
     if (bIsValid)
         $("#ContentPlaceHolder3_CreateCustomer").click();
 }
 
 function ValidateNewProject() {
     var bIsValid = true;
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectDate", function (s) { return s != "" && !isValidDate(s); });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectPrice", function (s) { return s.length == 0 || !isNumber(s); });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectHatches", function (s) { return s.length == 0 || !isInteger(s); });
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectDateOpened", function (s) { return !isValidDate(s); }, false, "יש להזין תאריך חוקי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectPrice", function (s) { return !isNumber(s); }, false, "יש להזין מחיר חוקי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectHatches", function (s) { return !isInteger(s); },false,"יש להזין מספר פתחים שלם");
     if (bIsValid)
         $("#ContentPlaceHolder3_CreateProject").click();
 }
 
-function MarkInvalid(id, cb, bSelector) {
+function MarkInvalid(id, cb, bSelector, sMessage) {
     var sValue = $.trim($(id).val());
     var bInvalid = cb(sValue);
     if (bSelector) {
         $(id).toggleClass("Invalid", bInvalid);
-        $(id).prev().find(".InvalidText").toggle(bInvalid);
+        //$(id).prev().find(".InvalidText").toggle(bInvalid);
     } else {
         $(id).toggleClass("Invalid", bInvalid);
-        $(id).parent().prev().find(".InvalidText").toggle(bInvalid);
+        if (bInvalid && sMessage != "") {
+            $(".ErrorLabel").html(sMessage);
+            //$(id).parent().prev().find(".InvalidText").toggle(bInvalid);
+        }
     }
     return !bInvalid;
 }
 
 function IsEmail(email) {
+    if (email == "") return false;
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
 }
 
 function isValidDate(date) {
+    if (date == "") return false;
     var matches = /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/.exec(date);
     if (matches == null) return false;
     var d = matches[2];
@@ -109,139 +114,137 @@ function isValidDate(date) {
 }
 
 function isNumber(n) {
+    if (n == "") return false;
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 function isInteger(number) {
+    if (number == "") return false;
     var intRegex = /^\d+$/;
     return intRegex.test(number);
 }
 
 
-//this is the function of Drag & Drop - need to check it later
-
-/*
 function sendFileToServer(formData, status) {
-var uploadURL = "http://hayageek.com/examples/jquery/drag-drop-file-upload/upload.php"; //Upload URL
-var extraData = {}; //Extra Data.
-var jqXHR = $.ajax({
-xhr: function () {
-var xhrobj = $.ajaxSettings.xhr();
-if (xhrobj.upload) {
-xhrobj.upload.addEventListener('progress', function (event) {
-var percent = 0;
-var position = event.loaded || event.position;
-var total = event.total;
-if (event.lengthComputable) {
-percent = Math.ceil(position / total * 100);
-}
-//Set progress
-status.setProgress(percent);
-}, false);
-}
-return xhrobj;
-},
-url: uploadURL,
-type: "POST",
-contentType: false,
-processData: false,
-cache: false,
-data: formData,
-success: function (data) {
-status.setProgress(100);
+    var uploadURL = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1); //Upload URL
+    var extraData = {}; //Extra Data.
+    var jqXHR = $.ajax({
+        xhr: function () {
+            var xhrobj = $.ajaxSettings.xhr();
+            if (xhrobj.upload) {
+                xhrobj.upload.addEventListener('progress', function (event) {
+                    var percent = 0;
+                    var position = event.loaded || event.position;
+                    var total = event.total;
+                    if (event.lengthComputable) {
+                        percent = Math.ceil(position / total * 100);
+                    }
+                    //Set progress
+                    status.setProgress(percent);
+                }, false);
+            }
+            return xhrobj;
+        },
+        url: uploadURL,
+        type: "POST",
+        contentType: false,
+        processData: false,
+        cache: false,
+        data: formData,
+        success: function (data) {
+            status.setProgress(100);
 
-$("#status1").append("File upload Done<br>");
-}
-});
+            //$("#status1").append("File upload Done<br>");
+        }
+    });
 
-status.setAbort(jqXHR);
+    status.setAbort(jqXHR);
 }
 
 var rowCount = 0;
 function createStatusbar(obj) {
-rowCount++;
-var row = "odd";
-if (rowCount % 2 == 0) row = "even";
-this.statusbar = $("<div class='statusbar " + row + "'></div>");
-this.filename = $("<div class='filename'></div>").appendTo(this.statusbar);
-this.size = $("<div class='filesize'></div>").appendTo(this.statusbar);
-this.progressBar = $("<div class='progressBar'><div></div></div>").appendTo(this.statusbar);
-this.abort = $("<div class='abort'>Abort</div>").appendTo(this.statusbar);
-obj.after(this.statusbar);
+    rowCount++;
+    var row = "odd";
+    if (rowCount % 2 == 0) row = "even";
+    this.statusbar = $("<div class='statusbar " + row + "'></div>");
+    this.filename = $("<div class='filename'></div>").appendTo(this.statusbar);
+    this.size = $("<div class='filesize'></div>").appendTo(this.statusbar);
+    this.progressBar = $("<div class='progressBar'><div></div></div>").appendTo(this.statusbar);
+    this.abort = $("<div class='abort'>Abort</div>").appendTo(this.statusbar);
+    obj.after(this.statusbar);
 
-this.setFileNameSize = function (name, size) {
-var sizeStr = "";
-var sizeKB = size / 1024;
-if (parseInt(sizeKB) > 1024) {
-var sizeMB = sizeKB / 1024;
-sizeStr = sizeMB.toFixed(2) + " MB";
-}
-else {
-sizeStr = sizeKB.toFixed(2) + " KB";
-}
+    this.setFileNameSize = function (name, size) {
+        var sizeStr = "";
+        var sizeKB = size / 1024;
+        if (parseInt(sizeKB) > 1024) {
+            var sizeMB = sizeKB / 1024;
+            sizeStr = sizeMB.toFixed(2) + " MB";
+        }
+        else {
+            sizeStr = sizeKB.toFixed(2) + " KB";
+        }
 
-this.filename.html(name);
-this.size.html(sizeStr);
-}
-this.setProgress = function (progress) {
-var progressBarWidth = progress * this.progressBar.width() / 100;
-this.progressBar.find('div').animate({ width: progressBarWidth }, 10).html(progress + "% ");
-if (parseInt(progress) >= 100) {
-this.abort.hide();
-}
-}
-this.setAbort = function (jqxhr) {
-var sb = this.statusbar;
-this.abort.click(function () {
-jqxhr.abort();
-sb.hide();
-});
-}
+        this.filename.html(name);
+        this.size.html(sizeStr);
+    }
+    this.setProgress = function (progress) {
+        var progressBarWidth = progress * this.progressBar.width() / 100;
+        this.progressBar.find('div').animate({ width: progressBarWidth }, 10).html(progress + "% ");
+        if (parseInt(progress) >= 100) {
+            this.abort.hide();
+        }
+    }
+    this.setAbort = function (jqxhr) {
+        var sb = this.statusbar;
+        this.abort.click(function () {
+            jqxhr.abort();
+            sb.hide();
+        });
+    }
 }
 function handleFileUpload(files, obj) {
-for (var i = 0; i < files.length; i++) {
-var fd = new FormData();
-fd.append('file', files[i]);
+    for (var i = 0; i < files.length; i++) {
+        var fd = new FormData();
+        fd.append('file', files[i]);
 
-var status = new createStatusbar(obj); //Using this we can set progress.
-status.setFileNameSize(files[i].name, files[i].size);
-sendFileToServer(fd, status);
+        var status = new createStatusbar(obj); //Using this we can set progress.
+        status.setFileNameSize(files[i].name, files[i].size);
+        sendFileToServer(fd, status);
 
-}
+    }
 }
 $(document).ready(function () {
-var obj = $("#dragandrophandler");
-obj.on('dragenter', function (e) {
-e.stopPropagation();
-e.preventDefault();
-$(this).css('border', '2px solid #0B85A1');
-});
-obj.on('dragover', function (e) {
-e.stopPropagation();
-e.preventDefault();
-});
-obj.on('drop', function (e) {
+    var obj = $("#dragandrophandler");
+    obj.on('dragenter', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).css('border', '2px solid #0B85A1');
+    });
+    obj.on('dragover', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    obj.on('drop', function (e) {
 
-$(this).css('border', '2px dotted #0B85A1');
-e.preventDefault();
-var files = e.originalEvent.dataTransfer.files;
+        $(this).css('border', '2px dotted #0B85A1');
+        e.preventDefault();
+        var files = e.originalEvent.dataTransfer.files;
 
-//We need to send dropped files to Server
-handleFileUpload(files, obj);
-});
-$(document).on('dragenter', function (e) {
-e.stopPropagation();
-e.preventDefault();
-});
-$(document).on('dragover', function (e) {
-e.stopPropagation();
-e.preventDefault();
-obj.css('border', '2px dotted #0B85A1');
-});
-$(document).on('drop', function (e) {
-e.stopPropagation();
-e.preventDefault();
-});
+        //We need to send dropped files to Server
+        handleFileUpload(files, obj);
+    });
+    $(document).on('dragenter', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    $(document).on('dragover', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        obj.css('border', '2px dotted #0B85A1');
+    });
+    $(document).on('drop', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
 
 });
-*/

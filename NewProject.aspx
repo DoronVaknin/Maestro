@@ -14,19 +14,23 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="ProjectDate" type="text" class="form-control datepicker" runat="server">
-                    <span class="input-group-addon">תאריך</span>
+                    <input id="ProjectDateOpened" type="text" class="form-control datepicker" runat="server">
+                    <span class="input-group-addon">תאריך פתיחה</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectHatches" type="text" class="form-control" runat="server">
+                    <input id="ProjectHatches" type="text" class="form-control" runat="server" maxlength="2">
                     <span class="input-group-addon">מספר פתחים</span>
                 </div>
             </td>
         </tr>
         <tr>
             <td>
+                <div class="input-group">
+                    <input id="ProjectExpirationDate" type="text" class="form-control datepicker" runat="server">
+                    <span class="input-group-addon">תאריך תפוגה</span>
+                </div>
             </td>
             <td>
                 <div class="input-group">
@@ -42,22 +46,22 @@
                         rows="5" cols="10"></textarea></div>
             </td>
             <td>
-                העלה קבצים
-                <br />
-                <div id="dragandrophandler">
-                    Drag & Drop Files Here</div>
+                <%--                <div class="TextAreaHolder">
+                    <asp:FileUpload ID="ProjectFiles" runat="server" /></div>--%>
             </td>
         </tr>
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="ProjectContractorName" type="text" class="form-control" runat="server">
+                    <input id="ProjectContractorName" type="text" class="form-control" runat="server"
+                        maxlength="20">
                     <span class="input-group-addon">שם הקבלן</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectContractorPhone" type="text" class="form-control" runat="server">
+                    <input id="ProjectContractorPhone" type="text" class="form-control" runat="server"
+                        maxlength="10">
                     <span class="input-group-addon">טלפון</span>
                 </div>
             </td>
@@ -65,13 +69,15 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="ProjectArchitectName" type="text" class="form-control" runat="server">
+                    <input id="ProjectArchitectName" type="text" class="form-control" runat="server"
+                        maxlength="20">
                     <span class="input-group-addon">שם האדריכל</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectArchitectPhone" type="text" class="form-control" runat="server">
+                    <input id="ProjectArchitectPhone" type="text" class="form-control" runat="server"
+                        maxlength="10">
                     <span class="input-group-addon">טלפון</span>
                 </div>
             </td>
@@ -79,22 +85,33 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="ProjectSupervisorName" type="text" class="form-control" runat="server">
+                    <input id="ProjectSupervisorName" type="text" class="form-control" runat="server"
+                        maxlength="20">
                     <span class="input-group-addon">שם המפקח</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectSupervisorPhone" type="text" class="form-control" runat="server">
+                    <input id="ProjectSupervisorPhone" type="text" class="form-control" runat="server"
+                        maxlength="10">
                     <span class="input-group-addon">טלפון</span>
                 </div>
             </td>
         </tr>
     </table>
-    <br />
     <div class="cntr">
+        <div id="dragandrophandler">
+            גרור קבצים לכאן</div>
+        <br />
+        <br />
+        <div id="status1">
+        </div>
+        <br />
         <input type="button" value="צור פרויקט" class="btn btn-default" onclick="ValidateNewProject()" />
         <asp:Button ID="CreateProject" runat="server" Text="צור פרויקט" CssClass="HiddenButtons"
             OnClick="CreateProject_Click" />
+        <br />
+        <br />
+        <span class="ErrorLabel"></span>
     </div>
 </asp:Content>

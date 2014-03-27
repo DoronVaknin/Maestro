@@ -4,18 +4,31 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
 
 public partial class Default2 : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        ProjectDate.Value = DateTime.Now.ToShortDateString();
+        ProjectDateOpened.Value = (DateTime.Today).ToString("MM/dd/yyyy");
+        ProjectExpirationDate.Value = (DateTime.Now.AddYears(7)).ToString("MM/dd/yyyy");
     }
+    //protected void Button1_Click(object sender, EventArgs e)
+    //{
+    //    if (ProjectFiles.HasFile)
+    //    {
+    //        string filename = Path.GetFileName(ProjectFiles.FileName);
+    //        ProjectFiles.SaveAs(Server.MapPath("~/files/") + filename);
+    //    }
+    //}
+
     protected void CreateProject_Click(object sender, EventArgs e)
     {
         Project p = new Project();
-        p.OpenedDate1 = Convert.ToDateTime(ProjectDate.Value);
-        p.ExpirationDate1 = p.OpenedDate1.AddDays(60);
+        p.OpenedDate1 =  DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null);
+        //p.OpenedDate1 = Convert.ToDateTime(ProjectDateOpened.Value);
+        p.ExpirationDate1 = DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null);
+        //p.ExpirationDate1 = Convert.ToDateTime(ProjectExpirationDate.Value);
         p.Comment1 = ProjectComments.InnerText;
         if (ProjectPrice.Value != "")
             p.Price = Convert.ToInt16(ProjectPrice.Value);
@@ -40,5 +53,6 @@ public partial class Default2 : System.Web.UI.Page
         db.InsertProjectInfo(p, TempCustomer.Cid);
         int projectid = db.findid(TempCustomer.Cid);
         db.CreateHatches(p, projectid);
+        Response.Redirect("~/Projects.aspx");
     }
 }
