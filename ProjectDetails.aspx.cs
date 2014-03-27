@@ -53,6 +53,8 @@ public partial class Default2 : System.Web.UI.Page
         ProjectInfoArchitectMobile.Value = Convert.ToString(dt.Rows[0].ItemArray[10]);
         ProjectInfoContractorName.Value = Convert.ToString(dt.Rows[0].ItemArray[11]);
         ProjectInfoContractorPhone.Value = Convert.ToString(dt.Rows[0].ItemArray[12]);
+        ProjectInfoSupervisorName.Value = Convert.ToString(dt.Rows[0].ItemArray[13]);
+        ProjectInfoSupervisorPhone.Value = Convert.ToString(dt.Rows[0].ItemArray[14]);
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         ProjectInfoHatches.Value = row.Cells[8].Text;
         ProjectInfoPrice.Value = row.Cells[7].Text;
