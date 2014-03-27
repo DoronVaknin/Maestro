@@ -25,8 +25,10 @@ public partial class Default2 : System.Web.UI.Page
     protected void CreateProject_Click(object sender, EventArgs e)
     {
         Project p = new Project();
-        p.OpenedDate1 = Convert.ToDateTime(ProjectDateOpened.Value);
-        p.ExpirationDate1 = Convert.ToDateTime(ProjectExpirationDate.Value);
+        p.OpenedDate1 =  DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null);
+        //p.OpenedDate1 = Convert.ToDateTime(ProjectDateOpened.Value);
+        p.ExpirationDate1 = DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null);
+        //p.ExpirationDate1 = Convert.ToDateTime(ProjectExpirationDate.Value);
         p.Comment1 = ProjectComments.InnerText;
         if (ProjectPrice.Value != "")
             p.Price = Convert.ToInt16(ProjectPrice.Value);
@@ -51,5 +53,6 @@ public partial class Default2 : System.Web.UI.Page
         db.InsertProjectInfo(p, TempCustomer.Cid);
         int projectid = db.findid(TempCustomer.Cid);
         db.CreateHatches(p, projectid);
+        Response.Redirect("~/Projects.aspx");
     }
 }
