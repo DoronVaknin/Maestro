@@ -14,13 +14,13 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="CustomerId" type="text" class="form-control" runat="server" maxlength = "9">
+                    <input id="CustomerId" type="text" class="form-control" runat="server" maxlength="9">
                     <span class="input-group-addon">ת.ז</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="CustomerPhone" type="text" class="form-control" runat="server" maxlength = "10">
+                    <input id="CustomerPhone" type="text" class="form-control" runat="server" maxlength="10">
                     <span class="input-group-addon">טלפון</span>
                 </div>
             </td>
@@ -28,13 +28,13 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="CustomerFirstName" type="text" class="form-control" runat="server" maxlength = "20">
+                    <input id="CustomerFirstName" type="text" class="form-control" runat="server" maxlength="20">
                     <span class="input-group-addon">שם פרטי</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="CustomerCellPhone" type="text" class="form-control" runat="server" maxlength = "10">
+                    <input id="CustomerCellPhone" type="text" class="form-control" runat="server" maxlength="10">
                     <span class="input-group-addon">טלפון נייד</span>
                 </div>
             </td>
@@ -42,13 +42,13 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="CustomerLastName" type="text" class="form-control" runat="server" maxlength = "20">
+                    <input id="CustomerLastName" type="text" class="form-control" runat="server" maxlength="20">
                     <span class="input-group-addon">שם משפחה</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="CustomerFaxNumber" type="text" class="form-control" runat="server" maxlength = "10">
+                    <input id="CustomerFaxNumber" type="text" class="form-control" runat="server" maxlength="10">
                     <span class="input-group-addon">פקס</span>
                 </div>
             </td>
@@ -70,7 +70,7 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="CustomerCity" type="text" class="form-control" runat="server" maxlength = "15">
+                    <input id="CustomerCity" type="text" class="form-control" runat="server" maxlength="15">
                     <span class="input-group-addon">עיר</span>
                 </div>
             </td>
@@ -87,9 +87,11 @@
     </table>
     <br />
     <div class="cntr">
-        <input type="button" value="צור לקוח" class="btn btn-default"
-            onclick="ValidateNewCustomer()" />
-        <asp:Button ID="CreateCustomer" runat="server" Text="צור לקוח" CssClass="btn btn-default HiddenButtons" Font-Bold = "true"
-             OnClick="CreateCustomer_Click" />
+        <input type="button" value="צור לקוח" class="btn btn-default" onclick="ValidateNewCustomer()" />
+        <asp:Button ID="CreateCustomer" runat="server" Text="צור לקוח" CssClass="btn btn-default HiddenButtons"
+            Font-Bold="true" OnClick="CreateCustomer_Click" />
+        <br />
+        <br />
+        <span class="ErrorLabel"></span>
     </div>
 </asp:Content>

@@ -20,7 +20,7 @@
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectHatches" type="text" class="form-control" runat="server" maxlength = "2">
+                    <input id="ProjectHatches" type="text" class="form-control" runat="server" maxlength="2">
                     <span class="input-group-addon">מספר פתחים</span>
                 </div>
             </td>
@@ -53,13 +53,15 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="ProjectContractorName" type="text" class="form-control" runat="server" maxlength = "20">
+                    <input id="ProjectContractorName" type="text" class="form-control" runat="server"
+                        maxlength="20">
                     <span class="input-group-addon">שם הקבלן</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectContractorPhone" type="text" class="form-control" runat="server" maxlength = "10">
+                    <input id="ProjectContractorPhone" type="text" class="form-control" runat="server"
+                        maxlength="10">
                     <span class="input-group-addon">טלפון</span>
                 </div>
             </td>
@@ -67,13 +69,15 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="ProjectArchitectName" type="text" class="form-control" runat="server" maxlength = "20">
+                    <input id="ProjectArchitectName" type="text" class="form-control" runat="server"
+                        maxlength="20">
                     <span class="input-group-addon">שם האדריכל</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectArchitectPhone" type="text" class="form-control" runat="server" maxlength = "10">
+                    <input id="ProjectArchitectPhone" type="text" class="form-control" runat="server"
+                        maxlength="10">
                     <span class="input-group-addon">טלפון</span>
                 </div>
             </td>
@@ -81,13 +85,15 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="ProjectSupervisorName" type="text" class="form-control" runat="server" maxlength = "20">
+                    <input id="ProjectSupervisorName" type="text" class="form-control" runat="server"
+                        maxlength="20">
                     <span class="input-group-addon">שם המפקח</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectSupervisorPhone" type="text" class="form-control" runat="server" maxlength = "10">
+                    <input id="ProjectSupervisorPhone" type="text" class="form-control" runat="server"
+                        maxlength="10">
                     <span class="input-group-addon">טלפון</span>
                 </div>
             </td>
@@ -104,5 +110,8 @@
         <input type="button" value="צור פרויקט" class="btn btn-default" onclick="ValidateNewProject()" />
         <asp:Button ID="CreateProject" runat="server" Text="צור פרויקט" CssClass="HiddenButtons"
             OnClick="CreateProject_Click" />
+        <br />
+        <br />
+        <span class="ErrorLabel"></span>
     </div>
 </asp:Content>

@@ -54,44 +54,49 @@ $(document).ready(function () {
 
 function ValidateNewCustomer() {
     var bIsValid = true;
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerId", function (s) { return s.length < 8 || !isInteger(s); });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerFirstName", function (s) { return s.length < 2; });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerLastName", function (s) { return s.length < 2; });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerAddress", function (s) { return s.length < 2; });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerCity", function (s) { return s.length < 2; });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerEmail", function (s) { return s != "" && !IsEmail(s); });
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerId", function (s) { return s.length < 8 || !isInteger(s); },false,"יש להזין מספר ת.ז תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerFirstName", function (s) { return s.length < 2; }, false, "השם הפרטי קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerLastName", function (s) { return s.length < 2; }, false, "שם המשפחה קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerAddress", function (s) { return s.length < 2; }, false, "כתובת המגורים קצרה מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerCity", function (s) { return s.length < 2; }, false, "שם העיר קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerEmail", function (s) { !IsEmail(s); }, false, "יש להזין כתובת דוא&#34;ל חוקית");
     if (bIsValid)
         $("#ContentPlaceHolder3_CreateCustomer").click();
 }
 
 function ValidateNewProject() {
     var bIsValid = true;
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectDateOpened", function (s) { return s != "" && !isValidDate(s); });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectPrice", function (s) { return s.length == 0 || !isNumber(s); });
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectHatches", function (s) { return s.length == 0 || !isInteger(s); });
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectDateOpened", function (s) { return !isValidDate(s); }, false, "יש להזין תאריך חוקי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectPrice", function (s) { return !isNumber(s); }, false, "יש להזין מחיר חוקי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectHatches", function (s) { return !isInteger(s); },false,"יש להזין מספר פתחים שלם");
     if (bIsValid)
         $("#ContentPlaceHolder3_CreateProject").click();
 }
 
-function MarkInvalid(id, cb, bSelector) {
+function MarkInvalid(id, cb, bSelector, sMessage) {
     var sValue = $.trim($(id).val());
     var bInvalid = cb(sValue);
     if (bSelector) {
         $(id).toggleClass("Invalid", bInvalid);
-        $(id).prev().find(".InvalidText").toggle(bInvalid);
+        //$(id).prev().find(".InvalidText").toggle(bInvalid);
     } else {
         $(id).toggleClass("Invalid", bInvalid);
-        $(id).parent().prev().find(".InvalidText").toggle(bInvalid);
+        if (bInvalid && sMessage != "") {
+            $(".ErrorLabel").html(sMessage);
+            //$(id).parent().prev().find(".InvalidText").toggle(bInvalid);
+        }
     }
     return !bInvalid;
 }
 
 function IsEmail(email) {
+    if (email == "") return false;
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
 }
 
 function isValidDate(date) {
+    if (date == "") return false;
     var matches = /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/.exec(date);
     if (matches == null) return false;
     var d = matches[2];
@@ -104,10 +109,12 @@ function isValidDate(date) {
 }
 
 function isNumber(n) {
+    if (n == "") return false;
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
 function isInteger(number) {
+    if (number == "") return false;
     var intRegex = /^\d+$/;
     return intRegex.test(number);
 }

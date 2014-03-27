@@ -330,3 +330,9 @@ div.cntr input[type=button]
     cursor: pointer;
     vertical-align: top;
 }
+
+.ErrorLabel
+{
+    color: Red;
+    font-weight:bold;   
+}
