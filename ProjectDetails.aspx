@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true" EnableEventValidation="false"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true" 
     CodeFile="ProjectDetails.aspx.cs" Inherits="Default2" EnableEventValidation="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
@@ -192,7 +192,11 @@
                 <td>
                     שם הספק</td>
                 <td>
-                    סטטוס</td>
+                    &nbsp;</td>
+                <td>
+                    &nbsp;</td>
+                <td>
+                    &nbsp;</td>
             </tr>
             <tr>
                 <td>
@@ -206,55 +210,35 @@
                     </asp:DropDownList>
                 </td>
                 <td>
-                    <asp:DropDownList ID="ShutterAmount" runat="server">
-                    </asp:DropDownList>
-                </td>
-            </tr>
-            <tr>
-                <td class="style1">
                     נאספים</td>
-                <td class="style1">
+                <td>
                     <asp:DropDownList ID="CollectedCount" runat="server">
                     </asp:DropDownList>
                 </td>
-                <td class="style1">
+                <td>
                     <asp:DropDownList ID="CollectedProvider" runat="server" value="2" Width="150px">
                     </asp:DropDownList>
                 </td>
-                <td class="style1">
-                    <asp:DropDownList ID="CollectedAmount" runat="server">
-                    </asp:DropDownList>
-                </td>
             </tr>
             <tr>
-                <td>
+                <td class="style1">
                     וואלים</td>
-                <td>
+                <td class="style1">
                     <asp:DropDownList ID="ValimCount" runat="server">
                     </asp:DropDownList>
                 </td>
-                <td>
+                <td class="style1">
                     <asp:DropDownList ID="ValimProvider" runat="server" Width="150px">
                     </asp:DropDownList>
                 </td>
-                <td>
-                    <asp:DropDownList ID="ValimAmount" runat="server">
-                    </asp:DropDownList>
-                </td>
-            </tr>
-            <tr>
-                <td>
+                <td class="style1">
                     U</td>
-                <td>
+                <td class="style1">
                     <asp:DropDownList ID="UCount" runat="server">
                     </asp:DropDownList>
                 </td>
-                <td>
+                <td class="style1">
                     <asp:DropDownList ID="UProvider" runat="server" Width="150px">
-                    </asp:DropDownList>
-                </td>
-                <td>
-                    <asp:DropDownList ID="Uamount" runat="server">
                     </asp:DropDownList>
                 </td>
             </tr>
@@ -270,12 +254,6 @@
                     </asp:DropDownList>
                 </td>
                 <td>
-                    <asp:DropDownList ID="ShoeingAmount" runat="server">
-                    </asp:DropDownList>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     מנועים</td>
                 <td>
                     <asp:DropDownList ID="EnginCount" runat="server">
@@ -283,10 +261,6 @@
                 </td>
                 <td>
                     <asp:DropDownList ID="EngineProvider" runat="server" Width="150px">
-                    </asp:DropDownList>
-                </td>
-                <td>
-                    <asp:DropDownList ID="EnginesAmount" runat="server">
                     </asp:DropDownList>
                 </td>
             </tr>
@@ -302,12 +276,6 @@
                     </asp:DropDownList>
                 </td>
                 <td>
-                    <asp:DropDownList ID="ProtectedSpaceAmount" runat="server">
-                    </asp:DropDownList>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     זכוכית</td>
                 <td>
                     <asp:DropDownList ID="GlassCount" runat="server">
@@ -315,10 +283,6 @@
                 </td>
                 <td>
                     <asp:DropDownList ID="GlassProvider" runat="server" Width="150px">
-                    </asp:DropDownList>
-                </td>
-                <td>
-                    <asp:DropDownList ID="GlassAmount" runat="server">
                     </asp:DropDownList>
                 </td>
             </tr>
@@ -334,13 +298,16 @@
                     </asp:DropDownList>
                 </td>
                 <td>
-                    <asp:DropDownList ID="BoxAmount" runat="server">
-                    </asp:DropDownList>
-                </td>
+                    &nbsp;</td>
+                <td>
+                    &nbsp;</td>
+                <td>
+                    &nbsp;</td>
             </tr>
-        </table>
+            </table>
     </div>
     <br />
     <asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Button" />
     <br />
+    <input type="hidden" id="_ispostback" value="<%=Page.IsPostBack.ToString()%>" />
 </asp:Content>

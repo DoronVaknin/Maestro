@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Configuration;
@@ -24,8 +25,9 @@ public partial class Default2 : System.Web.UI.Page
         {
             SetPageDetails(dt);
             SetProjCurrentStatus();
+            LoadSuppliers();
         }
-        LoadSuppliers();
+        
         GetOrderStatus();
     }
 
@@ -106,25 +108,38 @@ public partial class Default2 : System.Web.UI.Page
     public void GetOrderStatus()
     {
         DBservices db = new DBservices();
-        db.GetOrderStatus(ShutterAmount);
-        db.GetOrderStatus(CollectedAmount);
-        db.GetOrderStatus(ValimAmount);
-        db.GetOrderStatus(Uamount);
-        db.GetOrderStatus(ShoeingAmount);
-        db.GetOrderStatus(EnginesAmount);
-        db.GetOrderStatus(ProtectedSpaceAmount);
-        db.GetOrderStatus(GlassAmount);
-        db.GetOrderStatus(BoxAmount);
+        db.GetOrderStatus(ShuttersCount);
+        db.GetOrderStatus(CollectedCount);
+        db.GetOrderStatus(ValimCount);
+        db.GetOrderStatus(UCount);
+        db.GetOrderStatus(ShuttersCount);
+        db.GetOrderStatus(EnginCount);
+        db.GetOrderStatus(ProtectedSpaceCount);
+        db.GetOrderStatus(GlassCount);
+        db.GetOrderStatus(BoxesCount);
     }
 
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-        Order o = new Order();
-        GridViewRow row = (GridViewRow)Session["selectedrow"];
-        Response.Write(Convert.ToInt32(row.Cells[1].Text));
-        
-    }
-    
-}
 
+        CreateOrder(Convert.ToInt32(ShuttersCount.SelectedItem), Convert.ToString(ShutterProvider.SelectedValue));
+       
+    }
+
+    public void CreateOrder(int Count, string Supplier)
+    {
+        if (Count > 0)
+        {
+            DBservices db = new DBservices();
+            Order o = new Order();
+            GridViewRow row = (GridViewRow)Session["selectedrow"];
+            o.ProjectID1 = Convert.ToInt32(row.Cells[1].Text);
+            o.DateOpened1 = DateTime.Now;
+            o.DateOfArrival1 = o.DateOpened1.AddDays(14); // בשלב זה נניח שתאריך ההגעה של ההזמנה תגיע בתוך 14 ימים
+            o.OrderStatus1 = 1;
+            o.SupplierID1=db.GetSupplierID(Supplier);
+        }
+
+    }
+}

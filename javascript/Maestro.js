@@ -39,6 +39,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    if(!isPostBack())
     for (var i = 0; i < 51; i++) {
         $('#ContentPlaceHolder3_ShuttersCount').append(new Option(i, i));
         $('#ContentPlaceHolder3_CollectedCount').append(new Option(i, i));
@@ -51,6 +52,10 @@ $(document).ready(function () {
         $('#ContentPlaceHolder3_BoxesCount').append(new Option(i, i));
     }
 });
+
+function isPostBack() { //function to check if page is a postback-ed one
+  return document.getElementById('_ispostback').value == 'True';
+}
 
 function ValidateNewCustomer() {
     var bIsValid = true;

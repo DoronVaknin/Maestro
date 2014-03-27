@@ -331,6 +331,31 @@ public class DBservices
             }
         }
     }
+
+
+    public int GetSupplierID(string SupplierName)
+    {
+        con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetSupplierID]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.CommandTimeout = 600;
+                sqlComm.Parameters.AddWithValue("@SupplierName", SupplierName);
+                int SupplierID = (int)sqlComm.ExecuteScalar();
+                return SupplierID;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
 }
 
 
