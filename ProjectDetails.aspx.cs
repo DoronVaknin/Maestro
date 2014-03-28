@@ -39,8 +39,8 @@ public partial class Default2 : System.Web.UI.Page
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         DBservices db = new DBservices();
         DataTable dt2 = db.GetOrdersDetails(Convert.ToInt32(row.Cells[1].Text));
-        OrdersGrid.DataSource = dt2;
-        OrdersGrid.DataBind();
+        //OrdersGrid.DataSource = dt2;
+        //OrdersGrid.DataBind();
         DataTable statustable = new DataTable();
         statustable=db.GetOrderStatus();
         
@@ -165,30 +165,10 @@ public partial class Default2 : System.Web.UI.Page
         }
 
     }
+
+ 
+
 }
 
 
 
-
-//Public void PageLoad (......) {
-//    DataSet ordersSet = // fetch all orders, including StatusID column
-//    DataSet statusesSet = // fetch all status ID's and Names
-	
-//    String[] statusesArray = new String[]();
-	
-//    for each status String in statusesSet {
-//        statusesArray.push(status);
-//    }
-	
-//    for each DataRow order in ordersSet {
-//        // inject all order rows to a table/placeholder
-//        // when getting to the statuses column you can do something like that:
-//        DropDownList _statusesDD = new DropDownList();
-//        // iterate on statusesArray and add its elements to a DropDownList
-//        for (Int32 i = 0; i < statusesArray.length; i++) {
-//            _statusesDD.AddItem(i, statusesArray[i]);
-//        }
-//        // then just inject the dropdown to the table
-		
-//    }
-//}

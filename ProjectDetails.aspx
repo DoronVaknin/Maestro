@@ -304,38 +304,60 @@
     <br />
     <asp:SqlDataSource ID="SqlDataSource2" runat="server" 
         ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>" 
-        SelectCommand="spGetOrderStatus" SelectCommandType="StoredProcedure">
+        SelectCommand="spGetOrdersListForProject" 
+        SelectCommandType="StoredProcedure" 
+        UpdateCommand="update Orders set osID=3 where oID=1">
+        <SelectParameters>
+            <asp:Parameter DefaultValue="6" Name="ProjectID" Type="Int32" />
+        </SelectParameters>
+
+
+
     </asp:SqlDataSource>
     <br />
-    הזמנות עבור פרויקט זה:<br />
-    <asp:GridView ID="OrdersGrid" runat="server" AutoGenerateColumns="False"  >
-     <Columns>
-            <asp:CommandField ShowEditButton="True" />
-            <asp:BoundField DataField="DateOpened" HeaderText="תאריך" 
-                    InsertVisible="False" ReadOnly="True" SortExpression="DateOpened" />
-            <asp:BoundField DataField="rName" HeaderText="חומר גלם" 
-                    SortExpression="rName" />
-            <asp:BoundField DataField="DateOfArrival" HeaderText="תאריך הגעה" 
-                    SortExpression="DateOfArrival" />
-            <asp:BoundField DataField="Quantity" HeaderText="כמות" 
-                    SortExpression="Quantity" />
+    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
+        DataSourceID="SqlDataSource2">
+        <Columns>
+        <asp:CommandField ShowEditButton="True" />
+            <asp:BoundField DataField="DateOpened" HeaderText="DateOpened" 
+                SortExpression="DateOpened" ReadOnly="true" />
+            <asp:BoundField DataField="rName" HeaderText="rName" SortExpression="rName" ReadOnly="true" />
+            <asp:BoundField DataField="DateOfArrival" HeaderText="DateOfArrival" 
+                SortExpression="DateOfArrival"  ReadOnly="true"/>
+            <asp:BoundField DataField="Quantity" HeaderText="Quantity" 
+                SortExpression="Quantity"  ReadOnly="true"/>
+            <asp:BoundField DataField="sName" HeaderText="sName" SortExpression="sName" ReadOnly="true" />
+            <asp:TemplateField HeaderText="osName" SortExpression="osName">
+                <EditItemTemplate>
+                    <asp:DropDownList runat="server" ID="OrderStatusDDL" >
 
-            <asp:BoundField DataField="sName" HeaderText="שם הספק" 
-                    SortExpression="sName" />
-            <asp:TemplateField HeaderText="Status" SortExpression="Status">
-            <EditItemTemplate>
-            
-            <asp:DropDownList ID="DropDownList1" runat="server" 
-                            DataSourceID="SqlDataSource2" DataTextField="osName" DataValueField="osName" 
-                            SelectedValue='<%# Bind("osName") %>'>
-           </asp:DropDownList>
-
-            </EditItemTemplate>
-
-
-
+                    <asp:ListItem>הוזמן</asp:ListItem>
+                    <asp:ListItem>מתעכב</asp:ListItem>
+                    <asp:ListItem>התקבל</asp:ListItem>
+                    </asp:DropDownList>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("osName") %>'></asp:Label>
+                </ItemTemplate>
             </asp:TemplateField>
-
-                    </Columns>
+        </Columns>
     </asp:GridView>
+    <br />
+    הזמנות עבור פרויקט זה:<br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
     </asp:Content>
+
+
+
