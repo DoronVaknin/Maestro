@@ -356,6 +356,88 @@ public class DBservices
         }
     }
 
+    public int GetRawMeterialID(string RM)
+    {
+        con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetRawMeterialID]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.CommandTimeout = 600;
+                sqlComm.Parameters.AddWithValue("@RawMetirial", RM);
+                int ID = (int)sqlComm.ExecuteScalar();
+                return ID;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+    }
+
+    public void CreateNewOrder(Order o)
+    {
+        con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spCreateNewOrder]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@DateOpened", o.DateOpened1);
+                sqlComm.Parameters.AddWithValue("@EstimateDateOfArrival", o.EstimateDateOfArrival1);
+                sqlComm.Parameters.AddWithValue("@Quantity", o.Quantity1);
+                sqlComm.Parameters.AddWithValue("@osID", o.OrderStatus1);
+                sqlComm.Parameters.AddWithValue("@pID", o.ProjectID1);
+                sqlComm.Parameters.AddWithValue("@SupplierID", o.SupplierID1);
+                sqlComm.Parameters.AddWithValue("@rmID", o.RawMeterialID1);
+                sqlComm.CommandTimeout = 600;
+                sqlComm.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+
+
+        public DataTable GetOrdersDetails(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_test1ConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetOrdersListForProject]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+
 }
 
 

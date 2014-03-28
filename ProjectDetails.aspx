@@ -202,8 +202,7 @@
                 <td>
                     תריסים</td>
                 <td>
-                    <asp:DropDownList ID="ShuttersCount" runat="server">
-                    </asp:DropDownList>
+                    <asp:TextBox ID="ShutterCount" runat="server" Width="50px"></asp:TextBox>
                 </td>
                 <td>
                     <asp:DropDownList ID="ShutterProvider" runat="server" Width="150px">
@@ -212,8 +211,7 @@
                 <td>
                     נאספים</td>
                 <td>
-                    <asp:DropDownList ID="CollectedCount" runat="server">
-                    </asp:DropDownList>
+                    <asp:TextBox ID="CollectedCount" runat="server" Width="50px"></asp:TextBox>
                 </td>
                 <td>
                     <asp:DropDownList ID="CollectedProvider" runat="server" value="2" Width="150px">
@@ -224,8 +222,7 @@
                 <td class="style1">
                     וואלים</td>
                 <td class="style1">
-                    <asp:DropDownList ID="ValimCount" runat="server">
-                    </asp:DropDownList>
+                    <asp:TextBox ID="ValimCount" runat="server" Width="50px"></asp:TextBox>
                 </td>
                 <td class="style1">
                     <asp:DropDownList ID="ValimProvider" runat="server" Width="150px">
@@ -234,8 +231,7 @@
                 <td class="style1">
                     U</td>
                 <td class="style1">
-                    <asp:DropDownList ID="UCount" runat="server">
-                    </asp:DropDownList>
+                    <asp:TextBox ID="UCount" runat="server" Width="50px"></asp:TextBox>
                 </td>
                 <td class="style1">
                     <asp:DropDownList ID="UProvider" runat="server" Width="150px">
@@ -246,8 +242,7 @@
                 <td>
                     פרזול</td>
                 <td>
-                    <asp:DropDownList ID="ShoeingCount" runat="server">
-                    </asp:DropDownList>
+                    <asp:TextBox ID="ShoeingCount" runat="server" Width="50px"></asp:TextBox>
                 </td>
                 <td>
                     <asp:DropDownList ID="ShoeingProvider" runat="server" Width="150px">
@@ -256,8 +251,7 @@
                 <td>
                     מנועים</td>
                 <td>
-                    <asp:DropDownList ID="EnginCount" runat="server">
-                    </asp:DropDownList>
+                    <asp:TextBox ID="EngineCount" runat="server" Width="50px"></asp:TextBox>
                 </td>
                 <td>
                     <asp:DropDownList ID="EngineProvider" runat="server" Width="150px">
@@ -268,8 +262,7 @@
                 <td>
                     ממ&quot;ד</td>
                 <td>
-                    <asp:DropDownList ID="ProtectedSpaceCount" runat="server">
-                    </asp:DropDownList>
+                    <asp:TextBox ID="ProtectedSpaceCount" runat="server" Width="50px"></asp:TextBox>
                 </td>
                 <td>
                     <asp:DropDownList ID="ProtectedSpaceProvider" runat="server" Width="150px">
@@ -278,8 +271,7 @@
                 <td>
                     זכוכית</td>
                 <td>
-                    <asp:DropDownList ID="GlassCount" runat="server">
-                    </asp:DropDownList>
+                    <asp:TextBox ID="GlassCount" runat="server" Width="50px"></asp:TextBox>
                 </td>
                 <td>
                     <asp:DropDownList ID="GlassProvider" runat="server" Width="150px">
@@ -290,8 +282,7 @@
                 <td>
                     ארגזים</td>
                 <td>
-                    <asp:DropDownList ID="BoxesCount" runat="server">
-                    </asp:DropDownList>
+                    <asp:TextBox ID="BoxCount" runat="server" Width="50px"></asp:TextBox>
                 </td>
                 <td>
                     <asp:DropDownList ID="BoxesProvider" runat="server" Width="150px">
@@ -307,7 +298,15 @@
             </table>
     </div>
     <br />
-    <asp:Button ID="Button1" runat="server" onclick="Button1_Click" Text="Button" />
+    <asp:Button ID="Button1" runat="server" onclick="Button1_Click" 
+        Text="צור  הזמנה" />
     <br />
-    <input type="hidden" id="_ispostback" value="<%=Page.IsPostBack.ToString()%>" />
+    <br />
+    <br />
+    הזמנות עבור פרויקט זה:<br />
+    <asp:GridView ID="OrdersGrid" runat="server">
+        <Columns>
+            <asp:CheckBoxField HeaderText="22" />
+        </Columns>
+    </asp:GridView>
 </asp:Content>

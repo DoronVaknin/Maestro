@@ -20,6 +20,7 @@ public partial class Default2 : System.Web.UI.Page
 
         DBservices db = new DBservices();
         DataTable dt = db.GetCustomerInformation(ProjectID);
+        SetOrdersGrid();
 
         if (!Page.IsPostBack)
         {
@@ -27,9 +28,19 @@ public partial class Default2 : System.Web.UI.Page
             SetProjCurrentStatus();
             LoadSuppliers();
         }
+       
         
-        GetOrderStatus();
     }
+
+    public void SetOrdersGrid()
+    {
+        GridViewRow row = (GridViewRow)Session["selectedrow"];
+        DBservices db = new DBservices();
+        DataTable dt2 = db.GetOrdersDetails(Convert.ToInt32(row.Cells[1].Text));
+        OrdersGrid.DataSource = dt2;
+        OrdersGrid.DataBind(); //לא בטוח אם יש לי ברירה ואפשרי לעשות במקום אחר
+    }
+
 
     public void SetProjCurrentStatus()
     {
@@ -107,29 +118,29 @@ public partial class Default2 : System.Web.UI.Page
         db.LoadSuppliers(BoxesProvider, 9);
     }
 
-    public void GetOrderStatus()
-    {
-        DBservices db = new DBservices();
-        db.GetOrderStatus(ShuttersCount);
-        db.GetOrderStatus(CollectedCount);
-        db.GetOrderStatus(ValimCount);
-        db.GetOrderStatus(UCount);
-        db.GetOrderStatus(ShuttersCount);
-        db.GetOrderStatus(EnginCount);
-        db.GetOrderStatus(ProtectedSpaceCount);
-        db.GetOrderStatus(GlassCount);
-        db.GetOrderStatus(BoxesCount);
-    }
+    //public void GetOrderStatus()
+    //{
+    //    DBservices db = new DBservices();
+    //    db.GetOrderStatus(ShuttersCount);
+    //    db.GetOrderStatus(CollectedCount);
+    //    db.GetOrderStatus(ValimCount);
+    //    db.GetOrderStatus(UCount);
+    //    db.GetOrderStatus(ShuttersCount);
+    //    db.GetOrderStatus(EnginCount);
+    //    db.GetOrderStatus(ProtectedSpaceCount);
+    //    db.GetOrderStatus(GlassCount);
+    //    db.GetOrderStatus(BoxesCount);
+    //}
 
 
     protected void Button1_Click(object sender, EventArgs e)
     {
 
-        CreateOrder(Convert.ToInt32(ShuttersCount.SelectedItem), Convert.ToString(ShutterProvider.SelectedValue));
+        CreateOrder(Convert.ToInt32(ShutterCount.Text), Convert.ToString(ShutterProvider.SelectedValue),1);
        
     }
 
-    public void CreateOrder(int Count, string Supplier)
+    public void CreateOrder(int Count, string Supplier,int RawMeterialID)
     {
         if (Count > 0)
         {
@@ -138,9 +149,13 @@ public partial class Default2 : System.Web.UI.Page
             GridViewRow row = (GridViewRow)Session["selectedrow"];
             o.ProjectID1 = Convert.ToInt32(row.Cells[1].Text);
             o.DateOpened1 = DateTime.Now;
-            o.DateOfArrival1 = o.DateOpened1.AddDays(14); // בשלב זה נניח שתאריך ההגעה של ההזמנה תגיע בתוך 14 ימים
+            o.EstimateDateOfArrival1 = o.DateOpened1.AddDays(14); // בשלב זה נניח שתאריך ההגעה של ההזמנה תגיע בתוך 14 ימים
             o.OrderStatus1 = 1;
             o.SupplierID1=db.GetSupplierID(Supplier);
+            o.RawMeterialID1 = RawMeterialID;  //השורה הזאת קצת יכולה להוות בעיה כי טכנית אני שולח את מספר האיי די לפי הסדר בטבלה אבל אם זה משתנה אז זה לא תקין
+            o.Quantity1 = Count;
+            db.CreateNewOrder(o);
+            SetOrdersGrid();
         }
 
     }

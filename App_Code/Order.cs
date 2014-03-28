@@ -71,4 +71,12 @@ public class Order
         get { return RawMeterialID; }
         set { RawMeterialID = value; }
     }
+
+    int Quantity;
+
+    public int Quantity1
+    {
+        get { return Quantity; }
+        set { Quantity = value; }
+    }
 }
