@@ -29,8 +29,6 @@ public partial class Default2 : System.Web.UI.Page
             SetProjCurrentStatus();
             LoadSuppliers();
         }
-       
-        
     }
 
     public void SetOrdersGrid()
@@ -85,7 +83,7 @@ public partial class Default2 : System.Web.UI.Page
 
     }
 
-    protected void SaveCustomerDetails_Click1(object sender, EventArgs e)
+    protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)
     {
         int CustomerInitialID = Convert.ToInt32(ProjectInfoID.Value);
         DBservices db = new DBservices();
@@ -100,14 +98,18 @@ public partial class Default2 : System.Web.UI.Page
         c.City = ProjectInfoCity.Value;
         c.Email = ProjectInfoEmail.Value;
         db.UpdateCustomerInformation(c, CustomerInitialID);
+        SaveCustomerDetailsBTN.Style.Add("display", "none");
+        EditCustomerDetailsBTN.Style.Add("display", "inline-block");
     }
 
-    protected void SaveProjectDetails_Click(object sender, EventArgs e)
+    protected void SaveProjectDetailsBTN_Click(object sender, EventArgs e)
     {
         DBservices db = new DBservices();
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         db.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectInfoStatus.SelectedIndex + 1);
         db.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToInt32(ProjectInfoPrice.Value), ProjectInfoComments.Value);
+        SaveProjectDetailsBTN.Style.Add("display", "none");
+        EditProjectDetailsBTN.Style.Add("display", "inline-block");
     }
 
     public void LoadSuppliers()
@@ -163,11 +165,8 @@ public partial class Default2 : System.Web.UI.Page
             db.CreateNewOrder(o);
             SetOrdersGrid();
         }
-
     }
 }
-
-
 
 
 //Public void PageLoad (......) {

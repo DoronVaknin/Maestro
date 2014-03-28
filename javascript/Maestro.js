@@ -22,40 +22,20 @@ function ClickLoginBTN() {
 
 function EnableCustomerDetails() {
     $("#CustomerDetailsTBL input").removeAttr("disabled");
+    $("#ContentPlaceHolder3_EditCustomerDetailsBTN").hide();
+    $("#ContentPlaceHolder3_SaveCustomerDetailsBTN").show();
 }
 
 function EnableProjectDetails() {
-    $("#ContentPlaceHolder3_ProjectInfoStatus").removeAttr("disabled");
-    $("#ContentPlaceHolder3_ProjectInfoPrice").removeAttr("disabled");
-    $("#ContentPlaceHolder3_ProjectInfoComments").removeAttr("disabled");
+    $("#ProjectDetailsTBL *").removeAttr("disabled");
+    $("#ContentPlaceHolder3_EditProjectDetailsBTN").hide();
+    $("#ContentPlaceHolder3_SaveProjectDetailsBTN").show();
 }
 
 $(document).ready(function () {
     $("#CustomerDetailsTBL input").attr("disabled", "disabled");
-    $("#ContentPlaceHolder3_ProjectInfoStatus").prop("disabled", true);
-    $("#ContentPlaceHolder3_ProjectInfoHatches").prop("disabled", true);
-    $("#ContentPlaceHolder3_ProjectInfoPrice").prop("disabled", true);
-    $("#ContentPlaceHolder3_ProjectInfoComments").prop("disabled", true);
+    $("#ProjectDetailsTBL *").attr("disabled", "disabled");
 });
-
-$(document).ready(function () {
-    if(!isPostBack())
-    for (var i = 0; i < 51; i++) {
-        $('#ContentPlaceHolder3_ShuttersCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_CollectedCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_ValimCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_UCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_ShoeingCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_EnginCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_ProtectedSpaceCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_GlassCount').append(new Option(i, i));
-        $('#ContentPlaceHolder3_BoxesCount').append(new Option(i, i));
-    }
-});
-
-function isPostBack() { //function to check if page is a postback-ed one
-  return document.getElementById('_ispostback').value == 'True';
-}
 
 function ValidateNewCustomer() {
     var bIsValid = true;
@@ -124,7 +104,27 @@ function isInteger(number) {
     return intRegex.test(number);
 }
 
+//$(document).ready(function () {
+//    if(!isPostBack())
+//    for (var i = 0; i < 51; i++) {
+//        $('#ContentPlaceHolder3_ShuttersCount').append(new Option(i, i));
+//        $('#ContentPlaceHolder3_CollectedCount').append(new Option(i, i));
+//        $('#ContentPlaceHolder3_ValimCount').append(new Option(i, i));
+//        $('#ContentPlaceHolder3_UCount').append(new Option(i, i));
+//        $('#ContentPlaceHolder3_ShoeingCount').append(new Option(i, i));
+//        $('#ContentPlaceHolder3_EnginCount').append(new Option(i, i));
+//        $('#ContentPlaceHolder3_ProtectedSpaceCount').append(new Option(i, i));
+//        $('#ContentPlaceHolder3_GlassCount').append(new Option(i, i));
+//        $('#ContentPlaceHolder3_BoxesCount').append(new Option(i, i));
+//    }
+//});
 
+//function isPostBack() { //function to check if page is a postback-ed one
+//  return document.getElementById('_ispostback').value == 'True';
+//}
+
+
+//DRAG & DROP
 function sendFileToServer(formData, status) {
     var uploadURL = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1); //Upload URL
     var extraData = {}; //Extra Data.
@@ -251,6 +251,6 @@ $(document).ready(function () {
 
 // datatables.net
 
-$(document).ready(function () {
-    $('#ContentPlaceHolder3_OrdersGrid').dataTable();
-});
+//$(document).ready(function () {
+//    $('#ContentPlaceHolder3_OrdersGrid').dataTable();
+//});
