@@ -248,3 +248,9 @@ $(document).ready(function () {
     });
 
 });
+
+// datatables.net
+
+$(document).ready(function () {
+    $('#ContentPlaceHolder3_OrdersGrid').dataTable();
+});

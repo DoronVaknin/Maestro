@@ -307,9 +307,11 @@ public class DBservices
         }
     }
 
-    public void GetOrderStatus(DropDownList ddl)
+    public DataTable GetOrderStatus()
     {
+        DataTable dt3 = new DataTable();
         con = connect("igroup9_test1ConnectionString");
+        SqlDataAdapter da = new SqlDataAdapter();
         using (SqlCommand sqlComm = new SqlCommand("[spGetOrderStatus]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -319,11 +321,9 @@ public class DBservices
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.CommandTimeout = 600;
-                IDataReader dr = sqlComm.ExecuteReader();
-                ddl.DataSource = dr;
-                ddl.DataTextField = "osName";
-                ddl.DataValueField = "osID";
-                ddl.DataBind();
+                da.SelectCommand = sqlComm;
+                da.Fill(dt3);
+                return dt3;
             }
             catch (Exception ex)
             {

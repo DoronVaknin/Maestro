@@ -302,11 +302,40 @@
         Text="צור  הזמנה" />
     <br />
     <br />
+    <asp:SqlDataSource ID="SqlDataSource2" runat="server" 
+        ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>" 
+        SelectCommand="spGetOrderStatus" SelectCommandType="StoredProcedure">
+    </asp:SqlDataSource>
     <br />
     הזמנות עבור פרויקט זה:<br />
-    <asp:GridView ID="OrdersGrid" runat="server">
-        <Columns>
-            <asp:CheckBoxField HeaderText="22" />
-        </Columns>
+    <asp:GridView ID="OrdersGrid" runat="server" AutoGenerateColumns="False"  >
+     <Columns>
+            <asp:CommandField ShowEditButton="True" />
+            <asp:BoundField DataField="DateOpened" HeaderText="תאריך" 
+                    InsertVisible="False" ReadOnly="True" SortExpression="DateOpened" />
+            <asp:BoundField DataField="rName" HeaderText="חומר גלם" 
+                    SortExpression="rName" />
+            <asp:BoundField DataField="DateOfArrival" HeaderText="תאריך הגעה" 
+                    SortExpression="DateOfArrival" />
+            <asp:BoundField DataField="Quantity" HeaderText="כמות" 
+                    SortExpression="Quantity" />
+
+            <asp:BoundField DataField="sName" HeaderText="שם הספק" 
+                    SortExpression="sName" />
+            <asp:TemplateField HeaderText="Status" SortExpression="Status">
+            <EditItemTemplate>
+            
+            <asp:DropDownList ID="DropDownList1" runat="server" 
+                            DataSourceID="SqlDataSource2" DataTextField="osName" DataValueField="osName" 
+                            SelectedValue='<%# Bind("osName") %>'>
+           </asp:DropDownList>
+
+            </EditItemTemplate>
+
+
+
+            </asp:TemplateField>
+
+                    </Columns>
     </asp:GridView>
-</asp:Content>
+    </asp:Content>
