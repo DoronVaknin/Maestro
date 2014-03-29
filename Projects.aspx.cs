@@ -11,12 +11,19 @@ public partial class Default2 : System.Web.UI.Page
     {
 
     }
-    protected void ProjectsTBL_SelectedIndexChanged(object sender, EventArgs e)
-    {
-        //Need to add conditions in ProjectDetails.aspx.cs because of the rows difference (Project vs ProjectsPerCustomer)
 
-        //Session["selectedrow"] = ProjectsTBL.SelectedRow;
-        //Response.Redirect("ProjectDetails.aspx");
+    protected void OnDataBound(object sender, EventArgs e)
+    {
+        GridViewRow row = new GridViewRow(0, 0, DataControlRowType.Header, DataControlRowState.Normal);
+        for (int i = 0; i < ProjectsTBL.Columns.Count; i++)
+        {
+            TableHeaderCell cell = new TableHeaderCell();
+            TextBox txtSearch = new TextBox();
+            txtSearch.Attributes["placeholder"] = ProjectsTBL.Columns[i].HeaderText;
+            txtSearch.CssClass = "search_textbox form-control";
+            cell.Controls.Add(txtSearch);
+            row.Controls.Add(cell);
+        }
+        ProjectsTBL.HeaderRow.Parent.Controls.AddAt(1, row);
     }
-   
 }

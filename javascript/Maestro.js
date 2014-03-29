@@ -1,19 +1,25 @@
-﻿// Tables Zebra design
-
-//$(function () {
-//    /* For zebra striping */
-//    $(".DataTables tr:nth-child(odd)").addClass("odd-row");
-//    /* For cell text alignment */
-//    $(".DataTables td:first-child, table th:first-child").addClass("first");
-//    /* For removing the last border */
-//    $(".DataTables td:last-child, table th:last-child").addClass("last");
-//});
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
+    //Mark current tabs
     var sFileName = $(location).attr('href').replace(/^.*[\\\/]/, '');
     sFileName = sFileName.substring(0, sFileName.length - 5);
     $("#" + sFileName).addClass("current");
+
+    //Datepicker activation
     $(".datepicker").datepicker();
+    $('.search_textbox').first().hide();
+
+    //Quick search activation
+    $('.search_textbox').each(function (i) {
+        $(this).quicksearch("[class*=DataTables] tr:not(:has(th))", {
+            'testQuery': function (query, txt, row) {
+                return $(row).children(":eq(" + i + ")").text().toLowerCase().indexOf(query[0].toLowerCase()) != -1;
+            }
+        });
+    });
+
+    //Default state for project fields is disabled
+    $("#CustomerDetailsTBL input").attr("disabled", "disabled");
+    $("#ProjectDetailsTBL *").attr("disabled", "disabled");
 });
 
 function ClickLoginBTN() {
@@ -28,23 +34,20 @@ function EnableCustomerDetails() {
 
 function EnableProjectDetails() {
     $("#ProjectDetailsTBL *").removeAttr("disabled");
+    $("#ContentPlaceHolder3_ProjectInfoHatches").attr("disabled", "disabled");
     $("#ContentPlaceHolder3_EditProjectDetailsBTN").hide();
     $("#ContentPlaceHolder3_SaveProjectDetailsBTN").show();
 }
 
-$(document).ready(function () {
-    $("#CustomerDetailsTBL input").attr("disabled", "disabled");
-    $("#ProjectDetailsTBL *").attr("disabled", "disabled");
-});
-
+//Validators
 function ValidateNewCustomer() {
     var bIsValid = true;
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerId", function (s) { return s.length < 8 || !isInteger(s); },false,"יש להזין מספר ת.ז תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerId", function (s) { return s.length < 8 || !isInteger(s); }, false, "יש להזין מספר ת.ז תקין");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerFirstName", function (s) { return s.length < 2; }, false, "השם הפרטי קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerLastName", function (s) { return s.length < 2; }, false, "שם המשפחה קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerAddress", function (s) { return s.length < 2; }, false, "כתובת המגורים קצרה מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerCity", function (s) { return s.length < 2; }, false, "שם העיר קצר מדי");
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerEmail", function (s) { !IsEmail(s); }, false, "יש להזין כתובת דוא&#34;ל חוקית");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerEmail", function (s) { return !IsEmail(s); }, false, "יש להזין כתובת מייל חוקית");
     if (bIsValid)
         $("#ContentPlaceHolder3_CreateCustomer").click();
 }
@@ -53,7 +56,7 @@ function ValidateNewProject() {
     var bIsValid = true;
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectDateOpened", function (s) { return !isValidDate(s); }, false, "יש להזין תאריך חוקי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectPrice", function (s) { return !isNumber(s); }, false, "יש להזין מחיר חוקי");
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectHatches", function (s) { return !isInteger(s); },false,"יש להזין מספר פתחים שלם");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectHatches", function (s) { return !isInteger(s); }, false, "יש להזין מספר פתחים שלם");
     if (bIsValid)
         $("#ContentPlaceHolder3_CreateProject").click();
 }
@@ -75,7 +78,6 @@ function MarkInvalid(id, cb, bSelector, sMessage) {
 }
 
 function IsEmail(email) {
-    if (email == "") return false;
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
 }
@@ -104,29 +106,33 @@ function isInteger(number) {
     return intRegex.test(number);
 }
 
-//$(document).ready(function () {
-//    if(!isPostBack())
-//    for (var i = 0; i < 51; i++) {
-//        $('#ContentPlaceHolder3_ShuttersCount').append(new Option(i, i));
-//        $('#ContentPlaceHolder3_CollectedCount').append(new Option(i, i));
-//        $('#ContentPlaceHolder3_ValimCount').append(new Option(i, i));
-//        $('#ContentPlaceHolder3_UCount').append(new Option(i, i));
-//        $('#ContentPlaceHolder3_ShoeingCount').append(new Option(i, i));
-//        $('#ContentPlaceHolder3_EnginCount').append(new Option(i, i));
-//        $('#ContentPlaceHolder3_ProtectedSpaceCount').append(new Option(i, i));
-//        $('#ContentPlaceHolder3_GlassCount').append(new Option(i, i));
-//        $('#ContentPlaceHolder3_BoxesCount').append(new Option(i, i));
-//    }
-//});
-
-//function isPostBack() { //function to check if page is a postback-ed one
-//  return document.getElementById('_ispostback').value == 'True';
-//}
-
+//Cities AutoCompletion
+$.ajax({
+    url: "xmlFiles/IsraelCities.xml",
+    type: "GET",
+    dataType: "xml",
+    success: function (xmlResponse) {
+        var data = $("City", xmlResponse).map(function () {
+            return {
+                value: $(this).attr("Heb")
+            };
+        }).get();
+        $(".City").autocomplete({
+            source: function (req, response) {
+                var re = $.ui.autocomplete.escapeRegex(req.term);
+                var matcher = new RegExp("^" + re, "i");
+                response($.grep(data, function (item) {
+                    return matcher.test(item.value);
+                }));
+            },
+            minLength: 1
+        });
+    }
+});
 
 //DRAG & DROP
 function sendFileToServer(formData, status) {
-    var uploadURL = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1); //Upload URL
+    var uploadURL = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) + "files/";   //Upload URL
     var extraData = {}; //Extra Data.
     var jqXHR = $.ajax({
         xhr: function () {
@@ -248,9 +254,3 @@ $(document).ready(function () {
     });
 
 });
-
-// datatables.net
-
-//$(document).ready(function () {
-//    $('#ContentPlaceHolder3_OrdersGrid').dataTable();
-//});

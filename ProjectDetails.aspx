@@ -173,7 +173,7 @@
                 </div>
             </td>
             <td>
-                <div id="CommentContainer">
+                <div class = "TextAreaHolder">
                     <textarea id="ProjectInfoComments" runat="server" class="form-control" cols="10"
                         rows="3" placeholder="הערות"></textarea>
                 </div>
@@ -189,7 +189,7 @@
             OnClick="SaveProjectDetailsBTN_Click" Font-Bold="true" />
         <br />
         <br />
-        הזמנות עבור פרוייקט<br />
+        <h1>הזמנות עבור הפרויקט</h1>
         <br />
         <table class="nav-justified" id="OrderTable">
             <tr>
@@ -324,62 +324,7 @@
         </table>
     </div>
     <br />
-    <asp:Button ID="Button1" runat="server" onclick="Button1_Click" 
-        Text="צור  הזמנה" />
-    <br />
-    <br />
-        SelectCommand="spGetOrdersListForProject" 
-        SelectCommandType="StoredProcedure" 
-        UpdateCommand="update Orders set osID=3 where oID=1">
-        <SelectParameters>
-            <asp:Parameter DefaultValue="6" Name="ProjectID" Type="Int32" />
-        </SelectParameters>
-
-
-
-    <br />
-    <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" 
-        DataSourceID="SqlDataSource2">
-        <Columns>
-        <asp:CommandField ShowEditButton="True" />
-            <asp:BoundField DataField="DateOpened" HeaderText="DateOpened" 
-                SortExpression="DateOpened" ReadOnly="true" />
-            <asp:BoundField DataField="rName" HeaderText="rName" SortExpression="rName" ReadOnly="true" />
-            <asp:BoundField DataField="DateOfArrival" HeaderText="DateOfArrival" 
-                SortExpression="DateOfArrival"  ReadOnly="true"/>
-            <asp:BoundField DataField="Quantity" HeaderText="Quantity" 
-                SortExpression="Quantity"  ReadOnly="true"/>
-            <asp:BoundField DataField="sName" HeaderText="sName" SortExpression="sName" ReadOnly="true" />
-            <asp:TemplateField HeaderText="osName" SortExpression="osName">
-                <EditItemTemplate>
-                    <asp:DropDownList runat="server" ID="OrderStatusDDL" >
-
-                    <asp:ListItem>הוזמן</asp:ListItem>
-                    <asp:ListItem>מתעכב</asp:ListItem>
-                    <asp:ListItem>התקבל</asp:ListItem>
-                    </asp:DropDownList>
-                </EditItemTemplate>
-                <ItemTemplate>
-                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("osName") %>'></asp:Label>
-                </ItemTemplate>
-            </asp:TemplateField>
-        </Columns>
-    <br />
-    הזמנות עבור פרויקט זה:<br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+    <div class = "cntr"><asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="צור הזמנה" CssClass = "btn btn-default" Font-Bold = "true" /></div>
     <br />
     <br />
 </asp:Content>
-
-
-

@@ -70,7 +70,7 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="CustomerCity" type="text" class="form-control" runat="server" maxlength="15">
+                    <input id="CustomerCity" type="text" class="form-control City" runat="server" maxlength="15">
                     <span class="input-group-addon">עיר</span>
                 </div>
             </td>
@@ -94,4 +94,6 @@
         <br />
         <span class="ErrorLabel"></span>
     </div>
+    <br />
+    <br />
 </asp:Content>

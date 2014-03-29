@@ -18,4 +18,19 @@ public partial class Default2 : System.Web.UI.Page
         Session["LastName"] = CustomersTBL.SelectedRow.Cells[3].Text;
         Response.Redirect("ProjectsPerCustomer.aspx");
     }
+
+    protected void OnDataBound(object sender, EventArgs e)
+    {
+        GridViewRow row = new GridViewRow(0, 0, DataControlRowType.Header, DataControlRowState.Normal);
+        for (int i = 0; i < CustomersTBL.Columns.Count - 3; i++)
+        {
+                TableHeaderCell cell = new TableHeaderCell();
+                TextBox txtSearch = new TextBox();
+                txtSearch.Attributes["placeholder"] = CustomersTBL.Columns[i].HeaderText;
+                txtSearch.CssClass = "search_textbox form-control";
+                cell.Controls.Add(txtSearch);
+                row.Controls.Add(cell);
+        }
+        CustomersTBL.HeaderRow.Parent.Controls.AddAt(1, row);
+    }
 }

@@ -11,9 +11,8 @@
     <br />
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>"
         SelectCommand="spShowAllProjects" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-    <asp:GridView ID="ProjectsTBL" runat="server" AllowPaging="True" AllowSorting="True"
-        OnSelectedIndexChanged="ProjectsTBL_SelectedIndexChanged" CssClass="DataTables"
-        DataSourceID="SqlDataSource1" AutoGenerateColumns="false">
+    <asp:GridView ID="ProjectsTBL" runat="server" AllowSorting="True" CssClass="DataTables"
+        DataSourceID="SqlDataSource1" AutoGenerateColumns="False" OnDataBound="OnDataBound">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
             <asp:BoundField DataField="fname" HeaderText="שם פרטי" />

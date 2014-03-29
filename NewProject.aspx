@@ -46,8 +46,8 @@
                         rows="5" cols="10"></textarea></div>
             </td>
             <td>
-                <%--                <div class="TextAreaHolder">
-                    <asp:FileUpload ID="ProjectFiles" runat="server" /></div>--%>
+                <div class="TextAreaHolder">
+                    <asp:FileUpload ID="ProjectFiles" runat="server" /></div>
             </td>
         </tr>
         <tr>
@@ -102,7 +102,6 @@
     <div class="cntr">
         <div id="dragandrophandler">
             גרור קבצים לכאן</div>
-        <br />
         <br />
         <div id="status1">
         </div>
