@@ -12,6 +12,17 @@ public partial class Default2 : System.Web.UI.Page
 
     }
 
+
+
+    protected void ProjectsTBL_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int SelectedIndex = ProjectsTBL.SelectedIndex;
+        SelectedIndex += 1;
+        GridViewRow row = ProjectsTBL.Rows[SelectedIndex];
+        Session["selectedrow"] = row;
+        Response.Redirect("ProjectDetails.aspx");
+    }
+
     protected void OnDataBound(object sender, EventArgs e)
     {
         GridViewRow row = new GridViewRow(0, 0, DataControlRowType.Header, DataControlRowState.Normal);

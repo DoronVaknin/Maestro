@@ -141,6 +141,7 @@
         <asp:Button ID="SaveCustomerDetailsBTN" runat="server" Text="שמור" class="btn btn-default"
             OnClick="SaveCustomerDetailsBTN_Click1" Font-Bold="true" />
     </div>
+    <asp:HiddenField ID="ProjectIDHolder" runat="server" />
     <br />
     <div class="cntr">
         <h1>
@@ -173,7 +174,7 @@
                 </div>
             </td>
             <td>
-                <div class = "TextAreaHolder">
+                <div class="TextAreaHolder">
                     <textarea id="ProjectInfoComments" runat="server" class="form-control" cols="10"
                         rows="3" placeholder="הערות"></textarea>
                 </div>
@@ -189,7 +190,8 @@
             OnClick="SaveProjectDetailsBTN_Click" Font-Bold="true" />
         <br />
         <br />
-        <h1>הזמנות עבור הפרויקט</h1>
+        <h1>
+            הזמנות עבור הפרויקט</h1>
         <br />
         <table class="nav-justified" id="OrderTable">
             <tr>
@@ -324,7 +326,9 @@
         </table>
     </div>
     <br />
-    <div class = "cntr"><asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="צור הזמנה" CssClass = "btn btn-default" Font-Bold = "true" /></div>
+    <div class="cntr">
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="צור הזמנה"
+            CssClass="btn btn-default" Font-Bold="true" /></div>
     <br />
     <br />
 </asp:Content>

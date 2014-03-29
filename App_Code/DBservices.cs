@@ -59,7 +59,7 @@ public class DBservices
         }
     }
 
-    public void InsertProjectInfo(Project p, int CId)
+    public int InsertProjectInfo(Project p, int CId)
     {
         con = connect("igroup9_test1ConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spInsertProjectInfo]", con))
@@ -82,13 +82,13 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@superName", p.SupervisorName1);
                 sqlComm.Parameters.AddWithValue("@superPhone", p.SupervisorPhone1);
                 sqlComm.CommandTimeout = 600;
-                sqlComm.ExecuteNonQuery();
+                int value = (int)sqlComm.ExecuteScalar();
+                return value;
             }
             catch (Exception ex)
             {
                 throw (ex);
             }
-
         }
     }
 

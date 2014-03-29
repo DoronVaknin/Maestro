@@ -12,15 +12,19 @@
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>"
         SelectCommand="spShowAllProjects" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
     <asp:GridView ID="ProjectsTBL" runat="server" AllowSorting="True" CssClass="DataTables"
-        DataSourceID="SqlDataSource1" AutoGenerateColumns="False" OnDataBound="OnDataBound">
+        DataSourceID="SqlDataSource1" AutoGenerateColumns="False" OnDataBound="OnDataBound"
+        OnSelectedIndexChanged="ProjectsTBL_SelectedIndexChanged">
         <Columns>
-            <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
-            <asp:BoundField DataField="fname" HeaderText="שם פרטי" />
-            <asp:BoundField DataField="lname" HeaderText="שם משפחה" />
-            <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" />
-            <asp:BoundField DataField="psName" HeaderText="סטטוס" />
-            <asp:BoundField DataField="comments" HeaderText="הערות" />
-            <asp:BoundField DataField="HatchesNum" HeaderText="מספר פתחים" />
+            <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
+            <asp:BoundField DataField="pID" HeaderText="מספר פרויקט" InsertVisible="False" ReadOnly="True"
+                SortExpression="pID" />
+            <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" />
+            <asp:BoundField DataField="lName" HeaderText="שם משפחה" SortExpression="lName" />
+            <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened" />
+            <asp:BoundField DataField="psName" HeaderText="סטטוס" SortExpression="psName" />
+            <asp:BoundField DataField="Comments" HeaderText="הערות" SortExpression="Comments" />
+            <asp:BoundField DataField="price" HeaderText="מחיר" SortExpression="price" />
+            <asp:BoundField DataField="HatchesNum" HeaderText="מספר פתחים" ReadOnly="True" SortExpression="HatchesNum" />
         </Columns>
     </asp:GridView>
     <br />

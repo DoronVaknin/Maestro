@@ -22,6 +22,7 @@ public partial class Default2 : System.Web.UI.Page
         DBservices db = new DBservices();
         DataTable dt = db.GetCustomerInformation(ProjectID);
         SetOrdersGrid();
+        ProjectIDHolder.Value = Convert.ToString(row.Cells[1].Text);
 
         if (!Page.IsPostBack)
         {
@@ -33,16 +34,13 @@ public partial class Default2 : System.Web.UI.Page
 
     public void SetOrdersGrid()
     {
-        
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         DBservices db = new DBservices();
         DataTable dt2 = db.GetOrdersDetails(Convert.ToInt32(row.Cells[1].Text));
         //OrdersGrid.DataSource = dt2;
         //OrdersGrid.DataBind();
         DataTable statustable = new DataTable();
-        statustable=db.GetOrderStatus();
-        
-
+        statustable = db.GetOrderStatus();
     }
 
 

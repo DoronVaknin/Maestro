@@ -13,9 +13,13 @@ public partial class Default2 : System.Web.UI.Page
     }
     protected void Customers_SelectedIndexChanged(object sender, EventArgs e)
     {
-        Session["ID"] = CustomersTBL.SelectedRow.Cells[1].Text;
-        Session["FirstName"] = CustomersTBL.SelectedRow.Cells[2].Text;
-        Session["LastName"] = CustomersTBL.SelectedRow.Cells[3].Text;
+        int SelectedIndex = CustomersTBL.SelectedIndex;
+        SelectedIndex += 1;
+        GridViewRow row = CustomersTBL.Rows[SelectedIndex];
+        Session["Customer"] = row;
+        Session["CustomerID"] = row.Cells[1].Text;
+        //Session["FirstName"] = CustomersTBL.Rows[SelectedIndex].Cells[2].Text;
+        //Session["LastName"] = CustomersTBL.Rows[SelectedIndex].Cells[3].Text;
         Response.Redirect("ProjectsPerCustomer.aspx");
     }
 

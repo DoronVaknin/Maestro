@@ -38,15 +38,11 @@ public partial class Default2 : System.Web.UI.Page
         p.SupervisorName1 = ProjectSupervisorName.Value;
         if (ProjectSupervisorPhone.Value != "")
             p.SupervisorPhone1 = Convert.ToInt32(ProjectSupervisorPhone.Value);
-        Customer TempCustomer = new Customer();
-        if (Session["customer"] != null)
-        {
-            TempCustomer = (Customer)Session["customer"];
-            int id = TempCustomer.Cid;
-        }
+        Int32 CustomerID = 0;
+        if (Session["CustomerID"] != null)
+            CustomerID = Convert.ToInt32(Session["CustomerID"]);
         DBservices db = new DBservices();
-        db.InsertProjectInfo(p, TempCustomer.Cid);
-        int projectid = db.findid(TempCustomer.Cid);
+        int projectid = db.InsertProjectInfo(p, CustomerID);
         db.CreateHatches(p, projectid);
         Response.Redirect("~/Projects.aspx");
     }
