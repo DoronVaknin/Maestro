@@ -9,7 +9,7 @@
             פרויקטים</h1>
     </div>
     <br />
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>"
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
         SelectCommand="spShowAllProjects" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
     <asp:GridView ID="ProjectsTBL" runat="server" AllowSorting="True" CssClass="DataTables"
         DataSourceID="SqlDataSource1" AutoGenerateColumns="False" OnDataBound="OnDataBound"

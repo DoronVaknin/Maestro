@@ -12,8 +12,6 @@ public partial class Default2 : System.Web.UI.Page
 
     }
 
-
-
     protected void ProjectsTBL_SelectedIndexChanged(object sender, EventArgs e)
     {
         int SelectedIndex = ProjectsTBL.SelectedIndex;

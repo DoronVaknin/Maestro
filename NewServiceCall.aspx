@@ -63,7 +63,7 @@
             <td>
              
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
-                    ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>" 
+                    ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>" 
                     SelectCommand="spGetRegion" SelectCommandType="StoredProcedure">
                 </asp:SqlDataSource>
                 <asp:DropDownList ID="AreaTB" runat="server" DataSourceID="SqlDataSource1" 

@@ -50,7 +50,7 @@ public partial class Default2 : System.Web.UI.Page
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         string status = Convert.ToString(row.Cells[5].Text);
         int statusnumber = db.StatusNumber(status);
-        ProjectInfoStatus.SelectedIndex = (statusnumber - 1);
+        ProjectInfoStatus.SelectedIndex = statusnumber - 1;
     }
 
     public void SetPageDetails(DataTable dt)

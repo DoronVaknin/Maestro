@@ -9,7 +9,7 @@
             לקוחות</h1>
     </div>
     <br />
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_test1ConnectionString %>"
+    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
         SelectCommand="SELECT * FROM [Customer]"></asp:SqlDataSource>
     <asp:GridView ID="CustomersTBL" runat="server" AllowSorting="True" AutoGenerateColumns="False"
         CssClass="DataTables" DataKeyNames="cID" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="Customers_SelectedIndexChanged"

@@ -30,7 +30,7 @@ public class DBservices
 
     public void insertcustomer(Customer c)
     {
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spInsertNewCustomer]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -61,7 +61,7 @@ public class DBservices
 
     public int InsertProjectInfo(Project p, int CId)
     {
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spInsertProjectInfo]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -94,7 +94,7 @@ public class DBservices
 
     public void CreateHatches(Project p, int id)
     {
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spCreateHatches]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -117,7 +117,7 @@ public class DBservices
 
     public int findid(int id)
     {
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spFindProjectID]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -151,7 +151,7 @@ public class DBservices
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
 
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetCustomerInformation]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -175,7 +175,7 @@ public class DBservices
 
     public void UpdateCustomerInformation(Customer c, int OriginalCustomerID)
     {
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateCustomerInformation]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -208,7 +208,7 @@ public class DBservices
 
     public int StatusNumber(string status)
     {
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetProjectStatusNumber]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -232,7 +232,7 @@ public class DBservices
 
     public void UpdateProjectStatus(int ProjectID, int ProjectStatusNum)
     {
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateProjectStatus]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -256,7 +256,7 @@ public class DBservices
 
     public void UpdateProjectDetails(int ProjectID, int ProjPrice, string Comments)
     {
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateProjectDetails]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -280,7 +280,7 @@ public class DBservices
 
     public void LoadSuppliers(DropDownList ddl, int num)
     {
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetSuppliers]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -310,7 +310,7 @@ public class DBservices
     public DataTable GetOrderStatus()
     {
         DataTable dt3 = new DataTable();
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         SqlDataAdapter da = new SqlDataAdapter();
         using (SqlCommand sqlComm = new SqlCommand("[spGetOrderStatus]", con))
         {
@@ -335,7 +335,7 @@ public class DBservices
 
     public int GetSupplierID(string SupplierName)
     {
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetSupplierID]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -358,7 +358,7 @@ public class DBservices
 
     public int GetRawMeterialID(string RM)
     {
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetRawMeterialID]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -382,7 +382,7 @@ public class DBservices
 
     public void CreateNewOrder(Order o)
     {
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spCreateNewOrder]", con))
         {
             if (con.State != ConnectionState.Open)
@@ -415,7 +415,7 @@ public class DBservices
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
 
-        con = connect("igroup9_test1ConnectionString");
+        con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetOrdersListForProject]", con))
         {
             if (con.State != ConnectionState.Open)
