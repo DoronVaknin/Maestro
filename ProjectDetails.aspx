@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true"
-    CodeFile="ProjectDetails.aspx.cs" Inherits="Default2" EnableEventValidation="false" %>
+    CodeFile="ProjectDetails.aspx.cs" Inherits="Default" EnableEventValidation="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
     <style type="text/css">
@@ -329,6 +329,47 @@
     <div class="cntr">
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="צור הזמנה"
             CssClass="btn btn-default" Font-Bold="true" /></div>
+    <br />
+    <br />
+    <asp:GridView runat="server" AutoGenerateColumns="False" DataSourceID="OrderDataSource"
+        CssClass="DataTables">
+        <Columns>
+            <asp:CommandField ShowEditButton="true" />
+            <asp:BoundField DataField="oID" HeaderText="oId" SortExpression="oId" ReadOnly="true" />
+            <asp:BoundField DataField="DateOpened" HeaderText="DateOpened" SortExpression="DateOpened"
+                ReadOnly="true" />
+            <asp:BoundField DataField="rName" HeaderText="rName" SortExpression="rName" ReadOnly="true" />
+            <asp:BoundField DataField="DateOfArrival" HeaderText="DateOfArrival" SortExpression="DateOfArrival"
+                ReadOnly="true" />
+            <asp:BoundField DataField="Quantity" HeaderText="Quantity" SortExpression="Quantity"
+                ReadOnly="true" />
+            <asp:BoundField DataField="sName" HeaderText="sName" SortExpression="sName" ReadOnly="true" />
+            <asp:TemplateField HeaderText="osName" SortExpression="osName">
+                <EditItemTemplate>
+                    <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="StatusDataSource"
+                        DataTextField="osName" DataValueField="osName" SelectedValue='<%# Bind("osName") %>'>
+                    </asp:DropDownList>
+                </EditItemTemplate>
+                <ItemTemplate>
+                    <asp:Label ID="Label1" runat="server" Text='<%# Bind("osName") %>'></asp:Label>
+                </ItemTemplate>
+            </asp:TemplateField>
+        </Columns>
+    </asp:GridView>
+    <asp:SqlDataSource ID="OrderDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
+        SelectCommand="spGetOrdersListForProject" SelectCommandType="StoredProcedure"
+        UpdateCommand="Update[Orders] set [osID] =@osID where [oID]=@oID">
+        <SelectParameters>
+            <asp:ControlParameter ControlID="ProjectIDHolder" DefaultValue="" Name="ProjectID"
+                PropertyName="Value" Type="Int32" />
+        </SelectParameters>
+        <UpdateParameters>
+            <asp:Parameter Name="osID" Type="Int32" />
+            <asp:Parameter Name="oID" Type="Int32" />
+        </UpdateParameters>
+    </asp:SqlDataSource>
+    <asp:SqlDataSource ID="StatusDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
+        SelectCommand="spGetOrderStatus" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
     <br />
     <br />
 </asp:Content>

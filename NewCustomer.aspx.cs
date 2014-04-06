@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 using System.Web.Configuration;
 using System.Data;
 
-public partial class Default2 : System.Web.UI.Page
+public partial class Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -17,39 +17,13 @@ public partial class Default2 : System.Web.UI.Page
     }
     protected void CreateCustomer_Click(object sender, EventArgs e)
     {
-        Customer c = new Customer();
-        c.Cid = Convert.ToInt32(CustomerId.Value);
-        c.Fname = CustomerFirstName.Value;
-        c.Lname = CustomerLastName.Value;
-        c.City = CustomerCity.Value;
-        c.Address = CustomerAddress.Value;
-        if (CustomerPhone.Value != "")
-            c.Phone = Convert.ToInt32(CustomerPhone.Value);
+        Customer c = new Customer(Convert.ToInt32(CustomerId.Value), CustomerFirstName.Value, CustomerLastName.Value, CustomerCity.Value, CustomerAddress.Value, CustomerEmail.Value, Convert.ToInt32(CustomerArea.Text));
+        c.SetPhones(CustomerPhone.Value, CustomerCellPhone.Value, CustomerFaxNumber.Value);
+        Session["CustomerID"] = c.Cid;
+        int RowsAffected = c.InsertNewCustomer();
+        if (RowsAffected > 0)
+            Response.Redirect("NewProject.aspx?CustomerFirstName=" + CustomerFirstName.Value + "&CustomerLastName=" + CustomerLastName.Value);
         else
-            c.Phone = 0;
-        if (CustomerCellPhone.Value != "")
-            c.Mobile = Convert.ToInt32(CustomerCellPhone.Value);
-        else
-            c.Mobile = 0;
-        if (CustomerFaxNumber.Value != "")
-            c.Fax = Convert.ToInt32(CustomerFaxNumber.Value);
-        else
-            c.Fax = 0;
-        c.Email = CustomerEmail.Value;
-        if (CustomerArea.Text != "")
-            c.Region = Convert.ToInt32(CustomerArea.Text);
-        else
-            c.Region = 0;
-        DBservices db = new DBservices();
-        try
-        {
-            db.insertcustomer(c);
-            Session["CustomerID"] = c.Cid;
-            Response.Redirect("NewProject.aspx");
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
+            Response.Write("לא ניתן לשמור את הלקוח");
     }
 }

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Default2 : System.Web.UI.Page
+public partial class Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -16,10 +16,10 @@ public partial class Default2 : System.Web.UI.Page
     {
         ServiceCall sc = new ServiceCall();
         sc.CustomerName1 = CustomerName.Text;
-        sc.CellPhone1 = Convert.ToInt32( CustomerPhone.Text);
+        sc.CellPhone1 = Convert.ToInt32(CustomerPhone.Text);
         sc.Address1 = CustomerAddress.Text;
         sc.Description1 = ErrorDescription.Text;
-        sc.Area1 =Convert.ToInt32( AreaTB.SelectedItem.Value);
+        sc.Area1 = Convert.ToInt32(AreaTB.SelectedItem.Value);
         if (IsUrgent.Checked)
         {
             sc.IsUrgent1 = true;

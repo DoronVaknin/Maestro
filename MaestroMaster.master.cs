@@ -10,14 +10,14 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Page.User.Identity.Name == "Admin")
-            Welcome.InnerText = "שלום, אדמין";
-        else if (Page.User.Identity.Name == "ShimonY")
-            Welcome.InnerText = "שלום, שמעון";
-        else if (Page.User.Identity.Name == "MaliY")
-            Welcome.InnerText = "שלום, מלי";
-        else if (Page.User.Identity.Name == "BettiY")
-            Welcome.InnerText = "שלום, בטי";
+        switch (Page.User.Identity.Name)
+        {
+            case "Admin": Welcome.InnerText = "שלום, אדמין"; break;
+            case "ShimonY": Welcome.InnerText = "שלום, שמעון"; break;
+            case "MaliY": Welcome.InnerText = "שלום, מלי"; break;
+            case "BettiY": Welcome.InnerText = "שלום, בטי"; break;
+            default: break;
+        }
     }
 
     protected void LogoutBTN_Click(object sender, EventArgs e)

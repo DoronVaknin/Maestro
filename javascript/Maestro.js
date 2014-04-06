@@ -6,9 +6,9 @@
 
     //Datepicker activation
     $(".datepicker").datepicker();
-    $('.search_textbox').first().hide();
 
     //Quick search activation
+    $('.search_textbox').first().hide();
     $('.search_textbox').each(function (i) {
         $(this).quicksearch("[class*=DataTables] tr:not(:has(th))", {
             'testQuery': function (query, txt, row) {

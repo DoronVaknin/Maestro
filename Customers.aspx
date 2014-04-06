@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true"
-    CodeFile="Customers.aspx.cs" Inherits="Default2" %>
+    CodeFile="Customers.aspx.cs" Inherits="Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 </asp:Content>
@@ -21,9 +21,10 @@
             <asp:BoundField DataField="lName" HeaderText="שם משפחה" SortExpression="lName" />
             <asp:BoundField DataField="City" HeaderText="יישוב" SortExpression="City" />
             <asp:BoundField DataField="cAddress" HeaderText="כתובת" SortExpression="cAddress" />
-            <asp:BoundField DataField="Phone" HeaderText="טלפון" SortExpression="Phone"/>
+            <asp:BoundField DataField="Phone" HeaderText="טלפון" SortExpression="Phone" />
             <asp:BoundField DataField="Mobile" HeaderText="נייד" SortExpression="Mobile" />
-            <asp:BoundField DataField="Email" HeaderText="דוא&quot;ל" SortExpression="Email" Visible = "false" />
+            <asp:BoundField DataField="Email" HeaderText="דוא&quot;ל" SortExpression="Email"
+                Visible="false" />
             <asp:BoundField DataField="Fax" HeaderText="פקס" SortExpression="Fax" Visible="False" />
             <asp:BoundField DataField="RegionID" HeaderText="אזור" SortExpression="RegionID"
                 Visible="False" />

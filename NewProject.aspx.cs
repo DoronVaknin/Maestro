@@ -6,44 +6,33 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.IO;
 
-public partial class Default2 : System.Web.UI.Page
+public partial class Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        //התרעה על לקוח שנשמר במערכת
+        string CustomerFirstName = Request.QueryString["CustomerFirstName"];
+        string CustomerLastName = Request.QueryString["CustomerLastName"];
+        string CustomerWasAdded = "הלקוח" + " " + CustomerFirstName + " " + CustomerLastName + " " + "נוסף בהצלחה";
+        CustomerLabel.Text = CustomerWasAdded;
         ProjectDateOpened.Value = (DateTime.Today).ToString("MM/dd/yyyy");
         ProjectExpirationDate.Value = (DateTime.Now.AddYears(7)).ToString("MM/dd/yyyy");
     }
 
     protected void CreateProject_Click(object sender, EventArgs e)
     {
-        Project p = new Project();
-        p.OpenedDate1 =  DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null);
-        p.ExpirationDate1 = DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null);
-        p.Comment1 = ProjectComments.Value;
+        string filename = "";
         if (ProjectFiles.HasFile)
         {
-            string filename = Path.GetFileName(ProjectFiles.FileName);
+            filename = Path.GetFileName(ProjectFiles.FileName);
             ProjectFiles.SaveAs(Server.MapPath("~/files/") + filename);
         }
-        if (ProjectPrice.Value != "")
-            p.Price = Convert.ToInt16(ProjectPrice.Value);
-        if (ProjectHatches.Value != "")
-            p.HatchesNum1 = Convert.ToInt32(ProjectHatches.Value);
-        p.ArchitectName1 = ProjectArchitectName.Value;
-        if (ProjectArchitectPhone.Value != "")
-            p.ArchitectPhone1 = Convert.ToInt32(ProjectArchitectPhone.Value);
-        p.ContractorName1 = ProjectContractorName.Value;
-        if (ProjectContractorPhone.Value != "")
-            p.ContractorPhone1 = Convert.ToInt32(ProjectContractorPhone.Value);
-        p.SupervisorName1 = ProjectSupervisorName.Value;
-        if (ProjectSupervisorPhone.Value != "")
-            p.SupervisorPhone1 = Convert.ToInt32(ProjectSupervisorPhone.Value);
+        Project p = new Project(DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null), ProjectComments.Value, ProjectPrice.Value, ProjectHatches.Value, ProjectArchitectName.Value, ProjectArchitectPhone.Value, ProjectContractorName.Value, ProjectContractorPhone.Value, ProjectSupervisorName.Value, ProjectSupervisorPhone.Value);
+        //שמירת מספר תעודת זהות של הלקוח  במשתנה
         Int32 CustomerID = 0;
         if (Session["CustomerID"] != null)
             CustomerID = Convert.ToInt32(Session["CustomerID"]);
-        DBservices db = new DBservices();
-        int projectid = db.InsertProjectInfo(p, CustomerID);
-        db.CreateHatches(p, projectid);
+        p.InsertNewProject(p, CustomerID);
         Response.Redirect("~/Projects.aspx");
     }
 }

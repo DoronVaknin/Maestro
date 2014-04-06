@@ -8,12 +8,12 @@ using System.Web;
 /// </summary>
 public class ProjectStatus
 {
-	public ProjectStatus()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
+    public ProjectStatus()
+    {
+        //
+        // TODO: Add constructor logic here
+        //
+    }
 
     int statusnum;
     public int Statusnum

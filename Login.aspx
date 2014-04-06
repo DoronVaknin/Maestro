@@ -20,21 +20,21 @@
         </div>
         <section class="main">
             <form class="form-1" runat="server">
-            <asp:Button id = "LoginBTN" runat="server" Style="display: none;" OnClick="LoginBTN_Click" />
+            <asp:Button ID="LoginBTN" runat="server" Style="display: none;" OnClick="LoginBTN_Click" />
             <p class="field">
-                <input id = "UserNameTB" type="text" name="login" placeholder="Username" runat="server">
+                <input id="UserNameTB" type="text" name="login" placeholder="Username" runat="server">
                 <i class="icon-user icon-large"></i>
             </p>
             <p class="field">
-                <input id = "PasswordTB" type="password" name="password" placeholder="Password" runat="server">
+                <input id="PasswordTB" type="password" name="password" placeholder="Password" runat="server">
                 <i class="icon-lock icon-large"></i>
             </p>
             <p class="submit">
-                <button type = "button" onclick="ClickLoginBTN()">
+                <button type="button" onclick="ClickLoginBTN()">
                     <i class="icon-arrow-right icon-large"></i>
                 </button>
             </p>
-            <span id = "ErrorLBL" runat = "server"></span>
+            <span id="ErrorLBL" runat="server"></span>
             </form>
         </section>
     </div>

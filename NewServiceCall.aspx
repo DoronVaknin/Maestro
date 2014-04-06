@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true"
-    CodeFile="NewServiceCall.aspx.cs" Inherits="Default2" %>
+    CodeFile="NewServiceCall.aspx.cs" Inherits="Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
     <style type="text/css">
@@ -9,8 +9,8 @@
         }
         .style2
         {
-        width: 136px;
-    }
+            width: 136px;
+        }
         .style3
         {
             width: 406px;
@@ -61,15 +61,11 @@
                 אזור
             </td>
             <td>
-             
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
-                    ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>" 
-                    SelectCommand="spGetRegion" SelectCommandType="StoredProcedure">
-                </asp:SqlDataSource>
-                <asp:DropDownList ID="AreaTB" runat="server" DataSourceID="SqlDataSource1" 
-                    DataTextField="RegionName" DataValueField="RegionID">
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
+                    SelectCommand="spGetRegion" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+                <asp:DropDownList ID="AreaTB" runat="server" DataSourceID="SqlDataSource1" DataTextField="RegionName"
+                    DataValueField="RegionID">
                 </asp:DropDownList>
-             
             </td>
         </tr>
         <tr>
@@ -95,8 +91,8 @@
     <table class="style1">
         <tr>
             <td align="left" class="style3">
-                <asp:Button ID="Button1" runat="server" onclick="Button1_Click" 
-                    style="margin-left: 0px" Text="שמור" Width="66px" />
+                <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Style="margin-left: 0px"
+                    Text="שמור" Width="66px" />
             </td>
             <td style="padding-right: 10px">
                 <asp:Button ID="Button2" runat="server" Text="בטל" Width="64px" />

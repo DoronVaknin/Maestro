@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Web.Configuration;
+using System.Data;
 
 /// <summary>
 /// Summary description for Customer
@@ -13,6 +19,17 @@ public class Customer
         //
         // TODO: Add constructor logic here
         //
+    }
+
+    public Customer(int _cid, string _fname, string _lname, string _city, string _address, string _email, int _region)
+    {
+        cid = _cid;
+        fname = _fname;
+        lname = _lname;
+        city = _city;
+        address = _address;
+        email = _email;
+        region = _region;
     }
 
     int cid;
@@ -85,9 +102,50 @@ public class Customer
         set { region = value; }
     }
 
-    public void insert()
+    public void SetPhones(string _phone, string _CustomerCellPhone, string _CustomerFaxNumber)
+    {
+        if (_phone != "")
+            phone = Convert.ToInt32(_phone);
+        else
+            phone = 0;
+
+        if (_CustomerCellPhone != "")
+            Mobile = Convert.ToInt32(_CustomerCellPhone);
+        else
+            Mobile = 0;
+
+        if (_CustomerFaxNumber != "")
+            Fax = Convert.ToInt32(_CustomerFaxNumber);
+        else
+            Fax = 0;
+    }
+
+    public int InsertNewCustomer()
     {
         DBservices db = new DBservices();
-        db.insertcustomer(this);
+        try
+        {
+            int RowsAffected = db.insertcustomer(this);
+            return RowsAffected;
+        }
+
+        catch (Exception ex)
+        {
+            throw (ex);
+        }
+    }
+
+    public void SaveCustomerNewDetails(string ProjectInfoFirstName, string ProjectInfoLastName, string ProjectInfoPhone, string ProjectInfoMobile, string ProjectInfoFax, string ProjectInfoAddress, string ProjectInfoCity, string ProjectInfoEmail, int ProjectInfoID)
+    {
+        Fname = ProjectInfoFirstName;
+        Lname = ProjectInfoLastName;
+        Phone = Convert.ToInt32(ProjectInfoPhone);
+        Mobile = Convert.ToInt32(ProjectInfoMobile);
+        Fax = Convert.ToInt32(ProjectInfoFax);
+        Address = ProjectInfoAddress;
+        City = ProjectInfoCity;
+        Email = ProjectInfoEmail;
+        DBservices db = new DBservices();
+        db.UpdateCustomerInformation(this, ProjectInfoID);
     }
 }

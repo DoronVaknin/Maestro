@@ -8,12 +8,25 @@ using System.Web;
 /// </summary>
 public class Order
 {
-	public Order()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
+    public Order()
+    {
+        //
+        // TODO: Add constructor logic here
+        //
+    }
+
+    public Order(int ProjectId, string Supplier, int RawMeterialID, int Quantity)
+    {
+        DBservices db = new DBservices();
+        ProjectID1 = ProjectId;
+        DateOpened1 = DateTime.Now;
+        EstimateDateOfArrival1 = DateOpened1.AddDays(14);
+        OrderStatus1 = 1;
+        SupplierID1 = db.GetSupplierID(Supplier);
+        RawMeterialID1 = RawMeterialID;
+        Quantity1 = Quantity;
+        db.CreateNewOrder(this);
+    }
 
     int OrderID;
 

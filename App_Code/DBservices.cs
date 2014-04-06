@@ -11,7 +11,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 
-
 /// <summary>
 /// DBServices is a class created by me to provides some DataBase Services
 /// </summary>
@@ -28,7 +27,7 @@ public class DBservices
         //
     }
 
-    public void insertcustomer(Customer c)
+    public int insertcustomer(Customer c)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spInsertNewCustomer]", con))
@@ -50,7 +49,8 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@email", c.Email);
                 sqlComm.Parameters.AddWithValue("@region", c.Region);
                 sqlComm.CommandTimeout = 600;
-                sqlComm.ExecuteNonQuery();
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
             }
             catch (Exception ex)
             {
@@ -187,7 +187,6 @@ public class DBservices
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@OriginalID", Convert.ToInt32(OriginalCustomerID));
-                sqlComm.Parameters.AddWithValue("@NewID", Convert.ToInt32(c.Cid));
                 sqlComm.Parameters.AddWithValue("@FirstNAme", c.Fname);
                 sqlComm.Parameters.AddWithValue("@LastName", c.Lname);
                 sqlComm.Parameters.AddWithValue("@Phone", Convert.ToInt32(c.Phone));
@@ -408,9 +407,7 @@ public class DBservices
         }
     }
 
-
-
-        public DataTable GetOrdersDetails(int ProjectID)
+    public DataTable GetOrdersDetails(int ProjectID)
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
@@ -437,7 +434,60 @@ public class DBservices
         }
     }
 
+    //Mobile Application Methods
 
+    public DataTable GetProjects()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spShowAllProjects]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetProjectDetails(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectDetails]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
 }
 
 
