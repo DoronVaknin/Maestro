@@ -218,4 +218,14 @@ public class Project
         dt = db.GetProjectDetails(ProjectID);
         return dt;
     }
+
+    public DataTable GetHatches(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetHatches(ProjectID);
+        return dt;
+    }
+
+    
 }

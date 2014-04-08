@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿/// <reference path="jquery-1.11.0.js" />
+
+$(document).ready(function () {
     //Mark current tabs
     var sFileName = $(location).attr('href').replace(/^.*[\\\/]/, '');
     sFileName = sFileName.substring(0, sFileName.length - 5);
