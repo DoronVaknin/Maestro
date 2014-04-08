@@ -233,13 +233,13 @@ function BuildHatchesList(ProjID) {
 //------------------------------------------------------
 function BuildHatchesListPerProject() {
     str = "";
-    for (var Project in ProjectsList) {
-        str += '<div data-role="page" id="HatchesOfProject' + ProjectsList[Project].Pid1 + '">';
-        str += '<div data-role="header" data-theme="a"><h1>מאסטרו אלומיניום</h1>';
-        str += '<a href="#Project' + ProjectsList[Project].Pid1 + '" data-icon="back" data-iconpos="notext" style="border: none;"></a></div>';
+    for (var Project in Projects) {
+        str += '<div data-role="page" id="HatchesOfProject' + Projects[Project][1].Pid1 + '">';
+        str += '<div data-role="header" data-theme="a"><h1>' + Projects[Project][0].Fname + ' ' + Projects[Project][0].Lname + '</h1>';
+        str += '<a href="#Project' + Projects[Project][1].Pid1 + '" data-icon="back" data-iconpos="notext" style="border: none;"></a></div>';
         str += '<div data-role="content">';
         str += '<ul id="HatchesList" data-role="listview" data-theme="c" data-inset="true" data-filter="true">';
-        str += BuildHatchesList(ProjectsList[Project].Pid1);
+        str += BuildHatchesList(Projects[Project][1].Pid1);
         str += "</ul>"; // end of ul
         str += "</div>"; // end of content
         str += "</div>"; // end of page
