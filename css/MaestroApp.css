@@ -11,3 +11,17 @@ h2
 {
     width: 100%;
 }
+
+
+div.ui-navbar ul li .ui-icon-camera-white
+{
+    background: url("../themes/images/icons-png/camera-white.png") center 10px no-repeat;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 2)
+{
+    .ui-icon-camera-white
+    {
+        background: url("../themes/images/icons-png/camera-white.png") center 0 no-repeat;
+        background-size: 18px 18px;
+    }
+}

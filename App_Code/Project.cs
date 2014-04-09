@@ -139,6 +139,13 @@ public class Project
         set { HatchesNum = value; }
     }
 
+    string hatchesImageURL;
+    public string HatchesImageURL
+    {
+        get { return hatchesImageURL; }
+        set { hatchesImageURL = value; }
+    }
+
     public void InsertNewProject(Project p, int CustomerID)
     {
         DBservices db = new DBservices();

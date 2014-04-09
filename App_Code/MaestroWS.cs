@@ -75,18 +75,19 @@ public class MaestroWS : System.Web.Services.WebService
         ArrayList myAL = new ArrayList();
 
         p.Pid1 = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
-        ps.Statusname = dt.Rows[0].ItemArray[24].ToString();
+        ps.Statusname = dt.Rows[0].ItemArray[25].ToString();
         p.Comment1 = dt.Rows[0].ItemArray[1].ToString();
         p.OpenedDate1 = Convert.ToDateTime(dt.Rows[0].ItemArray[2]);
         p.ExpirationDate1 = Convert.ToDateTime(dt.Rows[0].ItemArray[3]);
         p.Price = Convert.ToInt32(dt.Rows[0].ItemArray[4]);
+        p.HatchesImageURL = dt.Rows[0].ItemArray[11].ToString();
 
-        c.Fname = dt.Rows[0].ItemArray[14].ToString();
-        c.Lname = dt.Rows[0].ItemArray[15].ToString();
-        c.Phone = Convert.ToInt32(dt.Rows[0].ItemArray[18]);
-        c.Mobile = Convert.ToInt32(dt.Rows[0].ItemArray[19]);
-        c.Fax = Convert.ToInt32(dt.Rows[0].ItemArray[20]);
-        c.Email = dt.Rows[0].ItemArray[21].ToString();
+        c.Fname = dt.Rows[0].ItemArray[15].ToString();
+        c.Lname = dt.Rows[0].ItemArray[16].ToString();
+        c.Phone = Convert.ToInt32(dt.Rows[0].ItemArray[19]);
+        c.Mobile = Convert.ToInt32(dt.Rows[0].ItemArray[20]);
+        c.Fax = Convert.ToInt32(dt.Rows[0].ItemArray[21]);
+        c.Email = dt.Rows[0].ItemArray[22].ToString();
 
         p.ContractorName1 = dt.Rows[0].ItemArray[5].ToString();
         p.ContractorPhone1 = Convert.ToInt32(dt.Rows[0].ItemArray[6]);
@@ -106,7 +107,6 @@ public class MaestroWS : System.Web.Services.WebService
         return jsonString;
     }
 
-
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public string GetHatches(int pID)
@@ -124,16 +124,15 @@ public class MaestroWS : System.Web.Services.WebService
             p = new Project();
             Hatch h = new Hatch();
 
-
             p.Pid1 = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+            p.HatchesImageURL = dt.Rows[i].ItemArray[11].ToString();
 
-            h.HatchID = Convert.ToInt32(dt.Rows[i].ItemArray[13]);
-            h.HatchStatus = dt.Rows[i].ItemArray[18].ToString();
-            h.HatchType = dt.Rows[i].ItemArray[20].ToString();
+            h.HatchID = Convert.ToInt32(dt.Rows[i].ItemArray[14]);
+            h.HatchStatus = dt.Rows[i].ItemArray[19].ToString();
+            h.HatchType = dt.Rows[i].ItemArray[21].ToString();
 
             myAL[i].Add(p);
             myAL[i].Add(h);
-
         }
         // create a json serializer object
         JavaScriptSerializer js = new JavaScriptSerializer();
@@ -142,21 +141,47 @@ public class MaestroWS : System.Web.Services.WebService
         return jsonString;
     }
 
-    //Picture pic = new Picture();
-    //Pin pin = new Pin();
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetPicsAndPins(int ProjectID)
+    {
+        Hatch h = new Hatch();
 
-    //pic.PictureID = Convert.ToInt32(dt.Rows[i].ItemArray[21]);
-    //pic.PictureDescription = dt.Rows[i].ItemArray[22].ToString();
-    //pic.DateTaken = Convert.ToDateTime(dt.Rows[i].ItemArray[23]);
-    //pic.ImageURL = dt.Rows[i].ItemArray[24].ToString();
+        DataTable dt = h.GetPicsAndPins(ProjectID);
+        ArrayList[] myAL = new ArrayList[dt.Rows.Count];
 
-    //pin.PinID = Convert.ToInt32(dt.Rows[i].ItemArray[26]);
-    //pin.CoordinateX = Convert.ToDouble(dt.Rows[i].ItemArray[27]);
-    //pin.CoordinateY = Convert.ToDouble(dt.Rows[i].ItemArray[28]);
-    //pin.Comment = dt.Rows[i].ItemArray[29].ToString();
-    //pin.AudioURL = dt.Rows[i].ItemArray[30].ToString();
-    //pin.VideoURL = dt.Rows[i].ItemArray[31].ToString();
+        for (int i = 0; i < myAL.Length; i++)
+            myAL[i] = new ArrayList();
 
-    //myAL[i].Add(pic);
-    //myAL[i].Add(pin);
+        for (int i = 0; i < myAL.Length; i++)
+        {
+            h = new Hatch();
+            Picture pic = new Picture();
+            Pin pin = new Pin();
+
+            h.HatchID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+            h.ProjectID = Convert.ToInt32(dt.Rows[i].ItemArray[3]);
+
+            pic.PictureID = Convert.ToInt32(dt.Rows[i].ItemArray[4]);
+            pic.PictureDescription = dt.Rows[i].ItemArray[5].ToString();
+            pic.DateTaken = Convert.ToDateTime(dt.Rows[i].ItemArray[6]);
+            pic.ImageURL = dt.Rows[i].ItemArray[7].ToString();
+
+            pin.PinID = Convert.ToInt32(dt.Rows[i].ItemArray[9]);
+            pin.CoordinateX = Convert.ToDouble(dt.Rows[i].ItemArray[10]);
+            pin.CoordinateY = Convert.ToDouble(dt.Rows[i].ItemArray[11]);
+            pin.Comment = dt.Rows[i].ItemArray[12].ToString();
+            pin.AudioURL = dt.Rows[i].ItemArray[13].ToString();
+            pin.VideoURL = dt.Rows[i].ItemArray[14].ToString();
+
+            myAL[i].Add(h);
+            myAL[i].Add(pic);
+            myAL[i].Add(pin);
+        }
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(myAL);
+        return jsonString;
+    }
 }

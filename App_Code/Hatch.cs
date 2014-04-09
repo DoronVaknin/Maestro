@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 
 /// <summary>
 /// Summary description for Hatch
@@ -48,5 +49,20 @@ public class Hatch
     {
         get { return hatchType; }
         set { hatchType = value; }
+    }
+
+    int projectID;
+    public int ProjectID
+    {
+        get { return projectID; }
+        set { projectID = value; }
+    }
+
+    public DataTable GetPicsAndPins(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetPicsAndPins(ProjectID);
+        return dt;
     }
 }
