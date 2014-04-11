@@ -22,121 +22,121 @@ public class Project
         //
     }
 
-    public Project(DateTime _OpenedDate1, DateTime _ExpirationDate1, string _comment, string price, string hatches, string ProjectArchitectName, string ProjectArchitectPhone, string ProjectContractorName, string ProjectContractorPhone, string ProjectSupervisorName, string ProjectSupervisorPhone)
+    public Project(DateTime _OpenedDate, DateTime _ExpirationDate, string _Comments, string _Cost, string _Hatches, string _ArchitectName, string _ArchitectPhone, string _ContractorName, string _ContractorPhone, string _SupervisorName, string _SupervisorPhone)
     {
-        OpenedDate = _OpenedDate1;
-        ExpirationDate = _ExpirationDate1;
-        Comment1 = _comment;
-        if (price != "")
-            Price = Convert.ToInt32(price);
-        if (hatches != "")
-            HatchesNum1 = Convert.ToInt32(hatches);
-        ArchitectName = ProjectArchitectName;
-        if (ProjectArchitectPhone != "")
-            ArchitectPhone = Convert.ToInt32(ProjectArchitectPhone);
+        DateOpened = _OpenedDate;
+        ExpirationDate = _ExpirationDate;
+        Comments = _Comments;
+        if (_Cost != "")
+            Cost = Convert.ToInt32(_Cost);
+        if (_Hatches != "")
+            NumOfHatches = Convert.ToInt32(_Hatches);
+        ArchitectName = _ArchitectName;
+        if (_ArchitectPhone != "")
+            ArchitectPhone = Convert.ToInt32(_ArchitectPhone);
         else
             ArchitectPhone = 0;
-        ContractorName = ProjectContractorName;
-        if (ProjectContractorPhone != "")
-            ContractorPhone1 = Convert.ToInt32(ProjectContractorPhone);
+        ContractorName = _ContractorName;
+        if (_ContractorPhone != "")
+            ContractorPhone = Convert.ToInt32(_ContractorPhone);
         else
-            ContractorPhone1 = 0;
-        SupervisorName = ProjectSupervisorName;
-        if (ProjectSupervisorPhone != "")
-            SupervisorPhone1 = Convert.ToInt32(ProjectSupervisorPhone);
+            ContractorPhone = 0;
+        SupervisorName = _SupervisorName;
+        if (_SupervisorPhone != "")
+            SupervisorPhone = Convert.ToInt32(_SupervisorPhone);
         else
-            SupervisorPhone1 = 0;
+            SupervisorPhone = 0;
     }
 
-    string Comment;
-    public string Comment1
+    string comments;
+    public string Comments
     {
-        get { return Comment; }
-        set { Comment = value; }
+        get { return comments; }
+        set { comments = value; }
     }
 
-    DateTime ExpirationDate;
-    public DateTime ExpirationDate1
+    DateTime expirationDate;
+    public DateTime ExpirationDate
     {
-        get { return ExpirationDate; }
-        set { ExpirationDate = value; }
+        get { return expirationDate; }
+        set { expirationDate = value; }
     }
 
-    DateTime OpenedDate;
-    public DateTime OpenedDate1
+    DateTime dateOpened;
+    public DateTime DateOpened
     {
-        get { return OpenedDate; }
-        set { OpenedDate = value; }
+        get { return dateOpened; }
+        set { dateOpened = value; }
     }
 
-    string ContractorName;
-    public string ContractorName1
+    string contractorName;
+    public string ContractorName
     {
-        get { return ContractorName; }
-        set { ContractorName = value; }
+        get { return contractorName; }
+        set { contractorName = value; }
     }
 
-    int ContractorPhone;
-    public int ContractorPhone1
+    int contractorPhone;
+    public int ContractorPhone
     {
-        get { return ContractorPhone; }
-        set { ContractorPhone = value; }
+        get { return contractorPhone; }
+        set { contractorPhone = value; }
     }
 
-    string ArchitectName;
-    public string ArchitectName1
+    string architectName;
+    public string ArchitectName
     {
-        get { return ArchitectName; }
-        set { ArchitectName = value; }
+        get { return architectName; }
+        set { architectName = value; }
     }
 
-    int ArchitectPhone;
-    public int ArchitectPhone1
+    int architectPhone;
+    public int ArchitectPhone
     {
-        get { return ArchitectPhone; }
-        set { ArchitectPhone = value; }
+        get { return architectPhone; }
+        set { architectPhone = value; }
     }
 
-    string SupervisorName;
-    public string SupervisorName1
+    string supervisorName;
+    public string SupervisorName
     {
-        get { return SupervisorName; }
-        set { SupervisorName = value; }
+        get { return supervisorName; }
+        set { supervisorName = value; }
     }
 
-    int SupervisorPhone;
-    public int SupervisorPhone1
+    int supervisorPhone;
+    public int SupervisorPhone
     {
-        get { return SupervisorPhone; }
-        set { SupervisorPhone = value; }
+        get { return supervisorPhone; }
+        set { supervisorPhone = value; }
     }
 
-    int Cid;
-    public int Cid1
+    int cid;
+    public int cID
     {
-        get { return Cid; }
-        set { Cid = value; }
+        get { return cid; }
+        set { cid = value; }
     }
 
-    int Pid;
-    public int Pid1
+    int pid;
+    public int pID
     {
-        get { return Pid; }
-        set { Pid = value; }
+        get { return pid; }
+        set { pid = value; }
     }
 
-    int price;
-    public int Price
+    int cost;
+    public int Cost
     {
-        get { return price; }
-        set { price = value; }
+        get { return cost; }
+        set { cost = value; }
     }
 
-    int HatchesNum;
-    public int HatchesNum1
+    int numOfHatches;
+    public int NumOfHatches
     {
-        get { return HatchesNum; }
-        set { HatchesNum = value; }
+        get { return numOfHatches; }
+        set { numOfHatches = value; }
     }
 
     string hatchesImageURL;
@@ -149,8 +149,8 @@ public class Project
     public void InsertNewProject(Project p, int CustomerID)
     {
         DBservices db = new DBservices();
-        int projectid = db.InsertProjectInfo(this, CustomerID);
-        db.CreateHatches(this, projectid);
+        int ProjectID = db.InsertProjectInfo(this, CustomerID);
+        db.CreateHatches(this, ProjectID);
     }
 
     public DataTable GetCustomerInformation(int ProjectID)
@@ -177,11 +177,11 @@ public class Project
         return dt;
     }
 
-    public int GetStatusNumber(string status)
+    public int GetStatusNumber(string StatusName)
     {
         DBservices db = new DBservices();
-        int StatusNumber = db.StatusNumber(status);
-        return StatusNumber;
+        int StatusNum = db.StatusNumber(StatusName);
+        return StatusNum;
     }
 
     public void UpdateProjectStatus(int ProjectID, int StatusNum)
@@ -190,10 +190,10 @@ public class Project
         db.UpdateProjectStatus(ProjectID, StatusNum);
     }
 
-    public void UpdateProjectDetails(int ProjectID, int price, string comments)
+    public void UpdateProjectDetails(int ProjectID, int Cost, string Comments)
     {
         DBservices db = new DBservices();
-        db.UpdateProjectDetails(ProjectID, price, comments);
+        db.UpdateProjectDetails(ProjectID, Cost, Comments);
     }
 
     public void LoadSuppliers(DropDownList ShutterProvider, DropDownList CollectedProvider, DropDownList ValimProvider, DropDownList UProvider, DropDownList ShoeingProvider, DropDownList EngineProvider, DropDownList ProtectedSpaceProvider, DropDownList GlassProvider, DropDownList BoxesProvider)
@@ -233,6 +233,4 @@ public class Project
         dt = db.GetHatches(ProjectID);
         return dt;
     }
-
-    
 }

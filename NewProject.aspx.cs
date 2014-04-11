@@ -10,7 +10,7 @@ public partial class Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        //התרעה על לקוח שנשמר במערכת
+        // Notification about customer that was added to database
         string CustomerFirstName = Request.QueryString["CustomerFirstName"];
         string CustomerLastName = Request.QueryString["CustomerLastName"];
         string CustomerWasAdded = "הלקוח" + " " + CustomerFirstName + " " + CustomerLastName + " " + "נוסף בהצלחה";

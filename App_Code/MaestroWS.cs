@@ -54,7 +54,7 @@ public class MaestroWS : System.Web.Services.WebService
             Projects[i] = new Project();
 
         for (int i = 0; i < Projects.Length; i++)
-            Projects[i].Pid1 = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+            Projects[i].pID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
 
         // create a json serializer object
         JavaScriptSerializer js = new JavaScriptSerializer();
@@ -74,12 +74,12 @@ public class MaestroWS : System.Web.Services.WebService
         ProjectStatus ps = new ProjectStatus();
         ArrayList myAL = new ArrayList();
 
-        p.Pid1 = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
-        ps.Statusname = dt.Rows[0].ItemArray[25].ToString();
-        p.Comment1 = dt.Rows[0].ItemArray[1].ToString();
-        p.OpenedDate1 = Convert.ToDateTime(dt.Rows[0].ItemArray[2]);
-        p.ExpirationDate1 = Convert.ToDateTime(dt.Rows[0].ItemArray[3]);
-        p.Price = Convert.ToInt32(dt.Rows[0].ItemArray[4]);
+        p.pID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
+        ps.StatusName = dt.Rows[0].ItemArray[25].ToString();
+        p.Comments = dt.Rows[0].ItemArray[1].ToString();
+        p.DateOpened = Convert.ToDateTime(dt.Rows[0].ItemArray[2]);
+        p.ExpirationDate = Convert.ToDateTime(dt.Rows[0].ItemArray[3]);
+        p.Cost = Convert.ToInt32(dt.Rows[0].ItemArray[4]);
         p.HatchesImageURL = dt.Rows[0].ItemArray[11].ToString();
 
         c.Fname = dt.Rows[0].ItemArray[15].ToString();
@@ -89,12 +89,12 @@ public class MaestroWS : System.Web.Services.WebService
         c.Fax = Convert.ToInt32(dt.Rows[0].ItemArray[21]);
         c.Email = dt.Rows[0].ItemArray[22].ToString();
 
-        p.ContractorName1 = dt.Rows[0].ItemArray[5].ToString();
-        p.ContractorPhone1 = Convert.ToInt32(dt.Rows[0].ItemArray[6]);
-        p.ArchitectName1 = dt.Rows[0].ItemArray[7].ToString();
-        p.ArchitectPhone1 = Convert.ToInt32(dt.Rows[0].ItemArray[8]);
-        p.SupervisorName1 = dt.Rows[0].ItemArray[9].ToString();
-        p.SupervisorPhone1 = Convert.ToInt32(dt.Rows[0].ItemArray[10]);
+        p.ContractorName = dt.Rows[0].ItemArray[5].ToString();
+        p.ContractorPhone = Convert.ToInt32(dt.Rows[0].ItemArray[6]);
+        p.ArchitectName = dt.Rows[0].ItemArray[7].ToString();
+        p.ArchitectPhone = Convert.ToInt32(dt.Rows[0].ItemArray[8]);
+        p.SupervisorName = dt.Rows[0].ItemArray[9].ToString();
+        p.SupervisorPhone = Convert.ToInt32(dt.Rows[0].ItemArray[10]);
 
         myAL.Add(c);
         myAL.Add(p);
@@ -124,7 +124,7 @@ public class MaestroWS : System.Web.Services.WebService
             p = new Project();
             Hatch h = new Hatch();
 
-            p.Pid1 = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+            p.pID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
             p.HatchesImageURL = dt.Rows[i].ItemArray[11].ToString();
 
             h.HatchID = Convert.ToInt32(dt.Rows[i].ItemArray[14]);

@@ -15,17 +15,17 @@ public class ProjectStatus
         //
     }
 
-    int statusnum;
-    public int Statusnum
+    int statusNum;
+    public int StatusNum
     {
-        get { return statusnum; }
-        set { statusnum = value; }
+        get { return statusNum; }
+        set { statusNum = value; }
     }
 
-    string statusname;
-    public string Statusname
+    string statusName;
+    public string StatusName
     {
-        get { return statusname; }
-        set { statusname = value; }
+        get { return statusName; }
+        set { statusName = value; }
     }
 }

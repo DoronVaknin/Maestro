@@ -23,8 +23,8 @@
             <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened" />
             <asp:BoundField DataField="psName" HeaderText="סטטוס" SortExpression="psName" />
             <asp:BoundField DataField="Comments" HeaderText="הערות" SortExpression="Comments" />
-            <asp:BoundField DataField="price" HeaderText="מחיר" SortExpression="price" />
-            <asp:BoundField DataField="HatchesNum" HeaderText="מספר פתחים" ReadOnly="True" SortExpression="HatchesNum" />
+            <asp:BoundField DataField="Cost" HeaderText="מחיר" SortExpression="Cost" />
+            <asp:BoundField DataField="NumOfHatches" HeaderText="מספר פתחים" ReadOnly="True" SortExpression="NumOfHatches" />
         </Columns>
     </asp:GridView>
     <br />

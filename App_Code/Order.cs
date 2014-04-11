@@ -15,81 +15,79 @@ public class Order
         //
     }
 
-    public Order(int ProjectId, string Supplier, int RawMeterialID, int Quantity)
+    public Order(int _ProjectId, string _Supplier, int _RawMaterialID, int _Quantity)
     {
         DBservices db = new DBservices();
-        ProjectID1 = ProjectId;
-        DateOpened1 = DateTime.Now;
-        EstimateDateOfArrival1 = DateOpened1.AddDays(14);
-        OrderStatus1 = 1;
-        SupplierID1 = db.GetSupplierID(Supplier);
-        RawMeterialID1 = RawMeterialID;
-        Quantity1 = Quantity;
+        ProjectID = _ProjectId;
+        DateOpened = DateTime.Now;
+        EstimatedDateOfArrival = DateOpened.AddDays(14);
+        OrderStatus = 1;
+        SupplierID = db.GetSupplierID(_Supplier);
+        RawMaterialID = _RawMaterialID;
+        Quantity = _Quantity;
         db.CreateNewOrder(this);
     }
 
-    int OrderID;
-
-    public int OrderID1
+    int orderID;
+    public int OrderID
     {
-        get { return OrderID; }
-        set { OrderID = value; }
-    }
-    DateTime DateOpened;
-
-    public DateTime DateOpened1
-    {
-        get { return DateOpened; }
-        set { DateOpened = value; }
-    }
-    DateTime EstimateDateOfArrival;
-
-    public DateTime EstimateDateOfArrival1
-    {
-        get { return EstimateDateOfArrival; }
-        set { EstimateDateOfArrival = value; }
-    }
-    DateTime DateOfArrival;
-
-    public DateTime DateOfArrival1
-    {
-        get { return DateOfArrival; }
-        set { DateOfArrival = value; }
-    }
-    int OrderStatus;
-
-    public int OrderStatus1
-    {
-        get { return OrderStatus; }
-        set { OrderStatus = value; }
-    }
-    int ProjectID;
-
-    public int ProjectID1
-    {
-        get { return ProjectID; }
-        set { ProjectID = value; }
-    }
-    int SupplierID;
-
-    public int SupplierID1
-    {
-        get { return SupplierID; }
-        set { SupplierID = value; }
-    }
-    int RawMeterialID;
-
-    public int RawMeterialID1
-    {
-        get { return RawMeterialID; }
-        set { RawMeterialID = value; }
+        get { return orderID; }
+        set { orderID = value; }
     }
 
-    int Quantity;
-
-    public int Quantity1
+    DateTime dateOpened;
+    public DateTime DateOpened
     {
-        get { return Quantity; }
-        set { Quantity = value; }
+        get { return dateOpened; }
+        set { dateOpened = value; }
+    }
+
+    DateTime estimatedDateOfArrival;
+    public DateTime EstimatedDateOfArrival
+    {
+        get { return estimatedDateOfArrival; }
+        set { estimatedDateOfArrival = value; }
+    }
+
+    DateTime dateOfArrival;
+    public DateTime DateOfArrival
+    {
+        get { return dateOfArrival; }
+        set { dateOfArrival = value; }
+    }
+
+    int orderStatus;
+    public int OrderStatus
+    {
+        get { return orderStatus; }
+        set { orderStatus = value; }
+    }
+
+    int projectID;
+    public int ProjectID
+    {
+        get { return projectID; }
+        set { projectID = value; }
+    }
+
+    int supplierID;
+    public int SupplierID
+    {
+        get { return supplierID; }
+        set { supplierID = value; }
+    }
+
+    int rawMaterialID;
+    public int RawMaterialID
+    {
+        get { return rawMaterialID; }
+        set { rawMaterialID = value; }
+    }
+
+    int quantity;
+    public int Quantity
+    {
+        get { return quantity; }
+        set { quantity = value; }
     }
 }

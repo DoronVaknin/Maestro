@@ -15,21 +15,19 @@ public partial class Default : System.Web.UI.Page
     protected void Button1_Click(object sender, EventArgs e)
     {
         ServiceCall sc = new ServiceCall();
-        sc.CustomerName1 = CustomerName.Text;
-        sc.CellPhone1 = Convert.ToInt32(CustomerPhone.Text);
-        sc.Address1 = CustomerAddress.Text;
-        sc.Description1 = ErrorDescription.Text;
-        sc.Area1 = Convert.ToInt32(AreaTB.SelectedItem.Value);
+        sc.CustomerName = CustomerName.Text;
+        sc.Mobile = Convert.ToInt32(CustomerPhone.Text);
+        sc.Address = CustomerAddress.Text;
+        sc.Description = ErrorDescription.Text;
+        sc.Area = Convert.ToInt32(AreaTB.SelectedItem.Value);
         if (IsUrgent.Checked)
-        {
-            sc.IsUrgent1 = true;
-        }
+            sc.Urgent = true;
         else
-            sc.IsUrgent1 = false;
+            sc.Urgent = false;
         if (IsWarranty.Checked)
-            sc.Warranty1 = true;
+            sc.Warranty = true;
         else
-            sc.Warranty1 = false;
+            sc.Warranty = false;
 
         //sc.insert(this);
     }

@@ -17,8 +17,6 @@ public partial class Default : System.Web.UI.Page
 
     }
 
-
-
     protected void ProjectsTBL_SelectedIndexChanged(object sender, EventArgs e)
     {
         int SelectedIndex = ProjectsTBL.SelectedIndex;
@@ -42,7 +40,4 @@ public partial class Default : System.Web.UI.Page
         }
         ProjectsTBL.HeaderRow.Parent.Controls.AddAt(1, row);
     }
-
- 
-
 }

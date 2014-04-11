@@ -21,19 +21,19 @@ public class Customer
         //
     }
 
-    public Customer(int _cid, string _fname, string _lname, string _city, string _address, string _email, int _region)
+    public Customer(int _cID, string _fName, string _lName, string _City, string _Address, string _Email, int _Region)
     {
-        cid = _cid;
-        fname = _fname;
-        lname = _lname;
-        city = _city;
-        address = _address;
-        email = _email;
-        region = _region;
+        cID = _cID;
+        Fname = _fName;
+        Lname = _lName;
+        City = _City;
+        Address = _Address;
+        Email = _Email;
+        Region = _Region;
     }
 
     int cid;
-    public int Cid
+    public int cID
     {
         get { return cid; }
         set { cid = value; }
@@ -102,20 +102,20 @@ public class Customer
         set { region = value; }
     }
 
-    public void SetPhones(string _phone, string _CustomerCellPhone, string _CustomerFaxNumber)
+    public void SetPhones(string _Phone, string _Mobile, string _Fax)
     {
-        if (_phone != "")
-            phone = Convert.ToInt32(_phone);
+        if (_Phone != "")
+            phone = Convert.ToInt32(_Phone);
         else
             phone = 0;
 
-        if (_CustomerCellPhone != "")
-            Mobile = Convert.ToInt32(_CustomerCellPhone);
+        if (_Mobile != "")
+            Mobile = Convert.ToInt32(_Mobile);
         else
             Mobile = 0;
 
-        if (_CustomerFaxNumber != "")
-            Fax = Convert.ToInt32(_CustomerFaxNumber);
+        if (_Fax != "")
+            Fax = Convert.ToInt32(_Fax);
         else
             Fax = 0;
     }
@@ -125,7 +125,7 @@ public class Customer
         DBservices db = new DBservices();
         try
         {
-            int RowsAffected = db.insertcustomer(this);
+            int RowsAffected = db.InsertNewCustomer(this);
             return RowsAffected;
         }
 

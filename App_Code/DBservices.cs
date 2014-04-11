@@ -27,7 +27,7 @@ public class DBservices
         //
     }
 
-    public int insertcustomer(Customer c)
+    public int InsertNewCustomer(Customer c)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spInsertNewCustomer]", con))
@@ -38,16 +38,16 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@cid", c.Cid);
-                sqlComm.Parameters.AddWithValue("@fname", c.Fname);
-                sqlComm.Parameters.AddWithValue("@lname", c.Lname);
-                sqlComm.Parameters.AddWithValue("@city", c.City);
-                sqlComm.Parameters.AddWithValue("@address", c.Address);
-                sqlComm.Parameters.AddWithValue("@phone", c.Phone);
-                sqlComm.Parameters.AddWithValue("@mobile", c.Mobile);
-                sqlComm.Parameters.AddWithValue("@fax", c.Fax);
-                sqlComm.Parameters.AddWithValue("@email", c.Email);
-                sqlComm.Parameters.AddWithValue("@region", c.Region);
+                sqlComm.Parameters.AddWithValue("@cID", c.cID);
+                sqlComm.Parameters.AddWithValue("@fName", c.Fname);
+                sqlComm.Parameters.AddWithValue("@lName", c.Lname);
+                sqlComm.Parameters.AddWithValue("@City", c.City);
+                sqlComm.Parameters.AddWithValue("@Address", c.Address);
+                sqlComm.Parameters.AddWithValue("@Phone", c.Phone);
+                sqlComm.Parameters.AddWithValue("@Mobile", c.Mobile);
+                sqlComm.Parameters.AddWithValue("@Fax", c.Fax);
+                sqlComm.Parameters.AddWithValue("@Email", c.Email);
+                sqlComm.Parameters.AddWithValue("@Region", c.Region);
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;
@@ -59,7 +59,7 @@ public class DBservices
         }
     }
 
-    public int InsertProjectInfo(Project p, int CId)
+    public int InsertProjectInfo(Project p, int pID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spInsertProjectInfo]", con))
@@ -70,17 +70,17 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@id", CId);
-                sqlComm.Parameters.AddWithValue("@date", p.OpenedDate1);
-                sqlComm.Parameters.AddWithValue("@exdate", p.ExpirationDate1.AddDays(60));
-                sqlComm.Parameters.AddWithValue("@price", p.Price);
-                sqlComm.Parameters.AddWithValue("@comment", p.Comment1);
-                sqlComm.Parameters.AddWithValue("@ContName", p.ContractorName1);
-                sqlComm.Parameters.AddWithValue("@contPhone", p.ContractorPhone1);
-                sqlComm.Parameters.AddWithValue("@ArchName", p.ArchitectName1);
-                sqlComm.Parameters.AddWithValue("@ArchPhone", p.ArchitectPhone1);
-                sqlComm.Parameters.AddWithValue("@superName", p.SupervisorName1);
-                sqlComm.Parameters.AddWithValue("@superPhone", p.SupervisorPhone1);
+                sqlComm.Parameters.AddWithValue("@pID", pID);
+                sqlComm.Parameters.AddWithValue("@DateOpened", p.DateOpened);
+                sqlComm.Parameters.AddWithValue("@ExpirationDate", p.ExpirationDate.AddDays(60));
+                sqlComm.Parameters.AddWithValue("@Cost", p.Cost);
+                sqlComm.Parameters.AddWithValue("@Comments", p.Comments);
+                sqlComm.Parameters.AddWithValue("@ContName", p.ContractorName);
+                sqlComm.Parameters.AddWithValue("@ContPhone", p.ContractorPhone);
+                sqlComm.Parameters.AddWithValue("@ArchName", p.ArchitectName);
+                sqlComm.Parameters.AddWithValue("@ArchPhone", p.ArchitectPhone);
+                sqlComm.Parameters.AddWithValue("@SuperName", p.SupervisorName);
+                sqlComm.Parameters.AddWithValue("@SuperPhone", p.SupervisorPhone);
                 sqlComm.CommandTimeout = 600;
                 int value = (int)sqlComm.ExecuteScalar();
                 return value;
@@ -92,7 +92,7 @@ public class DBservices
         }
     }
 
-    public void CreateHatches(Project p, int id)
+    public void CreateHatches(Project p, int pID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spCreateHatches]", con))
@@ -103,8 +103,8 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@NumOfHatches", p.HatchesNum1);
-                sqlComm.Parameters.AddWithValue("@ProjectID", id);
+                sqlComm.Parameters.AddWithValue("@NumOfHatches", p.NumOfHatches);
+                sqlComm.Parameters.AddWithValue("@ProjectID", pID);
                 sqlComm.CommandTimeout = 600;
                 sqlComm.ExecuteNonQuery();
             }
@@ -115,10 +115,10 @@ public class DBservices
         }
     }
 
-    public int findid(int id)
+    public int GetProjectID(int cID)
     {
         con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[spFindProjectID]", con))
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectID]", con))
         {
             if (con.State != ConnectionState.Open)
                 con.Open();
@@ -126,7 +126,7 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@customerid", id);
+                sqlComm.Parameters.AddWithValue("@CustomerID", cID);
                 sqlComm.CommandTimeout = 600;
                 int value = (int)sqlComm.ExecuteScalar();
                 return value;
@@ -146,7 +146,7 @@ public class DBservices
         return con;
     }
 
-    public DataTable GetCustomerInformation(int id)
+    public DataTable GetCustomerInformation(int pID)
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
@@ -160,7 +160,7 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@ProjectID", id);
+                sqlComm.Parameters.AddWithValue("@ProjectID", pID);
                 da.SelectCommand = sqlComm;
                 da.Fill(dt);
                 return dt;
@@ -186,8 +186,8 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@OriginalID", Convert.ToInt32(OriginalCustomerID));
-                sqlComm.Parameters.AddWithValue("@FirstNAme", c.Fname);
+                sqlComm.Parameters.AddWithValue("@cID", Convert.ToInt32(OriginalCustomerID));
+                sqlComm.Parameters.AddWithValue("@FirstName", c.Fname);
                 sqlComm.Parameters.AddWithValue("@LastName", c.Lname);
                 sqlComm.Parameters.AddWithValue("@Phone", Convert.ToInt32(c.Phone));
                 sqlComm.Parameters.AddWithValue("@Mobile", Convert.ToInt32(c.Mobile));
@@ -205,7 +205,7 @@ public class DBservices
         }
     }
 
-    public int StatusNumber(string status)
+    public int StatusNumber(string StatusName)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetProjectStatusNumber]", con))
@@ -216,7 +216,7 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@status", status);
+                sqlComm.Parameters.AddWithValue("@StatusName", StatusName);
 
                 sqlComm.CommandTimeout = 600;
                 int value = (int)sqlComm.ExecuteScalar();
@@ -253,7 +253,7 @@ public class DBservices
         }
     }
 
-    public void UpdateProjectDetails(int ProjectID, int ProjPrice, string Comments)
+    public void UpdateProjectDetails(int ProjectID, int ProjCost, string Comments)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateProjectDetails]", con))
@@ -265,8 +265,8 @@ public class DBservices
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
-                sqlComm.Parameters.AddWithValue("@ProjPrice", ProjPrice);
-                sqlComm.Parameters.AddWithValue("@ProjectComment", Comments);
+                sqlComm.Parameters.AddWithValue("@Cost", ProjCost);
+                sqlComm.Parameters.AddWithValue("@Comments", Comments);
                 sqlComm.CommandTimeout = 600;
                 sqlComm.ExecuteNonQuery();
             }
@@ -277,7 +277,7 @@ public class DBservices
         }
     }
 
-    public void LoadSuppliers(DropDownList ddl, int num)
+    public void LoadSuppliers(DropDownList ddl, int RawMaterialID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetSuppliers]", con))
@@ -290,7 +290,7 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@RawMaterialID ", num);
+                sqlComm.Parameters.AddWithValue("@RawMaterialID ", RawMaterialID);
                 sqlComm.CommandTimeout = 600;
                 IDataReader dr = sqlComm.ExecuteReader();
                 ddl.DataSource = dr;
@@ -355,10 +355,10 @@ public class DBservices
         }
     }
 
-    public int GetRawMeterialID(string RM)
+    public int GetRawMaterialID(string RawMaterialName)
     {
         con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[spGetRawMeterialID]", con))
+        using (SqlCommand sqlComm = new SqlCommand("[spGetRawMaterialID]", con))
         {
             if (con.State != ConnectionState.Open)
                 con.Open();
@@ -367,7 +367,7 @@ public class DBservices
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.CommandTimeout = 600;
-                sqlComm.Parameters.AddWithValue("@RawMetirial", RM);
+                sqlComm.Parameters.AddWithValue("@RawMaterialName", RawMaterialName);
                 int ID = (int)sqlComm.ExecuteScalar();
                 return ID;
             }
@@ -376,7 +376,6 @@ public class DBservices
                 throw (ex);
             }
         }
-
     }
 
     public void CreateNewOrder(Order o)
@@ -390,13 +389,13 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@DateOpened", o.DateOpened1);
-                sqlComm.Parameters.AddWithValue("@EstimateDateOfArrival", o.EstimateDateOfArrival1);
-                sqlComm.Parameters.AddWithValue("@Quantity", o.Quantity1);
-                sqlComm.Parameters.AddWithValue("@osID", o.OrderStatus1);
-                sqlComm.Parameters.AddWithValue("@pID", o.ProjectID1);
-                sqlComm.Parameters.AddWithValue("@SupplierID", o.SupplierID1);
-                sqlComm.Parameters.AddWithValue("@rmID", o.RawMeterialID1);
+                sqlComm.Parameters.AddWithValue("@DateOpened", o.DateOpened);
+                sqlComm.Parameters.AddWithValue("@EstimateDateOfArrival", o.EstimatedDateOfArrival);
+                sqlComm.Parameters.AddWithValue("@Quantity", o.Quantity);
+                sqlComm.Parameters.AddWithValue("@osID", o.OrderStatus);
+                sqlComm.Parameters.AddWithValue("@pID", o.ProjectID);
+                sqlComm.Parameters.AddWithValue("@SupplierID", o.SupplierID);
+                sqlComm.Parameters.AddWithValue("@rmID", o.RawMaterialID);
                 sqlComm.CommandTimeout = 600;
                 sqlComm.ExecuteNonQuery();
             }

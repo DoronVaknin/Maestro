@@ -8,63 +8,63 @@ using System.Web;
 /// </summary>
 public class ServiceCall
 {
-	public ServiceCall()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
-
-    string CustomerName;
-    public string CustomerName1
+    public ServiceCall()
     {
-        get { return CustomerName; }
-        set { CustomerName = value; }
+        //
+        // TODO: Add constructor logic here
+        //
     }
 
-    Int32 CellPhone;
-    public Int32 CellPhone1
+    string customerName;
+    public string CustomerName
     {
-        get { return CellPhone; }
-        set { CellPhone = value; }
+        get { return customerName; }
+        set { customerName = value; }
     }
 
-    string Address;
-    public string Address1
+    int mobile;
+    public int Mobile
     {
-        get { return Address; }
-        set { Address = value; }
+        get { return mobile; }
+        set { mobile = value; }
     }
 
-    string Description;
-    public string Description1
+    string address;
+    public string Address
     {
-        get { return Description; }
-        set { Description = value; }
+        get { return address; }
+        set { address = value; }
     }
 
-    int Area;
-    public int Area1
+    string description;
+    public string Description
     {
-        get { return Area; }
-        set { Area = value; }
+        get { return description; }
+        set { description = value; }
     }
 
-    bool IsUrgent;
-    public bool IsUrgent1
+    int area;
+    public int Area
     {
-        get { return IsUrgent; }
-        set { IsUrgent = value; }
+        get { return area; }
+        set { area = value; }
     }
 
-    bool Warranty;
-    public bool Warranty1
+    bool urgent;
+    public bool Urgent
     {
-        get { return Warranty; }
-        set { Warranty = value; }
+        get { return urgent; }
+        set { urgent = value; }
     }
 
-    public void insert(ServiceCall sc)
+    bool warranty;
+    public bool Warranty
+    {
+        get { return warranty; }
+        set { warranty = value; }
+    }
+
+    public void InsertServiceCall(ServiceCall sc)
     {
         DBservices dbs = new DBservices();
     }
