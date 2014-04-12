@@ -253,7 +253,7 @@ public class DBservices
         }
     }
 
-    public void UpdateProjectDetails(int ProjectID, int ProjCost, string Comments)
+    public void UpdateProjectDetails(int ProjectID, double ProjCost, string Comments)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateProjectDetails]", con))

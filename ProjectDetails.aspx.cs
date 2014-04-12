@@ -93,7 +93,7 @@ public partial class Default : System.Web.UI.Page
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         Project p = new Project();
         p.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectInfoStatus.SelectedIndex + 1);
-        p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToInt32(ProjectInfoPrice.Value), ProjectInfoComments.Value);
+        p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoPrice.Value), ProjectInfoComments.Value);
         SaveProjectDetailsBTN.Style.Add("display", "none");
         EditProjectDetailsBTN.Style.Add("display", "inline-block");
     }

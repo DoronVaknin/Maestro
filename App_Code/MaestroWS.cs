@@ -79,7 +79,7 @@ public class MaestroWS : System.Web.Services.WebService
         p.Comments = dt.Rows[0].ItemArray[1].ToString();
         p.DateOpened = Convert.ToDateTime(dt.Rows[0].ItemArray[2]);
         p.ExpirationDate = Convert.ToDateTime(dt.Rows[0].ItemArray[3]);
-        p.Cost = Convert.ToInt32(dt.Rows[0].ItemArray[4]);
+        p.Cost = Convert.ToDouble(dt.Rows[0].ItemArray[4]);
         p.HatchesImageURL = dt.Rows[0].ItemArray[11].ToString();
 
         c.Fname = dt.Rows[0].ItemArray[15].ToString();

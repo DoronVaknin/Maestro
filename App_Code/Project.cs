@@ -28,7 +28,7 @@ public class Project
         ExpirationDate = _ExpirationDate;
         Comments = _Comments;
         if (_Cost != "")
-            Cost = Convert.ToInt32(_Cost);
+            Cost = Convert.ToDouble(_Cost);
         if (_Hatches != "")
             NumOfHatches = Convert.ToInt32(_Hatches);
         ArchitectName = _ArchitectName;
@@ -125,8 +125,8 @@ public class Project
         set { pid = value; }
     }
 
-    int cost;
-    public int Cost
+    double cost;
+    public double Cost
     {
         get { return cost; }
         set { cost = value; }
@@ -190,7 +190,7 @@ public class Project
         db.UpdateProjectStatus(ProjectID, StatusNum);
     }
 
-    public void UpdateProjectDetails(int ProjectID, int Cost, string Comments)
+    public void UpdateProjectDetails(int ProjectID, double Cost, string Comments)
     {
         DBservices db = new DBservices();
         db.UpdateProjectDetails(ProjectID, Cost, Comments);
