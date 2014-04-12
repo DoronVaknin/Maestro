@@ -16,7 +16,7 @@ public partial class Default : System.Web.UI.Page
     {
         ServiceCall sc = new ServiceCall();
         sc.CustomerName = CustomerName.Text;
-        sc.Mobile = Convert.ToInt32(CustomerPhone.Text);
+        sc.Mobile = CustomerPhone.Text;
         sc.Address = CustomerAddress.Text;
         sc.Description = ErrorDescription.Text;
         sc.Area = Convert.ToInt32(AreaTB.SelectedItem.Value);

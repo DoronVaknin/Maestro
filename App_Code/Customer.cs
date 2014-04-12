@@ -67,22 +67,22 @@ public class Customer
         set { address = value; }
     }
 
-    int phone;
-    public int Phone
+    string phone;
+    public string Phone
     {
         get { return phone; }
         set { phone = value; }
     }
 
-    int mobile;
-    public int Mobile
+    string mobile;
+    public string Mobile
     {
         get { return mobile; }
         set { mobile = value; }
     }
 
-    int fax;
-    public int Fax
+    string fax;
+    public string Fax
     {
         get { return fax; }
         set { fax = value; }
@@ -105,19 +105,19 @@ public class Customer
     public void SetPhones(string _Phone, string _Mobile, string _Fax)
     {
         if (_Phone != "")
-            phone = Convert.ToInt32(_Phone);
+            phone = _Phone;
         else
-            phone = 0;
+            phone = "0";
 
         if (_Mobile != "")
-            Mobile = Convert.ToInt32(_Mobile);
+            Mobile = _Mobile;
         else
-            Mobile = 0;
+            Mobile = "0";
 
         if (_Fax != "")
-            Fax = Convert.ToInt32(_Fax);
+            Fax = _Fax;
         else
-            Fax = 0;
+            Fax = "0";
     }
 
     public int InsertNewCustomer()
@@ -139,9 +139,9 @@ public class Customer
     {
         Fname = ProjectInfoFirstName;
         Lname = ProjectInfoLastName;
-        Phone = Convert.ToInt32(ProjectInfoPhone);
-        Mobile = Convert.ToInt32(ProjectInfoMobile);
-        Fax = Convert.ToInt32(ProjectInfoFax);
+        Phone = ProjectInfoPhone;
+        Mobile = ProjectInfoMobile;
+        Fax = ProjectInfoFax;
         Address = ProjectInfoAddress;
         City = ProjectInfoCity;
         Email = ProjectInfoEmail;

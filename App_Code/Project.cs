@@ -33,19 +33,19 @@ public class Project
             NumOfHatches = Convert.ToInt32(_Hatches);
         ArchitectName = _ArchitectName;
         if (_ArchitectPhone != "")
-            ArchitectPhone = Convert.ToInt32(_ArchitectPhone);
+            ArchitectPhone = _ArchitectPhone;
         else
-            ArchitectPhone = 0;
+            ArchitectPhone = "0";
         ContractorName = _ContractorName;
         if (_ContractorPhone != "")
-            ContractorPhone = Convert.ToInt32(_ContractorPhone);
+            ContractorPhone = _ContractorPhone;
         else
-            ContractorPhone = 0;
+            ContractorPhone = "0";
         SupervisorName = _SupervisorName;
         if (_SupervisorPhone != "")
-            SupervisorPhone = Convert.ToInt32(_SupervisorPhone);
+            SupervisorPhone = _SupervisorPhone;
         else
-            SupervisorPhone = 0;
+            SupervisorPhone = "0";
     }
 
     string comments;
@@ -76,8 +76,8 @@ public class Project
         set { contractorName = value; }
     }
 
-    int contractorPhone;
-    public int ContractorPhone
+    string contractorPhone;
+    public string ContractorPhone
     {
         get { return contractorPhone; }
         set { contractorPhone = value; }
@@ -90,8 +90,8 @@ public class Project
         set { architectName = value; }
     }
 
-    int architectPhone;
-    public int ArchitectPhone
+    string architectPhone;
+    public string ArchitectPhone
     {
         get { return architectPhone; }
         set { architectPhone = value; }
@@ -104,8 +104,8 @@ public class Project
         set { supervisorName = value; }
     }
 
-    int supervisorPhone;
-    public int SupervisorPhone
+    string supervisorPhone;
+    public string SupervisorPhone
     {
         get { return supervisorPhone; }
         set { supervisorPhone = value; }

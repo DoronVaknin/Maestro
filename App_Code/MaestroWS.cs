@@ -84,17 +84,17 @@ public class MaestroWS : System.Web.Services.WebService
 
         c.Fname = dt.Rows[0].ItemArray[15].ToString();
         c.Lname = dt.Rows[0].ItemArray[16].ToString();
-        c.Phone = Convert.ToInt32(dt.Rows[0].ItemArray[19]);
-        c.Mobile = Convert.ToInt32(dt.Rows[0].ItemArray[20]);
-        c.Fax = Convert.ToInt32(dt.Rows[0].ItemArray[21]);
+        c.Phone = dt.Rows[0].ItemArray[19].ToString();
+        c.Mobile = dt.Rows[0].ItemArray[20].ToString();
+        c.Fax = dt.Rows[0].ItemArray[21].ToString();
         c.Email = dt.Rows[0].ItemArray[22].ToString();
 
         p.ContractorName = dt.Rows[0].ItemArray[5].ToString();
-        p.ContractorPhone = Convert.ToInt32(dt.Rows[0].ItemArray[6]);
+        p.ContractorPhone = dt.Rows[0].ItemArray[6].ToString();
         p.ArchitectName = dt.Rows[0].ItemArray[7].ToString();
-        p.ArchitectPhone = Convert.ToInt32(dt.Rows[0].ItemArray[8]);
+        p.ArchitectPhone = dt.Rows[0].ItemArray[8].ToString();
         p.SupervisorName = dt.Rows[0].ItemArray[9].ToString();
-        p.SupervisorPhone = Convert.ToInt32(dt.Rows[0].ItemArray[10]);
+        p.SupervisorPhone = dt.Rows[0].ItemArray[10].ToString();
 
         myAL.Add(c);
         myAL.Add(p);

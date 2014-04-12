@@ -173,7 +173,7 @@ public class DBservices
         }
     }
 
-    public void UpdateCustomerInformation(Customer c, int OriginalCustomerID)
+    public void UpdateCustomerInformation(Customer c, int cID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateCustomerInformation]", con))
@@ -186,12 +186,12 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@cID", Convert.ToInt32(OriginalCustomerID));
+                sqlComm.Parameters.AddWithValue("@cID", Convert.ToInt32(cID));
                 sqlComm.Parameters.AddWithValue("@FirstName", c.Fname);
                 sqlComm.Parameters.AddWithValue("@LastName", c.Lname);
-                sqlComm.Parameters.AddWithValue("@Phone", Convert.ToInt32(c.Phone));
-                sqlComm.Parameters.AddWithValue("@Mobile", Convert.ToInt32(c.Mobile));
-                sqlComm.Parameters.AddWithValue("@Fax", Convert.ToInt32(c.Fax));
+                sqlComm.Parameters.AddWithValue("@Phone", c.Phone);
+                sqlComm.Parameters.AddWithValue("@Mobile", c.Mobile);
+                sqlComm.Parameters.AddWithValue("@Fax", c.Fax);
                 sqlComm.Parameters.AddWithValue("@Address", c.Address);
                 sqlComm.Parameters.AddWithValue("@City", c.City);
                 sqlComm.Parameters.AddWithValue("@Email", c.Email);

@@ -22,8 +22,8 @@ public class ServiceCall
         set { customerName = value; }
     }
 
-    int mobile;
-    public int Mobile
+    string mobile;
+    public string Mobile
     {
         get { return mobile; }
         set { mobile = value; }
