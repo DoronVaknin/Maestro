@@ -190,10 +190,10 @@ public class Project
         db.UpdateProjectStatus(ProjectID, StatusNum);
     }
 
-    public void UpdateProjectDetails(int ProjectID, double Cost, string Comments)
+    public void UpdateProjectDetails(int _ProjectID, double _Cost, string _Comments, string _ArchitectName, string _ArchitectPhone, string _ContractorName, string _ContractorPhone, string _SupervisorName, string _SupervisorPhone)
     {
         DBservices db = new DBservices();
-        db.UpdateProjectDetails(ProjectID, Cost, Comments);
+        db.UpdateProjectDetails(_ProjectID, _Cost, _Comments, _ArchitectName, _ArchitectPhone, _ContractorName, _ContractorPhone, _SupervisorName, _SupervisorPhone);
     }
 
     public void LoadSuppliers(DropDownList ShutterProvider, DropDownList CollectedProvider, DropDownList ValimProvider, DropDownList UProvider, DropDownList ShoeingProvider, DropDownList EngineProvider, DropDownList ProtectedSpaceProvider, DropDownList GlassProvider, DropDownList BoxesProvider)

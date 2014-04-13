@@ -39,7 +39,6 @@ public partial class Default : System.Web.UI.Page
         Project p = new Project();
         DataTable OrdersDataTable = p.GetOrderDetails(Convert.ToInt32(row.Cells[1].Text));
         DataTable statustable = p.GetOrderStatus();
-
     }
 
 
@@ -47,32 +46,32 @@ public partial class Default : System.Web.UI.Page
     {
         Project p = new Project();
         GridViewRow row = (GridViewRow)Session["selectedrow"];
-        string status = Convert.ToString(row.Cells[5].Text);
-        int statusnumber = p.GetStatusNumber(status);
-        ProjectInfoStatus.SelectedIndex = (statusnumber - 1);
+        string StatusNum = Convert.ToString(row.Cells[5].Text);
+        int StatusNumber = p.GetStatusNumber(StatusNum);
+        ProjectInfoStatus.SelectedIndex = (StatusNumber - 1);
     }
 
     public void SetPageDetails(DataTable dt)
     {
-        ProjectInfoID.Value = Convert.ToString(dt.Rows[0].ItemArray[0]);
-        ProjectInfoFirstName.Value = Convert.ToString(dt.Rows[0].ItemArray[1]);
-        ProjectInfoLastName.Value = Convert.ToString(dt.Rows[0].ItemArray[2]);
-        ProjectInfoPhone.Value = Convert.ToString(dt.Rows[0].ItemArray[3]);
-        ProjectInfoMobile.Value = Convert.ToString(dt.Rows[0].ItemArray[4]);
-        ProjectInfoFax.Value = Convert.ToString(dt.Rows[0].ItemArray[5]);
-        ProjectInfoAddress.Value = Convert.ToString(dt.Rows[0].ItemArray[6]);
-        ProjectInfoCity.Value = Convert.ToString(dt.Rows[0].ItemArray[7]);
-        ProjectInfoEmail.Value = Convert.ToString(dt.Rows[0].ItemArray[8]);
-        ProjectInfoArchitectName.Value = Convert.ToString(dt.Rows[0].ItemArray[9]);
-        ProjectInfoArchitectMobile.Value = Convert.ToString(dt.Rows[0].ItemArray[10]);
-        ProjectInfoContractorName.Value = Convert.ToString(dt.Rows[0].ItemArray[11]);
-        ProjectInfoContractorPhone.Value = Convert.ToString(dt.Rows[0].ItemArray[12]);
-        ProjectInfoSupervisorName.Value = Convert.ToString(dt.Rows[0].ItemArray[13]);
-        ProjectInfoSupervisorPhone.Value = Convert.ToString(dt.Rows[0].ItemArray[14]);
+        ProjectInfoID.Text = dt.Rows[0].ItemArray[0].ToString();
+        ProjectInfoFirstName.Text = dt.Rows[0].ItemArray[1].ToString();
+        ProjectInfoLastName.Text = dt.Rows[0].ItemArray[2].ToString();
+        ProjectInfoPhone.Text = dt.Rows[0].ItemArray[3].ToString();
+        ProjectInfoMobile.Text = dt.Rows[0].ItemArray[4].ToString();
+        ProjectInfoFax.Text = dt.Rows[0].ItemArray[5].ToString();
+        ProjectInfoAddress.Text = dt.Rows[0].ItemArray[6].ToString();
+        ProjectInfoCity.Text = dt.Rows[0].ItemArray[7].ToString();
+        ProjectInfoEmail.Text = dt.Rows[0].ItemArray[8].ToString();
+        ProjectInfoArchitectName.Text = dt.Rows[0].ItemArray[9].ToString();
+        ProjectInfoArchitectMobile.Text = dt.Rows[0].ItemArray[10].ToString();
+        ProjectInfoContractorName.Text = dt.Rows[0].ItemArray[11].ToString();
+        ProjectInfoContractorPhone.Text = dt.Rows[0].ItemArray[12].ToString();
+        ProjectInfoSupervisorName.Text = dt.Rows[0].ItemArray[13].ToString();
+        ProjectInfoSupervisorPhone.Text = dt.Rows[0].ItemArray[14].ToString();
         GridViewRow row = (GridViewRow)Session["selectedrow"];
-        ProjectInfoHatches.Value = row.Cells[8].Text;
-        ProjectInfoPrice.Value = row.Cells[7].Text;
-        ProjectInfoComments.Value = row.Cells[6].Text;
+        ProjectInfoHatches.Text = row.Cells[8].Text;
+        ProjectInfoPrice.Text = row.Cells[7].Text;
+        ProjectInfoComments.Text = row.Cells[6].Text;
     }
 
     protected void DropDownDataBound(object sender, EventArgs e)
@@ -83,7 +82,7 @@ public partial class Default : System.Web.UI.Page
     protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)
     {
         Customer c = new Customer();
-        c.SaveCustomerNewDetails(ProjectInfoFirstName.Value, ProjectInfoLastName.Value, ProjectInfoPhone.Value, ProjectInfoMobile.Value, ProjectInfoFax.Value, ProjectInfoAddress.Value, ProjectInfoCity.Value, ProjectInfoEmail.Value, Convert.ToInt32(ProjectInfoID.Value));
+        c.SaveCustomerNewDetails(ProjectInfoFirstName.Text, ProjectInfoLastName.Text, ProjectInfoPhone.Text, ProjectInfoMobile.Text, ProjectInfoFax.Text, ProjectInfoAddress.Text, ProjectInfoCity.Text, ProjectInfoEmail.Text, Convert.ToInt32(ProjectInfoID.Text));
         SaveCustomerDetailsBTN.Style.Add("display", "none");
         EditCustomerDetailsBTN.Style.Add("display", "inline-block");
     }
@@ -93,7 +92,7 @@ public partial class Default : System.Web.UI.Page
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         Project p = new Project();
         p.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectInfoStatus.SelectedIndex + 1);
-        p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoPrice.Value), ProjectInfoComments.Value);
+        p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoPrice.Text), ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorPhone.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorPhone.Text);
         SaveProjectDetailsBTN.Style.Add("display", "none");
         EditProjectDetailsBTN.Style.Add("display", "inline-block");
     }

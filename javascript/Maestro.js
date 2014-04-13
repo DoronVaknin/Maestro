@@ -30,6 +30,7 @@ function ClickLoginBTN() {
 
 function EnableCustomerDetails() {
     $("#CustomerDetailsTBL input").removeAttr("disabled");
+    $("#ContentPlaceHolder3_ProjectInfoID").attr("disabled", "disabled");
     $("#ContentPlaceHolder3_EditCustomerDetailsBTN").hide();
     $("#ContentPlaceHolder3_SaveCustomerDetailsBTN").show();
 }

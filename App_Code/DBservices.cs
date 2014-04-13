@@ -253,7 +253,7 @@ public class DBservices
         }
     }
 
-    public void UpdateProjectDetails(int ProjectID, double ProjCost, string Comments)
+    public void UpdateProjectDetails(int ProjectID, double ProjCost, string Comments, string ArchitectName, string ArchitectPhone, string ContractorName, string ContractorPhone, string SupervisorName, string SupervisorPhone)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateProjectDetails]", con))
@@ -267,6 +267,12 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
                 sqlComm.Parameters.AddWithValue("@Cost", ProjCost);
                 sqlComm.Parameters.AddWithValue("@Comments", Comments);
+                sqlComm.Parameters.AddWithValue("@ContractorName", ContractorName);
+                sqlComm.Parameters.AddWithValue("@ContractorPhone", ContractorPhone);
+                sqlComm.Parameters.AddWithValue("@ArchitectName", ArchitectName);
+                sqlComm.Parameters.AddWithValue("@ArchitectPhone", ArchitectPhone);
+                sqlComm.Parameters.AddWithValue("@SupervisorName", SupervisorName);
+                sqlComm.Parameters.AddWithValue("@SupervisorPhone", SupervisorPhone);
                 sqlComm.CommandTimeout = 600;
                 sqlComm.ExecuteNonQuery();
             }

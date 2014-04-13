@@ -10,129 +10,89 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
     <div class="cntr">
         <h1>
             פרטי הלקוח
         </h1>
     </div>
     <br />
-    <table id="CustomerDetailsTBL" class="table">
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoID" type="text" class="form-control" runat="server" maxlength="9">
-                    <span class="input-group-addon">ת.ז</span>
-                </div>
-            </td>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoAddress" type="text" class="form-control" runat="server" maxlength="30">
-                    <span class="input-group-addon">כתובת</span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoFirstName" type="text" class="form-control" runat="server"
-                        maxlength="15">
-                    <span class="input-group-addon">שם פרטי</span>
-                </div>
-            </td>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoCity" type="text" class="form-control" runat="server" maxlength="15">
-                    <span class="input-group-addon">עיר</span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoLastName" type="text" class="form-control" runat="server" maxlength="15">
-                    <span class="input-group-addon">שם משפחה</span>
-                </div>
-            </td>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoEmail" type="text" class="form-control" runat="server">
-                    <span class="input-group-addon">דוא"ל</span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoPhone" type="text" class="form-control" runat="server" maxlength="10">
-                    <span class="input-group-addon">טלפון</span>
-                </div>
-            </td>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoFax" type="text" class="form-control" runat="server" maxlength="10">
-                    <span class="input-group-addon">פקס</span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoMobile" type="text" class="form-control" runat="server" maxlength="10">
-                    <span class="input-group-addon">טלפון נייד</span>
-                </div>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoArchitectName" type="text" class="form-control" runat="server"
-                        maxlength="15">
-                    <span class="input-group-addon">שם האדריכל</span>
-                </div>
-            </td>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoArchitectMobile" type="text" class="form-control" runat="server"
-                        maxlength="10">
-                    <span class="input-group-addon">טלפון אדריכל</span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoContractorName" type="text" class="form-control" runat="server"
-                        maxlength="15">
-                    <span class="input-group-addon">שם הקבלן</span>
-                </div>
-            </td>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoContractorPhone" type="text" class="form-control" runat="server"
-                        maxlength="10">
-                    <span class="input-group-addon">טלפון קבלן</span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoSupervisorName" type="text" class="form-control" runat="server"
-                        maxlength="15">
-                    <span class="input-group-addon">שם המפקח</span>
-                </div>
-            </td>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoSupervisorPhone" type="text" class="form-control" runat="server"
-                        maxlength="10">
-                    <span class="input-group-addon">טלפון מפקח</span>
-                </div>
-            </td>
-        </tr>
-    </table>
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="SaveCustomerDetailsBTN" EventName="Click" />
+        </Triggers>
+        <ContentTemplate>
+            <table id="CustomerDetailsTBL" class="table">
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoID" runat="server" class="form-control" MaxLength="9"></asp:TextBox>
+                            <span class="input-group-addon">ת.ז</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoAddress" runat="server" class="form-control" MaxLength="30"></asp:TextBox>
+                            <span class="input-group-addon">כתובת</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoFirstName" runat="server" class="form-control" MaxLength="15"></asp:TextBox>
+                            <span class="input-group-addon">שם פרטי</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoCity" runat="server" class="form-control" MaxLength="15"></asp:TextBox>
+                            <span class="input-group-addon">עיר</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoLastName" runat="server" class="form-control" MaxLength="15"></asp:TextBox>
+                            <span class="input-group-addon">שם משפחה</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoEmail" runat="server" class="form-control" MaxLength="30"></asp:TextBox>
+                            <span class="input-group-addon">דוא"ל</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoPhone" runat="server" class="form-control" MaxLength="10"></asp:TextBox>
+                            <span class="input-group-addon">טלפון</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoFax" runat="server" class="form-control" MaxLength="10"></asp:TextBox>
+                            <span class="input-group-addon">פקס</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoMobile" runat="server" class="form-control" MaxLength="10"></asp:TextBox>
+                            <span class="input-group-addon">טלפון נייד</span>
+                        </div>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+        </ContentTemplate>
+    </asp:UpdatePanel>
     <div class="cntr">
         <button id="EditCustomerDetailsBTN" runat="server" type="button" class="btn btn-default"
             onclick="EnableCustomerDetails()">
@@ -148,39 +108,91 @@
             פרטי הפרויקט
         </h1>
     </div>
-    <table id="ProjectDetailsTBL" class="table">
-        <tr>
-            <td>
-                <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
-                    SelectCommand="spGetProjectStatusList" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-                סטטוס הפרויקט:
-                <asp:DropDownList ID="ProjectInfoStatus" runat="server" CssClass="btn btn-default"
-                    DataSourceID="SqlDataSource1" DataTextField="psName" DataValueField="psName"
-                    OnDataBinding="DropDownDataBound" AutoPostBack="false">
-                </asp:DropDownList>
-            </td>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoPrice" type="text" class="form-control" runat="server">
-                    <span class="input-group-addon">סה"כ עלות</span>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="input-group">
-                    <input id="ProjectInfoHatches" type="text" class="form-control" runat="server" maxlength="2">
-                    <span class="input-group-addon">מס' פתחים</span>
-                </div>
-            </td>
-            <td>
-                <div class="TextAreaHolder">
-                    <textarea id="ProjectInfoComments" runat="server" class="form-control" cols="10"
-                        rows="3" placeholder="הערות"></textarea>
-                </div>
-            </td>
-        </tr>
-    </table>
+    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="SaveProjectDetailsBTN" EventName="Click" />
+        </Triggers>
+        <ContentTemplate>
+            <table id="ProjectDetailsTBL" class="table">
+                <tr>
+                    <td>
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
+                            SelectCommand="spGetProjectStatusList" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+                        סטטוס הפרויקט:
+                        <asp:DropDownList ID="ProjectInfoStatus" runat="server" CssClass="btn btn-default"
+                            DataSourceID="SqlDataSource1" DataTextField="psName" DataValueField="psName"
+                            OnDataBinding="DropDownDataBound" AutoPostBack="false">
+                        </asp:DropDownList>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoPrice" runat="server" class="form-control"></asp:TextBox>
+                            <span class="input-group-addon">סה"כ עלות</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoHatches" runat="server" class="form-control" MaxLength="2"></asp:TextBox>
+                            <span class="input-group-addon">מס' פתחים</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="TextAreaHolder">
+                            <asp:TextBox ID="ProjectInfoComments" runat="server" class="form-control" Rows = "5" TextMode="multiline"
+                                placeholder="הערות"></asp:TextBox>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoArchitectName" runat="server" class="form-control" MaxLength="15"></asp:TextBox>
+                            <span class="input-group-addon">שם האדריכל</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoArchitectMobile" runat="server" class="form-control"
+                                MaxLength="10"></asp:TextBox>
+                            <span class="input-group-addon">טלפון אדריכל</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoContractorName" runat="server" class="form-control" MaxLength="15"></asp:TextBox>
+                            <span class="input-group-addon">שם הקבלן</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoContractorPhone" runat="server" class="form-control"
+                                MaxLength="10"></asp:TextBox>
+                            <span class="input-group-addon">טלפון קבלן</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoSupervisorName" runat="server" class="form-control" MaxLength="15"></asp:TextBox>
+                            <span class="input-group-addon">שם המפקח</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoSupervisorPhone" runat="server" class="form-control"
+                                MaxLength="10"></asp:TextBox>
+                            <span class="input-group-addon">טלפון מפקח</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </ContentTemplate>
+    </asp:UpdatePanel>
     <div class="cntr">
         <button id="EditProjectDetailsBTN" runat="server" type="button" class="btn btn-default"
             onclick="EnableProjectDetails()">
