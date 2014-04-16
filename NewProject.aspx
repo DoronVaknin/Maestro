@@ -36,7 +36,7 @@
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectPrice" type="text" class="form-control" runat="server">
+                    <input id="ProjectCost" type="text" class="form-control" runat="server">
                     <span class="input-group-addon">סה"כ עלות</span>
                 </div>
             </td>

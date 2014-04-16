@@ -36,5 +36,7 @@ public partial class Default : System.Web.UI.Page
                 row.Controls.Add(cell);
         }
         CustomersTBL.HeaderRow.Parent.Controls.AddAt(1, row);
+        //int RowsNum = CustomersTBL.Rows.Count;
+        //CustomersTBL.Rows[RowsNum + 1].RowIndex = RowsNum;
     }
 }

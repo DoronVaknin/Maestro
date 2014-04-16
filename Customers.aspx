@@ -27,7 +27,7 @@
                 Visible="false" />
             <asp:BoundField DataField="Fax" HeaderText="פקס" SortExpression="Fax" Visible="False" />
             <asp:BoundField DataField="RegionID" HeaderText="אזור" SortExpression="RegionID"
-                Visible="False" />
+                Visible="false" />
         </Columns>
     </asp:GridView>
     <br />

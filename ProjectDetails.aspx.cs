@@ -70,7 +70,7 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoSupervisorMobile.Text = dt.Rows[0].ItemArray[14].ToString();
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         ProjectInfoHatches.Text = row.Cells[8].Text;
-        ProjectInfoPrice.Text = row.Cells[7].Text;
+        ProjectInfoCost.Text = row.Cells[7].Text;
         ProjectInfoComments.Text = row.Cells[6].Text;
     }
 
@@ -92,7 +92,7 @@ public partial class Default : System.Web.UI.Page
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         Project p = new Project();
         p.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectInfoStatus.SelectedIndex + 1);
-        p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoPrice.Text), ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text);
+        p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoCost.Text), ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text);
         SaveProjectDetailsBTN.Style.Add("display", "none");
         EditProjectDetailsBTN.Style.Add("display", "inline-block");
     }

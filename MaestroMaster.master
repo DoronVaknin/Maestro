@@ -25,7 +25,7 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <a href="Default.aspx">
+    <a href="Home.aspx">
         <img id="Logo" src="images/MaestroLogo.png" alt="" /></a>
     <form id="form2" runat="server">
     <div>
@@ -36,7 +36,7 @@
         </div>
         <div class="userNav">
             <ul id="nav">
-                <li id="Default"><a href="Default.aspx">בית</a></li>
+                <li id="Home"><a href="Home.aspx">בית</a></li>
                 <li id="Customers"><a>לקוחות</a>
                     <ul>
                         <li><a href="NewCustomer.aspx">צור לקוח חדש</a> </li>

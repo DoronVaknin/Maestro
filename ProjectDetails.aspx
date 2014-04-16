@@ -137,7 +137,7 @@
                     </td>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoPrice" runat="server" CssClass="form-control"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoCost" runat="server" CssClass="form-control"></asp:TextBox>
                             <span class="input-group-addon">סה"כ עלות</span>
                         </div>
                     </td>

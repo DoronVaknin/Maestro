@@ -23,6 +23,6 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
     protected void LogoutBTN_Click(object sender, EventArgs e)
     {
         FormsAuthentication.SignOut();
-        Response.Redirect("~/Login.aspx");
+        Response.Redirect("~/Default.aspx");
     }
 }
