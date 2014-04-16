@@ -62,7 +62,7 @@
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectContractorPhone" type="text" class="form-control" runat="server"
+                    <input id="ProjectContractorMobile" type="text" class="form-control" runat="server"
                         maxlength="10">
                     <span class="input-group-addon">טלפון</span>
                 </div>
@@ -78,7 +78,7 @@
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectArchitectPhone" type="text" class="form-control" runat="server"
+                    <input id="ProjectArchitectMobile" type="text" class="form-control" runat="server"
                         maxlength="10">
                     <span class="input-group-addon">טלפון</span>
                 </div>
@@ -94,7 +94,7 @@
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectSupervisorPhone" type="text" class="form-control" runat="server"
+                    <input id="ProjectSupervisorMobile" type="text" class="form-control" runat="server"
                         maxlength="10">
                     <span class="input-group-addon">טלפון</span>
                 </div>

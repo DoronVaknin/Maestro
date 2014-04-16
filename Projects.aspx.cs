@@ -29,7 +29,7 @@ public partial class Default : System.Web.UI.Page
     protected void OnDataBound(object sender, EventArgs e)
     {
         GridViewRow row = new GridViewRow(0, 0, DataControlRowType.Header, DataControlRowState.Normal);
-        for (int i = 0; i < ProjectsTBL.Columns.Count; i++)
+        for (int i = 0; i < ProjectsTBL.Columns.Count - 1; i++)
         {
             TableHeaderCell cell = new TableHeaderCell();
             TextBox txtSearch = new TextBox();

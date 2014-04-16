@@ -78,6 +78,7 @@
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
                     SelectCommand="spGetRegion" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
                 <div class="cntr">
+                אזור: &nbsp;
                     <asp:DropDownList ID="CustomerArea" runat="server" DataSourceID="SqlDataSource1"
                         CssClass="btn btn-default" DataTextField="RegionName" DataValueField="RegionID">
                     </asp:DropDownList>

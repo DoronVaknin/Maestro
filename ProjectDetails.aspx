@@ -20,20 +20,20 @@
     <br />
     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <Triggers>
-            <asp:AsyncPostBackTrigger ControlID="SaveCustomerDetailsBTN" EventName="Click" />
+            <asp:AsyncPostBackTrigger ControlID="SaveCustomerDetailsHiddenBTN" EventName="Click" />
         </Triggers>
         <ContentTemplate>
             <table id="CustomerDetailsTBL" class="table">
                 <tr>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoID" runat="server" class="form-control" MaxLength="9"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoID" runat="server" CssClass="form-control" MaxLength="9"></asp:TextBox>
                             <span class="input-group-addon">ת.ז</span>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoAddress" runat="server" class="form-control" MaxLength="30"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoAddress" runat="server" CssClass="form-control" MaxLength="30"></asp:TextBox>
                             <span class="input-group-addon">כתובת</span>
                         </div>
                     </td>
@@ -41,13 +41,13 @@
                 <tr>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoFirstName" runat="server" class="form-control" MaxLength="15"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoFirstName" runat="server" CssClass="form-control" MaxLength="15"></asp:TextBox>
                             <span class="input-group-addon">שם פרטי</span>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoCity" runat="server" class="form-control" MaxLength="15"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoCity" runat="server" CssClass="form-control City"></asp:TextBox>
                             <span class="input-group-addon">עיר</span>
                         </div>
                     </td>
@@ -55,13 +55,13 @@
                 <tr>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoLastName" runat="server" class="form-control" MaxLength="15"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoLastName" runat="server" CssClass="form-control" MaxLength="15"></asp:TextBox>
                             <span class="input-group-addon">שם משפחה</span>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoEmail" runat="server" class="form-control" MaxLength="30"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoEmail" runat="server" CssClass="form-control" MaxLength="30"></asp:TextBox>
                             <span class="input-group-addon">דוא"ל</span>
                         </div>
                     </td>
@@ -69,13 +69,13 @@
                 <tr>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoPhone" runat="server" class="form-control" MaxLength="10"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoPhone" runat="server" CssClass="form-control" MaxLength="10"></asp:TextBox>
                             <span class="input-group-addon">טלפון</span>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoFax" runat="server" class="form-control" MaxLength="10"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoFax" runat="server" CssClass="form-control" MaxLength="10"></asp:TextBox>
                             <span class="input-group-addon">פקס</span>
                         </div>
                     </td>
@@ -83,7 +83,7 @@
                 <tr>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoMobile" runat="server" class="form-control" MaxLength="10"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoMobile" runat="server" CssClass="form-control" MaxLength="10"></asp:TextBox>
                             <span class="input-group-addon">טלפון נייד</span>
                         </div>
                     </td>
@@ -96,9 +96,20 @@
     <div class="cntr">
         <button id="EditCustomerDetailsBTN" runat="server" type="button" class="btn btn-default"
             onclick="EnableCustomerDetails()">
-            ערוך&nbsp;<span class="glyphicon glyphicon-pencil"></span>
+            ערוך&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span>
         </button>
-        <asp:Button ID="SaveCustomerDetailsBTN" runat="server" Text="שמור" class="btn btn-default"
+        <button id="SaveCustomerDetailsBTN" runat="server" type="button" class="btn btn-default"
+            onclick="ValidateCustomerDetails()">
+            שמור&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
+        </button>
+        <button id="CancelCustomerDetailsBTN" runat="server" type="button" class="btn btn-default"
+            onclick="RestoreCustomerDetails()">
+            בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
+        </button>
+        <br />
+        <br />
+        <span id="CustomerDetailsErrorLabel" class="ErrorLabel"></span>
+        <asp:Button ID="SaveCustomerDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default"
             OnClick="SaveCustomerDetailsBTN_Click1" Font-Bold="true" />
     </div>
     <asp:HiddenField ID="ProjectIDHolder" runat="server" />
@@ -110,7 +121,7 @@
     </div>
     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
         <Triggers>
-            <asp:AsyncPostBackTrigger ControlID="SaveProjectDetailsBTN" EventName="Click" />
+            <asp:AsyncPostBackTrigger ControlID="SaveProjectDetailsHiddenBTN" EventName="Click" />
         </Triggers>
         <ContentTemplate>
             <table id="ProjectDetailsTBL" class="table">
@@ -126,7 +137,7 @@
                     </td>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoPrice" runat="server" class="form-control"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoPrice" runat="server" CssClass="form-control"></asp:TextBox>
                             <span class="input-group-addon">סה"כ עלות</span>
                         </div>
                     </td>
@@ -134,13 +145,13 @@
                 <tr>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoHatches" runat="server" class="form-control" MaxLength="2"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoHatches" runat="server" CssClass="form-control" MaxLength="2"></asp:TextBox>
                             <span class="input-group-addon">מס' פתחים</span>
                         </div>
                     </td>
                     <td>
                         <div class="TextAreaHolder">
-                            <asp:TextBox ID="ProjectInfoComments" runat="server" class="form-control" Rows = "5" TextMode="multiline"
+                            <asp:TextBox ID="ProjectInfoComments" runat="server" CssClass="form-control" TextMode="multiline"
                                 placeholder="הערות"></asp:TextBox>
                         </div>
                     </td>
@@ -148,13 +159,14 @@
                 <tr>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoArchitectName" runat="server" class="form-control" MaxLength="15"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoArchitectName" runat="server" CssClass="form-control"
+                                MaxLength="15"></asp:TextBox>
                             <span class="input-group-addon">שם האדריכל</span>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoArchitectMobile" runat="server" class="form-control"
+                            <asp:TextBox ID="ProjectInfoArchitectMobile" runat="server" CssClass="form-control"
                                 MaxLength="10"></asp:TextBox>
                             <span class="input-group-addon">טלפון אדריכל</span>
                         </div>
@@ -163,13 +175,14 @@
                 <tr>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoContractorName" runat="server" class="form-control" MaxLength="15"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoContractorName" runat="server" CssClass="form-control"
+                                MaxLength="15"></asp:TextBox>
                             <span class="input-group-addon">שם הקבלן</span>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoContractorPhone" runat="server" class="form-control"
+                            <asp:TextBox ID="ProjectInfoContractorMobile" runat="server" CssClass="form-control"
                                 MaxLength="10"></asp:TextBox>
                             <span class="input-group-addon">טלפון קבלן</span>
                         </div>
@@ -178,13 +191,14 @@
                 <tr>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoSupervisorName" runat="server" class="form-control" MaxLength="15"></asp:TextBox>
+                            <asp:TextBox ID="ProjectInfoSupervisorName" runat="server" CssClass="form-control"
+                                MaxLength="15"></asp:TextBox>
                             <span class="input-group-addon">שם המפקח</span>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoSupervisorPhone" runat="server" class="form-control"
+                            <asp:TextBox ID="ProjectInfoSupervisorMobile" runat="server" CssClass="form-control"
                                 MaxLength="10"></asp:TextBox>
                             <span class="input-group-addon">טלפון מפקח</span>
                         </div>
@@ -196,147 +210,157 @@
     <div class="cntr">
         <button id="EditProjectDetailsBTN" runat="server" type="button" class="btn btn-default"
             onclick="EnableProjectDetails()">
-            ערוך&nbsp;<span class="glyphicon glyphicon-pencil"></span>
+            ערוך&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span>
         </button>
-        <asp:Button ID="SaveProjectDetailsBTN" runat="server" Text="שמור" class="btn btn-default"
+        <button id="SaveProjectDetailsBTN" runat="server" type="button" class="btn btn-default"
+            onclick="ValidateProjectDetails()">
+            שמור&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
+        </button>
+        <button id="CancelProjectDetailsBTN" runat="server" type="button" class="btn btn-default"
+            onclick="RestoreProjectDetails()">
+            בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
+        </button>
+        <asp:Button ID="SaveProjectDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default"
             OnClick="SaveProjectDetailsBTN_Click" Font-Bold="true" />
         <br />
         <br />
+        <span id="ProjectDetailsErrorLabel" class="ErrorLabel"></span>
+        <br />
         <h1>
             הזמנות עבור הפרויקט</h1>
-        <br />
-        <table class="nav-justified" id="OrderTable">
-            <tr>
-                <td>
-                    שם הפריט
-                </td>
-                <td>
-                    כמות להזמנה
-                </td>
-                <td>
-                    שם הספק
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    תריסים
-                </td>
-                <td>
-                    <asp:TextBox ID="ShutterCount" runat="server" Width="50px"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:DropDownList ID="ShutterProvider" runat="server" Width="150px">
-                    </asp:DropDownList>
-                </td>
-                <td>
-                    נאספים
-                </td>
-                <td>
-                    <asp:TextBox ID="CollectedCount" runat="server" Width="50px"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:DropDownList ID="CollectedProvider" runat="server" value="2" Width="150px">
-                    </asp:DropDownList>
-                </td>
-            </tr>
-            <tr>
-                <td class="style1">
-                    וואלים
-                </td>
-                <td class="style1">
-                    <asp:TextBox ID="ValimCount" runat="server" Width="50px"></asp:TextBox>
-                </td>
-                <td class="style1">
-                    <asp:DropDownList ID="ValimProvider" runat="server" Width="150px">
-                    </asp:DropDownList>
-                </td>
-                <td class="style1">
-                    U
-                </td>
-                <td class="style1">
-                    <asp:TextBox ID="UCount" runat="server" Width="50px"></asp:TextBox>
-                </td>
-                <td class="style1">
-                    <asp:DropDownList ID="UProvider" runat="server" Width="150px">
-                    </asp:DropDownList>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    פרזול
-                </td>
-                <td>
-                    <asp:TextBox ID="ShoeingCount" runat="server" Width="50px"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:DropDownList ID="ShoeingProvider" runat="server" Width="150px">
-                    </asp:DropDownList>
-                </td>
-                <td>
-                    מנועים
-                </td>
-                <td>
-                    <asp:TextBox ID="EngineCount" runat="server" Width="50px"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:DropDownList ID="EngineProvider" runat="server" Width="150px">
-                    </asp:DropDownList>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    ממ&quot;ד
-                </td>
-                <td>
-                    <asp:TextBox ID="ProtectedSpaceCount" runat="server" Width="50px"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:DropDownList ID="ProtectedSpaceProvider" runat="server" Width="150px">
-                    </asp:DropDownList>
-                </td>
-                <td>
-                    זכוכית
-                </td>
-                <td>
-                    <asp:TextBox ID="GlassCount" runat="server" Width="50px"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:DropDownList ID="GlassProvider" runat="server" Width="150px">
-                    </asp:DropDownList>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    ארגזים
-                </td>
-                <td>
-                    <asp:TextBox ID="BoxCount" runat="server" Width="50px"></asp:TextBox>
-                </td>
-                <td>
-                    <asp:DropDownList ID="BoxesProvider" runat="server" Width="150px">
-                    </asp:DropDownList>
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-                <td>
-                    &nbsp;
-                </td>
-            </tr>
-        </table>
     </div>
+    <br />
+    <table class="nav-justified" id="OrderTable">
+        <tr>
+            <td>
+                שם הפריט
+            </td>
+            <td>
+                כמות להזמנה
+            </td>
+            <td>
+                שם הספק
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td>
+                תריסים
+            </td>
+            <td>
+                <asp:TextBox ID="ShutterCount" runat="server" Width="50px"></asp:TextBox>
+            </td>
+            <td>
+                <asp:DropDownList ID="ShutterProvider" runat="server" Width="150px">
+                </asp:DropDownList>
+            </td>
+            <td>
+                נאספים
+            </td>
+            <td>
+                <asp:TextBox ID="CollectedCount" runat="server" Width="50px"></asp:TextBox>
+            </td>
+            <td>
+                <asp:DropDownList ID="CollectedProvider" runat="server" value="2" Width="150px">
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td class="style1">
+                וואלים
+            </td>
+            <td class="style1">
+                <asp:TextBox ID="ValimCount" runat="server" Width="50px"></asp:TextBox>
+            </td>
+            <td class="style1">
+                <asp:DropDownList ID="ValimProvider" runat="server" Width="150px">
+                </asp:DropDownList>
+            </td>
+            <td class="style1">
+                U
+            </td>
+            <td class="style1">
+                <asp:TextBox ID="UCount" runat="server" Width="50px"></asp:TextBox>
+            </td>
+            <td class="style1">
+                <asp:DropDownList ID="UProvider" runat="server" Width="150px">
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                פרזול
+            </td>
+            <td>
+                <asp:TextBox ID="ShoeingCount" runat="server" Width="50px"></asp:TextBox>
+            </td>
+            <td>
+                <asp:DropDownList ID="ShoeingProvider" runat="server" Width="150px">
+                </asp:DropDownList>
+            </td>
+            <td>
+                מנועים
+            </td>
+            <td>
+                <asp:TextBox ID="EngineCount" runat="server" Width="50px"></asp:TextBox>
+            </td>
+            <td>
+                <asp:DropDownList ID="EngineProvider" runat="server" Width="150px">
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ממ&quot;ד
+            </td>
+            <td>
+                <asp:TextBox ID="ProtectedSpaceCount" runat="server" Width="50px"></asp:TextBox>
+            </td>
+            <td>
+                <asp:DropDownList ID="ProtectedSpaceProvider" runat="server" Width="150px">
+                </asp:DropDownList>
+            </td>
+            <td>
+                זכוכית
+            </td>
+            <td>
+                <asp:TextBox ID="GlassCount" runat="server" Width="50px"></asp:TextBox>
+            </td>
+            <td>
+                <asp:DropDownList ID="GlassProvider" runat="server" Width="150px">
+                </asp:DropDownList>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ארגזים
+            </td>
+            <td>
+                <asp:TextBox ID="BoxCount" runat="server" Width="50px"></asp:TextBox>
+            </td>
+            <td>
+                <asp:DropDownList ID="BoxesProvider" runat="server" Width="150px">
+                </asp:DropDownList>
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+    </table>
     <br />
     <div class="cntr">
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="צור הזמנה"

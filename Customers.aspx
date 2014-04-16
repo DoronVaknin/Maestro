@@ -30,4 +30,8 @@
                 Visible="False" />
         </Columns>
     </asp:GridView>
+    <br />
+    <div class="cntr">
+        <input type="button" value="צור לקוח חדש" class="btn btn-default" onclick="GotoNewCustomer()" />
+    </div>
 </asp:Content>

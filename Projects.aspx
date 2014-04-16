@@ -16,7 +16,7 @@
         OnSelectedIndexChanged="ProjectsTBL_SelectedIndexChanged">
         <Columns>
             <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
-            <asp:BoundField DataField="pID" HeaderText="מספר פרויקט" InsertVisible="False" ReadOnly="True"
+            <asp:BoundField DataField="pID" HeaderText="מס' פרויקט" InsertVisible="False" ReadOnly="True"
                 SortExpression="pID" />
             <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" />
             <asp:BoundField DataField="lName" HeaderText="שם משפחה" SortExpression="lName" />
@@ -24,7 +24,7 @@
             <asp:BoundField DataField="psName" HeaderText="סטטוס" SortExpression="psName" />
             <asp:BoundField DataField="Comments" HeaderText="הערות" SortExpression="Comments" />
             <asp:BoundField DataField="Cost" HeaderText="עלות" SortExpression="Cost" />
-            <asp:BoundField DataField="NumOfHatches" HeaderText="מספר פתחים" ReadOnly="True" SortExpression="NumOfHatches" />
+            <asp:BoundField DataField="NumOfHatches" HeaderText="מס' פתחים" ReadOnly="True" SortExpression="NumOfHatches" Visible = "false" />
         </Columns>
     </asp:GridView>
     <br />

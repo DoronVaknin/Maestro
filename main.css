@@ -210,7 +210,7 @@ html[xmlns] #nav
     width: 100px;
 }
 
-#NewCustomerTBL td, #NewProjectTBL td, #CustomerDetailsTBL td, #ProjectDetailsTBL td
+#NewCustomerTBL td, #NewProjectTBL td, #CustomerDetailsTBL td, #ProjectDetailsTBL td, #NewSCExistingProjectTBL td
 {
     border-top: none;
 }
@@ -250,7 +250,7 @@ div.cntr input[type=button]
     font-weight: bold;
 }
 
-#NewProjectTBL textarea, #ProjectDetailsTBL textarea
+#NewProjectTBL textarea, #ProjectDetailsTBL textarea, #NewSCExistingProjectTBL textarea
 {
     max-width: 320px;
     height: 100px;
@@ -340,7 +340,9 @@ div.cntr input[type=button]
     vertical-align: top;
 }
 
-#ContentPlaceHolder3_SaveCustomerDetailsBTN, #ContentPlaceHolder3_SaveProjectDetailsBTN
+#ContentPlaceHolder3_SaveCustomerDetailsBTN, #ContentPlaceHolder3_SaveProjectDetailsBTN,
+#ContentPlaceHolder3_CancelCustomerDetailsBTN, #ContentPlaceHolder3_CancelProjectDetailsBTN,
+#ContentPlaceHolder3_SaveCustomerDetailsHiddenBTN, #ContentPlaceHolder3_SaveProjectDetailsHiddenBTN
 {
     display: none;
 }

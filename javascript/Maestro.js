@@ -1,15 +1,31 @@
 ﻿/// <reference path="jquery-1.11.0.js" />
 
+var aCustomerDetails = [];
+var aProjectDetails = [];
+
 $(document).ready(function () {
-    //Mark current tabs
+    ActivateTabsMarking();
+    ActivateDatepicker();
+    ActivateQuickSearch();
+    DisableCustomerDetailsFields();
+    DisableProjectDetailsFields();
+    FixTextAreaIssue();
+});
+
+//Mark current tabs
+function ActivateTabsMarking() {
     var sFileName = $(location).attr('href').replace(/^.*[\\\/]/, '');
     sFileName = sFileName.substring(0, sFileName.length - 5);
     $("#" + sFileName).addClass("current");
+}
 
-    //Datepicker activation
+//Datepicker activation
+function ActivateDatepicker() {
     $(".datepicker").datepicker();
+}
 
-    //Quick search activation
+//Quick search activation
+function ActivateQuickSearch() {
     $('.search_textbox').first().hide();
     $('.search_textbox').each(function (i) {
         $(this).quicksearch("[class*=DataTables] tr:not(:has(th))", {
@@ -18,28 +34,85 @@ $(document).ready(function () {
             }
         });
     });
+}
 
-    //Default state for project fields is disabled
+//Default state for project fields is disabled
+function DisableCustomerDetailsFields() {
     $("#CustomerDetailsTBL input").attr("disabled", "disabled");
-    $("#ProjectDetailsTBL *").attr("disabled", "disabled");
-});
+}
+
+function DisableProjectDetailsFields() {
+    $("#ProjectDetailsTBL input, #ProjectDetailsTBL textarea, #ProjectDetailsTBL select").attr("disabled", "disabled");
+}
+
+function FixTextAreaIssue() {
+    var sValue = $("#ProjectDetailsTBL textarea").val();
+    if (sValue == "&nbsp;")
+        $("#ProjectDetailsTBL textarea").val("");
+}
 
 function ClickLoginBTN() {
     $("#LoginBTN").click();
 }
 
+//Project Details edit buttons
 function EnableCustomerDetails() {
     $("#CustomerDetailsTBL input").removeAttr("disabled");
     $("#ContentPlaceHolder3_ProjectInfoID").attr("disabled", "disabled");
-    $("#ContentPlaceHolder3_EditCustomerDetailsBTN").hide();
-    $("#ContentPlaceHolder3_SaveCustomerDetailsBTN").show();
+    SwitchCustomerDetailsEditSaveButtons(false);
+    BackupCustomerDetails();
+}
+
+function SwitchCustomerDetailsEditSaveButtons(bShowEditButton) {
+    $("#ContentPlaceHolder3_EditCustomerDetailsBTN").toggle(bShowEditButton);
+    $("#ContentPlaceHolder3_SaveCustomerDetailsBTN").toggle(!bShowEditButton);
+    $("#ContentPlaceHolder3_CancelCustomerDetailsBTN").toggle(!bShowEditButton);
 }
 
 function EnableProjectDetails() {
     $("#ProjectDetailsTBL *").removeAttr("disabled");
     $("#ContentPlaceHolder3_ProjectInfoHatches").attr("disabled", "disabled");
-    $("#ContentPlaceHolder3_EditProjectDetailsBTN").hide();
-    $("#ContentPlaceHolder3_SaveProjectDetailsBTN").show();
+    SwitchProjectDetailsEditSaveButtons(false);
+    BackupProjectDetails();
+}
+
+function SwitchProjectDetailsEditSaveButtons(bShowEditButton) {
+    $("#ContentPlaceHolder3_EditProjectDetailsBTN").toggle(bShowEditButton);
+    $("#ContentPlaceHolder3_SaveProjectDetailsBTN").toggle(!bShowEditButton);
+    $("#ContentPlaceHolder3_CancelProjectDetailsBTN").toggle(!bShowEditButton);
+}
+
+function RestoreCustomerDetails() {
+    $("#ContentPlaceHolder3_ProjectInfoFirstName").val(aCustomerDetails[0]);
+    $("#ContentPlaceHolder3_ProjectInfoLastName").val(aCustomerDetails[1]);
+    $("#ContentPlaceHolder3_ProjectInfoPhone").val(aCustomerDetails[2]);
+    $("#ContentPlaceHolder3_ProjectInfoMobile").val(aCustomerDetails[3]);
+    $("#ContentPlaceHolder3_ProjectInfoAddress").val(aCustomerDetails[4]);
+    $("#ContentPlaceHolder3_ProjectInfoCity").val(aCustomerDetails[5]);
+    $("#ContentPlaceHolder3_ProjectInfoEmail").val(aCustomerDetails[6]);
+    $("#ContentPlaceHolder3_ProjectInfoFax").val(aCustomerDetails[7]);
+    DisableCustomerDetailsFields();
+    SwitchCustomerDetailsEditSaveButtons(true);
+}
+
+function RestoreProjectDetails() {
+    $("#ContentPlaceHolder3_ProjectInfoStatus").val(aProjectDetails[0]);
+    $("#ContentPlaceHolder3_ProjectInfoHatches").val(aProjectDetails[1]);
+    $("#ContentPlaceHolder3_ProjectInfoCost").val(aProjectDetails[2]);
+    $("#ContentPlaceHolder3_ProjectInfoComments").val(aProjectDetails[3]);
+    $("#ContentPlaceHolder3_ProjectInfoArchitectName").val(aProjectDetails[4]);
+    $("#ContentPlaceHolder3_ProjectInfoContractorName").val(aProjectDetails[5]);
+    $("#ContentPlaceHolder3_ProjectInfoSupervisorName").val(aProjectDetails[6]);
+    $("#ContentPlaceHolder3_ProjectInfoArchitectMobile").val(aProjectDetails[7]);
+    $("#ContentPlaceHolder3_ProjectInfoContractorMobile").val(aProjectDetails[8]);
+    $("#ContentPlaceHolder3_ProjectInfoSupervisorMobile").val(aProjectDetails[9]);
+    DisableProjectDetailsFields();
+    SwitchProjectDetailsEditSaveButtons(true);
+}
+
+//Navigation
+function GotoNewCustomer() {
+    window.location = "NewCustomer.aspx";
 }
 
 //Validators
@@ -50,34 +123,123 @@ function ValidateNewCustomer() {
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerLastName", function (s) { return s.length < 2; }, false, "שם המשפחה קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerAddress", function (s) { return s.length < 2; }, false, "כתובת המגורים קצרה מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerCity", function (s) { return s.length < 2; }, false, "שם העיר קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerPhone", function (s) { return s.length > 0 && !isValidPhoneNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerCellPhone", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerFaxNumber", function (s) { return s.length > 0 && !isValidPhoneNumber(s); }, false, "יש להזין מס' פקס תקין");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerEmail", function (s) { return !IsEmail(s); }, false, "יש להזין כתובת מייל חוקית");
-    if (bIsValid)
+    if (bIsValid) {
+        $(".ErrorLabel").html("");
         $("#ContentPlaceHolder3_CreateCustomer").click();
+    }
 }
 
 function ValidateNewProject() {
     var bIsValid = true;
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectDateOpened", function (s) { return !isValidDate(s); }, false, "יש להזין תאריך חוקי");
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectPrice", function (s) { return !isNumber(s); }, false, "יש להזין מחיר חוקי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectCost", function (s) { return !isNumber(s); }, false, "יש להזין מחיר חוקי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectHatches", function (s) { return !isInteger(s); }, false, "יש להזין מספר פתחים שלם");
-    if (bIsValid)
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectContractorMobile", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectArchitectMobile", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectSupervisorMobile", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    if (bIsValid) {
+        $(".ErrorLabel").html("");
         $("#ContentPlaceHolder3_CreateProject").click();
+    }
+}
+
+function ValidateCustomerDetails() {
+    var bIsValid = true;
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoFirstName", function (s) { return s.length < 2; }, false, "השם הפרטי קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoLastName", function (s) { return s.length < 2; }, false, "שם המשפחה קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoAddress", function (s) { return s.length < 2; }, false, "כתובת המגורים קצרה מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoCity", function (s) { return s.length < 2; }, false, "שם העיר קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoPhone", function (s) { return s.length > 0 && !isValidPhoneNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoMobile", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoFax", function (s) { return s.length > 0 && !isValidPhoneNumber(s); }, false, "יש להזין מס' פקס תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoEmail", function (s) { return !IsEmail(s); }, false, "יש להזין כתובת מייל חוקית");
+    if (bIsValid) {
+        $("#CustomerDetailsErrorLabel").html("");
+        SwitchCustomerDetailsEditSaveButtons(true);
+        DisableCustomerDetailsFields();
+        $("#ContentPlaceHolder3_SaveCustomerDetailsHiddenBTN").click();
+    }
+}
+
+function ValidateProjectDetails() {
+    var bIsValid = true;
+    //bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectDateOpened", function (s) { return !isValidDate(s); }, false, "יש להזין תאריך חוקי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoCost", function (s) { return !isNumber(s); }, false, "יש להזין מחיר חוקי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoHatches", function (s) { return !isInteger(s); }, false, "יש להזין מספר פתחים שלם");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoContractorMobile", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoArchitectMobile", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoSupervisorMobile", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    if (bIsValid) {
+        $("#ProjectDetailsErrorLabel").html("");
+        SwitchProjectDetailsEditSaveButtons(true);
+        DisableProjectDetailsFields();
+        $("#ContentPlaceHolder3_SaveProjectDetailsHiddenBTN").click();
+    }
 }
 
 function MarkInvalid(id, cb, bSelector, sMessage) {
     var sValue = $.trim($(id).val());
     var bInvalid = cb(sValue);
+    var sFunctionCalledName = arguments.callee.caller.name;
     if (bSelector) {
         $(id).toggleClass("Invalid", bInvalid);
         //$(id).prev().find(".InvalidText").toggle(bInvalid);
     } else {
         $(id).toggleClass("Invalid", bInvalid);
         if (bInvalid && sMessage != "") {
-            $(".ErrorLabel").html(sMessage);
             //$(id).parent().prev().find(".InvalidText").toggle(bInvalid);
+            switch (sFunctionCalledName) {
+                case "ValidateNewCustomer":
+                case "ValidateNewProject":
+                    $(".ErrorLabel").html(sMessage);
+                    break;
+
+                case "ValidateCustomerDetails":
+                    $("#CustomerDetailsErrorLabel").html(sMessage);
+                    break;
+
+                case "ValidateProjectDetails":
+                    $("#ProjectDetailsErrorLabel").html(sMessage);
+                    break;
+
+                default:
+                    $(".ErrorLabel").html(sMessage);
+                    break;
+            }
         }
     }
     return !bInvalid;
+}
+
+//Backup details in case user choose to cancel changes
+function BackupCustomerDetails() {
+    aCustomerDetails = [];
+    aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoFirstName").val());
+    aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoLastName").val());
+    aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoPhone").val());
+    aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoMobile").val());
+    aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoAddress").val());
+    aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoCity").val());
+    aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoEmail").val());
+    aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoFax").val());
+}
+
+function BackupProjectDetails() {
+    aProjectDetails = [];
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoStatus").val());
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoHatches").val());
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoCost").val());
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoComments").val());
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoArchitectName").val());
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoContractorName").val());
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoSupervisorName").val());
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoArchitectMobile").val());
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoContractorMobile").val());
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoSupervisorMobile").val());
 }
 
 function IsEmail(email) {
@@ -107,6 +269,14 @@ function isInteger(number) {
     if (number == "") return false;
     var intRegex = /^\d+$/;
     return intRegex.test(number);
+}
+
+function isValidPhoneNumber(s) {
+    return s.indexOf("0") == 0 && s.length >= 9;
+}
+
+function isValidMobileNumber(s) {
+    return s.indexOf("05") == 0 && s.length == 10;
 }
 
 //Cities AutoCompletion

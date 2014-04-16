@@ -65,9 +65,9 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoArchitectName.Text = dt.Rows[0].ItemArray[9].ToString();
         ProjectInfoArchitectMobile.Text = dt.Rows[0].ItemArray[10].ToString();
         ProjectInfoContractorName.Text = dt.Rows[0].ItemArray[11].ToString();
-        ProjectInfoContractorPhone.Text = dt.Rows[0].ItemArray[12].ToString();
+        ProjectInfoContractorMobile.Text = dt.Rows[0].ItemArray[12].ToString();
         ProjectInfoSupervisorName.Text = dt.Rows[0].ItemArray[13].ToString();
-        ProjectInfoSupervisorPhone.Text = dt.Rows[0].ItemArray[14].ToString();
+        ProjectInfoSupervisorMobile.Text = dt.Rows[0].ItemArray[14].ToString();
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         ProjectInfoHatches.Text = row.Cells[8].Text;
         ProjectInfoPrice.Text = row.Cells[7].Text;
@@ -92,7 +92,7 @@ public partial class Default : System.Web.UI.Page
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         Project p = new Project();
         p.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectInfoStatus.SelectedIndex + 1);
-        p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoPrice.Text), ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorPhone.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorPhone.Text);
+        p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoPrice.Text), ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text);
         SaveProjectDetailsBTN.Style.Add("display", "none");
         EditProjectDetailsBTN.Style.Add("display", "inline-block");
     }
