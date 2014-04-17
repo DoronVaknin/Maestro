@@ -83,7 +83,7 @@ public partial class Default : System.Web.UI.Page
     protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)
     {
         Customer c = new Customer();
-        c.SaveCustomerNewDetails(ProjectInfoFirstName.Text, ProjectInfoLastName.Text, ProjectInfoPhone.Text, ProjectInfoMobile.Text, ProjectInfoFax.Text, ProjectInfoAddress.Text, ProjectInfoCity.Text, ProjectInfoEmail.Text,Convert.ToInt32(ProjectInfoArea.SelectedValue), Convert.ToInt32(ProjectInfoID.Text));
+        c.SaveCustomerNewDetails(ProjectInfoFirstName.Text, ProjectInfoLastName.Text, ProjectInfoPhone.Text, ProjectInfoMobile.Text, ProjectInfoFax.Text, ProjectInfoAddress.Text, ProjectInfoCity.Text, ProjectInfoEmail.Text, Convert.ToInt32(ProjectInfoArea.SelectedValue), Convert.ToInt32(ProjectInfoID.Text));
         SaveCustomerDetailsBTN.Style.Add("display", "none");
         EditCustomerDetailsBTN.Style.Add("display", "inline-block");
     }
@@ -124,19 +124,6 @@ public partial class Default : System.Web.UI.Page
             SetOrdersGrid();
         }
     }
-
-    //בדיקה- למחוק
-    protected void OrdersGridView_RowEdit(object sender, EventArgs e)
-    {
-        Response.Write("kuku");
-    }
-
-
-
-
-
-
-
 }
 
 

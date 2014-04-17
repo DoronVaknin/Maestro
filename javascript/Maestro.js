@@ -10,11 +10,13 @@ $(document).ready(function () {
     DisableCustomerDetailsFields();
     DisableProjectDetailsFields();
     FixTextAreaIssue();
+    if (IsPage("NewProject", "NewCustomer"))
+        ActivateModal("CustomerCreatedModal");
 });
 
 //Mark current tabs
 function ActivateTabsMarking() {
-    var sFileName = $(location).attr('href').replace(/^.*[\\\/]/, '');
+    var sFileName = location.pathname.split('/').pop();
     sFileName = sFileName.substring(0, sFileName.length - 5);
     $("#" + sFileName).addClass("current");
 }
@@ -34,6 +36,11 @@ function ActivateQuickSearch() {
             }
         });
     });
+}
+
+//Modals Activation
+function ActivateModal(sID) {
+    $("#" + sID).modal();
 }
 
 //Default state for project fields is disabled
@@ -92,7 +99,7 @@ function RestoreCustomerDetails() {
     $("#ContentPlaceHolder3_ProjectInfoEmail").val(aCustomerDetails[6]);
     $("#ContentPlaceHolder3_ProjectInfoFax").val(aCustomerDetails[7]);
     $("#ContentPlaceHolder3_ProjectInfoArea").val(aCustomerDetails[8]);
-    
+
     DisableCustomerDetailsFields();
     SwitchCustomerDetailsEditSaveButtons(true);
 }
@@ -243,6 +250,15 @@ function BackupProjectDetails() {
     aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoArchitectMobile").val());
     aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoContractorMobile").val());
     aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoSupervisorMobile").val());
+}
+
+function IsPage(sPageName, sSource) {
+    return location.pathname + location.search == "/Maestro/" + sPageName + ".aspx" + (!IsEmpty(sSource) ? "?Source=" + sSource : "");
+}
+
+//Misc
+function IsEmpty(o) {
+    return (o == "" || o == null);
 }
 
 function IsEmail(email) {

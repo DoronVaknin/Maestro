@@ -22,6 +22,6 @@ public partial class Default : System.Web.UI.Page
 
     protected void AddProjectForCustomer_Click(object sender, EventArgs e)
     {
-        Response.Redirect("NewProject.aspx");
+        Response.Redirect("NewProject.aspx?" + "Source=ProjectsPerCustomer");
     }
 }
