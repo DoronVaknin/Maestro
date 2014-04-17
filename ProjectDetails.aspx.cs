@@ -68,6 +68,7 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoContractorMobile.Text = dt.Rows[0].ItemArray[12].ToString();
         ProjectInfoSupervisorName.Text = dt.Rows[0].ItemArray[13].ToString();
         ProjectInfoSupervisorMobile.Text = dt.Rows[0].ItemArray[14].ToString();
+        ProjectInfoArea.SelectedValue = dt.Rows[0].ItemArray[15].ToString();
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         ProjectInfoHatches.Text = row.Cells[8].Text;
         ProjectInfoCost.Text = row.Cells[7].Text;
@@ -82,7 +83,7 @@ public partial class Default : System.Web.UI.Page
     protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)
     {
         Customer c = new Customer();
-        c.SaveCustomerNewDetails(ProjectInfoFirstName.Text, ProjectInfoLastName.Text, ProjectInfoPhone.Text, ProjectInfoMobile.Text, ProjectInfoFax.Text, ProjectInfoAddress.Text, ProjectInfoCity.Text, ProjectInfoEmail.Text, Convert.ToInt32(ProjectInfoID.Text));
+        c.SaveCustomerNewDetails(ProjectInfoFirstName.Text, ProjectInfoLastName.Text, ProjectInfoPhone.Text, ProjectInfoMobile.Text, ProjectInfoFax.Text, ProjectInfoAddress.Text, ProjectInfoCity.Text, ProjectInfoEmail.Text,Convert.ToInt32(ProjectInfoArea.SelectedValue), Convert.ToInt32(ProjectInfoID.Text));
         SaveCustomerDetailsBTN.Style.Add("display", "none");
         EditCustomerDetailsBTN.Style.Add("display", "inline-block");
     }

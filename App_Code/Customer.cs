@@ -135,7 +135,7 @@ public class Customer
         }
     }
 
-    public void SaveCustomerNewDetails(string ProjectInfoFirstName, string ProjectInfoLastName, string ProjectInfoPhone, string ProjectInfoMobile, string ProjectInfoFax, string ProjectInfoAddress, string ProjectInfoCity, string ProjectInfoEmail, int ProjectInfoID)
+    public void SaveCustomerNewDetails(string ProjectInfoFirstName, string ProjectInfoLastName, string ProjectInfoPhone, string ProjectInfoMobile, string ProjectInfoFax, string ProjectInfoAddress, string ProjectInfoCity, string ProjectInfoEmail, int ProjectInfoRegion, int ProjectInfoID)
     {
         Fname = ProjectInfoFirstName;
         Lname = ProjectInfoLastName;
@@ -145,6 +145,7 @@ public class Customer
         Address = ProjectInfoAddress;
         City = ProjectInfoCity;
         Email = ProjectInfoEmail;
+        Region = ProjectInfoRegion;
         DBservices db = new DBservices();
         db.UpdateCustomerInformation(this, ProjectInfoID);
     }

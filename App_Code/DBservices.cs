@@ -195,6 +195,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@Address", c.Address);
                 sqlComm.Parameters.AddWithValue("@City", c.City);
                 sqlComm.Parameters.AddWithValue("@Email", c.Email);
+                sqlComm.Parameters.AddWithValue("@RegionID", c.Region);
                 sqlComm.CommandTimeout = 600;
                 sqlComm.ExecuteNonQuery();
             }

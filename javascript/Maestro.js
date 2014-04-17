@@ -38,7 +38,7 @@ function ActivateQuickSearch() {
 
 //Default state for project fields is disabled
 function DisableCustomerDetailsFields() {
-    $("#CustomerDetailsTBL input").attr("disabled", "disabled");
+    $("#CustomerDetailsTBL input, #CustomerDetailsTBL select").attr("disabled", "disabled");
 }
 
 function DisableProjectDetailsFields() {
@@ -57,7 +57,7 @@ function ClickLoginBTN() {
 
 //Project Details edit buttons
 function EnableCustomerDetails() {
-    $("#CustomerDetailsTBL input").removeAttr("disabled");
+    $("#CustomerDetailsTBL input, #CustomerDetailsTBL select").removeAttr("disabled");
     $("#ContentPlaceHolder3_ProjectInfoID").attr("disabled", "disabled");
     SwitchCustomerDetailsEditSaveButtons(false);
     BackupCustomerDetails();
@@ -91,6 +91,8 @@ function RestoreCustomerDetails() {
     $("#ContentPlaceHolder3_ProjectInfoCity").val(aCustomerDetails[5]);
     $("#ContentPlaceHolder3_ProjectInfoEmail").val(aCustomerDetails[6]);
     $("#ContentPlaceHolder3_ProjectInfoFax").val(aCustomerDetails[7]);
+    $("#ContentPlaceHolder3_ProjectInfoArea").val(aCustomerDetails[8]);
+    
     DisableCustomerDetailsFields();
     SwitchCustomerDetailsEditSaveButtons(true);
 }
@@ -226,6 +228,7 @@ function BackupCustomerDetails() {
     aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoCity").val());
     aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoEmail").val());
     aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoFax").val());
+    aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoArea").val());
 }
 
 function BackupProjectDetails() {
