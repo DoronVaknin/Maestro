@@ -20,17 +20,51 @@ public partial class Default : System.Web.UI.Page
         int ProjectID = Convert.ToInt32(row.Cells[1].Text);
         Project p = new Project();
         //שליפת נתוני הלקוח להצגה
-        DataTable dt = p.GetCustomerInformation(ProjectID);
+        DataTable CustomerDT = p.GetCustomerInformation(ProjectID);
+        DataTable ProjectDT = p.GetProjectDetails(ProjectID);
         //הצבה של כל פרטי הלקוח בשדות המתאימים
         SetOrdersGrid();
         ProjectIDHolder.Value = Convert.ToString(row.Cells[1].Text);
 
         if (!Page.IsPostBack)
         {
-            SetPageDetails(dt);
+            SetPageDetails(CustomerDT, ProjectDT);
             SetProjCurrentStatus();
             LoadSuppliers();
         }
+        else
+            DisableAllFields();
+    }
+
+    public void DisableAllFields()
+    {
+        //Customer Fields
+        ProjectInfoID.Attributes.Add("disabled", "disabled");
+        ProjectInfoFirstName.Attributes.Add("disabled", "disabled");
+        ProjectInfoLastName.Attributes.Add("disabled", "disabled");
+        ProjectInfoPhone.Attributes.Add("disabled", "disabled");
+        ProjectInfoMobile.Attributes.Add("disabled", "disabled");
+        ProjectInfoAddress.Attributes.Add("disabled", "disabled");
+        ProjectInfoCity.Attributes.Add("disabled", "disabled");
+        ProjectInfoEmail.Attributes.Add("disabled", "disabled");
+        ProjectInfoFax.Attributes.Add("disabled", "disabled");
+        ProjectInfoArea.Attributes.Add("disabled", "disabled");
+
+        //Project Fields
+        ProjectInfoStatus.Attributes.Add("disabled", "disabled");
+        ProjectInfoName.Attributes.Add("disabled", "disabled");
+        ProjectInfoHatches.Attributes.Add("disabled", "disabled");
+        ProjectInfoCost.Attributes.Add("disabled", "disabled");
+        ProjectInfoComments.Attributes.Add("disabled", "disabled");
+        ProjectInfoDateOpened.Attributes.Add("disabled", "disabled");
+        ProjectInfoExpirationDate.Attributes.Add("disabled", "disabled");
+        ProjectInfoInstallationDate.Attributes.Add("disabled", "disabled");
+        ProjectInfoArchitectName.Attributes.Add("disabled", "disabled");
+        ProjectInfoArchitectMobile.Attributes.Add("disabled", "disabled");
+        ProjectInfoContractorName.Attributes.Add("disabled", "disabled");
+        ProjectInfoContractorMobile.Attributes.Add("disabled", "disabled");
+        ProjectInfoSupervisorName.Attributes.Add("disabled", "disabled");
+        ProjectInfoSupervisorMobile.Attributes.Add("disabled", "disabled");
     }
 
     public void SetOrdersGrid()
@@ -51,33 +85,42 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoStatus.SelectedIndex = (StatusNumber - 1);
     }
 
-    public void SetPageDetails(DataTable dt)
+    public void SetPageDetails(DataTable C_dt, DataTable P_dt)
     {
-        ProjectInfoID.Text = dt.Rows[0].ItemArray[0].ToString();
-        ProjectInfoFirstName.Text = dt.Rows[0].ItemArray[1].ToString();
-        ProjectInfoLastName.Text = dt.Rows[0].ItemArray[2].ToString();
-        ProjectInfoPhone.Text = dt.Rows[0].ItemArray[3].ToString();
-        ProjectInfoMobile.Text = dt.Rows[0].ItemArray[4].ToString();
-        ProjectInfoFax.Text = dt.Rows[0].ItemArray[5].ToString();
-        ProjectInfoAddress.Text = dt.Rows[0].ItemArray[6].ToString();
-        ProjectInfoCity.Text = dt.Rows[0].ItemArray[7].ToString();
-        ProjectInfoEmail.Text = dt.Rows[0].ItemArray[8].ToString();
-        ProjectInfoArchitectName.Text = dt.Rows[0].ItemArray[9].ToString();
-        ProjectInfoArchitectMobile.Text = dt.Rows[0].ItemArray[10].ToString();
-        ProjectInfoContractorName.Text = dt.Rows[0].ItemArray[11].ToString();
-        ProjectInfoContractorMobile.Text = dt.Rows[0].ItemArray[12].ToString();
-        ProjectInfoSupervisorName.Text = dt.Rows[0].ItemArray[13].ToString();
-        ProjectInfoSupervisorMobile.Text = dt.Rows[0].ItemArray[14].ToString();
-        ProjectInfoArea.SelectedValue = dt.Rows[0].ItemArray[15].ToString();
+        //Populate customer details
+        ProjectInfoID.Text = C_dt.Rows[0].ItemArray[0].ToString();
+        ProjectInfoFirstName.Text = C_dt.Rows[0].ItemArray[1].ToString();
+        ProjectInfoLastName.Text = C_dt.Rows[0].ItemArray[2].ToString();
+        ProjectInfoPhone.Text = C_dt.Rows[0].ItemArray[3].ToString();
+        ProjectInfoMobile.Text = C_dt.Rows[0].ItemArray[4].ToString();
+        ProjectInfoFax.Text = C_dt.Rows[0].ItemArray[5].ToString();
+        ProjectInfoAddress.Text = C_dt.Rows[0].ItemArray[6].ToString();
+        ProjectInfoCity.Text = C_dt.Rows[0].ItemArray[7].ToString();
+        ProjectInfoEmail.Text = C_dt.Rows[0].ItemArray[8].ToString();
+        ProjectInfoArchitectName.Text = C_dt.Rows[0].ItemArray[9].ToString();
+        ProjectInfoArchitectMobile.Text = C_dt.Rows[0].ItemArray[10].ToString();
+        ProjectInfoContractorName.Text = C_dt.Rows[0].ItemArray[11].ToString();
+        ProjectInfoContractorMobile.Text = C_dt.Rows[0].ItemArray[12].ToString();
+        ProjectInfoSupervisorName.Text = C_dt.Rows[0].ItemArray[13].ToString();
+        ProjectInfoSupervisorMobile.Text = C_dt.Rows[0].ItemArray[14].ToString();
+        ProjectInfoArea.SelectedValue = C_dt.Rows[0].ItemArray[15].ToString();
+
+        //Populate project details
         GridViewRow row = (GridViewRow)Session["selectedrow"];
+        ProjectInfoStatus.Text = P_dt.Rows[0].ItemArray[27].ToString();
+        ProjectInfoName.Text = P_dt.Rows[0].ItemArray[1].ToString();
         ProjectInfoHatches.Text = row.Cells[8].Text;
-        ProjectInfoCost.Text = row.Cells[7].Text;
-        ProjectInfoComments.Text = row.Cells[6].Text;
-    }
-
-    protected void DropDownDataBound(object sender, EventArgs e)
-    {
-
+        ProjectInfoCost.Text = P_dt.Rows[0].ItemArray[6].ToString();
+        ProjectInfoComments.Text = P_dt.Rows[0].ItemArray[2].ToString();
+        ProjectInfoDateOpened.Value = ((DateTime)P_dt.Rows[0].ItemArray[3]).ToString("MM/dd/yyyy");
+        ProjectInfoExpirationDate.Value = ((DateTime)P_dt.Rows[0].ItemArray[4]).ToString("MM/dd/yyyy");
+        ProjectInfoInstallationDate.Value = ((DateTime)P_dt.Rows[0].ItemArray[5]).ToString("MM/dd/yyyy");
+        ProjectInfoContractorName.Text = P_dt.Rows[0].ItemArray[7].ToString();
+        ProjectInfoContractorMobile.Text = P_dt.Rows[0].ItemArray[8].ToString();
+        ProjectInfoArchitectName.Text = P_dt.Rows[0].ItemArray[9].ToString();
+        ProjectInfoArchitectMobile.Text = P_dt.Rows[0].ItemArray[10].ToString();
+        ProjectInfoSupervisorName.Text = P_dt.Rows[0].ItemArray[11].ToString();
+        ProjectInfoSupervisorMobile.Text = P_dt.Rows[0].ItemArray[12].ToString();
     }
 
     protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)
@@ -93,7 +136,7 @@ public partial class Default : System.Web.UI.Page
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         Project p = new Project();
         p.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectInfoStatus.SelectedIndex + 1);
-        p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoCost.Text), ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text);
+        p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoCost.Text), ProjectInfoName.Text, ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text, DateTime.ParseExact(ProjectInfoExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInfoInstallationDate.Value, "MM/dd/yyyy", null));
         SaveProjectDetailsBTN.Style.Add("display", "none");
         EditProjectDetailsBTN.Style.Add("display", "inline-block");
     }
