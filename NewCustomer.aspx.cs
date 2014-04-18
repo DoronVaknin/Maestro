@@ -22,7 +22,12 @@ public partial class Default : System.Web.UI.Page
         Session["CustomerID"] = c.cID;
         int RowsAffected = c.InsertNewCustomer();
         if (RowsAffected > 0)
+        {
+            string msg = " הלקוח נוצר בהצלחה";
+            Response.Write("<script>alert('" + msg + "')  </script>");
             Response.Redirect("NewProject.aspx?CustomerFirstName=" + CustomerFirstName.Value + "&CustomerLastName=" + CustomerLastName.Value);
+            
+        }
         else
             Response.Write("לא ניתן לשמור את הלקוח");
     }

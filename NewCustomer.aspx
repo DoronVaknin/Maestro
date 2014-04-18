@@ -86,6 +86,7 @@
             </td>
         </tr>
     </table>
+    <asp:Label ID="ErrorLabel" runat="server" Text="Label" style= " "></asp:Label>
     <br />
     <div class="cntr">
         <input type="button" value="צור לקוח" class="btn btn-default" onclick="ValidateNewCustomer()" />

@@ -72,6 +72,15 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoHatches.Text = row.Cells[8].Text;
         ProjectInfoCost.Text = row.Cells[7].Text;
         ProjectInfoComments.Text = row.Cells[6].Text;
+        // set the opened date to the DateOpened Label
+        DateOpened.Text = row.Cells[4].Text;
+        DateTime Wdate = new DateTime();
+        //saving the opened date to Wdate
+        Wdate = Convert.ToDateTime(row.Cells[4].Text);
+        Wdate=Wdate.AddYears(7);
+        DateTime dateonly = Wdate.Date;
+        //show only the date of the warranty
+        warranty.Text = Convert.ToString(dateonly.ToString("d"));
     }
 
     protected void DropDownDataBound(object sender, EventArgs e)
