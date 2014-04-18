@@ -341,7 +341,7 @@ function BuildHatchDetailsPage(oHatch) {
 }
 
 
-//Utility Functions
+//Misc
 function IsEmpty(o) {
     return (o == "" || o == null);
 }

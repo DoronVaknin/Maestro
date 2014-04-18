@@ -88,6 +88,14 @@
                         </div>
                     </td>
                     <td>
+                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
+                            SelectCommand="spGetRegion" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+                        <div class="cntr">
+                            אזור: &nbsp;
+                            <asp:DropDownList ID="ProjectInfoArea" runat="server" DataSourceID="SqlDataSource2"
+                                CssClass="btn btn-default" DataTextField="RegionName" DataValueField="RegionID">
+                            </asp:DropDownList>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -98,18 +106,18 @@
             onclick="EnableCustomerDetails()">
             ערוך&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span>
         </button>
-        <button id="SaveCustomerDetailsBTN" runat="server" type="button" class="btn btn-default"
+        <button id="SaveCustomerDetailsBTN" runat="server" type="button" class="btn btn-default HiddenButtons"
             onclick="ValidateCustomerDetails()">
             שמור&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
         </button>
-        <button id="CancelCustomerDetailsBTN" runat="server" type="button" class="btn btn-default"
+        <button id="CancelCustomerDetailsBTN" runat="server" type="button" class="btn btn-default HiddenButtons"
             onclick="RestoreCustomerDetails()">
             בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
         </button>
         <br />
         <br />
         <span id="CustomerDetailsErrorLabel" class="ErrorLabel"></span>
-        <asp:Button ID="SaveCustomerDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default"
+        <asp:Button ID="SaveCustomerDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default HiddenButtons"
             OnClick="SaveCustomerDetailsBTN_Click1" Font-Bold="true" />
     </div>
     <asp:HiddenField ID="ProjectIDHolder" runat="server" />
@@ -222,15 +230,15 @@
             onclick="EnableProjectDetails()">
             ערוך&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span>
         </button>
-        <button id="SaveProjectDetailsBTN" runat="server" type="button" class="btn btn-default"
+        <button id="SaveProjectDetailsBTN" runat="server" type="button" class="btn btn-default HiddenButtons"
             onclick="ValidateProjectDetails()">
             שמור&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
         </button>
-        <button id="CancelProjectDetailsBTN" runat="server" type="button" class="btn btn-default"
+        <button id="CancelProjectDetailsBTN" runat="server" type="button" class="btn btn-default HiddenButtons"
             onclick="RestoreProjectDetails()">
             בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
         </button>
-        <asp:Button ID="SaveProjectDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default"
+        <asp:Button ID="SaveProjectDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default HiddenButtons"
             OnClick="SaveProjectDetailsBTN_Click" Font-Bold="true" />
         <br />
         <br />

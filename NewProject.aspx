@@ -6,7 +6,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
     <div class="cntr">
         <br />
-        <asp:Label runat="server" ID="CustomerLabel" Text="" Style="color: red;"></asp:Label>
         <h1>
             פרויקט חדש
         </h1>
@@ -114,5 +113,31 @@
         <br />
         <br />
         <span class="ErrorLabel"></span>
+    </div>
+    <br />
+    <!-- Modal -->
+    <div class="modal fade" id="CustomerCreatedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" dir="rtl">
+                        &times;</button>
+                    <h4 class="modal-title">
+                        הודעת מערכת</h4>
+                </div>
+                <div class="modal-body">
+                    הלקוח נוצר בהצלחה
+                </div>
+                <%--                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close</button>
+                    <button type="button" class="btn btn-primary">
+                        Save changes</button>
+                </div>--%>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
     </div>
 </asp:Content>

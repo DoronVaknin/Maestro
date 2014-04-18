@@ -10,11 +10,6 @@ public partial class Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        // Notification about customer that was added to database
-        string CustomerFirstName = Request.QueryString["CustomerFirstName"];
-        string CustomerLastName = Request.QueryString["CustomerLastName"];
-        string CustomerWasAdded = "הלקוח" + " " + CustomerFirstName + " " + CustomerLastName + " " + "נוסף בהצלחה";
-        CustomerLabel.Text = CustomerWasAdded;
         ProjectDateOpened.Value = (DateTime.Today).ToString("MM/dd/yyyy");
         ProjectExpirationDate.Value = (DateTime.Now.AddYears(7)).ToString("MM/dd/yyyy");
     }
