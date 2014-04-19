@@ -114,6 +114,24 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoStatus.Text = P_dt.Rows[0].ItemArray[27].ToString();
         ProjectInfoName.Text = P_dt.Rows[0].ItemArray[1].ToString();
         ProjectInfoHatches.Text = row.Cells[8].Text;
+<<<<<<< HEAD
+        ProjectInfoCost.Text = row.Cells[7].Text;
+        ProjectInfoComments.Text = row.Cells[6].Text;
+        // set the opened date to the DateOpened Label
+        DateOpened.Text = row.Cells[4].Text;
+        DateTime Wdate = new DateTime();
+        //saving the opened date to Wdate
+        Wdate = Convert.ToDateTime(row.Cells[4].Text);
+        Wdate=Wdate.AddYears(7);
+        DateTime dateonly = Wdate.Date;
+        //show only the date of the warranty
+        warranty.Text = Convert.ToString(dateonly.ToString("d"));
+    }
+
+    protected void DropDownDataBound(object sender, EventArgs e)
+    {
+
+=======
         ProjectInfoCost.Text = P_dt.Rows[0].ItemArray[6].ToString();
         ProjectInfoComments.Text = P_dt.Rows[0].ItemArray[2].ToString();
         ProjectInfoDateOpened.Value = ((DateTime)P_dt.Rows[0].ItemArray[3]).ToString("MM/dd/yyyy");
@@ -125,6 +143,7 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoArchitectMobile.Text = P_dt.Rows[0].ItemArray[10].ToString();
         ProjectInfoSupervisorName.Text = P_dt.Rows[0].ItemArray[11].ToString();
         ProjectInfoSupervisorMobile.Text = P_dt.Rows[0].ItemArray[12].ToString();
+>>>>>>> e641090ec8ef05a9ead5273db7499d7daf06e0d3
     }
 
     protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)
