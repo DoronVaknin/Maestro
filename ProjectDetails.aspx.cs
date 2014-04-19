@@ -38,7 +38,11 @@ public partial class Default : System.Web.UI.Page
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         Project p = new Project();
         DataTable OrdersDataTable = p.GetOrderDetails(Convert.ToInt32(row.Cells[1].Text));
-        DataTable statustable = p.GetOrderStatus();
+        DataTable statustable = p.GetOrderStatus(); // להחליט מה לעשות
+        OrderGrid.DataSource = OrdersDataTable;
+        OrderGrid.DataBind();
+        
+        
     }
 
 
