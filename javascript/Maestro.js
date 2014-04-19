@@ -5,13 +5,21 @@ var aProjectDetails = [];
 
 $(document).ready(function () {
     ActivateTabsMarking();
+    ActivateToolbarButton("ToolbarBtnCreateProject", "NewCustomer", "CreateProject");
+    ActivateToolbarButton("ToolbarBtnCreateServiceCall", "NewCustomer", "CreateServiceCall");
     ActivateDatepicker();
     ActivateQuickSearch();
-    DisableCustomerDetailsFields();
-    DisableProjectDetailsFields();
-    FixTextAreaIssue();
+    if (IsPage("ProjectDetails")) {
+        DisableCustomerDetailsFields();
+        DisableProjectDetailsFields();
+        FixTextAreaIssue();
+    }
     if (IsPage("NewProject", "NewCustomer"))
         ActivateModal("CustomerCreatedModal");
+    if (IsPage("NewCustomer", "CreateProject"))
+        $("#CustomerForServiceCallBTN").addClass("HiddenButtons");
+    if (IsPage("NewCustomer", "CreateServiceCall"))
+        $("#CustomerForProjectBTN").addClass("HiddenButtons");
 });
 
 //Mark current tabs
@@ -19,6 +27,13 @@ function ActivateTabsMarking() {
     var sFileName = location.pathname.split('/').pop();
     sFileName = sFileName.substring(0, sFileName.length - 5);
     $("#" + sFileName).addClass("current");
+}
+
+//Toolbar buttons
+function ActivateToolbarButton(sID, sPage, sSource) {
+    $("#" + sID).click(function () {
+        window.location.replace(sPage + ".aspx?Source=" + sSource);
+    });
 }
 
 //Datepicker activation
@@ -100,7 +115,7 @@ function RestoreCustomerDetails() {
     $("#ContentPlaceHolder3_ProjectInfoEmail").val(aCustomerDetails[6]);
     $("#ContentPlaceHolder3_ProjectInfoFax").val(aCustomerDetails[7]);
     $("#ContentPlaceHolder3_ProjectInfoArea").val(aCustomerDetails[8]);
-    
+
     DisableCustomerDetailsFields();
     SwitchCustomerDetailsEditSaveButtons(true);
     ClearInvalidFields("#CustomerDetailsTBL");
@@ -119,7 +134,7 @@ function RestoreProjectDetails() {
     $("#ContentPlaceHolder3_ProjectInfoArchitectMobile").val(aProjectDetails[9]);
     $("#ContentPlaceHolder3_ProjectInfoContractorMobile").val(aProjectDetails[10]);
     $("#ContentPlaceHolder3_ProjectInfoSupervisorMobile").val(aProjectDetails[11]);
-    
+
     DisableProjectDetailsFields();
     SwitchProjectDetailsEditSaveButtons(true);
     ClearInvalidFields("#ProjectDetailsTBL");
@@ -131,7 +146,7 @@ function GotoNewCustomer() {
 }
 
 //Validators
-function ValidateNewCustomer() {
+function ValidateNewCustomer(Button) {
     var bIsValid = true;
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerId", function (s) { return s.length < 8 || !isInteger(s); }, false, "יש להזין מספר ת.ז תקין");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerFirstName", function (s) { return s.length < 2; }, false, "השם הפרטי קצר מדי");
@@ -144,7 +159,11 @@ function ValidateNewCustomer() {
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerEmail", function (s) { return !IsEmail(s); }, false, "יש להזין כתובת מייל חוקית");
     if (bIsValid) {
         $(".ErrorLabel").html("");
-        $("#ContentPlaceHolder3_CreateCustomer").click();
+        if (Button.id == "CustomerForProjectBTN")
+            $("#ContentPlaceHolder3_CreateCustomerForProject").click();
+        else
+            alert("פונקציה זו עדיין בתהליכי בנייה, עימכם הסליחה");
+        //            $("#ContentPlaceHolder3_CreateCustomerForServiceCall").click();
     }
 }
 

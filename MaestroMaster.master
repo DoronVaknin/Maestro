@@ -30,8 +30,7 @@
     <form id="form2" runat="server">
     <div>
         <div id="WelcomeDiv">
-            <a href="">
-                <img alt="" /></a><span id="Welcome" runat="server"></span>&nbsp;&nbsp;
+            <a href=""></a><span id="Welcome" runat="server"></span>&nbsp;&nbsp;
             <asp:LinkButton ID="LogoutBTN" runat="server" OnClick="LogoutBTN_Click"><img id = "LogoutIcon" src="images/icons/logout.png" alt = "" /> התנתק</asp:LinkButton>
         </div>
         <div class="userNav">
@@ -39,17 +38,39 @@
                 <li id="Home"><a href="Home.aspx">בית</a></li>
                 <li id="Customers"><a>לקוחות</a>
                     <ul>
-                        <li><a href="NewCustomer.aspx">צור לקוח חדש</a> </li>
+                        <li><a href="NewCustomer.aspx">צור לקוח חדש</a></li>
                         <li><a href="Customers.aspx">רשימת לקוחות</a></li>
                     </ul>
                 </li>
-                <li id="Projects"><a href="Projects.aspx">פרויקטים</a> </li>
+                <li id="Projects"><a>פרויקטים</a>
+                    <ul>
+                        <li id="ToolbarBtnCreateProject"><a>צור פרויקט חדש</a></li>
+                        <li><a href="Projects.aspx">רשימת פרויקטים</a></li>
+                    </ul>
+                </li>
+                <li><a>טכני</a>
+                    <ul>
+                        <li><a>הזמנות</a>
+                            <ul>
+                                <li><a>הזמנות לפי פרויקט</a></li>
+                                <li><a>רשימת הזמנות</a></li>
+                                <li><a>ניהול ספקים</a></li>
+                            </ul>
+                        </li>
+                        <li><a>פתחים</a>
+                            <ul>
+                                <li><a>דיווחי ייצור</a></li>
+                                <li><a>רשימת פתחים</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
                 <li id="ServiceCalls"><a>קריאות שירות</a>
                     <ul>
-                        <li><a href="">צור קריאת שירות</a>
+                        <li><a>צור קריאת שירות</a>
                             <ul>
                                 <li><a href="NewServiceCallExistingProject.aspx">פרויקט קיים</a></li>
-                                <li><a href="">לקוח חיצוני</a></li>
+                                <li id="ToolbarBtnCreateServiceCall"><a>לקוח חיצוני</a></li>
                             </ul>
                         </li>
                         <li><a href="ServiceCalls.aspx">רשימת קריאות שירות</a> </li>
