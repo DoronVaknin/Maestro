@@ -15,28 +15,42 @@
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="ProjectDateOpened" type="text" class="form-control datepicker" runat="server">
-                    <span class="input-group-addon">תאריך פתיחה</span>
+                    <input id="ProjectName" type="text" class="form-control" runat="server">
+                    <span class="input-group-addon">שם הפרויקט</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
-                    <input id="ProjectHatches" type="text" class="form-control" runat="server" maxlength="2">
-                    <span class="input-group-addon">מספר פתחים</span>
+                    <input id="ProjectDateOpened" type="text" class="form-control datepicker" runat="server">
+                    <span class="input-group-addon">תאריך פתיחה</span>
                 </div>
             </td>
         </tr>
         <tr>
             <td>
                 <div class="input-group">
-                    <input id="ProjectExpirationDate" type="text" class="form-control datepicker" runat="server">
-                    <span class="input-group-addon">תאריך תפוגה</span>
+                    <input id="ProjectHatches" type="text" class="form-control" runat="server" maxlength="2">
+                    <span class="input-group-addon">מספר פתחים</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
+                    <input id="ProjectExpirationDate" type="text" class="form-control datepicker" runat="server">
+                    <span class="input-group-addon">תאריך תפוגה</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="input-group">
                     <input id="ProjectCost" type="text" class="form-control" runat="server">
                     <span class="input-group-addon">סה"כ עלות</span>
+                </div>
+            </td>
+            <td>
+                <div class="input-group">
+                    <input id="ProjectInstallationDate" type="text" class="form-control datepicker" runat="server">
+                    <span class="input-group-addon">תאריך התקנה</span>
                 </div>
             </td>
         </tr>

@@ -22,10 +22,12 @@ public class Project
         //
     }
 
-    public Project(DateTime _OpenedDate, DateTime _ExpirationDate, string _Comments, string _Cost, string _Hatches, string _ArchitectName, string _ArchitectPhone, string _ContractorName, string _ContractorPhone, string _SupervisorName, string _SupervisorPhone)
+    public Project(DateTime _OpenedDate, DateTime _ExpirationDate, DateTime _InstallationDate, string _Name, string _Comments, string _Cost, string _Hatches, string _ArchitectName, string _ArchitectPhone, string _ContractorName, string _ContractorPhone, string _SupervisorName, string _SupervisorPhone)
     {
+        Name = _Name;
         DateOpened = _OpenedDate;
         ExpirationDate = _ExpirationDate;
+        InstallationDate = _InstallationDate;
         Comments = _Comments;
         if (_Cost != "")
             Cost = Convert.ToDouble(_Cost);
@@ -48,11 +50,25 @@ public class Project
             SupervisorPhone = "0";
     }
 
+    string name;
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
+    }
+
     string comments;
     public string Comments
     {
         get { return comments; }
         set { comments = value; }
+    }
+
+    DateTime dateOpened;
+    public DateTime DateOpened
+    {
+        get { return dateOpened; }
+        set { dateOpened = value; }
     }
 
     DateTime expirationDate;
@@ -62,11 +78,11 @@ public class Project
         set { expirationDate = value; }
     }
 
-    DateTime dateOpened;
-    public DateTime DateOpened
+    DateTime installationDate;
+    public DateTime InstallationDate
     {
-        get { return dateOpened; }
-        set { dateOpened = value; }
+        get { return installationDate; }
+        set { installationDate = value; }
     }
 
     string contractorName;
@@ -190,10 +206,10 @@ public class Project
         db.UpdateProjectStatus(ProjectID, StatusNum);
     }
 
-    public void UpdateProjectDetails(int _ProjectID, double _Cost, string _Comments, string _ArchitectName, string _ArchitectPhone, string _ContractorName, string _ContractorPhone, string _SupervisorName, string _SupervisorPhone)
+    public void UpdateProjectDetails(int _ProjectID, double _Cost, string _Name, string _Comments, string _ArchitectName, string _ArchitectPhone, string _ContractorName, string _ContractorPhone, string _SupervisorName, string _SupervisorPhone, DateTime _ExpirationDate, DateTime _InstallationDate)
     {
         DBservices db = new DBservices();
-        db.UpdateProjectDetails(_ProjectID, _Cost, _Comments, _ArchitectName, _ArchitectPhone, _ContractorName, _ContractorPhone, _SupervisorName, _SupervisorPhone);
+        db.UpdateProjectDetails(_ProjectID, _Cost, _Name, _Comments, _ArchitectName, _ArchitectPhone, _ContractorName, _ContractorPhone, _SupervisorName, _SupervisorPhone, _ExpirationDate, _InstallationDate);
     }
 
     public void LoadSuppliers(DropDownList ShutterProvider, DropDownList CollectedProvider, DropDownList ValimProvider, DropDownList UProvider, DropDownList ShoeingProvider, DropDownList EngineProvider, DropDownList ProtectedSpaceProvider, DropDownList GlassProvider, DropDownList BoxesProvider)

@@ -71,9 +71,11 @@ public class DBservices
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@pID", pID);
-                sqlComm.Parameters.AddWithValue("@DateOpened", p.DateOpened);
-                sqlComm.Parameters.AddWithValue("@ExpirationDate", p.ExpirationDate.AddDays(60));
+                sqlComm.Parameters.AddWithValue("@Name", p.Name);
                 sqlComm.Parameters.AddWithValue("@Cost", p.Cost);
+                sqlComm.Parameters.AddWithValue("@DateOpened", p.DateOpened);
+                sqlComm.Parameters.AddWithValue("@ExpirationDate", p.ExpirationDate);
+                sqlComm.Parameters.AddWithValue("@InstallationDate", p.InstallationDate);
                 sqlComm.Parameters.AddWithValue("@Comments", p.Comments);
                 sqlComm.Parameters.AddWithValue("@ContName", p.ContractorName);
                 sqlComm.Parameters.AddWithValue("@ContPhone", p.ContractorPhone);
@@ -254,7 +256,7 @@ public class DBservices
         }
     }
 
-    public void UpdateProjectDetails(int ProjectID, double ProjCost, string Comments, string ArchitectName, string ArchitectPhone, string ContractorName, string ContractorPhone, string SupervisorName, string SupervisorPhone)
+    public void UpdateProjectDetails(int ProjectID, double Cost, string Name, string Comments, string ArchitectName, string ArchitectPhone, string ContractorName, string ContractorPhone, string SupervisorName, string SupervisorPhone, DateTime ExpirationDate, DateTime InstallationDate)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateProjectDetails]", con))
@@ -266,7 +268,10 @@ public class DBservices
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
-                sqlComm.Parameters.AddWithValue("@Cost", ProjCost);
+                sqlComm.Parameters.AddWithValue("@pName", Name);
+                sqlComm.Parameters.AddWithValue("@ExpirationDate", ExpirationDate);
+                sqlComm.Parameters.AddWithValue("@InstallationDate", InstallationDate);
+                sqlComm.Parameters.AddWithValue("@Cost", Cost);
                 sqlComm.Parameters.AddWithValue("@Comments", Comments);
                 sqlComm.Parameters.AddWithValue("@ContractorName", ContractorName);
                 sqlComm.Parameters.AddWithValue("@ContractorPhone", ContractorPhone);

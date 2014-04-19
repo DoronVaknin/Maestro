@@ -79,6 +79,7 @@ function SwitchCustomerDetailsEditSaveButtons(bShowEditButton) {
 function EnableProjectDetails() {
     $("#ProjectDetailsTBL *").removeAttr("disabled");
     $("#ContentPlaceHolder3_ProjectInfoHatches").attr("disabled", "disabled");
+    $("#ContentPlaceHolder3_ProjectInfoDateOpened").attr("disabled", "disabled");
     SwitchProjectDetailsEditSaveButtons(false);
     BackupProjectDetails();
 }
@@ -99,24 +100,29 @@ function RestoreCustomerDetails() {
     $("#ContentPlaceHolder3_ProjectInfoEmail").val(aCustomerDetails[6]);
     $("#ContentPlaceHolder3_ProjectInfoFax").val(aCustomerDetails[7]);
     $("#ContentPlaceHolder3_ProjectInfoArea").val(aCustomerDetails[8]);
-
+    
     DisableCustomerDetailsFields();
     SwitchCustomerDetailsEditSaveButtons(true);
+    ClearInvalidFields("#CustomerDetailsTBL");
 }
 
 function RestoreProjectDetails() {
     $("#ContentPlaceHolder3_ProjectInfoStatus").val(aProjectDetails[0]);
-    $("#ContentPlaceHolder3_ProjectInfoHatches").val(aProjectDetails[1]);
+    $("#ContentPlaceHolder3_ProjectInfoName").val(aProjectDetails[1]);
     $("#ContentPlaceHolder3_ProjectInfoCost").val(aProjectDetails[2]);
-    $("#ContentPlaceHolder3_ProjectInfoComments").val(aProjectDetails[3]);
-    $("#ContentPlaceHolder3_ProjectInfoArchitectName").val(aProjectDetails[4]);
-    $("#ContentPlaceHolder3_ProjectInfoContractorName").val(aProjectDetails[5]);
-    $("#ContentPlaceHolder3_ProjectInfoSupervisorName").val(aProjectDetails[6]);
-    $("#ContentPlaceHolder3_ProjectInfoArchitectMobile").val(aProjectDetails[7]);
-    $("#ContentPlaceHolder3_ProjectInfoContractorMobile").val(aProjectDetails[8]);
-    $("#ContentPlaceHolder3_ProjectInfoSupervisorMobile").val(aProjectDetails[9]);
+    $("#ContentPlaceHolder3_ProjectInfoExpirationDate").val(aProjectDetails[3]);
+    $("#ContentPlaceHolder3_ProjectInfoInstallationDate").val(aProjectDetails[4]);
+    $("#ContentPlaceHolder3_ProjectInfoComments").val(aProjectDetails[5]);
+    $("#ContentPlaceHolder3_ProjectInfoArchitectName").val(aProjectDetails[6]);
+    $("#ContentPlaceHolder3_ProjectInfoContractorName").val(aProjectDetails[7]);
+    $("#ContentPlaceHolder3_ProjectInfoSupervisorName").val(aProjectDetails[8]);
+    $("#ContentPlaceHolder3_ProjectInfoArchitectMobile").val(aProjectDetails[9]);
+    $("#ContentPlaceHolder3_ProjectInfoContractorMobile").val(aProjectDetails[10]);
+    $("#ContentPlaceHolder3_ProjectInfoSupervisorMobile").val(aProjectDetails[11]);
+    
     DisableProjectDetailsFields();
     SwitchProjectDetailsEditSaveButtons(true);
+    ClearInvalidFields("#ProjectDetailsTBL");
 }
 
 //Navigation
@@ -176,7 +182,8 @@ function ValidateCustomerDetails() {
 
 function ValidateProjectDetails() {
     var bIsValid = true;
-    //bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectDateOpened", function (s) { return !isValidDate(s); }, false, "יש להזין תאריך חוקי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoExpirationDate", function (s) { return s.length > 0 && !isValidDate(s); }, false, "יש להזין תאריך חוקי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoInstallationDate", function (s) { return s.length > 0 && !isValidDate(s); }, false, "יש להזין תאריך חוקי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoCost", function (s) { return !isNumber(s); }, false, "יש להזין מחיר חוקי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoHatches", function (s) { return !isInteger(s); }, false, "יש להזין מספר פתחים שלם");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoContractorMobile", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
@@ -224,6 +231,11 @@ function MarkInvalid(id, cb, bSelector, sMessage) {
     return !bInvalid;
 }
 
+function ClearInvalidFields(sTableID) {
+    $(sTableID + " input").removeClass("Invalid");
+    $(".ErrorLabel").html("");
+}
+
 //Backup details in case user choose to cancel changes
 function BackupCustomerDetails() {
     aCustomerDetails = [];
@@ -241,8 +253,10 @@ function BackupCustomerDetails() {
 function BackupProjectDetails() {
     aProjectDetails = [];
     aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoStatus").val());
-    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoHatches").val());
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoName").val());
     aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoCost").val());
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoExpirationDate").val());
+    aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoInstallationDate").val());
     aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoComments").val());
     aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoArchitectName").val());
     aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoContractorName").val());

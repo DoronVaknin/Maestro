@@ -150,13 +150,28 @@
                         סטטוס הפרויקט:
                         <asp:DropDownList ID="ProjectInfoStatus" runat="server" CssClass="btn btn-default"
                             DataSourceID="SqlDataSource1" DataTextField="psName" DataValueField="psName"
-                            OnDataBinding="DropDownDataBound" AutoPostBack="false">
+                            AutoPostBack="false">
                         </asp:DropDownList>
                     </td>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoCost" runat="server" CssClass="form-control"></asp:TextBox>
-                            <span class="input-group-addon">סה"כ עלות</span>
+                            <input id="ProjectInfoDateOpened" type="text" class="form-control datepicker" runat="server">
+                            <span class="input-group-addon">תאריך פתיחה</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoName" runat="server" CssClass="form-control" MaxLength="30"></asp:TextBox>
+                            <span class="input-group-addon">שם הפרויקט</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="ProjectInfoExpirationDate" type="text" class="form-control datepicker"
+                                runat="server">
+                            <span class="input-group-addon">תאריך תפוגה</span>
                         </div>
                     </td>
                 </tr>
@@ -165,6 +180,21 @@
                         <div class="input-group">
                             <asp:TextBox ID="ProjectInfoHatches" runat="server" CssClass="form-control" MaxLength="2"></asp:TextBox>
                             <span class="input-group-addon">מס' פתחים</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input id="ProjectInfoInstallationDate" type="text" class="form-control datepicker"
+                                runat="server">
+                            <span class="input-group-addon">תאריך התקנה</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoCost" runat="server" CssClass="form-control"></asp:TextBox>
+                            <span class="input-group-addon">סה"כ עלות</span>
                         </div>
                     </td>
                     <td>
