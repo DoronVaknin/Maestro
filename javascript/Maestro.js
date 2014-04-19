@@ -169,6 +169,7 @@ function ValidateNewCustomer(Button) {
 
 function ValidateNewProject() {
     var bIsValid = true;
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectName", function (s) { return s.length < 2; }, false, "שם הפרויקט קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectDateOpened", function (s) { return !isValidDate(s); }, false, "יש להזין תאריך חוקי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectCost", function (s) { return !isNumber(s); }, false, "יש להזין מחיר חוקי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectHatches", function (s) { return !isInteger(s); }, false, "יש להזין מספר פתחים שלם");
@@ -201,6 +202,7 @@ function ValidateCustomerDetails() {
 
 function ValidateProjectDetails() {
     var bIsValid = true;
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoName", function (s) { return s.length < 2; }, false, "שם הפרויקט קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoExpirationDate", function (s) { return s.length > 0 && !isValidDate(s); }, false, "יש להזין תאריך חוקי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoInstallationDate", function (s) { return s.length > 0 && !isValidDate(s); }, false, "יש להזין תאריך חוקי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoCost", function (s) { return !isNumber(s); }, false, "יש להזין מחיר חוקי");

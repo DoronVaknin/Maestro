@@ -37,8 +37,8 @@
                     </td>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoAddress" runat="server" CssClass="form-control" MaxLength="30"></asp:TextBox>
-                            <span class="input-group-addon">כתובת</span>
+                            <asp:TextBox ID="ProjectInfoPhone" runat="server" CssClass="form-control" MaxLength="10"></asp:TextBox>
+                            <span class="input-group-addon">טלפון</span>
                         </div>
                     </td>
                 </tr>
@@ -46,13 +46,13 @@
                     <td>
                         <div class="input-group">
                             <asp:TextBox ID="ProjectInfoFirstName" runat="server" CssClass="form-control" MaxLength="15"></asp:TextBox>
-                            <span class="input-group-addon">שם פרטי</span>
+                            <span class="input-group-addon">שם פרטי *</span>
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoCity" runat="server" CssClass="form-control City"></asp:TextBox>
-                            <span class="input-group-addon">עיר</span>
+                            <asp:TextBox ID="ProjectInfoMobile" runat="server" CssClass="form-control" MaxLength="10"></asp:TextBox>
+                            <span class="input-group-addon">טלפון נייד</span>
                         </div>
                     </td>
                 </tr>
@@ -60,21 +60,7 @@
                     <td>
                         <div class="input-group">
                             <asp:TextBox ID="ProjectInfoLastName" runat="server" CssClass="form-control" MaxLength="15"></asp:TextBox>
-                            <span class="input-group-addon">שם משפחה</span>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoEmail" runat="server" CssClass="form-control" MaxLength="30"></asp:TextBox>
-                            <span class="input-group-addon">דוא"ל</span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoPhone" runat="server" CssClass="form-control" MaxLength="10"></asp:TextBox>
-                            <span class="input-group-addon">טלפון</span>
+                            <span class="input-group-addon">שם משפחה *</span>
                         </div>
                     </td>
                     <td>
@@ -87,8 +73,22 @@
                 <tr>
                     <td>
                         <div class="input-group">
-                            <asp:TextBox ID="ProjectInfoMobile" runat="server" CssClass="form-control" MaxLength="10"></asp:TextBox>
-                            <span class="input-group-addon">טלפון נייד</span>
+                            <asp:TextBox ID="ProjectInfoAddress" runat="server" CssClass="form-control" MaxLength="30"></asp:TextBox>
+                            <span class="input-group-addon">כתובת *</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoEmail" runat="server" CssClass="form-control" MaxLength="30"></asp:TextBox>
+                            <span class="input-group-addon">דוא"ל *</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <asp:TextBox ID="ProjectInfoCity" runat="server" CssClass="form-control City"></asp:TextBox>
+                            <span class="input-group-addon">עיר *</span>
                         </div>
                     </td>
                     <td>
@@ -158,7 +158,7 @@
                     <td>
                         <div class="input-group">
                             <asp:TextBox ID="ProjectInfoName" runat="server" CssClass="form-control" MaxLength="30"></asp:TextBox>
-                            <span class="input-group-addon">שם הפרויקט</span>
+                            <span class="input-group-addon">שם הפרויקט *</span>
                         </div>
                     </td>
                     <td>
@@ -188,7 +188,7 @@
                     <td>
                         <div class="input-group">
                             <asp:TextBox ID="ProjectInfoCost" runat="server" CssClass="form-control"></asp:TextBox>
-                            <span class="input-group-addon">סה"כ עלות</span>
+                            <span class="input-group-addon">סה"כ עלות *</span>
                         </div>
                     </td>
                     <td>
@@ -409,12 +409,13 @@
             CssClass="btn btn-default" Font-Bold="true" /></div>
     <br />
     <br />
-    <asp:GridView runat="server"  CssClass="DataTables" ID="OrderGrid">
-    <Columns><asp:CommandField ShowSelectButton="True" SelectText="בחר" /></Columns>
-     
+    <asp:GridView runat="server" CssClass="DataTables" ID="OrderGrid">
+        <Columns>
+            <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
+        </Columns>
     </asp:GridView>
     <br />
     <br />
     <div class="btn-group">
-                </div>
+    </div>
 </asp:Content>

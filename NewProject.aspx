@@ -16,13 +16,13 @@
             <td>
                 <div class="input-group">
                     <input id="ProjectName" type="text" class="form-control" runat="server">
-                    <span class="input-group-addon">שם הפרויקט</span>
+                    <span class="input-group-addon">שם הפרויקט *</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
                     <input id="ProjectDateOpened" type="text" class="form-control datepicker" runat="server">
-                    <span class="input-group-addon">תאריך פתיחה</span>
+                    <span class="input-group-addon">תאריך פתיחה *</span>
                 </div>
             </td>
         </tr>
@@ -30,7 +30,7 @@
             <td>
                 <div class="input-group">
                     <input id="ProjectHatches" type="text" class="form-control" runat="server" maxlength="2">
-                    <span class="input-group-addon">מספר פתחים</span>
+                    <span class="input-group-addon">מס' פתחים *</span>
                 </div>
             </td>
             <td>
@@ -44,7 +44,7 @@
             <td>
                 <div class="input-group">
                     <input id="ProjectCost" type="text" class="form-control" runat="server">
-                    <span class="input-group-addon">סה"כ עלות</span>
+                    <span class="input-group-addon">סה"כ עלות *</span>
                 </div>
             </td>
             <td>

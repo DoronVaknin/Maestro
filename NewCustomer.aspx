@@ -15,7 +15,7 @@
             <td>
                 <div class="input-group">
                     <input id="CustomerId" type="text" class="form-control" runat="server" maxlength="9">
-                    <span class="input-group-addon">ת.ז</span>
+                    <span class="input-group-addon">ת.ז *</span>
                 </div>
             </td>
             <td>
@@ -29,7 +29,7 @@
             <td>
                 <div class="input-group">
                     <input id="CustomerFirstName" type="text" class="form-control" runat="server" maxlength="20">
-                    <span class="input-group-addon">שם פרטי</span>
+                    <span class="input-group-addon">שם פרטי *</span>
                 </div>
             </td>
             <td>
@@ -43,7 +43,7 @@
             <td>
                 <div class="input-group">
                     <input id="CustomerLastName" type="text" class="form-control" runat="server" maxlength="20">
-                    <span class="input-group-addon">שם משפחה</span>
+                    <span class="input-group-addon">שם משפחה *</span>
                 </div>
             </td>
             <td>
@@ -57,13 +57,13 @@
             <td>
                 <div class="input-group">
                     <input id="CustomerAddress" type="text" class="form-control" runat="server">
-                    <span class="input-group-addon">כתובת</span>
+                    <span class="input-group-addon">כתובת *</span>
                 </div>
             </td>
             <td>
                 <div class="input-group">
                     <input id="CustomerEmail" type="text" class="form-control" runat="server">
-                    <span class="input-group-addon">דוא"ל</span>
+                    <span class="input-group-addon">דוא"ל *</span>
                 </div>
             </td>
         </tr>
@@ -71,7 +71,7 @@
             <td>
                 <div class="input-group">
                     <input id="CustomerCity" type="text" class="form-control City" runat="server" maxlength="15">
-                    <span class="input-group-addon">עיר</span>
+                    <span class="input-group-addon">עיר *</span>
                 </div>
             </td>
             <td>
