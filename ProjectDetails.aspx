@@ -298,12 +298,7 @@
                 תריסים
             </td>
             <td>
-                <div class="btn-group" style=" width:100px ;">
-                    <button type="button" class="btn btn-default" style=" margin-left:0px ; margin-right: 0px;">-</button>
-                   <input type="text" class="form-control"  style=" width:30px; margin-left:0px ; margin-right: 0px;" >
-                       
-                    <button type="button" class="btn btn-default" style=" margin-left:0px ; margin-right: 0px;"> +</button>
-                </div>
+                <asp:TextBox ID="ShutterCount" runat="server" Width="50px">0</asp:TextBox>
             </td>
             <td>
                 <asp:DropDownList ID="ShutterProvider" runat="server" Width="150px">
@@ -419,11 +414,7 @@
      
     </asp:GridView>
     <br />
-    <asp:Button ID="Button2" runat="server" Text="ערוך סטטוס הזמנה" />
     <br />
     <div class="btn-group">
-                    <button type="button" class="btn btn-default" style=" width:20px;">-</button>
-                   <asp:TextBox ID="ShutterCount" runat="server" Width="50px">0</asp:TextBox>
-                    <button type="button" class="btn btn-default" style=" width:20px;">+</button>
                 </div>
 </asp:Content>
