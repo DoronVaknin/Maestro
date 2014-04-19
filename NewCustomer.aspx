@@ -78,7 +78,7 @@
                 <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
                     SelectCommand="spGetRegion" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
                 <div class="cntr">
-                אזור: &nbsp;
+                    אזור: &nbsp;
                     <asp:DropDownList ID="CustomerArea" runat="server" DataSourceID="SqlDataSource1"
                         CssClass="btn btn-default" DataTextField="RegionName" DataValueField="RegionID">
                     </asp:DropDownList>
@@ -86,12 +86,16 @@
             </td>
         </tr>
     </table>
-    <asp:Label ID="ErrorLabel" runat="server" Text="Label" style= " "></asp:Label>
     <br />
     <div class="cntr">
-        <input type="button" value="צור לקוח" class="btn btn-default" onclick="ValidateNewCustomer()" />
-        <asp:Button ID="CreateCustomer" runat="server" Text="צור לקוח" CssClass="btn btn-default HiddenButtons"
-            Font-Bold="true" OnClick="CreateCustomer_Click" />
+        <input id="CustomerForProjectBTN" type="button" value="המשך ליצירת פרויקט" class="btn btn-default"
+            onclick="ValidateNewCustomer(this)" />
+        <input id="CustomerForServiceCallBTN" type="button" value="המשך ליצירת קריאת שירות"
+            class="btn btn-default" onclick="ValidateNewCustomer(this)" />
+        <asp:Button ID="CreateCustomerForProject" runat="server" Text="המשך לפרויקט" CssClass="btn btn-default HiddenButtons"
+            OnClick="CreateCustomerForProject_Click" />
+        <asp:Button ID="CreateCustomerForServiceCall" runat="server" Text="המשך לקריאת שירות"
+            CssClass="btn btn-default HiddenButtons" OnClick="CreateCustomerForServiceCall_Click" />
         <br />
         <br />
         <span class="ErrorLabel"></span>

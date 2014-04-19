@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true"
-    CodeFile="NewServiceCall.aspx.cs" Inherits="Default" %>
+    CodeFile="NewServiceCallExternalCustomer.aspx.cs" Inherits="Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
     <style type="text/css">

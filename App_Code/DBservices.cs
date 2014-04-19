@@ -71,7 +71,7 @@ public class DBservices
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@pID", pID);
-                sqlComm.Parameters.AddWithValue("@Name", p.Name);
+                sqlComm.Parameters.AddWithValue("@pName", p.Name);
                 sqlComm.Parameters.AddWithValue("@Cost", p.Cost);
                 sqlComm.Parameters.AddWithValue("@DateOpened", p.DateOpened);
                 sqlComm.Parameters.AddWithValue("@ExpirationDate", p.ExpirationDate);

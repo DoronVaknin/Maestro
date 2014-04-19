@@ -75,10 +75,7 @@ public partial class Default : System.Web.UI.Page
         DataTable statustable = p.GetOrderStatus(); // להחליט מה לעשות
         OrderGrid.DataSource = OrdersDataTable;
         OrderGrid.DataBind();
-        
-        
     }
-
 
     public void SetProjCurrentStatus()
     {
@@ -152,12 +149,9 @@ public partial class Default : System.Web.UI.Page
 
     }
 
-
     protected void Button1_Click(object sender, EventArgs e)
     {
-
         CreateOrder(Convert.ToInt32(ShutterCount.Text), Convert.ToString(ShutterProvider.SelectedValue), 1);
-
     }
 
     public void CreateOrder(int Count, string Supplier, int RawMeterialID)

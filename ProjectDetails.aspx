@@ -134,16 +134,6 @@
         <ContentTemplate>
             <table id="ProjectDetailsTBL" class="table">
                 <tr>
-                    <td> 
-                        תאריך פתיחת הפרויקט:
-                        <asp:Label ID="DateOpened" runat="server" Text="Label"></asp:Label>
-                        <td>
-                            תאריך סיום האחריות:
-                            <asp:Label ID="warranty" runat="server" Text="Label"></asp:Label>
-                        </td>
-                    </td>
-                </tr>
-                <tr>
                     <td>
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
                             SelectCommand="spGetProjectStatusList" SelectCommandType="StoredProcedure"></asp:SqlDataSource>

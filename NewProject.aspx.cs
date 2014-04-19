@@ -10,6 +10,9 @@ public partial class Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        Customer c = new Customer();
+        c = (Customer)Session["Customer"];
+        ProjectName.Value = c.Fname + " " + c.Lname + " - " + c.City;
         ProjectDateOpened.Value = (DateTime.Today).ToString("MM/dd/yyyy");
         ProjectExpirationDate.Value = (DateTime.Now.AddYears(7)).ToString("MM/dd/yyyy");
     }
@@ -25,9 +28,13 @@ public partial class Default : System.Web.UI.Page
         Project p = new Project(DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInstallationDate.Value, "MM/dd/yyyy", null), ProjectName.Value, ProjectComments.Value, ProjectCost.Value, ProjectHatches.Value, ProjectArchitectName.Value, ProjectArchitectMobile.Value, ProjectContractorName.Value, ProjectContractorMobile.Value, ProjectSupervisorName.Value, ProjectSupervisorMobile.Value);
         //שמירת מספר תעודת זהות של הלקוח  במשתנה
         Int32 CustomerID = 0;
-        if (Session["CustomerID"] != null)
-            CustomerID = Convert.ToInt32(Session["CustomerID"]);
-        p.InsertNewProject(p, CustomerID);
+        if (Session["Customer"] != null)
+        {
+            Customer c = new Customer();
+            c = (Customer)Session["Customer"];
+            CustomerID = c.cID;
+            p.InsertNewProject(p, CustomerID);
+        }
         Response.Redirect("~/Projects.aspx");
     }
 }
