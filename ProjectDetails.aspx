@@ -7,6 +7,10 @@
         {
             height: 68px;
         }
+        .style2
+        {
+            height: 95px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
@@ -280,22 +284,22 @@
     <br />
     <table class="nav-justified" id="OrderTable">
         <tr>
-            <td>
+            <td class="style2">
                 שם הפריט
             </td>
-            <td>
+            <td class="style2">
                 כמות להזמנה
             </td>
-            <td>
+            <td class="style2">
                 שם הספק
             </td>
-            <td>
+            <td class="style2">
                 &nbsp;
             </td>
-            <td>
+            <td class="style2">
                 &nbsp;
             </td>
-            <td>
+            <td class="style2">
                 &nbsp;
             </td>
         </tr>
@@ -304,7 +308,12 @@
                 תריסים
             </td>
             <td>
-                <asp:TextBox ID="ShutterCount" runat="server" Width="50px"></asp:TextBox>
+                <div class="btn-group" style=" width:100px ;">
+                    <button type="button" class="btn btn-default" style=" margin-left:0px ; margin-right: 0px;">-</button>
+                   <input type="text" class="form-control"  style=" width:30px; margin-left:0px ; margin-right: 0px;" >
+                       
+                    <button type="button" class="btn btn-default" style=" margin-left:0px ; margin-right: 0px;"> +</button>
+                </div>
             </td>
             <td>
                 <asp:DropDownList ID="ShutterProvider" runat="server" Width="150px">
@@ -314,7 +323,7 @@
                 נאספים
             </td>
             <td>
-                <asp:TextBox ID="CollectedCount" runat="server" Width="50px"></asp:TextBox>
+                <asp:TextBox ID="CollectedCount" runat="server" Width="50px">0</asp:TextBox>
             </td>
             <td>
                 <asp:DropDownList ID="CollectedProvider" runat="server" value="2" Width="150px">
@@ -326,7 +335,7 @@
                 וואלים
             </td>
             <td class="style1">
-                <asp:TextBox ID="ValimCount" runat="server" Width="50px"></asp:TextBox>
+                <asp:TextBox ID="ValimCount" runat="server" Width="50px">0</asp:TextBox>
             </td>
             <td class="style1">
                 <asp:DropDownList ID="ValimProvider" runat="server" Width="150px">
@@ -336,7 +345,7 @@
                 U
             </td>
             <td class="style1">
-                <asp:TextBox ID="UCount" runat="server" Width="50px"></asp:TextBox>
+                <asp:TextBox ID="UCount" runat="server" Width="50px">0</asp:TextBox>
             </td>
             <td class="style1">
                 <asp:DropDownList ID="UProvider" runat="server" Width="150px">
@@ -348,7 +357,7 @@
                 פרזול
             </td>
             <td>
-                <asp:TextBox ID="ShoeingCount" runat="server" Width="50px"></asp:TextBox>
+                <asp:TextBox ID="ShoeingCount" runat="server" Width="50px">0</asp:TextBox>
             </td>
             <td>
                 <asp:DropDownList ID="ShoeingProvider" runat="server" Width="150px">
@@ -358,7 +367,7 @@
                 מנועים
             </td>
             <td>
-                <asp:TextBox ID="EngineCount" runat="server" Width="50px"></asp:TextBox>
+                <asp:TextBox ID="EngineCount" runat="server" Width="50px">0</asp:TextBox>
             </td>
             <td>
                 <asp:DropDownList ID="EngineProvider" runat="server" Width="150px">
@@ -370,7 +379,7 @@
                 ממ&quot;ד
             </td>
             <td>
-                <asp:TextBox ID="ProtectedSpaceCount" runat="server" Width="50px"></asp:TextBox>
+                <asp:TextBox ID="ProtectedSpaceCount" runat="server" Width="50px">0</asp:TextBox>
             </td>
             <td>
                 <asp:DropDownList ID="ProtectedSpaceProvider" runat="server" Width="150px">
@@ -380,7 +389,7 @@
                 זכוכית
             </td>
             <td>
-                <asp:TextBox ID="GlassCount" runat="server" Width="50px"></asp:TextBox>
+                <asp:TextBox ID="GlassCount" runat="server" Width="50px">0</asp:TextBox>
             </td>
             <td>
                 <asp:DropDownList ID="GlassProvider" runat="server" Width="150px">
@@ -392,7 +401,7 @@
                 ארגזים
             </td>
             <td>
-                <asp:TextBox ID="BoxCount" runat="server" Width="50px"></asp:TextBox>
+                <asp:TextBox ID="BoxCount" runat="server" Width="50px">0</asp:TextBox>
             </td>
             <td>
                 <asp:DropDownList ID="BoxesProvider" runat="server" Width="150px">
@@ -422,4 +431,9 @@
     <br />
     <asp:Button ID="Button2" runat="server" Text="ערוך סטטוס הזמנה" />
     <br />
+    <div class="btn-group">
+                    <button type="button" class="btn btn-default" style=" width:20px;">-</button>
+                   <asp:TextBox ID="ShutterCount" runat="server" Width="50px">0</asp:TextBox>
+                    <button type="button" class="btn btn-default" style=" width:20px;">+</button>
+                </div>
 </asp:Content>

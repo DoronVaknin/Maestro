@@ -125,6 +125,8 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoArchitectMobile.Text = P_dt.Rows[0].ItemArray[10].ToString();
         ProjectInfoSupervisorName.Text = P_dt.Rows[0].ItemArray[11].ToString();
         ProjectInfoSupervisorMobile.Text = P_dt.Rows[0].ItemArray[12].ToString();
+        DateOpened.Text = ProjectInfoDateOpened.Value;
+        warranty.Text = ProjectInfoExpirationDate.Value;
     }
 
     protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)
