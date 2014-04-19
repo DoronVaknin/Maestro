@@ -9,27 +9,20 @@ public partial class Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        Customer c = new Customer();
+        c = (Customer)Session["Customer"];
+        string fNname = c.Fname;
+        string lName = c.Lname;
+        PageHeader.InnerHtml = "קריאת שירות עבור הלקוח " + fNname + " " + lName;
+        ServiceCallDateOpened.Value = (DateTime.Today).ToString("MM/dd/yyyy");
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void CreateServiceCallExternal_Click(object sender, EventArgs e)
     {
-        ServiceCall sc = new ServiceCall();
-        sc.CustomerName = CustomerName.Text;
-        sc.Mobile = CustomerPhone.Text;
-        sc.Address = CustomerAddress.Text;
-        sc.Description = ErrorDescription.Text;
-        sc.Area = Convert.ToInt32(AreaTB.SelectedItem.Value);
-        if (IsUrgent.Checked)
-            sc.Urgent = true;
-        else
-            sc.Urgent = false;
-        if (IsWarranty.Checked)
-            sc.Warranty = true;
-        else
-            sc.Warranty = false;
-
-        //sc.insert(this);
+        ServiceCall sc = new ServiceCall(DateTime.ParseExact(ServiceCallDateOpened.Value, "MM/dd/yyyy", null), ServiceCallProblemDesc.Text, ServiceCallUrgentCall.Checked);
+        Customer c = new Customer();
+        c = (Customer)Session["Customer"];
+        sc.InsertExternalServiceCall(sc, c.cID);
     }
 }
 

@@ -29,17 +29,20 @@ public partial class Default : System.Web.UI.Page
         Session["Customer"] = c;
         int RowsAffected = c.InsertNewCustomer();
         if (RowsAffected > 0)
-        {
             Response.Redirect("NewProject.aspx?Source=NewCustomer");
-        }
         else
             Response.Write("לא ניתן לשמור את הלקוח");
     }
 
     protected void CreateCustomerForServiceCall_Click(object sender, EventArgs e)
     {
-        //Customer c = new Customer(Convert.ToInt32(CustomerId.Value), CustomerFirstName.Value, CustomerLastName.Value, CustomerCity.Value, CustomerAddress.Value, CustomerEmail.Value, Convert.ToInt32(CustomerArea.Text));
-        //c.SetPhones(CustomerPhone.Value, CustomerCellPhone.Value, CustomerFaxNumber.Value);
-        //Session["Customer"] = c;
+        Customer c = new Customer(Convert.ToInt32(CustomerId.Value), CustomerFirstName.Value, CustomerLastName.Value, CustomerCity.Value, CustomerAddress.Value, CustomerEmail.Value, Convert.ToInt32(CustomerArea.Text));
+        c.SetPhones(CustomerPhone.Value, CustomerCellPhone.Value, CustomerFaxNumber.Value);
+        Session["Customer"] = c;
+        int RowsAffected = c.InsertNewCustomer();
+        if (RowsAffected > 0)
+            Response.Redirect("NewServiceCallExternalCustomer.aspx");
+        else
+            Response.Write("לא ניתן לשמור את הלקוח");
     }
 }

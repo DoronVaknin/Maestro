@@ -8,32 +8,32 @@ using System.Web;
 /// </summary>
 public class ServiceCall
 {
-    public ServiceCall()
+    public ServiceCall(DateTime _DateOpened, string _Description, bool _Urgent)
     {
-        //
-        // TODO: Add constructor logic here
-        //
+        DateOpened = _DateOpened;
+        Description = _Description;
+        Urgent = _Urgent;
     }
 
-    string customerName;
-    public string CustomerName
+    int scID;
+    public int ScID
     {
-        get { return customerName; }
-        set { customerName = value; }
+        get { return scID; }
+        set { scID = value; }
     }
 
-    string mobile;
-    public string Mobile
+    DateTime dateOpened;
+    public DateTime DateOpened
     {
-        get { return mobile; }
-        set { mobile = value; }
+        get { return dateOpened; }
+        set { dateOpened = value; }
     }
 
-    string address;
-    public string Address
+    DateTime dateClosed;
+    public DateTime DateClosed
     {
-        get { return address; }
-        set { address = value; }
+        get { return dateClosed; }
+        set { dateClosed = value; }
     }
 
     string description;
@@ -43,13 +43,6 @@ public class ServiceCall
         set { description = value; }
     }
 
-    int area;
-    public int Area
-    {
-        get { return area; }
-        set { area = value; }
-    }
-
     bool urgent;
     public bool Urgent
     {
@@ -57,15 +50,9 @@ public class ServiceCall
         set { urgent = value; }
     }
 
-    bool warranty;
-    public bool Warranty
-    {
-        get { return warranty; }
-        set { warranty = value; }
-    }
-
-    public void InsertServiceCall(ServiceCall sc)
+    public void InsertExternalServiceCall(ServiceCall sc, int CustomerID)
     {
         DBservices dbs = new DBservices();
+        dbs.InsertExternalServiceCall(sc, CustomerID);
     }
 }

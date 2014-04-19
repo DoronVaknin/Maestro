@@ -162,8 +162,7 @@ function ValidateNewCustomer(Button) {
         if (Button.id == "CustomerForProjectBTN")
             $("#ContentPlaceHolder3_CreateCustomerForProject").click();
         else
-            alert("פונקציה זו עדיין בתהליכי בנייה, עימכם הסליחה");
-        //            $("#ContentPlaceHolder3_CreateCustomerForServiceCall").click();
+            $("#ContentPlaceHolder3_CreateCustomerForServiceCall").click();
     }
 }
 
@@ -179,6 +178,16 @@ function ValidateNewProject() {
     if (bIsValid) {
         $(".ErrorLabel").html("");
         $("#ContentPlaceHolder3_CreateProject").click();
+    }
+}
+
+function ValidateServiceCallExternal() {
+    var bIsValid = true;
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ServiceCallDateOpened", function (s) { return !isValidDate(s); }, false, "יש להזין תאריך חוקי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ServiceCallProblemDesc", function (s) { return s.length < 5; }, false, "תיאור התקלה קצר מדי");
+    if (bIsValid) {
+        $(".ErrorLabel").html("");
+        $("#ContentPlaceHolder3_CreateServiceCallExternal").click();
     }
 }
 

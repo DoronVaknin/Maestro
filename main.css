@@ -210,7 +210,7 @@ html[xmlns] #nav
     width: 100px;
 }
 
-#NewCustomerTBL td, #NewProjectTBL td, #CustomerDetailsTBL td, #ProjectDetailsTBL td, #NewSCExistingProjectTBL td
+#NewCustomerTBL td, #NewProjectTBL td, #CustomerDetailsTBL td, #ProjectDetailsTBL td, #NewSCExistingProjectTBL td, #NewServiceCallExternalTBL td
 {
     border-top: none;
 }
@@ -250,7 +250,7 @@ div.cntr input[type=button]
     font-weight: bold;
 }
 
-#NewProjectTBL textarea, #ProjectDetailsTBL textarea, #NewSCExistingProjectTBL textarea
+#NewProjectTBL textarea, #ProjectDetailsTBL textarea, #NewSCExistingProjectTBL textarea, #NewServiceCallExternalTBL textarea
 {
     max-width: 320px;
     height: 100px;

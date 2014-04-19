@@ -12,7 +12,7 @@ public partial class Default : System.Web.UI.Page
         GridViewRow CustomerRow = (GridViewRow)Session["Customer"];
         string Fname = CustomerRow.Cells[2].Text;
         string Lname = CustomerRow.Cells[3].Text;
-        Header.InnerHtml = "פרויקטים עבור הלקוח " + Fname + " " + Lname;
+        PageHeader.InnerHtml = "פרויקטים עבור הלקוח " + Fname + " " + Lname;
     }
     protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
     {
