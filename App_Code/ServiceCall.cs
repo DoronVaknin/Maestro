@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.Configuration;
+using System.Text;
+using System.Configuration;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 /// <summary>
 /// Summary description for ServiceCall
 /// </summary>
 public class ServiceCall
 {
+    public ServiceCall()
+    {
+
+    }
     public ServiceCall(DateTime _DateOpened, string _Description, bool _Urgent)
     {
         DateOpened = _DateOpened;
@@ -61,4 +72,18 @@ public class ServiceCall
         DBservices dbs = new DBservices();
         dbs.InsertServiceCallExistingProject(sc, CustomerID, ProjectID);
     }
+
+    public void CloseServicCall(int ServicCallID)
+    {
+        DBservices db = new DBservices();
+        db.CloseServiceCall(ServicCallID);
+    }
+
+    public DataTable GetServiceCallPopupMissingDetails(int ServicCallID)
+    {
+        DBservices db = new DBservices();
+        DataTable dt= db.GetServiceCallPopupMissingDetails(ServicCallID);
+        return dt;
+    }
+    
 }

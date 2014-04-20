@@ -606,6 +606,57 @@ public class DBservices
             }
         }
     }
+
+    public void CloseServiceCall(int ServicCallID) 
+    {
+        DateTime date= DateTime.Now;
+        con = connect("igroup9_prodConnectionString");
+         using (SqlCommand sqlComm = new SqlCommand("spCloseServicCall", con))
+         {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@date", date);
+                sqlComm.Parameters.AddWithValue("@ServiceCallID", ServicCallID);
+                sqlComm.ExecuteNonQuery();
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetServiceCallPopupMissingDetails(int ServicCallID)
+    {
+        DataTable dt = new DataTable();
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("spGetServiceCallPopupMissingDetails", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ServiceCallID", ServicCallID);
+                SqlDataAdapter da = new SqlDataAdapter();
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
 }
 
 
