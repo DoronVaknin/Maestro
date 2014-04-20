@@ -15,6 +15,8 @@ $(document).ready(function () {
         DisableProjectDetailsFields();
         FixTextAreaIssue();
     }
+    if (IsPage("ProjectOrders"))
+        ActivatePlusMinus();
     if (IsPage("NewProject", "NewCustomer"))
         ActivateModal("ModalCustomerCreated");
     if (IsPage("NewCustomer", "CreateProject"))
@@ -60,8 +62,36 @@ function ActivateModal(sID) {
 }
 
 function ActivateServiceCallExistingProjectModal() {
-    $("#ToolbarBtnCreateServiceCallExistingProject").click(function () {
-        ActivateModal("ModalServiceCallExistingProject");
+    $(".ChooseProjectToolbarButtons").click(function () {
+        var sButtonID = this.id;
+        switch (sButtonID) {
+            case "ToolbarBtnCreateServiceCallExistingProject":
+                $("#ModalChooseProject .modal-title").html("קריאת שירות - פרויקט קיים");
+                $("#ChooseProjectForProjectOrdersBTN").addClass("HiddenButtons");
+                $("#ChooseProjectForServiceCallBTN").removeClass("HiddenButtons");
+                break;
+
+            case "ToolbarBtnProjectOrders":
+                $("#ModalChooseProject .modal-title").html("הזמנות עבור פרויקט");
+                $("#ChooseProjectForServiceCallBTN").addClass("HiddenButtons");
+                $("#ChooseProjectForProjectOrdersBTN").removeClass("HiddenButtons");
+                break;
+
+        }
+        ActivateModal("ModalChooseProject");
+    });
+}
+
+function ActivatePlusMinus() {
+    $("#ProjectOrdersTBL .plus").click(function () {
+        var TextBox = $(this).prev();
+        var sValue = parseInt(TextBox.val());
+        TextBox.val(sValue + 1);
+    });
+    $("#ProjectOrdersTBL .minus").click(function () {
+        var TextBox = $(this).next();
+        var sValue = TextBox.val();
+        TextBox.val(sValue - 1);
     });
 }
 

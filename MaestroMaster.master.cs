@@ -19,6 +19,7 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
             default: break;
         }
     }
+
     protected void LogoutBTN_Click(object sender, EventArgs e)
     {
         FormsAuthentication.SignOut();
@@ -28,6 +29,14 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
     protected void ChooseProjectForServiceCallBTN_Click(object sender, EventArgs e)
     {
         Session["ProjectIDForServiceCall"] = ProjectNamesDDL.SelectedValue;
+        Session["ProjectNameForServiceCall"] = ProjectNamesDDL.SelectedItem;
         Response.Redirect("NewServiceCall.aspx?Source=ExistingProject");
+    }
+
+    protected void ChooseProjectForProjectOrdersBTN_Click(object sender, EventArgs e)
+    {
+        Session["ProjectIDForProjectOrders"] = ProjectNamesDDL.SelectedValue;
+        Session["ProjectNameForProjectOrders"] = ProjectNamesDDL.SelectedItem;
+        Response.Redirect("ProjectOrders.aspx");
     }
 }

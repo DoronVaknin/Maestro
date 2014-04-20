@@ -52,8 +52,8 @@
                     <ul>
                         <li><a>הזמנות</a>
                             <ul>
-                                <li><a>הזמנות לפי פרויקט</a></li>
-                                <li><a>רשימת הזמנות</a></li>
+                                <li id="ToolbarBtnProjectOrders" class="ChooseProjectToolbarButtons"><a>הזמנות לפי פרויקט</a></li>
+                                <li><a href="Orders.aspx">רשימת הזמנות</a></li>
                                 <li><a>ניהול ספקים</a></li>
                             </ul>
                         </li>
@@ -69,7 +69,8 @@
                     <ul>
                         <li><a>צור קריאת שירות</a>
                             <ul>
-                                <li id="ToolbarBtnCreateServiceCallExistingProject"><a>פרויקט קיים</a></li>
+                                <li id="ToolbarBtnCreateServiceCallExistingProject" class="ChooseProjectToolbarButtons">
+                                    <a>פרויקט קיים</a></li>
                                 <li id="ToolbarBtnCreateServiceCallExternalCustomer"><a>לקוח חיצוני</a></li>
                             </ul>
                         </li>
@@ -81,15 +82,15 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="ModalServiceCallExistingProject" tabindex="-1" role="dialog"
-        aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="ModalChooseProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" dir="rtl">
                         &times;</button>
                     <h4 class="modal-title">
-                        קריאת שירות - פרויקט קיים</h4>
+                    </h4>
                 </div>
                 <div class="modal-body">
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
@@ -100,8 +101,10 @@
                         </asp:DropDownList>
                         <br />
                         <br />
-                        <asp:Button ID="ChooseProjectForServiceCallBTN" runat="server" Text="בחר פרויקט" CssClass="btn btn-default"
-                            Font-Bold = "true" OnClick="ChooseProjectForServiceCallBTN_Click" />
+                        <asp:Button ID="ChooseProjectForServiceCallBTN" runat="server" Text="בחר פרויקט"
+                            CssClass="btn btn-default" Font-Bold="true" OnClick="ChooseProjectForServiceCallBTN_Click" />
+                        <asp:Button ID="ChooseProjectForProjectOrdersBTN" runat="server" Text="בחר פרויקט" CssClass="btn btn-default"
+                            Font-Bold="true" OnClick="ChooseProjectForProjectOrdersBTN_Click" />
                     </div>
                 </div>
                 <%--                <div class="modal-footer">
