@@ -46,6 +46,6 @@ public partial class Default : System.Web.UI.Page
     {
         GridViewRow row = ServiceCallsGridView.SelectedRow;
         ServiceCall sc = new ServiceCall();
-        sc.CloseServicCall(Convert.ToInt32(row.Cells[2].Text));
+        sc.CloseServiceCall(Convert.ToInt32(row.Cells[2].Text));
     }
 }

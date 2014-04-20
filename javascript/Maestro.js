@@ -68,15 +68,23 @@ function ActivateServiceCallExistingProjectModal() {
             case "ToolbarBtnCreateServiceCallExistingProject":
                 $("#ModalChooseProject .modal-title").html("קריאת שירות - פרויקט קיים");
                 $("#ChooseProjectForProjectOrdersBTN").addClass("HiddenButtons");
+                $("#ChooseProjectForProjectHatchesBTN").addClass("HiddenButtons");
                 $("#ChooseProjectForServiceCallBTN").removeClass("HiddenButtons");
                 break;
 
             case "ToolbarBtnProjectOrders":
                 $("#ModalChooseProject .modal-title").html("הזמנות עבור פרויקט");
                 $("#ChooseProjectForServiceCallBTN").addClass("HiddenButtons");
+                $("#ChooseProjectForProjectHatchesBTN").addClass("HiddenButtons");
                 $("#ChooseProjectForProjectOrdersBTN").removeClass("HiddenButtons");
                 break;
 
+            case "ToolbarBtnProjectHatches":
+                $("#ModalChooseProject .modal-title").html("פתחים עבור פרויקט");
+                $("#ChooseProjectForServiceCallBTN").addClass("HiddenButtons");
+                $("#ChooseProjectForProjectOrdersBTN").addClass("HiddenButtons");
+                $("#ChooseProjectForProjectHatchesBTN").removeClass("HiddenButtons");
+                break;
         }
         ActivateModal("ModalChooseProject");
     });
@@ -219,6 +227,21 @@ function ValidateNewProject() {
     if (bIsValid) {
         $(".ErrorLabel").html("");
         $("#ContentPlaceHolder3_CreateProject").click();
+    }
+}
+
+function ValidateNewSupplier(Button) {
+    var bIsValid = true;
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierName", function (s) { return s.length < 2; }, false, "השם הפרטי קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierAddress", function (s) { return s.length < 2; }, false, "כתובת המגורים קצרה מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierCity", function (s) { return s.length < 2; }, false, "שם העיר קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierPhone", function (s) { return !isValidPhoneNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierCellPhone", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierFax", function (s) { return s.length > 0 && !isValidPhoneNumber(s); }, false, "יש להזין מס' פקס תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierEmail", function (s) { return s.length > 0 && !IsEmail(s); }, false, "יש להזין כתובת מייל חוקית");
+    if (bIsValid) {
+        $(".ErrorLabel").html("");
+        $("#ContentPlaceHolder3_CreateSupplierHiddenBTN").click();
     }
 }
 

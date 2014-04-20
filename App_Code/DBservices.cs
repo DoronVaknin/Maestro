@@ -498,6 +498,35 @@ public class DBservices
         }
     }
 
+    public int InsertNewSupplier(Supplier s)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spInsertNewSupplier]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@sName", s.Name);
+                sqlComm.Parameters.AddWithValue("@City", s.City);
+                sqlComm.Parameters.AddWithValue("@Address", s.Address);
+                sqlComm.Parameters.AddWithValue("@Phone", s.Phone);
+                sqlComm.Parameters.AddWithValue("@Mobile", s.Mobile);
+                sqlComm.Parameters.AddWithValue("@Fax", s.Fax);
+                sqlComm.Parameters.AddWithValue("@Email", s.Email);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
     //Mobile Application Methods
 
     public DataTable GetProjects()
@@ -607,12 +636,12 @@ public class DBservices
         }
     }
 
-    public void CloseServiceCall(int ServicCallID) 
+    public void CloseServiceCall(int ServiceCallID)
     {
-        DateTime date= DateTime.Now;
+        DateTime date = DateTime.Now;
         con = connect("igroup9_prodConnectionString");
-         using (SqlCommand sqlComm = new SqlCommand("spCloseServicCall", con))
-         {
+        using (SqlCommand sqlComm = new SqlCommand("spCloseServiceCall", con))
+        {
             if (con.State != ConnectionState.Open)
                 con.Open();
 
@@ -620,7 +649,7 @@ public class DBservices
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@date", date);
-                sqlComm.Parameters.AddWithValue("@ServiceCallID", ServicCallID);
+                sqlComm.Parameters.AddWithValue("@ServiceCallID", ServiceCallID);
                 sqlComm.ExecuteNonQuery();
             }
 

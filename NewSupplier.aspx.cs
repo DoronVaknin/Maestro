@@ -11,4 +11,14 @@ public partial class Default2 : System.Web.UI.Page
     {
 
     }
+
+    protected void CreateSupplierHiddenBTN_Click(object sender, EventArgs e)
+    {
+        Supplier s = new Supplier(SupplierName.Value, SupplierAddress.Value, SupplierCity.Value, SupplierPhone.Value, SupplierCellPhone.Value, SupplierFax.Value, SupplierEmail.Value);
+        int RowAffected = s.InsertNewSupplier();
+        if (RowAffected > 0)
+            Response.Redirect("Suppliers.aspx");
+        else
+            Response.Write("לא ניתן לשמור את הספק");
+    }
 }

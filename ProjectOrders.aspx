@@ -5,7 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
     <div class="cntr">
-        <h1>
+        <h1 id = "PageHeader" runat = "server">
             הזמנות עבור פרויקט
         </h1>
         <br />

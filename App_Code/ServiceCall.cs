@@ -73,10 +73,10 @@ public class ServiceCall
         dbs.InsertServiceCallExistingProject(sc, CustomerID, ProjectID);
     }
 
-    public void CloseServicCall(int ServicCallID)
+    public void CloseServiceCall(int ServiceCallID)
     {
         DBservices db = new DBservices();
-        db.CloseServiceCall(ServicCallID);
+        db.CloseServiceCall(ServiceCallID);
     }
 
     public DataTable GetServiceCallPopupMissingDetails(int ServicCallID)
@@ -85,5 +85,4 @@ public class ServiceCall
         DataTable dt= db.GetServiceCallPopupMissingDetails(ServicCallID);
         return dt;
     }
-    
 }

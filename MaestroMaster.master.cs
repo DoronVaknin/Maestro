@@ -39,4 +39,11 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
         Session["ProjectNameForProjectOrders"] = ProjectNamesDDL.SelectedItem;
         Response.Redirect("ProjectOrders.aspx");
     }
+
+    protected void ChooseProjectForProjectHatchesBTN_Click(object sender, EventArgs e)
+    {
+        Session["ProjectIDForProjectHatches"] = ProjectNamesDDL.SelectedValue;
+        Session["ProjectNameForProjectHatches"] = ProjectNamesDDL.SelectedItem;
+        Response.Redirect("ProjectHatches.aspx");
+    }
 }
