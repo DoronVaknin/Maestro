@@ -18,6 +18,11 @@ public partial class Default : System.Web.UI.Page
             string lName = c.Lname;
             PageHeader.InnerHtml = "קריאת שירות עבור הלקוח " + fNname + " " + lName;
         }
+        else if (Session["ProjectNameForServiceCall"] != null)
+        {
+            string pName = Session["ProjectNameForServiceCall"].ToString();
+            PageHeader.InnerHtml = "קריאת שירות עבור הפרויקט " + pName;
+        }
         ServiceCallDateOpened.Value = (DateTime.Today).ToString("MM/dd/yyyy");
     }
 

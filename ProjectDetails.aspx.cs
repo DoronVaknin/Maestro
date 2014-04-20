@@ -147,7 +147,6 @@ public partial class Default : System.Web.UI.Page
     {
         Project p = new Project();
         p.LoadSuppliers(ShutterProvider, CollectedProvider, ValimProvider, UProvider, ShoeingProvider, EngineProvider, ProtectedSpaceProvider, GlassProvider, BoxesProvider);
-
     }
 
     protected void Button1_Click(object sender, EventArgs e)
