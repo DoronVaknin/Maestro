@@ -130,7 +130,7 @@
     </div>
     <br />
     <!-- Modal -->
-    <div class="modal fade" id="CustomerCreatedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade" id="ModalCustomerCreated" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">

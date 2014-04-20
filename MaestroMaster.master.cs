@@ -19,10 +19,15 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
             default: break;
         }
     }
-
     protected void LogoutBTN_Click(object sender, EventArgs e)
     {
         FormsAuthentication.SignOut();
-        Response.Redirect("~/Default.aspx");
+        Response.Redirect("Default.aspx");
+    }
+
+    protected void ChooseProjectForServiceCallBTN_Click(object sender, EventArgs e)
+    {
+        Session["ProjectIDForServiceCall"] = ProjectNamesDDL.SelectedValue;
+        Response.Redirect("NewServiceCall.aspx?Source=ExistingProject");
     }
 }

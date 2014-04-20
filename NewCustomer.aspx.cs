@@ -41,7 +41,7 @@ public partial class Default : System.Web.UI.Page
         Session["Customer"] = c;
         int RowsAffected = c.InsertNewCustomer();
         if (RowsAffected > 0)
-            Response.Redirect("NewServiceCallExternalCustomer.aspx");
+            Response.Redirect("NewServiceCall.aspx?Source=NewCustomer");
         else
             Response.Write("לא ניתן לשמור את הלקוח");
     }

@@ -6,16 +6,17 @@ var aProjectDetails = [];
 $(document).ready(function () {
     ActivateTabsMarking();
     ActivateToolbarButton("ToolbarBtnCreateProject", "NewCustomer", "CreateProject");
-    ActivateToolbarButton("ToolbarBtnCreateServiceCall", "NewCustomer", "CreateServiceCall");
+    ActivateToolbarButton("ToolbarBtnCreateServiceCallExternalCustomer", "NewCustomer", "CreateServiceCall");
     ActivateDatepicker();
     ActivateQuickSearch();
+    ActivateServiceCallExistingProjectModal();
     if (IsPage("ProjectDetails")) {
         DisableCustomerDetailsFields();
         DisableProjectDetailsFields();
         FixTextAreaIssue();
     }
     if (IsPage("NewProject", "NewCustomer"))
-        ActivateModal("CustomerCreatedModal");
+        ActivateModal("ModalCustomerCreated");
     if (IsPage("NewCustomer", "CreateProject"))
         $("#CustomerForServiceCallBTN").addClass("HiddenButtons");
     if (IsPage("NewCustomer", "CreateServiceCall"))
@@ -56,6 +57,12 @@ function ActivateQuickSearch() {
 //Modals Activation
 function ActivateModal(sID) {
     $("#" + sID).modal();
+}
+
+function ActivateServiceCallExistingProjectModal() {
+    $("#ToolbarBtnCreateServiceCallExistingProject").click(function () {
+        ActivateModal("ModalServiceCallExistingProject");
+    });
 }
 
 //Default state for project fields is disabled

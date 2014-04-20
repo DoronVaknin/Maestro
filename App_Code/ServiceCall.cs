@@ -55,4 +55,10 @@ public class ServiceCall
         DBservices dbs = new DBservices();
         dbs.InsertExternalServiceCall(sc, CustomerID);
     }
+
+    public void InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
+    {
+        DBservices dbs = new DBservices();
+        dbs.InsertServiceCallExistingProject(sc, CustomerID, ProjectID);
+    }
 }

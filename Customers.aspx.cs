@@ -16,7 +16,7 @@ public partial class Default : System.Web.UI.Page
         int SelectedIndex = CustomersTBL.SelectedIndex;
         SelectedIndex += 1;
         GridViewRow row = CustomersTBL.Rows[SelectedIndex];
-        Session["Customer"] = row;
+        Session["CustomerRow"] = row;
         Session["CustomerID"] = row.Cells[1].Text;
         //Session["FirstName"] = CustomersTBL.Rows[SelectedIndex].Cells[2].Text;
         //Session["LastName"] = CustomersTBL.Rows[SelectedIndex].Cells[3].Text;

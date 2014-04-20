@@ -9,7 +9,7 @@ public partial class Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        GridViewRow CustomerRow = (GridViewRow)Session["Customer"];
+        GridViewRow CustomerRow = (GridViewRow)Session["CustomerRow"];
         string Fname = CustomerRow.Cells[2].Text;
         string Lname = CustomerRow.Cells[3].Text;
         PageHeader.InnerHtml = "פרויקטים עבור הלקוח " + Fname + " " + Lname;

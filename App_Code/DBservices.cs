@@ -445,6 +445,59 @@ public class DBservices
         }
     }
 
+    public void InsertExternalServiceCall(ServiceCall sc, int CustomerID)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spInsertExternalServiceCall]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@DateOpened", sc.DateOpened);
+                sqlComm.Parameters.AddWithValue("@ProblemDesc", sc.Description);
+                sqlComm.Parameters.AddWithValue("@Urgent", sc.Urgent);
+                sqlComm.Parameters.AddWithValue("@cID", CustomerID);
+
+                sqlComm.CommandTimeout = 600;
+                sqlComm.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public void InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[InsertServiceCallExistingProject]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@DateOpened", sc.DateOpened);
+                sqlComm.Parameters.AddWithValue("@ProblemDesc", sc.Description);
+                sqlComm.Parameters.AddWithValue("@Urgent", sc.Urgent);
+                sqlComm.Parameters.AddWithValue("@cID", CustomerID);
+                sqlComm.Parameters.AddWithValue("@pID", ProjectID);
+
+                sqlComm.CommandTimeout = 600;
+                sqlComm.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
     //Mobile Application Methods
 
     public DataTable GetProjects()
@@ -547,32 +600,6 @@ public class DBservices
                 return dt;
             }
 
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
-        }
-    }
-
-    public void InsertExternalServiceCall(ServiceCall sc, int CustomerID)
-    {
-        con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[spInsertExternalServiceCall]", con))
-        {
-            if (con.State != ConnectionState.Open)
-                con.Open();
-
-            try
-            {
-                sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@DateOpened", sc.DateOpened);
-                sqlComm.Parameters.AddWithValue("@ProblemDesc", sc.Description);
-                sqlComm.Parameters.AddWithValue("@Urgent", sc.Urgent);
-                sqlComm.Parameters.AddWithValue("@cID", CustomerID);
-
-                sqlComm.CommandTimeout = 600;
-                sqlComm.ExecuteNonQuery();
-            }
             catch (Exception ex)
             {
                 throw (ex);
