@@ -358,8 +358,13 @@ div.cntr input[type=button]
     margin-right: auto;
 }
 
+.plus, .minus
+{
+    cursor: pointer;
+}
+
 /* X Button in Bootstrap Popup */
 .close
 {
-    float:left;
+    float: left;
 }

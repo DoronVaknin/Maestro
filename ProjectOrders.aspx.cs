@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 
 public partial class Default2 : System.Web.UI.Page
 {
@@ -15,11 +16,39 @@ public partial class Default2 : System.Web.UI.Page
             PageHeader.InnerHtml = "הזמנות עבור הפרויקט " + sProjectName;
         }
         LoadSuppliers();
+        //SetOrdersGrid();
     }
 
     public void LoadSuppliers()
     {
         Project p = new Project();
         p.LoadSuppliers(ShutterProvider, CollectedProvider, ValimProvider, UProvider, ShoeingProvider, EngineProvider, ProtectedSpaceProvider, GlassProvider, BoxesProvider);
+    }
+
+    public void CreateOrderBTN_Click(object sender, EventArgs e)
+    {
+        CreateOrder(Convert.ToInt32(ShutterCount.Text), Convert.ToString(ShutterProvider.SelectedValue), 1);
+    }
+
+    public void CreateOrder(int Count, string Supplier, int RawMeterialID)
+    {
+        if (Count > 0)
+        {
+            GridViewRow row = (GridViewRow)Session["selectedrow"];
+            DBservices db = new DBservices();
+            Order o = new Order(Convert.ToInt32(row.Cells[1].Text), Supplier, RawMeterialID, Count);
+
+            //SetOrdersGrid();
+        }
+    }
+
+    public void SetOrdersGrid()
+    {
+        string ProjectID = Session["ProjectIDForProjectOrders"].ToString();
+        Project p = new Project();
+        DataTable OrdersDT = p.GetOrderDetails(Convert.ToInt32(ProjectID));
+        //DataTable StatusTable = p.GetOrderStatus(); // להחליט מה לעשות
+        OrdersGV.DataSource = OrdersDT;
+        OrdersGV.DataBind();
     }
 }

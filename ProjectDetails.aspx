@@ -406,7 +406,8 @@
     <br />
     <div class="cntr">
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="צור הזמנה"
-            CssClass="btn btn-default" Font-Bold="true" /></div>
+            CssClass="btn btn-default" Font-Bold="true" />
+    </div>
     <br />
     <br />
     <asp:GridView runat="server" CssClass="DataTables" ID="OrderGrid">

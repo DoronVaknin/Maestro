@@ -52,7 +52,7 @@
                     <ul>
                         <li><a>הזמנות</a>
                             <ul>
-                                <li id="ToolbarBtnProjectOrders" class="ChooseProjectToolbarButtons"><a>הזמנות לפי פרויקט</a></li>
+                                <li id="ToolbarBtnProjectOrders" class="ChooseProjectToolbarButtons"><a>הזמנות עבור פרויקט</a></li>
                                 <li><a href="Orders.aspx">רשימת הזמנות</a></li>
                             </ul>
                         </li>
