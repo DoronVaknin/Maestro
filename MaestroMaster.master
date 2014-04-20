@@ -54,13 +54,18 @@
                             <ul>
                                 <li id="ToolbarBtnProjectOrders" class="ChooseProjectToolbarButtons"><a>הזמנות לפי פרויקט</a></li>
                                 <li><a href="Orders.aspx">רשימת הזמנות</a></li>
-                                <li><a>ניהול ספקים</a></li>
                             </ul>
                         </li>
                         <li><a>פתחים</a>
                             <ul>
                                 <li><a>דיווחי ייצור</a></li>
                                 <li><a>רשימת פתחים</a></li>
+                            </ul>
+                        </li>
+                        <li><a>ספקים</a>
+                            <ul>
+                                <li><a href = "NewSupplier.aspx">צור ספק חדש</a></li>
+                                <li><a href="Suppliers.aspx">רשימת ספקים</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -103,8 +108,8 @@
                         <br />
                         <asp:Button ID="ChooseProjectForServiceCallBTN" runat="server" Text="בחר פרויקט"
                             CssClass="btn btn-default" Font-Bold="true" OnClick="ChooseProjectForServiceCallBTN_Click" />
-                        <asp:Button ID="ChooseProjectForProjectOrdersBTN" runat="server" Text="בחר פרויקט" CssClass="btn btn-default"
-                            Font-Bold="true" OnClick="ChooseProjectForProjectOrdersBTN_Click" />
+                        <asp:Button ID="ChooseProjectForProjectOrdersBTN" runat="server" Text="בחר פרויקט"
+                            CssClass="btn btn-default" Font-Bold="true" OnClick="ChooseProjectForProjectOrdersBTN_Click" />
                     </div>
                 </div>
                 <%--                <div class="modal-footer">

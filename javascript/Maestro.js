@@ -182,6 +182,10 @@ function GotoNewCustomer() {
     window.location = "NewCustomer.aspx";
 }
 
+function GotoNewSupplier() {
+    window.location = "NewSupplier.aspx";
+}
+
 //Validators
 function ValidateNewCustomer(Button) {
     var bIsValid = true;

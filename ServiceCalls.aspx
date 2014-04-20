@@ -111,10 +111,10 @@
                         </tr>
                     </table>
                     <asp:Button ID="ServiceCallBTN" runat="server" Text="סגור קריאה" CssClass="btn btn-default"
-                        Font-Bold="true" OnClick="ServiceCallBTN_Click " />
+                        Font-Bold="true" OnClick="ServiceCallBTN_Click" />
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" style="  margin-left:50%"> 
+                    <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 50%">
                         סגור ללא שינויים</button>
                     <%--  <button type="button" class="btn btn-primary">
                         save changes</button>--%>
