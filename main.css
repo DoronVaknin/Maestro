@@ -368,3 +368,8 @@ div.cntr input[type=button]
 {
     float: left;
 }
+
+.datepicker
+{
+    z-index: 1050;
+}

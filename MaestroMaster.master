@@ -111,7 +111,7 @@
                             CssClass="btn btn-default" Font-Bold="true" OnClick="ChooseProjectForProjectHatchesBTN_Click" />
                     </div>
                 </div>
-                <%--                <div class="modal-footer">
+                <%--<div class="modal-footer">
                     <div class="cntr">
                         <button type="button" class="btn btn-primary">
                             בחר</button>
