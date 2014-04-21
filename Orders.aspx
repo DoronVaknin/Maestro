@@ -12,10 +12,12 @@
     <br />
     <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
         SelectCommand="spGetOrders" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-    <asp:GridView ID="OrdersGV" runat="server" AllowPaging="True" AllowSorting="True" CssClass = "DataTables"
-        AutoGenerateColumns="False" DataKeyNames="oID" DataSourceID="SqlDataSource2">
+    <asp:GridView ID="OrdersGV" runat="server" AllowPaging="True" AllowSorting="True"
+        CssClass="DataTables" AutoGenerateColumns="False" DataKeyNames="oID" DataSourceID="SqlDataSource2">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
+            <asp:CommandField EditText="ערוך" ShowEditButton="true" />
+            <asp:CommandField DeleteText="מחק" ShowDeleteButton="true" />
             <asp:BoundField DataField="oID" HeaderText="מס' הזמנה" InsertVisible="False" ReadOnly="True"
                 SortExpression="oID" />
             <asp:BoundField DataField="pName" HeaderText="שם הפרויקט" SortExpression="pName" />
