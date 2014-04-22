@@ -146,7 +146,7 @@ public partial class Default : System.Web.UI.Page
     public void LoadSuppliers()
     {
         Project p = new Project();
-        p.LoadSuppliers(ShutterProvider, CollectedProvider, ValimProvider, UProvider, ShoeingProvider, EngineProvider, ProtectedSpaceProvider, GlassProvider, BoxesProvider);
+        p.LoadSuppliers(ShutterProvider, CollectedProvider, CollectedProvider, ValimProvider, UProvider, ShoeingProvider, EngineProvider, ProtectedSpaceProvider, GlassProvider, BoxesProvider);
     }
 
     protected void Button1_Click(object sender, EventArgs e)
@@ -160,7 +160,7 @@ public partial class Default : System.Web.UI.Page
         {
             GridViewRow row = (GridViewRow)Session["selectedrow"];
             DBservices db = new DBservices();
-            Order o = new Order(Convert.ToInt32(row.Cells[1].Text), Supplier, RawMeterialID, Count);
+            //Order o = new Order(Convert.ToInt32(row.Cells[1].Text), Supplier, RawMeterialID, Count);
 
             SetOrdersGrid();
         }

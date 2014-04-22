@@ -307,7 +307,7 @@ public class DBservices
                 IDataReader dr = sqlComm.ExecuteReader();
                 ddl.DataSource = dr;
                 ddl.DataTextField = "sName";
-                ddl.DataValueField = "sName";
+                ddl.DataValueField = "SupplierID";
                 ddl.DataBind();
             }
 

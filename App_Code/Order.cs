@@ -15,17 +15,15 @@ public class Order
         //
     }
 
-    public Order(int _ProjectId, string _Supplier, int _RawMaterialID, int _Quantity)
+    public Order(int _ProjectId, int _SupplierID, int _RawMaterialID, int _Quantity, DateTime _EstimatedDateOfArrival)
     {
-        DBservices db = new DBservices();
         ProjectID = _ProjectId;
         DateOpened = DateTime.Now;
-        EstimatedDateOfArrival = DateOpened.AddDays(14);
+        EstimatedDateOfArrival = _EstimatedDateOfArrival;
         OrderStatus = 1;
-        SupplierID = db.GetSupplierID(_Supplier);
+        SupplierID = _SupplierID;
         RawMaterialID = _RawMaterialID;
         Quantity = _Quantity;
-        db.CreateNewOrder(this);
     }
 
     int orderID;
@@ -89,5 +87,11 @@ public class Order
     {
         get { return quantity; }
         set { quantity = value; }
+    }
+
+    public void CreateNewOrder(Order o)
+    {
+        DBservices db = new DBservices();
+        db.CreateNewOrder(o);
     }
 }

@@ -108,6 +108,11 @@ function ActivatePlusMinus() {
     });
 }
 
+function ResetCreateOrderForm() {
+    $("#ProjectOrdersTBL input.Count").val("0");
+    $("#ProjectOrdersTBL input.datepicker").val("");
+}
+
 //Default state for project fields is disabled
 function DisableCustomerDetailsFields() {
     $("#CustomerDetailsTBL input, #CustomerDetailsTBL select").attr("disabled", "disabled");

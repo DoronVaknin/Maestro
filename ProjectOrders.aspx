@@ -71,7 +71,7 @@
                                 <td>
                                     <div class="input-group">
                                         <span class="input-group-addon minus">-</span>
-                                        <asp:TextBox ID="ShutterCount" runat="server" CssClass="form-control cntr">0</asp:TextBox>
+                                        <asp:TextBox ID="ShutterCount" runat="server" CssClass="form-control cntr Count">0</asp:TextBox>
                                         <span class="input-group-addon plus">+</span>
                                     </div>
                                 </td>
@@ -85,12 +85,50 @@
                             </tr>
                             <tr>
                                 <td>
+                                    נאספים
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-addon minus">-</span>
+                                        <asp:TextBox ID="CollectedCount" runat="server" CssClass="form-control cntr Count">0</asp:TextBox>
+                                        <span class="input-group-addon plus">+</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="CollectedProvider" runat="server" CssClass="form-control" Width="150px">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="CollectedEstArrDate" runat="server" CssClass="form-control datepicker"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    אלומיניום
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-addon minus">-</span>
+                                        <asp:TextBox ID="AluminiumCount" runat="server" CssClass="form-control cntr Count">0</asp:TextBox>
+                                        <span class="input-group-addon plus">+</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="AluminiumProvider" runat="server" CssClass="form-control" Width="150px">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="AluminiumEstArrDate" runat="server" CssClass="form-control datepicker"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     וואלים
                                 </td>
                                 <td>
                                     <div class="input-group">
                                         <span class="input-group-addon minus">-</span>
-                                        <asp:TextBox ID="ValimCount" runat="server" CssClass="form-control cntr">0</asp:TextBox>
+                                        <asp:TextBox ID="ValimCount" runat="server" CssClass="form-control cntr Count">0</asp:TextBox>
                                         <span class="input-group-addon plus">+</span>
                                     </div>
                                 </td>
@@ -104,12 +142,31 @@
                             </tr>
                             <tr>
                                 <td>
+                                    יואים
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-addon minus">-</span>
+                                        <asp:TextBox ID="UCount" runat="server" CssClass="form-control cntr Count">0</asp:TextBox>
+                                        <span class="input-group-addon plus">+</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="UProvider" runat="server" CssClass="form-control" Width="150px">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="UEstArrDate" runat="server" CssClass="form-control datepicker"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     פרזול
                                 </td>
                                 <td>
                                     <div class="input-group">
                                         <span class="input-group-addon minus">-</span>
-                                        <asp:TextBox ID="ShoeingCount" runat="server" CssClass="form-control cntr">0</asp:TextBox>
+                                        <asp:TextBox ID="ShoeingCount" runat="server" CssClass="form-control cntr Count">0</asp:TextBox>
                                         <span class="input-group-addon plus">+</span>
                                     </div>
                                 </td>
@@ -123,12 +180,31 @@
                             </tr>
                             <tr>
                                 <td>
+                                    מנועים
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-addon minus">-</span>
+                                        <asp:TextBox ID="EngineCount" runat="server" CssClass="form-control cntr Count">0</asp:TextBox>
+                                        <span class="input-group-addon plus">+</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="EngineProvider" runat="server" CssClass="form-control" Width="150px">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="EngineEstArrDate" runat="server" CssClass="form-control datepicker"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     ממ"ד
                                 </td>
                                 <td>
                                     <div class="input-group">
                                         <span class="input-group-addon minus">-</span>
-                                        <asp:TextBox ID="ProtectedSpaceCount" runat="server" CssClass="form-control cntr">0</asp:TextBox>
+                                        <asp:TextBox ID="ProtectedSpaceCount" runat="server" CssClass="form-control cntr Count">0</asp:TextBox>
                                         <span class="input-group-addon plus">+</span>
                                     </div>
                                 </td>
@@ -143,88 +219,12 @@
                             </tr>
                             <tr>
                                 <td>
-                                    ארגזים
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <span class="input-group-addon minus">-</span>
-                                        <asp:TextBox ID="BoxesCount" runat="server" CssClass="form-control cntr">0</asp:TextBox>
-                                        <span class="input-group-addon plus">+</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <asp:DropDownList ID="BoxesProvider" runat="server" CssClass="form-control" Width="150px">
-                                    </asp:DropDownList>
-                                </td>
-                                <td>
-                                    <asp:TextBox ID="BoxesEstArrDate" runat="server" CssClass="form-control datepicker"></asp:TextBox>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    נאספים
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <span class="input-group-addon minus">-</span>
-                                        <asp:TextBox ID="CollectedCount" runat="server" CssClass="form-control cntr">0</asp:TextBox>
-                                        <span class="input-group-addon plus">+</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <asp:DropDownList ID="CollectedProvider" runat="server" CssClass="form-control" Width="150px">
-                                    </asp:DropDownList>
-                                </td>
-                                <td>
-                                    <asp:TextBox ID="CollectedEstArrDate" runat="server" CssClass="form-control datepicker"></asp:TextBox>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    יואים
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <span class="input-group-addon minus">-</span>
-                                        <asp:TextBox ID="UCount" runat="server" CssClass="form-control cntr">0</asp:TextBox>
-                                        <span class="input-group-addon plus">+</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <asp:DropDownList ID="UProvider" runat="server" CssClass="form-control" Width="150px">
-                                    </asp:DropDownList>
-                                </td>
-                                <td>
-                                    <asp:TextBox ID="UEstArrDate" runat="server" CssClass="form-control datepicker"></asp:TextBox>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    מנועים
-                                </td>
-                                <td>
-                                    <div class="input-group">
-                                        <span class="input-group-addon minus">-</span>
-                                        <asp:TextBox ID="EngineCount" runat="server" CssClass="form-control cntr">0</asp:TextBox>
-                                        <span class="input-group-addon plus">+</span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <asp:DropDownList ID="EngineProvider" runat="server" CssClass="form-control" Width="150px">
-                                    </asp:DropDownList>
-                                </td>
-                                <td>
-                                    <asp:TextBox ID="EngineEstArrDate" runat="server" CssClass="form-control datepicker"></asp:TextBox>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
                                     זכוכית
                                 </td>
                                 <td>
                                     <div class="input-group">
                                         <span class="input-group-addon minus">-</span>
-                                        <asp:TextBox ID="GlassCount" runat="server" CssClass="form-control cntr">0</asp:TextBox>
+                                        <asp:TextBox ID="GlassCount" runat="server" CssClass="form-control cntr Count">0</asp:TextBox>
                                         <span class="input-group-addon plus">+</span>
                                     </div>
                                 </td>
@@ -234,6 +234,25 @@
                                 </td>
                                 <td>
                                     <asp:TextBox ID="GlassEstArrDate" runat="server" CssClass="form-control datepicker"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    ארגזים
+                                </td>
+                                <td>
+                                    <div class="input-group">
+                                        <span class="input-group-addon minus">-</span>
+                                        <asp:TextBox ID="BoxesCount" runat="server" CssClass="form-control cntr Count">0</asp:TextBox>
+                                        <span class="input-group-addon plus">+</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <asp:DropDownList ID="BoxesProvider" runat="server" CssClass="form-control" Width="150px">
+                                    </asp:DropDownList>
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="BoxesEstArrDate" runat="server" CssClass="form-control datepicker"></asp:TextBox>
                                 </td>
                             </tr>
                         </table>
