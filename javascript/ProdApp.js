@@ -1,10 +1,8 @@
 ﻿/// <reference path="jquery-1.11.0.js" />
 
 var Projects = {};  //Projects[ProjectID][0] - Customer details, Projects[ProjectID][1] - Project details, Projects[ProjectID][2] - Project status details
-var ProjectsList = {};
+var ProjectsList = [];
 var Hatches = {};
-var PNP = {}; //Pictures & Pins
-
 
 $(document).ready(function () {
     $("#LoginBTN").click(function () {
@@ -32,7 +30,7 @@ function Login() {
         success: function (data) // Variable data contains the data we get from serverside
         {
             if (data.d == "true") {
-                window.location = "#MainMenuPage";
+                window.location = "#ProjectsPage";
                 LoadProjectsList(); //  read all the projects
             }
             else alert("Username or password is incorrect");
@@ -49,7 +47,7 @@ function Login() {
 function LoadProjectsList() {
     dataString = "";
     $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/LoadProjectsList',   // JQuery call to the server side method
+        url: 'MaestroWS.asmx/GetProjectListForProdApp',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -59,33 +57,33 @@ function LoadProjectsList() {
             ProjectsList = $.parseJSON(data.d);
             $("#ProjectsList").html(BuildProjectsPage(ProjectsList));
 
-            BuildHatchesPage(ProjectsList);
+            //            BuildHatchesPage(ProjectsList);
 
-            var newPage = $(BuildHatchesListPerProject());
-            newPage.appendTo($.mobile.pageContainer);
+            //            var newPage = $(BuildHatchesListPerProject());
+            //            newPage.appendTo($.mobile.pageContainer);
 
-            $(".HatchesBTN").click(function () {
-                var sHref = $(this).attr("href");
-                var sProjectID = sHref.substring(17, sHref.length + 1);
-                BuildHatchPage(sProjectID);
-            });
+            //            $(".HatchesBTN").click(function () {
+            //                var sHref = $(this).attr("href");
+            //                var sProjectID = sHref.substring(17, sHref.length + 1);
+            //                BuildHatchPage(sProjectID);
+            //            });
 
             // initializing popup event for images
-            $(document).on("pageinit", function () {
-                $(".photopopup").on({
-                    popupbeforeposition: function () {
-                        var maxHeight = $(window).height() - 30 + "px";
-                        $(".photopopup img").css("max-height", maxHeight);
-                    }
-                });
-            });
+            //            $(document).on("pageinit", function () {
+            //                $(".photopopup").on({
+            //                    popupbeforeposition: function () {
+            //                        var maxHeight = $(window).height() - 30 + "px";
+            //                        $(".photopopup img").css("max-height", maxHeight);
+            //                    }
+            //                });
+            //            });
 
-            //$("#ProjectsList").listview("refresh"); // this is important for the jQueryMobile to assign the style to a dynamically added list
+            $("#ProjectsList").listview("refresh"); // this is important for the jQueryMobile to assign the style to a dynamically added list
         }, // end of success
         error: function (e) {
             alert("failed to load projects :( " + e.responseText);
         } // end of error
-    });      // end of ajax call
+    });       // end of ajax call
 }
 
 //----------------------------------------------------------------------------
@@ -95,8 +93,8 @@ function LoadProjectsList() {
 function BuildProjectsPage(ProjectsList) {
     for (var i = 0; i < ProjectsList.length; i++) { // run on all the files in the list
         $.ajax({ // ajax call start
-            url: 'MaestroWS.asmx/GetProjectDetails',
-            data: "{ pID: " + ProjectsList[i].pID + "}", // Send value of the project id
+            url: 'MaestroWS.asmx/GetProjectHatchesForProdApp',
+            data: "{ pID: " + ProjectsList[i] + "}", // Send value of the project id
             dataType: 'json', // Choosing a JSON datatype for the data sent
             type: 'POST',
             async: false, // this is a synchronous call
@@ -104,18 +102,18 @@ function BuildProjectsPage(ProjectsList) {
             success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
             {
                 p = $.parseJSON(data.d); // parse the data as json
-                Projects[p[1].pID] = p;
+                Hatches[p[0][0].pID] = MergeInsideArrays(p);
             }, // end of success
             error: function (e) { // this function will be called upon failure
                 alert("failed to get project details: " + e.responseText);
             } // end of error
-        });    // end of ajax call
+        });        // end of ajax call
     } // end of loop on all the projects
 
     str = "";
-    for (var i in Projects) {
+    for (var i in Hatches) {
         str += BuildProjectsList(i); // add item to the list in the main projects page
-        BuildProjectPage(Projects[i][1].pID); // build a page for each project
+        //        BuildProjectPage(Projects[i][1].pID); // build a page for each project
     }
     return str;
 }
@@ -125,9 +123,9 @@ function BuildProjectsPage(ProjectsList) {
 //------------------------------------------------------
 function BuildProjectsList(i) {
     var str = "";
-    str += "<li><a data-ajax = 'false' href= '#Project" + Projects[i][1].pID + "'>";
-    str += "<h1>" + Projects[i][0].Fname + " " + Projects[i][0].Lname + "</h1>";
-    str += "<p>" + Projects[i][2].StatusName + "</p>";
+    str += "<li><a data-ajax = 'false' href= '#Project" + Hatches[i][0].pID + "'>";
+    str += "<h1>" + Hatches[i][0].Name + "</h1>";
+    str += "<p></p>";
     str += "</a></li>";
     return str;
 }
@@ -315,11 +313,11 @@ function BuildHatchDetailsPage(oHatch) {
     str += "<p><b>סטטוס: </b>" + Hatches[iProjID][iHatchID].HatchStatus + "</p>";
     str += "<p><b>סוג הפתח: </b>" + Hatches[iProjID][iHatchID].HatchType + "</p>";
 
-//    str += '</br><a href = "#myPopup" data-role = "button" data-rel="popup">Popup Image</a>';
+    //    str += '</br><a href = "#myPopup" data-role = "button" data-rel="popup">Popup Image</a>';
 
-//    str += '</br><div id="myPopup" data-role="popup" class = "photopopup">';
-//    str += '<a href="#Hatch' + iHatchID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
-//    str += '<img src = "' + Projects[iProjID][1].HatchesImageURL + '" /></div>';
+    //    str += '</br><div id="myPopup" data-role="popup" class = "photopopup">';
+    //    str += '<a href="#Hatch' + iHatchID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
+    //    str += '<img src = "' + Projects[iProjID][1].HatchesImageURL + '" /></div>';
 
     str += "</div>" // close the content
 
@@ -361,4 +359,18 @@ function MakeAssociativeArray(Arr, bReturnObj, iInternalKeyIndex) {
         UnifiedArr[Arr[i][iInternalKeyIndex].HatchID] = TempArr;
     }
     return UnifiedArr;
+}
+
+function MergeInsideArrays(Arr) {
+    var UniArr = [];
+    for (var i = 0; i < Arr.length; i++) {
+        var TempArr = [];
+        for (var j = 0; j < Arr[i].length; j++) {
+            for (var k in Arr[i][j]) {
+                TempArr[k] = eval("Arr[i][j]." + k);
+            }
+        }
+        UniArr.push(TempArr);
+    }
+    return UniArr;
 }

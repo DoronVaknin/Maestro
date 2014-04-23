@@ -250,4 +250,21 @@ public class Project
         dt = db.GetHatches(ProjectID);
         return dt;
     }
+
+    public DataTable GetProjectHatchesForProdApp(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetProjectHatchesForProdApp(ProjectID);
+        return dt;
+    }
+
+    public DataTable GetProjectListForProdApp()
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetProjectListForProdApp();
+        return dt;
+    }
+    
 }

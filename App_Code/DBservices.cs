@@ -686,6 +686,60 @@ public class DBservices
         }
     }
 
+    //Production App functions
+    public DataTable GetProjectHatchesForProdApp(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectHatchesForProdApp]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetProjectListForProdApp()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectListForProdApp]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
 }
 
 

@@ -37,6 +37,13 @@ public class Hatch
         set { hatchStatus = value; }
     }
 
+    DateTime statusLastModified;
+    public DateTime StatusLastModified
+    {
+        get { return statusLastModified; }
+        set { statusLastModified = value; }
+    }
+
     int hatchTypeID;
     public int HatchTypeID
     {
@@ -56,6 +63,34 @@ public class Hatch
     {
         get { return projectID; }
         set { projectID = value; }
+    }
+
+    string eName;
+    public string EmployeeName
+    {
+        get { return eName; }
+        set { eName = value; }
+    }
+
+    int ftID;
+    public int FtID
+    {
+        get { return ftID; }
+        set { ftID = value; }
+    }
+
+    string ftName;
+    public string FtName
+    {
+        get { return ftName; }
+        set { ftName = value; }
+    }
+
+    string comments;
+    public string Comments
+    {
+        get { return comments; }
+        set { comments = value; }
     }
 
     public DataTable GetPicsAndPins(int ProjectID)
