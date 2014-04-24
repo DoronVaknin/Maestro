@@ -4,6 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
+ <div class="form-background">
     <div class="cntr">
         <br />
         <h1>
@@ -114,6 +115,7 @@
             </td>
         </tr>
     </table>
+    </div>
     <div class="cntr">
         <div id="dragandrophandler">
             גרור קבצים לכאן</div>

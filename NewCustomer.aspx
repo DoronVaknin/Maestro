@@ -4,6 +4,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
+<div class="form-background">
+
     <div class="cntr">
         <h1>
             לקוח חדש
@@ -87,6 +89,9 @@
         </tr>
     </table>
     <br />
+
+
+   
     <div class="cntr">
         <input id="CustomerForProjectBTN" type="button" value="המשך ליצירת פרויקט" class="btn btn-default"
             onclick="ValidateNewCustomer(this)" />
@@ -100,6 +105,6 @@
         <br />
         <span class="ErrorLabel"></span>
     </div>
-    <br />
-    <br />
+    </div>
+    
 </asp:Content>

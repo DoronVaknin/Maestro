@@ -4,6 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
+ <div class="form-background">
     <div class="cntr">
         <h1>
             ספק חדש
@@ -64,7 +65,8 @@
             </td>
         </tr>
     </table>
-    <br />
+    </div>
+ 
     <div class="cntr">
         <input id="CreateSupplierBTN" type="button" value="צור ספק" class="btn btn-default"
             onclick="ValidateNewSupplier(this)" />

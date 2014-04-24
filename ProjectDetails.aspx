@@ -16,6 +16,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
     <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>
+    <div class="form-background">
+
     <div class="cntr">
         <h1>
             פרטי הלקוח
@@ -103,8 +105,10 @@
                     </td>
                 </tr>
             </table>
+        
         </ContentTemplate>
     </asp:UpdatePanel>
+     </div>
     <div class="cntr">
         <button id="EditCustomerDetailsBTN" runat="server" type="button" class="btn btn-default"
             onclick="EnableCustomerDetails()">
@@ -126,6 +130,7 @@
     </div>
     <asp:HiddenField ID="ProjectIDHolder" runat="server" />
     <br />
+    <div class="form-background">
     <div class="cntr">
         <h1>
             פרטי הפרויקט
@@ -249,6 +254,7 @@
             </table>
         </ContentTemplate>
     </asp:UpdatePanel>
+    </div>
     <div class="cntr">
         <button id="EditProjectDetailsBTN" runat="server" type="button" class="btn btn-default"
             onclick="EnableProjectDetails()">
@@ -268,9 +274,11 @@
         <br />
         <span id="ProjectDetailsErrorLabel" class="ErrorLabel"></span>
         <br />
+
+         <div class="form-background">
         <h1>
             הזמנות עבור הפרויקט</h1>
-    </div>
+   
     <br />
     <table class="nav-justified" id="OrderTable">
         <tr>
@@ -403,6 +411,8 @@
             </td>
         </tr>
     </table>
+    </div>
+
     <br />
     <div class="cntr">
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="צור הזמנה"
