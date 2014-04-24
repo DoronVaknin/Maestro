@@ -214,16 +214,19 @@ public class MaestroWS : System.Web.Services.WebService
 
         for (int i = 0; i < myAL.Length; i++)
         {
-            p.pID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
-            p.Name = dt.Rows[0].ItemArray[1].ToString();
-            p.HatchesImageURL = dt.Rows[0].ItemArray[2].ToString();
-            h.HatchID = Convert.ToInt32(dt.Rows[0].ItemArray[3]);
-            h.HatchType = dt.Rows[0].ItemArray[4].ToString();
-            h.HatchStatus = dt.Rows[0].ItemArray[5].ToString();
-            h.EmployeeName = dt.Rows[0].ItemArray[6].ToString();
-            h.StatusLastModified = Convert.ToDateTime(dt.Rows[0].ItemArray[7]);
-            h.FtName = dt.Rows[0].ItemArray[8].ToString();
-            h.Comments = dt.Rows[0].ItemArray[9].ToString();
+            p = new Project();
+            h = new Hatch();
+
+            p.pID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+            p.Name = dt.Rows[i].ItemArray[1].ToString();
+            p.HatchesImageURL = dt.Rows[i].ItemArray[2].ToString();
+            h.HatchID = Convert.ToInt32(dt.Rows[i].ItemArray[3]);
+            h.HatchType = dt.Rows[i].ItemArray[4].ToString();
+            h.HatchStatus = dt.Rows[i].ItemArray[5].ToString();
+            h.EmployeeName = dt.Rows[i].ItemArray[6].ToString();
+            h.StatusLastModified = Convert.ToDateTime(dt.Rows[i].ItemArray[7]);
+            h.FtName = dt.Rows[i].ItemArray[8].ToString();
+            h.Comments = dt.Rows[i].ItemArray[9].ToString();
             
             myAL[i].Add(p);
             myAL[i].Add(h);

@@ -57,10 +57,10 @@ function LoadProjectsList() {
             ProjectsList = $.parseJSON(data.d);
             $("#ProjectsList").html(BuildProjectsPage(ProjectsList));
 
-            //            BuildHatchesPage(ProjectsList);
+//                        BuildHatchesPage(ProjectsList);
 
-            //            var newPage = $(BuildHatchesListPerProject());
-            //            newPage.appendTo($.mobile.pageContainer);
+                        var newPage = $(BuildHatchesListPerProject());
+                        newPage.appendTo($.mobile.pageContainer);
 
             //            $(".HatchesBTN").click(function () {
             //                var sHref = $(this).attr("href");
@@ -69,14 +69,14 @@ function LoadProjectsList() {
             //            });
 
             // initializing popup event for images
-            //            $(document).on("pageinit", function () {
-            //                $(".photopopup").on({
-            //                    popupbeforeposition: function () {
-            //                        var maxHeight = $(window).height() - 30 + "px";
-            //                        $(".photopopup img").css("max-height", maxHeight);
-            //                    }
-            //                });
-            //            });
+                        $(document).on("pageinit", function () {
+                            $(".photopopup").on({
+                                popupbeforeposition: function () {
+                                    var maxHeight = $(window).height() - 30 + "px";
+                                    $(".photopopup img").css("max-height", maxHeight);
+                                }
+                            });
+                        });
 
             $("#ProjectsList").listview("refresh"); // this is important for the jQueryMobile to assign the style to a dynamically added list
         }, // end of success
@@ -107,13 +107,12 @@ function BuildProjectsPage(ProjectsList) {
             error: function (e) { // this function will be called upon failure
                 alert("failed to get project details: " + e.responseText);
             } // end of error
-        });        // end of ajax call
+        });         // end of ajax call
     } // end of loop on all the projects
-
     str = "";
     for (var i in Hatches) {
         str += BuildProjectsList(i); // add item to the list in the main projects page
-        //        BuildProjectPage(Projects[i][1].pID); // build a page for each project
+//        BuildProjectPage(Hatches[i][1].pID); // build a page for each project
     }
     return str;
 }
@@ -123,7 +122,7 @@ function BuildProjectsPage(ProjectsList) {
 //------------------------------------------------------
 function BuildProjectsList(i) {
     var str = "";
-    str += "<li><a data-ajax = 'false' href= '#Project" + Hatches[i][0].pID + "'>";
+    str += "<li><a data-ajax = 'false' href= '#HatchesOfProject" + Hatches[i][0].pID + "'>";
     str += "<h1>" + Hatches[i][0].Name + "</h1>";
     str += "<p></p>";
     str += "</a></li>";
@@ -134,18 +133,14 @@ function BuildProjectsList(i) {
 // build a page per project
 //----------------------------------------------------------------------------
 function BuildProjectPage(ProjectID) {
-    var p = Projects[ProjectID];
-    var Customer = p[0];
-    var Project = p[1];
-    var ProjectStatus = p[2];
+    var p = Hatches[ProjectID];
 
     var str = "";
     // build a page
     str += "<div data-role = 'page' id = 'Project" + ProjectID + "'>";
     // build the header
 
-    var CustomerFullName = Customer.Fname + " " + Customer.Lname;
-    str += BuildProjectHeader(CustomerFullName);
+    str += BuildProjectHeader(p.Name);
 
     // add the content div
     str += "<div data-role = 'content'>";
@@ -166,7 +161,7 @@ function BuildProjectPage(ProjectID) {
     if (!IsEmpty(Project.ArchitectName)) str += "<p><b>אדריכל: </b>" + Project.ArchitectName + "  " + Project.ArchitectPhone + "</p>";
     if (!IsEmpty(Project.SupervisorName)) str += "<p><b>מפקח: </b>" + Project.SupervisorName + "  " + Project.SupervisorPhone + "</p><br/>";
 
-    str += "<a class = 'HatchesBTN' href='#HatchesOfProject" + ProjectID + "' data-role='button'>צפה בפתחים</a>";
+//    str += "<a class = 'HatchesBTN' href='#HatchesOfProject" + ProjectID + "' data-role='button'>צפה בפתחים</a>";
 
     str += "</div>";  // close the content
     str += "</div>";  // close the page
@@ -175,7 +170,7 @@ function BuildProjectPage(ProjectID) {
     var newPage = $(str);
     newPage.appendTo($.mobile.pageContainer);
     //hatches button design
-    $(".HatchesBTN").css({ "width": "55%", "margin": "auto" });
+//    $(".HatchesBTN").css({ "width": "55%", "margin": "auto" });
 }
 
 //----------------------------------------------------------------------------
@@ -231,10 +226,10 @@ function BuildHatchesPage(ProjectsList) {
 //------------------------------------------------------
 function BuildHatchesList(ProjID) {
     var str = "";
-    for (var j in Hatches[ProjID]) {
-        str += "<li><a class = 'HatchBTN' data-ajax = 'false' href= '#Hatch" + Hatches[ProjID][j].HatchID + "'>";
-        str += "<h1>פתח מס' " + Hatches[ProjID][j].HatchID + "</h1>";
-        str += "<p>" + Hatches[ProjID][j].HatchStatus + "</p>";
+    for (var h in Hatches[ProjID]) {
+        str += "<li><a class = 'HatchBTN' data-ajax = 'false' href= '#Hatch" + Hatches[ProjID][h].HatchID + "'>";
+        str += "<h1>פתח מס' " + Hatches[ProjID][h].HatchID + "</h1>";
+        str += "<p>" + Hatches[ProjID][h].HatchType + " - " + Hatches[ProjID][h].HatchStatus + "</p>";
         str += "</a></li>";
     }
     return str;
@@ -245,20 +240,20 @@ function BuildHatchesList(ProjID) {
 //------------------------------------------------------
 function BuildHatchesListPerProject() {
     str = "";
-    for (var Project in Projects) {
-        //Projects[Project][1].HatchesImageURL
-        str += '<div data-role="page" id="HatchesOfProject' + Projects[Project][1].pID + '">';
-        str += '<div data-role="header" data-theme="a"><h1>' + Projects[Project][0].Fname + ' ' + Projects[Project][0].Lname + '</h1>';
-        str += '<a href="#Project' + Projects[Project][1].pID + '" data-icon="back" data-iconpos="notext" style="border: none;"></a>';
-        str += '<a href="#HatchesImage' + Projects[Project][1].pID + '" data-rel="popup" data-icon="info" data-iconpos="notext" style="border: none;"></a></div>'; //end of header
+    for (var pID in Hatches) {
+        //Projects[pID][1].HatchesImageURL
+        str += '<div data-role="page" id="HatchesOfProject' + pID + '">';
+        str += '<div data-role="header" data-theme="a"><h1>' + Hatches[pID][0].Name + '</h1>';
+        str += '<a href="#ProjectsPage" data-icon="back" data-iconpos="notext" style="border: none;"></a>';
+        str += '<a href="#HatchesImage' + pID + '" data-rel="popup" data-icon="info" data-iconpos="notext" style="border: none;"></a></div>'; //end of header
         str += '<div data-role="content">';
         str += '<ul id="HatchesList" data-role="listview" data-theme="c" data-inset="true" data-filter="true" data-filter-placeholder = "חפש פתח...">';
-        str += BuildHatchesList(Projects[Project][1].pID);
+        str += BuildHatchesList(pID);
         str += "</ul>"; // end of ul
 
-        str += '</br><div id="HatchesImage' + Projects[Project][1].pID + '" data-role="popup" class = "photopopup">';
-        str += '<a href="#HatchesOfProject' + Projects[Project][1].pID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
-        str += '<img src = "' + Projects[Project][1].HatchesImageURL + '" /></div>';
+        str += '</br><div id="HatchesImage' + pID + '" data-role="popup" class = "photopopup">';
+        str += '<a href="#HatchesOfProject' + pID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
+        str += '<img src = "' + Hatches[pID].HatchesImageURL + '" /></div>';
 
         str += "</div>"; // end of content
         str += "</div>"; // end of page
