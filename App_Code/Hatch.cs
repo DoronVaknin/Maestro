@@ -100,4 +100,20 @@ public class Hatch
         dt = db.GetPicsAndPins(ProjectID);
         return dt;
     }
+
+    public DataTable GetHatchStatusList()
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetHatchStatusList();
+        return dt;
+    }
+
+    public DataTable GetFailureTypeList()
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetFailureTypeList();
+        return dt;
+    }
 }

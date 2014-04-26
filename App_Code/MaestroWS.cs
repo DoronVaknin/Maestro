@@ -227,7 +227,7 @@ public class MaestroWS : System.Web.Services.WebService
             h.StatusLastModified = Convert.ToDateTime(dt.Rows[i].ItemArray[7]);
             h.FtName = dt.Rows[i].ItemArray[8].ToString();
             h.Comments = dt.Rows[i].ItemArray[9].ToString();
-            
+
             myAL[i].Add(p);
             myAL[i].Add(h);
         }
@@ -236,6 +236,53 @@ public class MaestroWS : System.Web.Services.WebService
         JavaScriptSerializer js = new JavaScriptSerializer();
         // serialize to string
         string jsonString = js.Serialize(myAL);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetHatchStatusList()
+    {
+        Hatch h = new Hatch();
+        DataTable dt = h.GetHatchStatusList();
+        Dictionary<string, string> dic = new Dictionary<string, string>();
+
+        for (int i = 0; i < dt.Rows.Count; i++)
+            dic.Add(dt.Rows[i].ItemArray[0].ToString(), dt.Rows[i].ItemArray[1].ToString());
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(dic);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetFailureTypeList()
+    {
+        Hatch h = new Hatch();
+        DataTable dt = h.GetFailureTypeList();
+        Dictionary<string, string> dic = new Dictionary<string, string>();
+
+        for (int i = 0; i < dt.Rows.Count; i++)
+            dic.Add(dt.Rows[i].ItemArray[0].ToString(), dt.Rows[i].ItemArray[1].ToString());
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(dic);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetUserName()
+    {
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(User.Identity.Name);
         return jsonString;
     }
 }

@@ -1,8 +1,11 @@
 ﻿/// <reference path="jquery-1.11.0.js" />
 
-var Projects = {};  //Projects[ProjectID][0] - Customer details, Projects[ProjectID][1] - Project details, Projects[ProjectID][2] - Project status details
 var ProjectsList = [];
 var Hatches = {};
+var HatchStatusList = {};
+var FailureTypeList = {};
+var HatchDetails = {};
+var sUserName = "";
 
 $(document).ready(function () {
     $("#LoginBTN").click(function () {
@@ -57,33 +60,76 @@ function LoadProjectsList() {
             ProjectsList = $.parseJSON(data.d);
             $("#ProjectsList").html(BuildProjectsPage(ProjectsList));
 
-//                        BuildHatchesPage(ProjectsList);
-
-                        var newPage = $(BuildHatchesListPerProject());
-                        newPage.appendTo($.mobile.pageContainer);
-
-            //            $(".HatchesBTN").click(function () {
-            //                var sHref = $(this).attr("href");
-            //                var sProjectID = sHref.substring(17, sHref.length + 1);
-            //                BuildHatchPage(sProjectID);
-            //            });
-
-            // initializing popup event for images
-                        $(document).on("pageinit", function () {
-                            $(".photopopup").on({
-                                popupbeforeposition: function () {
-                                    var maxHeight = $(window).height() - 30 + "px";
-                                    $(".photopopup img").css("max-height", maxHeight);
-                                }
-                            });
-                        });
+            var newPage = $(BuildHatchesListPerProject());
+            newPage.appendTo($.mobile.pageContainer);
 
             $("#ProjectsList").listview("refresh"); // this is important for the jQueryMobile to assign the style to a dynamically added list
+
+            GetHatchStatusList();
+            GetFailureTypeList();
+
+            newPage = $(BuildHatchesPagePerProject());
+            newPage.appendTo($.mobile.pageContainer);
+
+            // initializing popup event for images
+            $(document).on("pageinit", function () {
+                $(".photopopup").on({
+                    popupbeforeposition: function () {
+                        var maxHeight = $(window).height() - 30 + "px";
+                        $(".photopopup img").css("max-height", maxHeight);
+                    }
+                });
+            });
+
         }, // end of success
         error: function (e) {
             alert("failed to load projects :( " + e.responseText);
         } // end of error
-    });       // end of ajax call
+    });                 // end of ajax call
+}
+
+//-----------------------------------------------------------------------
+// Load the projects to client-side
+//-----------------------------------------------------------------------
+function GetHatchStatusList() {
+    dataString = "";
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/GetHatchStatusList',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        async: false,
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            HatchStatusList = $.parseJSON(data.d);
+        }, // end of success
+        error: function (e) {
+            alert("failed to load Hatch status list :( " + e.responseText);
+        } // end of error
+    });           // end of ajax call
+}
+
+//-----------------------------------------------------------------------
+// Load the projects to client-side
+//-----------------------------------------------------------------------
+function GetFailureTypeList() {
+    dataString = "";
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/GetFailureTypeList',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        async: false,
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            FailureTypeList = $.parseJSON(data.d);
+        }, // end of success
+        error: function (e) {
+            alert("failed to load Failure type list :( " + e.responseText);
+        } // end of error
+    });           // end of ajax call
 }
 
 //----------------------------------------------------------------------------
@@ -112,7 +158,7 @@ function BuildProjectsPage(ProjectsList) {
     str = "";
     for (var i in Hatches) {
         str += BuildProjectsList(i); // add item to the list in the main projects page
-//        BuildProjectPage(Hatches[i][1].pID); // build a page for each project
+        //        BuildProjectPage(Hatches[i][1].pID); // build a page for each project
     }
     return str;
 }
@@ -161,7 +207,7 @@ function BuildProjectPage(ProjectID) {
     if (!IsEmpty(Project.ArchitectName)) str += "<p><b>אדריכל: </b>" + Project.ArchitectName + "  " + Project.ArchitectPhone + "</p>";
     if (!IsEmpty(Project.SupervisorName)) str += "<p><b>מפקח: </b>" + Project.SupervisorName + "  " + Project.SupervisorPhone + "</p><br/>";
 
-//    str += "<a class = 'HatchesBTN' href='#HatchesOfProject" + ProjectID + "' data-role='button'>צפה בפתחים</a>";
+    //    str += "<a class = 'HatchesBTN' href='#HatchesOfProject" + ProjectID + "' data-role='button'>צפה בפתחים</a>";
 
     str += "</div>";  // close the content
     str += "</div>";  // close the page
@@ -170,7 +216,7 @@ function BuildProjectPage(ProjectID) {
     var newPage = $(str);
     newPage.appendTo($.mobile.pageContainer);
     //hatches button design
-//    $(".HatchesBTN").css({ "width": "55%", "margin": "auto" });
+    //    $(".HatchesBTN").css({ "width": "55%", "margin": "auto" });
 }
 
 //----------------------------------------------------------------------------
@@ -253,10 +299,40 @@ function BuildHatchesListPerProject() {
 
         str += '</br><div id="HatchesImage' + pID + '" data-role="popup" class = "photopopup">';
         str += '<a href="#HatchesOfProject' + pID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
-        str += '<img src = "' + Hatches[pID].HatchesImageURL + '" /></div>';
+        str += '<img src = "' + Hatches[pID][0].HatchesImageURL + '" /></div>';
 
         str += "</div>"; // end of content
         str += "</div>"; // end of page
+    }
+    return str;
+}
+
+//------------------------------------------------------
+// build Hatches list per project
+//------------------------------------------------------
+function BuildHatchesPagePerProject() {
+    str = "";
+    for (var pID in Hatches) {
+        for (var Hatch in Hatches[pID]) {
+            str += '<div data-role="page" id="Hatch' + Hatches[pID][Hatch].HatchID + '">';
+            str += "<div data-role='header' data-theme='a'><h1>פתח מס' " + Hatches[pID][Hatch].HatchID + '</h1>';
+            str += '<a href="#HatchesOfProject' + pID + '" data-icon="back" data-iconpos="notext" style="border: none;"></a></div>';
+            str += '<div data-role="content">';
+
+            str += "<h2>פרטי הפתח</h2>";
+            str += "<p><b>סוג הפתח: </b>" + Hatches[pID][Hatch].HatchType + "</p>";
+            str += "<p><b>סטטוס: </b>" + BuildHatchStatusDDL(Hatches[pID][Hatch].HatchStatus) + "</p>";
+            str += "<p><b>העובד המדווח: </b>" + Hatches[pID][Hatch].EmployeeName + "</p>";
+            str += "<p><b>תאריך דיווח: </b>" + ConvertToDate(Hatches[pID][Hatch].StatusLastModified) + "</p>";
+            if (Hatches[pID][Hatch].HatchStatus == "תקלה")
+                str += "<p><b>התקלה: </b>" + BuildFailureTypeDDL(Hatches[pID][Hatch].FtName) + "</p>";
+            if (!IsEmpty(Hatches[pID][Hatch].Comments))
+                str += "<p><b>הערות: </b>" + BuildHatchCommentsTextArea(Hatches[pID][Hatch].Comments) + "</p></br>";
+            str += "<a id = 'ReportBTN_Hatch'" + Hatches[pID][Hatch].HatchID + "class = 'HatchesReportBTN' onclick = 'PrepareHatchDetails(" + Hatches[pID][Hatch].HatchID + ", " + pID + ")' data-role='button'>דווח</a>";
+
+            str += "</div>"; // end of content
+            str += "</div>"; // end of page
+        }
     }
     return str;
 }
@@ -286,6 +362,59 @@ function BuildHatchPage(ProjectID) {
     for (var Hatch in PNP)
         BuildHatchDetailsPage(PNP[Hatch]); // build a page for each hatch
     //    $('.HatchNavbar').navbar('refresh');
+}
+
+function PrepareHatchDetails(hID, pID) {
+    var sHatchID = hID;
+    var sHatchStatus = $("#Hatch" + hID + " .HatchStatusDDL option:selected").text();
+    var sFailureType = $("#Hatch" + hID + " .FailureTypeDDL option:selected").text();
+    var sCurrentDate = GetCurrentDate();
+    var sComments = $("#Hatch" + hID + " .HatchCommentsTB").val();
+    GetUserName();
+    HatchDetails = { HatchID: sHatchID, HatchStatus: sHatchStatus, FailureType: sFailureType, UserName: sUserName ,Date: sCurrentDate, Comments: sComments };
+    UpdateHatchDetails(HatchDetails);
+    Goto("HatchesOfProject" + pID);
+}
+
+function GetUserName() {
+    dataString = "";
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/GetUserName',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'text',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        async: false,
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            var obj = $.parseJSON(data);
+            sUserName = obj.d.substring(1, obj.d.length - 1);
+        }, // end of success
+        error: function (e) {
+            alert("failed to load Failure type list :( " + e.responseText);
+        } // end of error
+    });
+}
+
+function UpdateHatchDetails(oHatchDetails) {
+    debugger;
+    dataString = JSON.stringify(oHatchDetails);
+    return;
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/UpdateHatchDetails',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            //            HatchStatusList = $.parseJSON(data.d);
+            alert("הדיווח נשלח בהצלחה");
+        }, // end of success
+        error: function (e) {
+            alert("failed to send a report :( " + e.responseText);
+        } // end of error
+    });            // end of ajax call
 }
 
 function BuildHatchDetailsPage(oHatch) {
@@ -333,6 +462,35 @@ function BuildHatchDetailsPage(oHatch) {
     newPage.appendTo($.mobile.pageContainer);
 }
 
+function BuildHatchStatusDDL(sHatchStatus) {
+    var str = "";
+    str += '<select name="HatchStatus" class = "HatchStatusDDL" >';
+    for (var i in HatchStatusList) {
+        bSelected = sHatchStatus == HatchStatusList[i];
+        str += "<option value='" + i + "' " + (bSelected ? "selected" : "") + ">" + HatchStatusList[i] + "</option>";
+    }
+    str += '</select>';
+
+    return str;
+}
+
+function BuildFailureTypeDDL(sFailureType) {
+    var str = "";
+    str += '<select name="FailureType" class = "FailureTypeDDL" >';
+    for (var i in FailureTypeList) {
+        bSelected = sFailureType == FailureTypeList[i];
+        str += "<option value='" + i + "' " + (bSelected ? "selected" : "") + ">" + FailureTypeList[i] + "</option>";
+    }
+    str += '</select>';
+
+    return str;
+}
+
+function BuildHatchCommentsTextArea(sComments) {
+    var str = "";
+    str += "<textarea class = 'HatchCommentsTB' cols = '5' rows = '3'>" + sComments + "</textarea>";
+    return str;
+}
 
 //Misc
 function IsEmpty(o) {
@@ -368,4 +526,35 @@ function MergeInsideArrays(Arr) {
         UniArr.push(TempArr);
     }
     return UniArr;
+}
+
+function Goto(sPage) {
+    window.location = "#" + sPage;
+}
+
+function ConvertToDate(sDate) {
+    //Remove all non-numeric (except the plus)
+    sDate = sDate.replace(/[^0-9 +]/g, '');
+    //Create date
+    var date = new Date(parseInt(sDate));
+    var sFixedDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    return sFixedDate;
+}
+
+function GetCurrentDate() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    today = dd + '/' + mm + '/' + yyyy;
+    return today;
 }

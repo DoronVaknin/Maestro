@@ -740,6 +740,58 @@ public class DBservices
         }
     }
 
+    public DataTable GetHatchStatusList()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetHatchStatusList]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetFailureTypeList()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetFailureTypeList]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
 }
 
 
