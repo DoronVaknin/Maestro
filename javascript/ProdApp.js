@@ -366,12 +366,19 @@ function BuildHatchPage(ProjectID) {
 
 function PrepareHatchDetails(hID, pID) {
     var sHatchID = hID;
-    var sHatchStatus = $("#Hatch" + hID + " .HatchStatusDDL option:selected").text();
-    var sFailureType = $("#Hatch" + hID + " .FailureTypeDDL option:selected").text();
+    var iHatchStatusID = $("#Hatch" + hID + " .HatchStatusDDL option:selected").val();
+    var iFailureTypeID = $("#Hatch" + hID + " .FailureTypeDDL option:selected").val();
     var sCurrentDate = GetCurrentDate();
     var sComments = $("#Hatch" + hID + " .HatchCommentsTB").val();
-    GetUserName();
-    HatchDetails = { HatchID: sHatchID, HatchStatus: sHatchStatus, FailureType: sFailureType, UserName: sUserName ,Date: sCurrentDate, Comments: sComments };
+    GetUserName(); // Need to identify worker and send his ID to DB
+    HatchDetails = {
+        HatchID: sHatchID,
+        HatchStatusID: iHatchStatusID,
+        FailureTypeID: iFailureTypeID,
+        EmployeeID: 302224167,
+        Date: sCurrentDate,
+        Comments: sComments
+    };
     UpdateHatchDetails(HatchDetails);
     Goto("HatchesOfProject" + pID);
 }
@@ -397,9 +404,7 @@ function GetUserName() {
 }
 
 function UpdateHatchDetails(oHatchDetails) {
-    debugger;
     dataString = JSON.stringify(oHatchDetails);
-    return;
     $.ajax({ // ajax call starts
         url: 'MaestroWS.asmx/UpdateHatchDetails',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
@@ -414,7 +419,7 @@ function UpdateHatchDetails(oHatchDetails) {
         error: function (e) {
             alert("failed to send a report :( " + e.responseText);
         } // end of error
-    });            // end of ajax call
+    });             // end of ajax call
 }
 
 function BuildHatchDetailsPage(oHatch) {

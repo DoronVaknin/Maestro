@@ -285,4 +285,18 @@ public class MaestroWS : System.Web.Services.WebService
         string jsonString = js.Serialize(User.Identity.Name);
         return jsonString;
     }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string UpdateHatchDetails(int HatchID, int HatchStatusID, int FailureTypeID, int EmployeeID, string Date, string Comments)
+    {
+        Hatch h = new Hatch(HatchID, HatchStatusID, FailureTypeID, EmployeeID,Convert.ToDateTime(Date), Comments);
+        int RowAffected = h.UpdateHatchDetails();
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
+        return jsonString;
+    }
 }

@@ -9,11 +9,21 @@ using System.Data;
 /// </summary>
 public class Hatch
 {
-	public Hatch()
+    public Hatch()
+    {
+        //
+        // TODO: Add constructor logic here
+        //
+    }
+
+    public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, int _EmployeeID, DateTime _StatusLastModified, string _Comments)
 	{
-		//
-		// TODO: Add constructor logic here
-		//
+        HatchID = _HatchID;
+        HatchStatusID = _HatchStatusID;
+        ftID = _FailureTypeID;
+        EmployeeID = _EmployeeID;
+        StatusLastModified = _StatusLastModified;
+        Comments = _Comments;
 	}
 
     int hatchID;
@@ -63,6 +73,13 @@ public class Hatch
     {
         get { return projectID; }
         set { projectID = value; }
+    }
+
+    int employeeID;
+    public int EmployeeID
+    {
+        get { return employeeID; }
+        set { employeeID = value; }
     }
 
     string eName;
@@ -116,4 +133,12 @@ public class Hatch
         dt = db.GetFailureTypeList();
         return dt;
     }
+
+    public int UpdateHatchDetails()
+    {
+        DBservices db = new DBservices();
+        int RowAffected = db.UpdateHatchDetails(this);
+        return RowAffected;
+    }
+
 }

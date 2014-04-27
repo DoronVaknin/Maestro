@@ -792,6 +792,34 @@ public class DBservices
         }
     }
 
+    public int UpdateHatchDetails(Hatch h)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spUpdateHatchDetails]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@HatchID", h.HatchID);
+                sqlComm.Parameters.AddWithValue("@HatchStatusID", h.HatchStatusID);
+                sqlComm.Parameters.AddWithValue("@FailureTypeID", h.FtID);
+                sqlComm.Parameters.AddWithValue("@EmployeeID", h.EmployeeID);
+                sqlComm.Parameters.AddWithValue("@StatusLastModified", h.StatusLastModified);
+                sqlComm.Parameters.AddWithValue("@Comments", h.Comments);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
 }
 
 
