@@ -33,7 +33,7 @@ function Login() {
         {
             if (data.d == "true") {
                 window.location = "#MainMenuPage";
-                LoadProjectsList(); //  read all the projects
+                GetProjectsList(); //  read all the projects
             }
             else alert("Username or password is incorrect");
         }, // end of success
@@ -46,10 +46,10 @@ function Login() {
 //-----------------------------------------------------------------------
 // Load the projects to client-side
 //-----------------------------------------------------------------------
-function LoadProjectsList() {
+function GetProjectsList() {
     dataString = "";
     $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/LoadProjectsList',   // JQuery call to the server side method
+        url: 'MaestroWS.asmx/GetProjectsList',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -57,9 +57,9 @@ function LoadProjectsList() {
         success: function (data) // Variable data contains the data we get from serverside
         {
             ProjectsList = $.parseJSON(data.d);
-            $("#ProjectsList").html(BuildProjectsPage(ProjectsList));
+            $("#ProjectsList").html(GetProjectDetails(ProjectsList));
 
-            BuildHatchesPage(ProjectsList);
+            GetProjectHatches(ProjectsList);
 
             var newPage = $(BuildHatchesListPerProject());
             newPage.appendTo($.mobile.pageContainer);
@@ -85,18 +85,18 @@ function LoadProjectsList() {
         error: function (e) {
             alert("failed to load projects :( " + e.responseText);
         } // end of error
-    });      // end of ajax call
+    });       // end of ajax call
 }
 
 //----------------------------------------------------------------------------
 // build the Projects page
 // ProjectsList contains all the names of the projects
 //----------------------------------------------------------------------------
-function BuildProjectsPage(ProjectsList) {
+function GetProjectDetails(ProjectsList) {
     for (var i = 0; i < ProjectsList.length; i++) { // run on all the files in the list
         $.ajax({ // ajax call start
             url: 'MaestroWS.asmx/GetProjectDetails',
-            data: "{ pID: " + ProjectsList[i].pID + "}", // Send value of the project id
+            data: "{ pID: " + ProjectsList[i] + "}", // Send value of the project id
             dataType: 'json', // Choosing a JSON datatype for the data sent
             type: 'POST',
             async: false, // this is a synchronous call
@@ -104,18 +104,18 @@ function BuildProjectsPage(ProjectsList) {
             success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
             {
                 p = $.parseJSON(data.d); // parse the data as json
-                Projects[p[1].pID] = p;
+                Projects[p[1].pID] = MergeObjects(p);
             }, // end of success
             error: function (e) { // this function will be called upon failure
                 alert("failed to get project details: " + e.responseText);
             } // end of error
-        });    // end of ajax call
+        });        // end of ajax call
     } // end of loop on all the projects
 
     str = "";
-    for (var i in Projects) {
-        str += BuildProjectsList(i); // add item to the list in the main projects page
-        BuildProjectPage(Projects[i][1].pID); // build a page for each project
+    for (var pID in Projects) {
+        str += BuildProjectsList(pID); // add item to the list in the main projects page
+        BuildProjectPage(pID); // build a page for each project
     }
     return str;
 }
@@ -123,11 +123,11 @@ function BuildProjectsPage(ProjectsList) {
 //------------------------------------------------------
 // build projects list items
 //------------------------------------------------------
-function BuildProjectsList(i) {
+function BuildProjectsList(pID) {
     var str = "";
-    str += "<li><a data-ajax = 'false' href= '#Project" + Projects[i][1].pID + "'>";
-    str += "<h1>" + Projects[i][0].Fname + " " + Projects[i][0].Lname + "</h1>";
-    str += "<p>" + Projects[i][2].StatusName + "</p>";
+    str += "<li><a data-ajax = 'false' href= '#Project" + pID + "'>";
+    str += "<h1>" + Projects[pID].Name + "</h1>";
+    str += "<p>" + Projects[pID].StatusName + "</p>";
     str += "</a></li>";
     return str;
 }
@@ -135,40 +135,36 @@ function BuildProjectsList(i) {
 //----------------------------------------------------------------------------
 // build a page per project
 //----------------------------------------------------------------------------
-function BuildProjectPage(ProjectID) {
-    var p = Projects[ProjectID];
-    var Customer = p[0];
-    var Project = p[1];
-    var ProjectStatus = p[2];
+function BuildProjectPage(pID) {
+    var p = Projects[pID];
 
     var str = "";
     // build a page
-    str += "<div data-role = 'page' id = 'Project" + ProjectID + "'>";
+    str += "<div data-role = 'page' id = 'Project" + pID + "'>";
     // build the header
 
-    var CustomerFullName = Customer.Fname + " " + Customer.Lname;
-    str += BuildProjectHeader(CustomerFullName);
+    str += BuildProjectHeader(p.Name);
 
     // add the content div
     str += "<div data-role = 'content'>";
     str += "<h2>פרטי הלקוח</h2>";
-    str += "<p><b>שם הלקוח: </b>" + CustomerFullName + "</p>";
-    if (!IsEmpty(Project.Phone)) str += "<p><b>טלפון: </b>" + Customer.Phone + "</p>";
-    str += "<p><b>טלפון נייד: </b>" + Customer.Mobile + "</p>";
-    if (!IsEmpty(Project.Fax)) str += "<p><b>פקס: </b>" + Customer.Fax + "</p>";
-    if (!IsEmpty(Project.Email)) str += "<p><b>דוא&quot;ל: </b>" + Customer.Email + "</p>";
+    str += "<p><b>שם הלקוח: </b>" + p.Fname + " " + p.Lname + "</p>";
+    if (!IsEmpty(p.Phone)) str += "<p><b>טלפון: </b>" + p.Phone + "</p>";
+    str += "<p><b>טלפון נייד: </b>" + p.Mobile + "</p>";
+    if (!IsEmpty(p.Fax)) str += "<p><b>פקס: </b>" + p.Fax + "</p>";
+    if (!IsEmpty(p.Email)) str += "<p><b>דוא&quot;ל: </b>" + p.Email + "</p>";
 
     str += "<h2>פרטי הפרויקט</h2>";
-    str += "<p><b>סטטוס: </b>" + ProjectStatus.StatusName + "</p>";
-    str += "<p><b>עלות: </b>" + Project.Cost + "</p>";
-    if (!IsEmpty(Project.Comments)) str += "<p><b>הערות: </b>" + Project.Comments + "</p>";
+    str += "<p><b>סטטוס: </b>" + p.StatusName + "</p>";
+    str += "<p><b>עלות: </b>" + p.Cost + "</p>";
+    if (!IsEmpty(p.Comments)) str += "<p><b>הערות: </b>" + p.Comments + "</p>";
 
     str += "<h2>אנשי קשר</h2>";
-    if (!IsEmpty(Project.ContractorName)) str += "<p><b>קבלן: </b>" + Project.ContractorName + "  " + Project.ContractorPhone + "</p>";
-    if (!IsEmpty(Project.ArchitectName)) str += "<p><b>אדריכל: </b>" + Project.ArchitectName + "  " + Project.ArchitectPhone + "</p>";
-    if (!IsEmpty(Project.SupervisorName)) str += "<p><b>מפקח: </b>" + Project.SupervisorName + "  " + Project.SupervisorPhone + "</p><br/>";
+    if (!IsEmpty(p.ContractorName)) str += "<p><b>קבלן: </b>" + p.ContractorName + "  " + p.ContractorPhone + "</p>";
+    if (!IsEmpty(p.ArchitectName)) str += "<p><b>אדריכל: </b>" + p.ArchitectName + "  " + p.ArchitectPhone + "</p>";
+    if (!IsEmpty(p.SupervisorName)) str += "<p><b>מפקח: </b>" + p.SupervisorName + "  " + p.SupervisorPhone + "</p><br/>";
 
-    str += "<a class = 'HatchesBTN' href='#HatchesOfProject" + ProjectID + "' data-role='button'>צפה בפתחים</a>";
+    str += "<a class = 'HatchesBTN' href='#HatchesOfProject" + pID + "' data-role='button'>צפה בפתחים</a>";
 
     str += "</div>";  // close the content
     str += "</div>";  // close the page
@@ -204,11 +200,11 @@ function BuildProjectHeader(sHeaderText) {
 //----------------------------------------------------------------------------
 // build Hatch pages
 //----------------------------------------------------------------------------
-function BuildHatchesPage(ProjectsList) {
+function GetProjectHatches(ProjectsList) {
     for (var i = 0; i < ProjectsList.length; i++) { // run on all the files in the list
         $.ajax({ // ajax call start
-            url: 'MaestroWS.asmx/GetHatches',
-            data: "{ pID: " + ProjectsList[i].pID + "}", // Send value of the project id
+            url: 'MaestroWS.asmx/GetProjectHatches',
+            data: "{ pID: " + ProjectsList[i] + "}", // Send value of the project id
             dataType: 'json', // Choosing a JSON datatype for the data sent
             type: 'POST',
             async: false, // this is a synchronous call
@@ -218,13 +214,13 @@ function BuildHatchesPage(ProjectsList) {
                 var h = $.parseJSON(data.d); // parse the data as json
                 if (h.length != 0) {
                     var ProjID = h[0][0].pID;
-                    Hatches[ProjID] = MakeAssociativeArray(h, true, 1);
+                    Hatches[ProjID] = MergeInsideArrays(h);
                 }
             }, // end of success
             error: function (e) { // this function will be called upon failure
                 alert("failed to get project's hatches: " + e.responseText);
             } // end of error
-        });          // end of ajax call
+        });             // end of ajax call
     } // end of loop on all the hatches
 }
 
@@ -247,20 +243,20 @@ function BuildHatchesList(ProjID) {
 //------------------------------------------------------
 function BuildHatchesListPerProject() {
     str = "";
-    for (var Project in Projects) {
+    for (var pID in Projects) {
         //Projects[Project][1].HatchesImageURL
-        str += '<div data-role="page" id="HatchesOfProject' + Projects[Project][1].pID + '">';
-        str += '<div data-role="header" data-theme="a"><h1>' + Projects[Project][0].Fname + ' ' + Projects[Project][0].Lname + '</h1>';
-        str += '<a href="#Project' + Projects[Project][1].pID + '" data-icon="back" data-iconpos="notext" style="border: none;"></a>';
-        str += '<a href="#HatchesImage' + Projects[Project][1].pID + '" data-rel="popup" data-icon="info" data-iconpos="notext" style="border: none;"></a></div>'; //end of header
+        str += '<div data-role="page" id="HatchesOfProject' + pID + '">';
+        str += '<div data-role="header" data-theme="a"><h1>' + Projects[pID].Fname + ' ' + Projects[pID].Lname + '</h1>';
+        str += '<a href="#Project' + pID + '" data-icon="back" data-iconpos="notext" style="border: none;"></a>';
+        str += '<a href="#HatchesImage' + pID + '" data-rel="popup" data-icon="info" data-iconpos="notext" style="border: none;"></a></div>'; //end of header
         str += '<div data-role="content">';
         str += '<ul id="HatchesList" data-role="listview" data-theme="c" data-inset="true" data-filter="true" data-filter-placeholder = "חפש פתח...">';
-        str += BuildHatchesList(Projects[Project][1].pID);
+        str += BuildHatchesList(pID);
         str += "</ul>"; // end of ul
 
-        str += '</br><div id="HatchesImage' + Projects[Project][1].pID + '" data-role="popup" class = "photopopup">';
-        str += '<a href="#HatchesOfProject' + Projects[Project][1].pID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
-        str += '<img src = "' + Projects[Project][1].HatchesImageURL + '" /></div>';
+        str += '</br><div id="HatchesImage' + pID + '" data-role="popup" class = "photopopup">';
+        str += '<a href="#HatchesOfProject' + pID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
+        str += '<img src = "' + Projects[pID].HatchesImageURL + '" /></div>';
 
         str += "</div>"; // end of content
         str += "</div>"; // end of page
@@ -315,11 +311,11 @@ function BuildHatchDetailsPage(oHatch) {
     str += "<p><b>סטטוס: </b>" + Hatches[iProjID][iHatchID].HatchStatus + "</p>";
     str += "<p><b>סוג הפתח: </b>" + Hatches[iProjID][iHatchID].HatchType + "</p>";
 
-//    str += '</br><a href = "#myPopup" data-role = "button" data-rel="popup">Popup Image</a>';
+    //    str += '</br><a href = "#myPopup" data-role = "button" data-rel="popup">Popup Image</a>';
 
-//    str += '</br><div id="myPopup" data-role="popup" class = "photopopup">';
-//    str += '<a href="#Hatch' + iHatchID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
-//    str += '<img src = "' + Projects[iProjID][1].HatchesImageURL + '" /></div>';
+    //    str += '</br><div id="myPopup" data-role="popup" class = "photopopup">';
+    //    str += '<a href="#Hatch' + iHatchID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
+    //    str += '<img src = "' + Projects[iProjID][1].HatchesImageURL + '" /></div>';
 
     str += "</div>" // close the content
 
@@ -361,4 +357,57 @@ function MakeAssociativeArray(Arr, bReturnObj, iInternalKeyIndex) {
         UnifiedArr[Arr[i][iInternalKeyIndex].HatchID] = TempArr;
     }
     return UnifiedArr;
+}
+
+function MergeInsideArrays(Arr) {
+    var UniArr = [];
+    for (var i = 0; i < Arr.length; i++) {
+        var TempArr = [];
+        for (var j = 0; j < Arr[i].length; j++) {
+            for (var k in Arr[i][j]) {
+                TempArr[k] = eval("Arr[i][j]." + k);
+            }
+        }
+        UniArr.push(TempArr);
+    }
+    return UniArr;
+}
+
+function MergeObjects(Arr) {
+    var ArrLength = Arr.length;
+    for (var i = 0; i < ArrLength - 1; i++) {
+        $.extend(Arr[0], Arr[i + 1]);
+    }
+    return Arr[0];
+}
+
+function Goto(sPage) {
+    window.location = "#" + sPage;
+}
+
+function ConvertToDate(sDate) {
+    //Remove all non-numeric (except the plus)
+    sDate = sDate.replace(/[^0-9 +]/g, '');
+    //Create date
+    var date = new Date(parseInt(sDate));
+    var sFixedDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    return sFixedDate;
+}
+
+function GetCurrentDate() {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+
+    today = dd + '/' + mm + '/' + yyyy;
+    return today;
 }

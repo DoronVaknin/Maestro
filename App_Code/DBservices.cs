@@ -582,13 +582,13 @@ public class DBservices
         }
     }
 
-    public DataTable GetHatches(int ProjectID)
+    public DataTable GetProjectHatches(int ProjectID)
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
 
         con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[spGetHatches]", con))
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectHatches]", con))
         {
             if (con.State != ConnectionState.Open)
                 con.Open();

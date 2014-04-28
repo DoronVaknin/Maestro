@@ -243,11 +243,11 @@ public class Project
         return dt;
     }
 
-    public DataTable GetHatches(int ProjectID)
+    public DataTable GetProjectHatches(int ProjectID)
     {
         DataTable dt = new DataTable();
         DBservices db = new DBservices();
-        dt = db.GetHatches(ProjectID);
+        dt = db.GetProjectHatches(ProjectID);
         return dt;
     }
 
