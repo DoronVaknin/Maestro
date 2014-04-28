@@ -67,4 +67,10 @@ public partial class Default2 : System.Web.UI.Page
     //    OrdersGV.DataSource = OrdersDT;
     //    OrdersGV.DataBind();
     //}
+    protected void OrdersGV_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "ActivateModal('ModalOrderDetails')", true);
+        GridViewRow row = OrdersGV.SelectedRow;
+        //OrderStausDDL.SelectedItem = 2;
+    }
 }

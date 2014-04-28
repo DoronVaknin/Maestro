@@ -42,7 +42,7 @@
                 </div>
                 <br />
                 <div align="center">
-                    <table class="nav-justified">
+                    <table class="nav-justified" >
                         <tr>
                             <td>
                                 תאריך פתיחה:&nbsp;

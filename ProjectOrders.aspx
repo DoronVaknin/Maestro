@@ -17,7 +17,8 @@
         </SelectParameters>
     </asp:SqlDataSource>
     <asp:GridView runat="server" CssClass="DataTables" ID="OrdersGV" AllowPaging="True"
-        AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="oID" DataSourceID="SqlDataSource1">
+        AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="oID" DataSourceID="SqlDataSource1"
+        OnSelectedIndexChanged="OrdersGV_SelectedIndexChanged">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
             <asp:CommandField EditText="ערוך" ShowEditButton="true" />
@@ -268,6 +269,52 @@
                     <button type="button" class="btn btn-primary">
                         Save changes</button>
                 </div>--%>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <asp:SqlDataSource runat="server" ID="StausDataSource" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
+            SelectCommand="spGetOrderStatus" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+        <!-- Order Details and editing Modal -->
+        <div class="modal fade" id="ModalOrderDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" dir="rtl"
+                            id="CloseBTN">
+                            &times;</button>
+                        <h4 class="modal-title">
+                            פרטי ההזמנה</h4>
+                    </div>
+                    <div class="modal-body" style="text-align: right;">
+                        <br />
+                        <asp:Label runat="server" Text="מספר הזמנה:" ID="OrderNumLBL"></asp:Label>
+                        <br />
+                        <asp:Label runat="server" Text="תאריך ההזמנה:" ID="OrderDateLBL"></asp:Label>
+                        <br />
+                        <asp:Label runat="server" Text="תאריך הגעה משוער:" ID="EstimateDateLBL"></asp:Label>
+                        <br />
+                        <asp:Label runat="server" Text="שם הפריט:" ID="RawMeterialLBL"></asp:Label>
+                        <br />
+                        <asp:Label runat="server" Text="כמות שהוזמנה:" ID="QuantityLBL"></asp:Label>
+                        <br />
+                        <asp:Label runat="server" Text="שם הספק:" ID="SupplierLBL"></asp:Label>
+                        <br />
+                        סטטוס הזמנה: &nbsp &nbsp
+                        <asp:DropDownList ID="OrderStausDDL" runat="server" DataSourceID="StausDataSource"
+                            DataTextField="osName" DataValueField="osID">
+                        </asp:DropDownList>
+                        <br />
+                    </div>
+                    <br />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 50%">
+                            סגור ללא שינויים</button>
+                        <%--  <button type="button" class="btn btn-primary">
+                        save changes</button>--%>
+                    </div>
                 </div>
                 <!-- /.modal-content -->
             </div>
