@@ -75,12 +75,8 @@ public class MaestroWS : System.Web.Services.WebService
         ArrayList myAL = new ArrayList();
 
         p.pID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
-        ps.StatusName = dt.Rows[0].ItemArray[25].ToString();
-        p.Comments = dt.Rows[0].ItemArray[1].ToString();
-        p.DateOpened = Convert.ToDateTime(dt.Rows[0].ItemArray[2]);
-        p.ExpirationDate = Convert.ToDateTime(dt.Rows[0].ItemArray[3]);
-        p.Cost = Convert.ToDouble(dt.Rows[0].ItemArray[4]);
-        p.HatchesImageURL = dt.Rows[0].ItemArray[11].ToString();
+        p.Name = dt.Rows[0].ItemArray[1].ToString();
+        p.HatchesImageURL = dt.Rows[0].ItemArray[14].ToString();
 
         c.Fname = dt.Rows[0].ItemArray[15].ToString();
         c.Lname = dt.Rows[0].ItemArray[16].ToString();
@@ -182,6 +178,125 @@ public class MaestroWS : System.Web.Services.WebService
         JavaScriptSerializer js = new JavaScriptSerializer();
         // serialize to string
         string jsonString = js.Serialize(myAL);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetProjectListForProdApp()
+    {
+        Project p = new Project();
+        DataTable dt = p.GetProjectListForProdApp();
+        int[] ProjArr = new int[dt.Rows.Count];
+
+        for (int i = 0; i < dt.Rows.Count; i++)
+            ProjArr[i] = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(ProjArr);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetProjectHatchesForProdApp(int pID)
+    {
+        Project p = new Project();
+        DataTable dt = p.GetProjectHatchesForProdApp(pID);
+
+        Hatch h = new Hatch();
+        ArrayList[] myAL = new ArrayList[dt.Rows.Count];
+
+        for (int i = 0; i < myAL.Length; i++)
+            myAL[i] = new ArrayList();
+
+        for (int i = 0; i < myAL.Length; i++)
+        {
+            p = new Project();
+            h = new Hatch();
+
+            p.pID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+            p.Name = dt.Rows[i].ItemArray[1].ToString();
+            p.HatchesImageURL = dt.Rows[i].ItemArray[2].ToString();
+            h.HatchID = Convert.ToInt32(dt.Rows[i].ItemArray[3]);
+            h.HatchType = dt.Rows[i].ItemArray[4].ToString();
+            h.HatchStatus = dt.Rows[i].ItemArray[5].ToString();
+            h.EmployeeName = dt.Rows[i].ItemArray[6].ToString();
+            h.StatusLastModified = Convert.ToDateTime(dt.Rows[i].ItemArray[7]);
+            h.FtName = dt.Rows[i].ItemArray[8].ToString();
+            h.Comments = dt.Rows[i].ItemArray[9].ToString();
+
+            myAL[i].Add(p);
+            myAL[i].Add(h);
+        }
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(myAL);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetHatchStatusList()
+    {
+        Hatch h = new Hatch();
+        DataTable dt = h.GetHatchStatusList();
+        Dictionary<string, string> dic = new Dictionary<string, string>();
+
+        for (int i = 0; i < dt.Rows.Count; i++)
+            dic.Add(dt.Rows[i].ItemArray[0].ToString(), dt.Rows[i].ItemArray[1].ToString());
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(dic);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetFailureTypeList()
+    {
+        Hatch h = new Hatch();
+        DataTable dt = h.GetFailureTypeList();
+        Dictionary<string, string> dic = new Dictionary<string, string>();
+
+        for (int i = 0; i < dt.Rows.Count; i++)
+            dic.Add(dt.Rows[i].ItemArray[0].ToString(), dt.Rows[i].ItemArray[1].ToString());
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(dic);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetUserName()
+    {
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(User.Identity.Name);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string UpdateHatchDetails(int HatchID, int HatchStatusID, int FailureTypeID, int EmployeeID, string Date, string Comments)
+    {
+        Hatch h = new Hatch(HatchID, HatchStatusID, FailureTypeID, EmployeeID,Convert.ToDateTime(Date), Comments);
+        int RowAffected = h.UpdateHatchDetails();
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
         return jsonString;
     }
 }

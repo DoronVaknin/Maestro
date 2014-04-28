@@ -93,14 +93,24 @@ function ActivateServiceCallExistingProjectModal() {
 function ActivatePlusMinus() {
     $("#ProjectOrdersTBL .plus").click(function () {
         var TextBox = $(this).prev();
-        var sValue = parseInt(TextBox.val());
-        TextBox.val(sValue + 1);
+        var iValue = parseInt(TextBox.val());
+        TextBox.val(iValue + 1);
     });
     $("#ProjectOrdersTBL .minus").click(function () {
         var TextBox = $(this).next();
-        var sValue = TextBox.val();
-        TextBox.val(sValue - 1);
+        var iValue = parseInt(TextBox.val());
+        if (iValue == "0")
+            return;
+        else if (iValue - 1 < 0)
+            TextBox.val(0);
+        else
+            TextBox.val(iValue - 1);
     });
+}
+
+function ResetCreateOrderForm() {
+    $("#ProjectOrdersTBL input.Count").val("0");
+    $("#ProjectOrdersTBL input.datepicker").val("");
 }
 
 //Default state for project fields is disabled

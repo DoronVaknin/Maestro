@@ -307,7 +307,7 @@ public class DBservices
                 IDataReader dr = sqlComm.ExecuteReader();
                 ddl.DataSource = dr;
                 ddl.DataTextField = "sName";
-                ddl.DataValueField = "sName";
+                ddl.DataValueField = "SupplierID";
                 ddl.DataBind();
             }
 
@@ -679,6 +679,140 @@ public class DBservices
                 return dt;
             }
 
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    //Production App functions
+    public DataTable GetProjectHatchesForProdApp(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectHatchesForProdApp]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetProjectListForProdApp()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectListForProdApp]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetHatchStatusList()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetHatchStatusList]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetFailureTypeList()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetFailureTypeList]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public int UpdateHatchDetails(Hatch h)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spUpdateHatchDetails]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@HatchID", h.HatchID);
+                sqlComm.Parameters.AddWithValue("@HatchStatusID", h.HatchStatusID);
+                sqlComm.Parameters.AddWithValue("@FailureTypeID", h.FtID);
+                sqlComm.Parameters.AddWithValue("@EmployeeID", h.EmployeeID);
+                sqlComm.Parameters.AddWithValue("@StatusLastModified", h.StatusLastModified);
+                sqlComm.Parameters.AddWithValue("@Comments", h.Comments);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
             catch (Exception ex)
             {
                 throw (ex);

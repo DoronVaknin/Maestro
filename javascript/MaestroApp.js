@@ -3,7 +3,7 @@
 var Projects = {};  //Projects[ProjectID][0] - Customer details, Projects[ProjectID][1] - Project details, Projects[ProjectID][2] - Project status details
 var ProjectsList = {};
 var Hatches = {};
-var PNP = {};
+var PNP = {}; //Pictures & Pins
 
 
 $(document).ready(function () {

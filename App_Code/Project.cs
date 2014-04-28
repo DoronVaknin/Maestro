@@ -212,18 +212,19 @@ public class Project
         db.UpdateProjectDetails(_ProjectID, _Cost, _Name, _Comments, _ArchitectName, _ArchitectPhone, _ContractorName, _ContractorPhone, _SupervisorName, _SupervisorPhone, _ExpirationDate, _InstallationDate);
     }
 
-    public void LoadSuppliers(DropDownList ShutterProvider, DropDownList CollectedProvider, DropDownList ValimProvider, DropDownList UProvider, DropDownList ShoeingProvider, DropDownList EngineProvider, DropDownList ProtectedSpaceProvider, DropDownList GlassProvider, DropDownList BoxesProvider)
+    public void LoadSuppliers(DropDownList ShutterProvider, DropDownList CollectedProvider, DropDownList AluminiumProvider, DropDownList ValimProvider, DropDownList UProvider, DropDownList ShoeingProvider, DropDownList EngineProvider, DropDownList ProtectedSpaceProvider, DropDownList GlassProvider, DropDownList BoxesProvider)
     {
         DBservices db = new DBservices();
         db.LoadSuppliers(ShutterProvider, 1);
         db.LoadSuppliers(CollectedProvider, 2);
-        db.LoadSuppliers(ValimProvider, 3);
-        db.LoadSuppliers(UProvider, 4);
-        db.LoadSuppliers(ShoeingProvider, 5);
-        db.LoadSuppliers(EngineProvider, 6);
-        db.LoadSuppliers(ProtectedSpaceProvider, 7);
-        db.LoadSuppliers(GlassProvider, 8);
-        db.LoadSuppliers(BoxesProvider, 9);
+        db.LoadSuppliers(AluminiumProvider, 3);
+        db.LoadSuppliers(ValimProvider, 4);
+        db.LoadSuppliers(UProvider, 5);
+        db.LoadSuppliers(ShoeingProvider, 6);
+        db.LoadSuppliers(EngineProvider, 7);
+        db.LoadSuppliers(ProtectedSpaceProvider, 8);
+        db.LoadSuppliers(GlassProvider, 9);
+        db.LoadSuppliers(BoxesProvider, 10);
     }
 
     public DataTable GetProjects()
@@ -249,4 +250,21 @@ public class Project
         dt = db.GetHatches(ProjectID);
         return dt;
     }
+
+    public DataTable GetProjectHatchesForProdApp(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetProjectHatchesForProdApp(ProjectID);
+        return dt;
+    }
+
+    public DataTable GetProjectListForProdApp()
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetProjectListForProdApp();
+        return dt;
+    }
+    
 }

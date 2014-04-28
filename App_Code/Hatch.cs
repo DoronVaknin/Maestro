@@ -9,11 +9,21 @@ using System.Data;
 /// </summary>
 public class Hatch
 {
-	public Hatch()
+    public Hatch()
+    {
+        //
+        // TODO: Add constructor logic here
+        //
+    }
+
+    public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, int _EmployeeID, DateTime _StatusLastModified, string _Comments)
 	{
-		//
-		// TODO: Add constructor logic here
-		//
+        HatchID = _HatchID;
+        HatchStatusID = _HatchStatusID;
+        ftID = _FailureTypeID;
+        EmployeeID = _EmployeeID;
+        StatusLastModified = _StatusLastModified;
+        Comments = _Comments;
 	}
 
     int hatchID;
@@ -37,6 +47,13 @@ public class Hatch
         set { hatchStatus = value; }
     }
 
+    DateTime statusLastModified;
+    public DateTime StatusLastModified
+    {
+        get { return statusLastModified; }
+        set { statusLastModified = value; }
+    }
+
     int hatchTypeID;
     public int HatchTypeID
     {
@@ -58,6 +75,41 @@ public class Hatch
         set { projectID = value; }
     }
 
+    int employeeID;
+    public int EmployeeID
+    {
+        get { return employeeID; }
+        set { employeeID = value; }
+    }
+
+    string eName;
+    public string EmployeeName
+    {
+        get { return eName; }
+        set { eName = value; }
+    }
+
+    int ftID;
+    public int FtID
+    {
+        get { return ftID; }
+        set { ftID = value; }
+    }
+
+    string ftName;
+    public string FtName
+    {
+        get { return ftName; }
+        set { ftName = value; }
+    }
+
+    string comments;
+    public string Comments
+    {
+        get { return comments; }
+        set { comments = value; }
+    }
+
     public DataTable GetPicsAndPins(int ProjectID)
     {
         DataTable dt = new DataTable();
@@ -65,4 +117,28 @@ public class Hatch
         dt = db.GetPicsAndPins(ProjectID);
         return dt;
     }
+
+    public DataTable GetHatchStatusList()
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetHatchStatusList();
+        return dt;
+    }
+
+    public DataTable GetFailureTypeList()
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetFailureTypeList();
+        return dt;
+    }
+
+    public int UpdateHatchDetails()
+    {
+        DBservices db = new DBservices();
+        int RowAffected = db.UpdateHatchDetails(this);
+        return RowAffected;
+    }
+
 }

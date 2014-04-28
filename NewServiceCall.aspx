@@ -4,6 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
+ <div class="form-background">
     <div align="center">
         <h1 id="PageHeader" runat="server">
         </h1>
@@ -35,8 +36,7 @@
             </td>
         </tr>
     </table>
-    <br />
-    <br />
+    </div>
     <div class="cntr">
         <input id="CreateServiceCallExternalBTN" type="button" value="צור קריאה" class="btn btn-default"
             onclick="ValidateServiceCallExternal()" />

@@ -52,14 +52,9 @@
                     <ul>
                         <li><a>הזמנות</a>
                             <ul>
-                                <li id="ToolbarBtnProjectOrders" class="ChooseProjectToolbarButtons"><a>הזמנות עבור פרויקט</a></li>
+                                <li id="ToolbarBtnProjectOrders" class="ChooseProjectToolbarButtons"><a>הזמנות עבור
+                                    פרויקט</a></li>
                                 <li><a href="Orders.aspx">רשימת הזמנות</a></li>
-                            </ul>
-                        </li>
-                        <li><a>פתחים</a>
-                            <ul>
-                                <li><a>דיווחי ייצור</a></li>
-                                <li id="ToolbarBtnProjectHatches" class="ChooseProjectToolbarButtons"><a>רשימת פתחים</a></li>
                             </ul>
                         </li>
                         <li><a>ספקים</a>
@@ -68,6 +63,8 @@
                                 <li><a href="Suppliers.aspx">רשימת ספקים</a></li>
                             </ul>
                         </li>
+                        <li id="ToolbarBtnProjectHatches" class="ChooseProjectToolbarButtons"><a>פתחים עבור
+                            פרויקט</a></li>
                     </ul>
                 </li>
                 <li id="ServiceCalls"><a>קריאות שירות</a>
@@ -114,7 +111,7 @@
                             CssClass="btn btn-default" Font-Bold="true" OnClick="ChooseProjectForProjectHatchesBTN_Click" />
                     </div>
                 </div>
-                <%--                <div class="modal-footer">
+                <%--<div class="modal-footer">
                     <div class="cntr">
                         <button type="button" class="btn btn-primary">
                             בחר</button>
