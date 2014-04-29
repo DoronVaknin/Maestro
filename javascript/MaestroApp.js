@@ -277,39 +277,39 @@ function BuildHatchPage(ProjectID) {
         contentType: 'application/json; charset = utf-8', // for the data received
         success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
         {
-            var Arr = $.parseJSON(data.d); // parse the data as json
-            var HatchID = Arr[0][0].HatchID;
-            PNP = MakeAssociativeArray(Arr, true, 0);
+            var pnp = $.parseJSON(data.d); // parse the data as json
+            if (!IsEmpty(pnp)) {
+                var HatchID = pnp[0][0].HatchID;
+                PNP = MergeInsideArrays(pnp);
+            }
         }, // end of success
         error: function (e) { // this function will be called upon failure
             alert("failed to get project details: " + e.responseText);
         } // end of error
-    });             // end of ajax call
-
-    for (var Hatch in PNP)
-        BuildHatchDetailsPage(PNP[Hatch]); // build a page for each hatch
+    });               // end of ajax call
+    for (var pID in Projects)
+        for (var hID in Hatches[pID])
+            BuildHatchDetailsPage(Hatches[pID][hID]); // build a page for each hatch
     //    $('.HatchNavbar').navbar('refresh');
 }
 
 function BuildHatchDetailsPage(oHatch) {
-    var iHatchID = oHatch.HatchID;
-    var iProjID = oHatch.ProjectID;
     var str = "";
     // build a page
-    str += "<div data-role = 'page' id = 'Hatch" + iHatchID + "'>";
+    str += "<div data-role = 'page' id = 'Hatch" + oHatch.HatchID + "'>";
 
     // build the header
-    var sHeaderText = "פתח מס' " + iHatchID;
+    var sHeaderText = "פתח מס' " + oHatch.HatchID;
     str += "<div data-role = 'header' data-position='fixed' data-theme='a'>";
     str += "<h1>" + sHeaderText + "</h1>";
-    str += "<a href='#HatchesOfProject" + iProjID + "' data-icon='back' data-iconpos = 'notext' style = 'border:none;'></a>";
+    str += "<a href='#HatchesOfProject" + oHatch.pID + "' data-icon='back' data-iconpos = 'notext' style = 'border:none;'></a>";
     str += "</div>"; //close the header
 
     // add the content div
     str += "<div data-role = 'content'>";
     str += "<h2>פרטי הפתח</h2>";
-    str += "<p><b>סטטוס: </b>" + Hatches[iProjID][iHatchID].HatchStatus + "</p>";
-    str += "<p><b>סוג הפתח: </b>" + Hatches[iProjID][iHatchID].HatchType + "</p>";
+    str += "<p><b>סטטוס: </b>" + oHatch.HatchStatus + "</p>";
+    str += "<p><b>סוג הפתח: </b>" + oHatch.HatchType + "</p>";
 
     //    str += '</br><a href = "#myPopup" data-role = "button" data-rel="popup">Popup Image</a>';
 
@@ -322,9 +322,9 @@ function BuildHatchDetailsPage(oHatch) {
     str += "<div data-role='footer' data-position='fixed' data-theme='a'>";
     str += "<div class = 'HatchNavbar' data-role='navbar'>";
     str += "<ul>";
-    str += "<li><a data-ajax = 'false' href='#TakePhotoHatch" + iHatchID + "' class = 'ui-icon-camera-white' >צלם תמונה</a></li>";
-    str += "<li><a data-ajax = 'false' href='#PicturesOfHatch" + iHatchID + "' class = 'HatchPicturesBTN' data-icon='grid' data-iconpos='left'>תמונות</a></li>";
-    str += "<li><a data-ajax = 'false' href='#QAForHatch" + iHatchID + "' data-icon='star'>בקרת איכות</a></li>";
+    str += "<li><a data-ajax = 'false' href='#TakePhotoHatch" + oHatch.HatchID + "' class = 'ui-icon-camera-white' >צלם תמונה</a></li>";
+    str += "<li><a data-ajax = 'false' href='#PicturesOfHatch" + oHatch.HatchID + "' class = 'HatchPicturesBTN' data-icon='grid' data-iconpos='left'>תמונות</a></li>";
+    str += "<li><a data-ajax = 'false' href='#QAForHatch" + oHatch.HatchID + "' data-icon='star'>בקרת איכות</a></li>";
     str += "</ul>";
     str += "</div>"; // close the navbar
     str += "</div>"; // close the footer
@@ -340,23 +340,6 @@ function BuildHatchDetailsPage(oHatch) {
 //Misc
 function IsEmpty(o) {
     return (o == "" || o == null);
-}
-
-function MakeAssociativeArray(Arr, bReturnObj, iInternalKeyIndex) {
-    var UnifiedArr;
-    bReturnObj ? UnifiedArr = {} : UnifiedArr = [];
-    for (var i = 0; i < Arr.length; i++) {
-        var TempArr = {};
-        //        var counter = 0;
-        for (var j = 0; j < Arr[i].length; j++) {
-            for (var field in Arr[i][j]) {
-                TempArr[field] = eval("Arr[i][j]." + field);
-                //                counter++;
-            }
-        }
-        UnifiedArr[Arr[i][iInternalKeyIndex].HatchID] = TempArr;
-    }
-    return UnifiedArr;
 }
 
 function MergeInsideArrays(Arr) {

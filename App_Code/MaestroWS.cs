@@ -162,20 +162,20 @@ public class MaestroWS : System.Web.Services.WebService
             Picture pic = new Picture();
             Pin pin = new Pin();
 
+            h.ProjectID = ProjectID;
             h.HatchID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
-            h.ProjectID = Convert.ToInt32(dt.Rows[i].ItemArray[3]);
 
-            pic.PictureID = Convert.ToInt32(dt.Rows[i].ItemArray[4]);
-            pic.PictureDescription = dt.Rows[i].ItemArray[5].ToString();
-            pic.DateTaken = Convert.ToDateTime(dt.Rows[i].ItemArray[6]);
-            pic.ImageURL = dt.Rows[i].ItemArray[7].ToString();
+            pic.PictureID = Convert.ToInt32(dt.Rows[i].ItemArray[1]);
+            pic.PictureDescription = dt.Rows[i].ItemArray[2].ToString();
+            pic.DateTaken = Convert.ToDateTime(dt.Rows[i].ItemArray[3]);
+            pic.ImageURL = dt.Rows[i].ItemArray[4].ToString();
 
-            pin.PinID = Convert.ToInt32(dt.Rows[i].ItemArray[9]);
-            pin.CoordinateX = Convert.ToDouble(dt.Rows[i].ItemArray[10]);
-            pin.CoordinateY = Convert.ToDouble(dt.Rows[i].ItemArray[11]);
-            pin.Comment = dt.Rows[i].ItemArray[12].ToString();
-            pin.AudioURL = dt.Rows[i].ItemArray[13].ToString();
-            pin.VideoURL = dt.Rows[i].ItemArray[14].ToString();
+            pin.PinID = Convert.ToInt32(dt.Rows[i].ItemArray[5]);
+            pin.CoordinateX = Convert.ToDouble(dt.Rows[i].ItemArray[6]);
+            pin.CoordinateY = Convert.ToDouble(dt.Rows[i].ItemArray[7]);
+            pin.Comment = dt.Rows[i].ItemArray[8].ToString();
+            pin.AudioURL = dt.Rows[i].ItemArray[9].ToString();
+            pin.VideoURL = dt.Rows[i].ItemArray[10].ToString();
 
             myAL[i].Add(h);
             myAL[i].Add(pic);
@@ -188,6 +188,7 @@ public class MaestroWS : System.Web.Services.WebService
         return jsonString;
     }
 
+    //Prod App functions
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public string GetProjectListForProdApp()
