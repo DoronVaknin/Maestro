@@ -167,6 +167,7 @@ a
 html[xmlns] #nav
 {
     display: block;
+    height: 46px;
 }
 
 * html #nav
@@ -201,7 +202,7 @@ html[xmlns] #nav
     /* Size & position */
     width: 75%;
     height: 70%;
-    margin: 10px auto 30px;
+    margin: 40px auto 30px;
     padding: 10px;
 
     /* Styles */
@@ -278,7 +279,7 @@ html[xmlns] #nav
     width: 320px;
 }
 
-div.cntr input[type=button]
+div.cntr input[type=button], div.cntr button
 {
     font-weight: bold;
 }
@@ -395,4 +396,9 @@ div.cntr input[type=button]
 .datepicker
 {
     z-index: 1050;
+}
+
+#CustomerForProjectBTN
+{    
+    margin-left: 20px;
 }

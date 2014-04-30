@@ -6,7 +6,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
  <div class="form-background">
     <div class="cntr">
-        <br />
         <h1>
             פרויקט חדש
         </h1>
