@@ -818,6 +818,33 @@ public class DBservices
         }
     }
 
+    public DataTable GetUsernameID(string Username)
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetUsernameID]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@Username", Username);
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
     public int UpdateHatchDetails(Hatch h)
     {
         con = connect("igroup9_prodConnectionString");
@@ -831,7 +858,10 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@HatchID", h.HatchID);
                 sqlComm.Parameters.AddWithValue("@HatchStatusID", h.HatchStatusID);
-                sqlComm.Parameters.AddWithValue("@FailureTypeID", h.FtID);
+                if (h.FtID == 0)
+                    sqlComm.Parameters.AddWithValue("@FailureTypeID", null);
+                else
+                    sqlComm.Parameters.AddWithValue("@FailureTypeID", h.FtID);
                 sqlComm.Parameters.AddWithValue("@EmployeeID", h.EmployeeID);
                 sqlComm.Parameters.AddWithValue("@StatusLastModified", h.StatusLastModified);
                 sqlComm.Parameters.AddWithValue("@Comments", h.Comments);

@@ -285,12 +285,16 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string GetUserName()
+    public string GetUsernameID()
     {
+        Hatch h = new Hatch();
+        DataTable dt = h.GetUsernameID(User.Identity.Name);
+        int eID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
+
         // create a json serializer object
         JavaScriptSerializer js = new JavaScriptSerializer();
         // serialize to string
-        string jsonString = js.Serialize(User.Identity.Name);
+        string jsonString = js.Serialize(eID);
         return jsonString;
     }
 

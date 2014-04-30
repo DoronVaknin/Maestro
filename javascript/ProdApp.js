@@ -5,7 +5,7 @@ var Hatches = {};
 var HatchStatusList = {};
 var FailureTypeList = {};
 var HatchDetails = {};
-var sUserName = "";
+var sEmployeeID = "";
 
 $(document).ready(function () {
     $("#LoginBTN").click(function () {
@@ -370,23 +370,23 @@ function PrepareHatchDetails(hID, pID) {
     var iFailureTypeID = $("#Hatch" + hID + " .FailureTypeDDL option:selected").val();
     var sCurrentDate = GetCurrentDate();
     var sComments = $("#Hatch" + hID + " .HatchCommentsTB").val();
-    GetUserName(); // Need to identify worker and send his ID to DB
+    GetUsernameID(); // Need to identify worker and send his ID to DB
     HatchDetails = {
         HatchID: sHatchID,
         HatchStatusID: iHatchStatusID,
-        FailureTypeID: iFailureTypeID,
-        EmployeeID: 302224167,
+        FailureTypeID: (!IsEmpty(iFailureTypeID) ? iFailureTypeID : 0),
+        EmployeeID: sEmployeeID,
         Date: sCurrentDate,
-        Comments: sComments
+        Comments: (!IsEmpty(sComments) ? sComments : "")
     };
     UpdateHatchDetails(HatchDetails);
     Goto("HatchesOfProject" + pID);
 }
 
-function GetUserName() {
+function GetUsernameID() {
     dataString = "";
     $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/GetUserName',   // JQuery call to the server side method
+        url: 'MaestroWS.asmx/GetUsernameID',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'text',    // Choosing a JSON datatype
@@ -395,7 +395,7 @@ function GetUserName() {
         success: function (data) // Variable data contains the data we get from serverside
         {
             var obj = $.parseJSON(data);
-            sUserName = obj.d.substring(1, obj.d.length - 1);
+            sEmployeeID = obj.d;
         }, // end of success
         error: function (e) {
             alert("failed to load Failure type list :( " + e.responseText);
@@ -499,7 +499,7 @@ function BuildHatchCommentsTextArea(sComments) {
 
 //Misc
 function IsEmpty(o) {
-    return (o == "" || o == null);
+    return (o == "" || o == null || o == undefined);
 }
 
 function MakeAssociativeArray(Arr, bReturnObj, iInternalKeyIndex) {

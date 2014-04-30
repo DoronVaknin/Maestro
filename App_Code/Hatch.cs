@@ -17,14 +17,16 @@ public class Hatch
     }
 
     public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, int _EmployeeID, DateTime _StatusLastModified, string _Comments)
-	{
+    {
         HatchID = _HatchID;
         HatchStatusID = _HatchStatusID;
-        ftID = _FailureTypeID;
+        if (_FailureTypeID != 0)
+            ftID = _FailureTypeID;
         EmployeeID = _EmployeeID;
         StatusLastModified = _StatusLastModified;
+        //if (_Comments != "")
         Comments = _Comments;
-	}
+    }
 
     int hatchID;
     public int HatchID
@@ -89,6 +91,13 @@ public class Hatch
         set { eName = value; }
     }
 
+    string username;
+    public string Username
+    {
+        get { return username; }
+        set { username = value; }
+    }
+
     int ftID;
     public int FtID
     {
@@ -139,6 +148,14 @@ public class Hatch
         DBservices db = new DBservices();
         int RowAffected = db.UpdateHatchDetails(this);
         return RowAffected;
+    }
+
+    public DataTable GetUsernameID(string Username)
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetUsernameID(Username);
+        return dt;
     }
 
 }
