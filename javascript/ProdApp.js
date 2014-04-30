@@ -16,6 +16,40 @@ $(document).ready(function () {
     $("#LoginBTN").parent().css({ "width": "36%", "margin": "auto" });
 });
 
+$(document).on("change", ".HatchStatusDDL", function () {
+    var sHatchStatus = $(this).find(":selected").text();
+    bShowFailureDDL = sHatchStatus == "תקלה";
+    $.mobile.activePage.find(".FailureTypeParagraph").toggle(bShowFailureDDL);
+});
+
+$(document).on("click", ".HatchBTN", function () {
+    setTimeout(BackupPage, 2000);
+});
+
+function BackupPage() {
+    CurrentPageData = [];
+    var Page = $.mobile.activePage;
+    var PageID = $(Page).attr("id");
+    var iHatchStatusID = $("#" + PageID + " .HatchStatusDDL option:selected").val();
+    var iFailureTypeID = $("#" + PageID + " .FailureTypeDDL option:selected").val();
+    var sComments = $("#" + PageID + " .HatchCommentsTB").val();
+    CurrentPageData.push(PageID, iHatchStatusID, iFailureTypeID, sComments);
+}
+
+function RestorePage(pID) {
+    var PageID = CurrentPageData[0];
+    var sText = $("#" + PageID + " .HatchStatusDDL option[value='" + CurrentPageData[1] + "']").text();
+    $("#" + PageID + " .HatchStatusDDL option[value='" + CurrentPageData[1] + "']").attr("selected", "selected");
+    $.mobile.activePage.find(".HatchStatusParagraph span.ui-btn-text .HatchStatusDDL").text(sText);
+
+    var sText = $("#" + PageID + " .FailureTypeDDL option[value='" + CurrentPageData[2] + "']").text();
+    $("#" + PageID + " .FailureTypeDDL option[value='" + CurrentPageData[2] + "']").attr("selected", "selected");
+    $.mobile.activePage.find(".FailureTypeParagraph span.ui-btn-text .FailureTypeDDL").text(sText);
+
+    $("#" + PageID + " .HatchCommentsTB").val(CurrentPageData[3]);
+    window.location = "#HatchesOfProject" + pID;
+}
+
 function Login() {
     var sUsername = $.trim($("#UserName").val());
     var sPassword = $.trim($("#Password").val());
@@ -316,19 +350,19 @@ function BuildHatchesPagePerProject() {
         for (var Hatch in Hatches[pID]) {
             str += '<div data-role="page" id="Hatch' + Hatches[pID][Hatch].HatchID + '">';
             str += "<div data-role='header' data-theme='a'><h1>פתח מס' " + Hatches[pID][Hatch].HatchID + '</h1>';
-            str += '<a href="#HatchesOfProject' + pID + '" data-icon="back" data-iconpos="notext" style="border: none;"></a></div>';
+            //            str += '<a class = "HatchDetailsBackBTN" href="#HatchesOfProject' + pID + '" data-icon="back" data-iconpos="notext" style="border: none;"></a></div>';
+            str += '<a onclick = "RestorePage(' + pID + ')" data-icon="back" data-iconpos="notext" style="border: none;"></a></div>';
             str += '<div data-role="content">';
 
             str += "<h2>פרטי הפתח</h2>";
             str += "<p><b>סוג הפתח: </b>" + Hatches[pID][Hatch].HatchType + "</p>";
-            str += "<p><b>סטטוס: </b>" + BuildHatchStatusDDL(Hatches[pID][Hatch].HatchStatus) + "</p>";
+            str += "<p class = 'HatchStatusParagraph'><b>סטטוס: </b>" + BuildHatchStatusDDL(Hatches[pID][Hatch].HatchStatus) + "</p>";
             str += "<p><b>העובד המדווח: </b>" + Hatches[pID][Hatch].EmployeeName + "</p>";
             str += "<p><b>תאריך דיווח: </b>" + ConvertToDate(Hatches[pID][Hatch].StatusLastModified) + "</p>";
-            if (Hatches[pID][Hatch].HatchStatus == "תקלה")
-                str += "<p><b>התקלה: </b>" + BuildFailureTypeDDL(Hatches[pID][Hatch].FtName) + "</p>";
-            if (!IsEmpty(Hatches[pID][Hatch].Comments))
-                str += "<p><b>הערות: </b>" + BuildHatchCommentsTextArea(Hatches[pID][Hatch].Comments) + "</p></br>";
-            str += "<a id = 'ReportBTN_Hatch'" + Hatches[pID][Hatch].HatchID + "class = 'HatchesReportBTN' onclick = 'PrepareHatchDetails(" + Hatches[pID][Hatch].HatchID + ", " + pID + ")' data-role='button'>דווח</a>";
+            var bShowFailureDDL = Hatches[pID][Hatch].HatchStatus == "תקלה";
+            str += "<p class = 'FailureTypeParagraph' " + (bShowFailureDDL ? '' : 'style = display:none;') + "><b>התקלה: </b>" + BuildFailureTypeDDL(Hatches[pID][Hatch].FtName) + "</p>";
+            str += "<p><b>הערות: </b>" + BuildHatchCommentsTextArea(Hatches[pID][Hatch].Comments) + "</p></br>";
+            str += "<a id = 'ReportBTN_Hatch" + Hatches[pID][Hatch].HatchID + "' class = 'HatchesReportBTN' onclick = 'PrepareHatchDetails(" + Hatches[pID][Hatch].HatchID + "," + pID + ")' data-role='button'>דווח</a>";
 
             str += "</div>"; // end of content
             str += "</div>"; // end of page
@@ -398,7 +432,7 @@ function GetUsernameID() {
             sEmployeeID = obj.d;
         }, // end of success
         error: function (e) {
-            alert("failed to load Failure type list :( " + e.responseText);
+            alert("failed to Get Username ID." + e.responseText);
         } // end of error
     });
 }
@@ -472,10 +506,9 @@ function BuildHatchStatusDDL(sHatchStatus) {
     str += '<select name="HatchStatus" class = "HatchStatusDDL" >';
     for (var i in HatchStatusList) {
         bSelected = sHatchStatus == HatchStatusList[i];
-        str += "<option value='" + i + "' " + (bSelected ? "selected" : "") + ">" + HatchStatusList[i] + "</option>";
+        str += "<option value='" + i + "' " + (bSelected ? "selected='selected'" : "") + ">" + HatchStatusList[i] + "</option>";
     }
     str += '</select>';
-
     return str;
 }
 
@@ -484,16 +517,14 @@ function BuildFailureTypeDDL(sFailureType) {
     str += '<select name="FailureType" class = "FailureTypeDDL" >';
     for (var i in FailureTypeList) {
         bSelected = sFailureType == FailureTypeList[i];
-        str += "<option value='" + i + "' " + (bSelected ? "selected" : "") + ">" + FailureTypeList[i] + "</option>";
+        str += "<option value='" + i + "' " + (bSelected ? "selected='selected'" : "") + ">" + FailureTypeList[i] + "</option>";
     }
     str += '</select>';
-
     return str;
 }
 
 function BuildHatchCommentsTextArea(sComments) {
-    var str = "";
-    str += "<textarea class = 'HatchCommentsTB' cols = '5' rows = '3'>" + sComments + "</textarea>";
+    var str = "<textarea class = 'HatchCommentsTB' cols = '5' rows = '3'>" + sComments + "</textarea>";
     return str;
 }
 
