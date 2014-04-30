@@ -1,9 +1,10 @@
 ﻿/// <reference path="jquery-1.11.0.js" />
 
-var Projects = {};  //Projects[ProjectID][0] - Customer details, Projects[ProjectID][1] - Project details, Projects[ProjectID][2] - Project status details
+var Projects = {};
 var ProjectsList = {};
 var Hatches = {};
 var PNP = {}; //Pictures & Pins
+var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, ServiceCallsList[scID][1] - Customer details, ServiceCallsList[scID][2] - Project details
 
 
 $(document).ready(function () {
@@ -13,6 +14,12 @@ $(document).ready(function () {
 
     //some css settings
     $("#LoginBTN").parent().css({ "width": "36%", "margin": "auto" });
+});
+
+$(document).on("click", ".HatchesBTN", function () {
+    var sHref = $(this).attr("href");
+    var sProjectID = sHref.substring(17, sHref.length + 1);
+    BuildHatchPage(sProjectID);
 });
 
 function Login() {
@@ -32,15 +39,17 @@ function Login() {
         success: function (data) // Variable data contains the data we get from serverside
         {
             if (data.d == "true") {
+                $("#UserName, #Password").val("");
                 window.location = "#MainMenuPage";
                 GetProjectsList(); //  read all the projects
+                GetServiceCalls();
             }
             else alert("Username or password is incorrect");
         }, // end of success
         error: function (e) {
             alert("failed to login: " + e.responseText);
         } // end of error
-    });            // end of ajax call
+    });               // end of ajax call
 }
 
 //-----------------------------------------------------------------------
@@ -64,11 +73,11 @@ function GetProjectsList() {
             var newPage = $(BuildHatchesListPerProject());
             newPage.appendTo($.mobile.pageContainer);
 
-            $(".HatchesBTN").click(function () {
-                var sHref = $(this).attr("href");
-                var sProjectID = sHref.substring(17, sHref.length + 1);
-                BuildHatchPage(sProjectID);
-            });
+            //            $(".HatchesBTN").click(function () {
+            //                var sHref = $(this).attr("href");
+            //                var sProjectID = sHref.substring(17, sHref.length + 1);
+            //                BuildHatchPage(sProjectID);
+            //            });
 
             // initializing popup event for images
             $(document).on("pageinit", function () {
@@ -230,7 +239,7 @@ function GetProjectHatches(ProjectsList) {
 function BuildHatchesList(ProjID) {
     var str = "";
     for (var j in Hatches[ProjID]) {
-        str += "<li><a class = 'HatchBTN' data-ajax = 'false' href= '#Hatch" + Hatches[ProjID][j].HatchID + "'>";
+        str += "<li><a class = 'HatchBTN' data-ajax = 'false' href = '#Hatch" + Hatches[ProjID][j].HatchID + "'>";
         str += "<h1>פתח מס' " + Hatches[ProjID][j].HatchID + "</h1>";
         str += "<p>" + Hatches[ProjID][j].HatchStatus + "</p>";
         str += "</a></li>";
@@ -336,6 +345,78 @@ function BuildHatchDetailsPage(oHatch) {
     newPage.appendTo($.mobile.pageContainer);
 }
 
+function GetServiceCalls() {
+    dataString = "";
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/GetServiceCalls',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            sc = $.parseJSON(data.d);
+            for (var i in sc)
+                ServiceCallsList[sc[i][0].ScID] = sc[i];
+            $("#ServiceCallsList").html(BuildServiceCallsList(ServiceCallsList));
+            for (var scID in ServiceCallsList)
+                BuildServiceCallPage(ServiceCallsList[scID]);
+        }, // end of success
+        error: function (e) {
+            alert("failed to load Service calls" + e.responseText);
+        } // end of error
+    });            // end of ajax call
+}
+
+function BuildServiceCallsList(ServiceCallsList) {
+    var str = "";
+    for (var scID in ServiceCallsList) {
+        str += "<li><a data-ajax = 'false' href= '#ServiceCall" + scID + "'>";
+        str += "<h1>" + ServiceCallsList[scID][1].Fname + " " + ServiceCallsList[scID][1].Lname + "</h1>";
+        //        str += "<p>" + ServiceCallsList[scID][0].StatusName + "</p>";
+        str += "</a></li>";
+    }
+    return str;
+}
+
+function BuildServiceCallPage(oServiceCall) {
+    var str = "";
+    // build a page
+    str += "<div data-role = 'page' id = 'ServiceCall" + oServiceCall[0].ScID + "'>";
+    // build the header
+
+    var sHeaderText = oServiceCall[1].Fname + " " + oServiceCall[1].Lname;
+    str += BuildServiceCallHeader(sHeaderText);
+
+    // add the content div
+    str += "<div data-role = 'content'>";
+    str += "<h2>פרטי הלקוח</h2>";
+    str += "<p><b>שם הלקוח: </b>" + sHeaderText + "</p>";
+    if (!IsEmpty(oServiceCall[1].Phone)) str += "<p><b>טלפון: </b>" + oServiceCall[1].Phone + "</p>";
+    str += "<p><b>טלפון נייד: </b>" + oServiceCall[1].Mobile + "</p>";
+    if (!IsEmpty(oServiceCall[1].Fax)) str += "<p><b>פקס: </b>" + oServiceCall[1].Fax + "</p>";
+    if (!IsEmpty(oServiceCall[1].Email)) str += "<p><b>דוא&quot;ל: </b>" + oServiceCall[1].Email + "</p>";
+
+    str += "<h2>פרטי הקריאה</h2>";
+    if (!IsEmpty(oServiceCall[0].DateOpened)) str += "<p><b>תאריך פתיחה: </b>" + ConvertToDate(oServiceCall[0].DateOpened) + "</p>";
+    if (!IsEmpty(oServiceCall[0].DateClosed)) str += "<p><b>תאריך סגירה: </b>" + ConvertToDate(oServiceCall[0].DateClosed) + "</p>";
+
+    str += "</div>";  // close the content
+    str += "</div>";  // close the page
+
+    //append it to the page container
+    var newPage = $(str);
+    newPage.appendTo($.mobile.pageContainer);
+}
+
+function BuildServiceCallHeader(sHeaderText) {
+    var str = "";
+    str += "<div data-role = 'header' data-position='fixed' data-theme='a'>";
+    str += "<h1>" + sHeaderText + "</h1>";
+    str += "<a href='#ServiceCallsPage' data-icon='back' data-iconpos = 'notext' style = 'border:none;'></a>";
+    str += "</div>"; //close the header
+    return str;
+}
 
 //Misc
 function IsEmpty(o) {

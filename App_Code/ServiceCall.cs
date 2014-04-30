@@ -85,4 +85,12 @@ public class ServiceCall
         DataTable dt= db.GetServiceCallPopupMissingDetails(ServicCallID);
         return dt;
     }
+
+    public DataTable GetServiceCalls()
+    {
+        DBservices db = new DBservices();
+        DataTable dt = db.GetServiceCalls();
+        return dt;
+    }
+    
 }

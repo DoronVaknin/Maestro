@@ -298,7 +298,7 @@ public class MaestroWS : System.Web.Services.WebService
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public string UpdateHatchDetails(int HatchID, int HatchStatusID, int FailureTypeID, int EmployeeID, string Date, string Comments)
     {
-        Hatch h = new Hatch(HatchID, HatchStatusID, FailureTypeID, EmployeeID,Convert.ToDateTime(Date), Comments);
+        Hatch h = new Hatch(HatchID, HatchStatusID, FailureTypeID, EmployeeID, Convert.ToDateTime(Date), Comments);
         int RowAffected = h.UpdateHatchDetails();
 
         // create a json serializer object
@@ -307,4 +307,56 @@ public class MaestroWS : System.Web.Services.WebService
         string jsonString = js.Serialize(RowAffected);
         return jsonString;
     }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetServiceCalls()
+    {
+        ServiceCall sc = new ServiceCall();
+        DataTable dt = sc.GetServiceCalls();
+
+        ArrayList[] myAL = new ArrayList[dt.Rows.Count];
+
+        for (int i = 0; i < myAL.Length; i++)
+            myAL[i] = new ArrayList();
+
+        for (int i = 0; i < myAL.Length; i++)
+        {
+            sc = new ServiceCall();
+            Customer c = new Customer();
+            Project p = new Project();
+
+            sc.ScID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+            sc.Description = dt.Rows[i].ItemArray[1].ToString();
+            sc.Urgent = Convert.ToBoolean(dt.Rows[i].ItemArray[2]);
+            sc.DateOpened = Convert.ToDateTime(dt.Rows[i].ItemArray[3]);
+            sc.DateClosed = Convert.ToDateTime(dt.Rows[i].ItemArray[4]);
+
+            c.cID = Convert.ToInt32(dt.Rows[i].ItemArray[7]);
+            c.Fname = dt.Rows[i].ItemArray[8].ToString();
+            c.Lname = dt.Rows[i].ItemArray[9].ToString();
+            c.City = dt.Rows[i].ItemArray[10].ToString();
+            c.Address = dt.Rows[i].ItemArray[11].ToString();
+            c.Phone = dt.Rows[i].ItemArray[12].ToString();
+            c.Mobile = dt.Rows[i].ItemArray[13].ToString();
+            c.Fax = dt.Rows[i].ItemArray[14].ToString();
+            c.Email = dt.Rows[i].ItemArray[15].ToString();
+
+            p.pID = Convert.ToInt32(dt.Rows[i].ItemArray[17]);
+            p.Name = dt.Rows[i].ItemArray[18].ToString();
+            p.DateOpened = Convert.ToDateTime(dt.Rows[i].ItemArray[20]);
+            p.ExpirationDate = Convert.ToDateTime(dt.Rows[i].ItemArray[21]);
+
+            myAL[i].Add(sc);
+            myAL[i].Add(c);
+            myAL[i].Add(p);
+        }
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(myAL);
+        return jsonString;
+    }
+
 }
