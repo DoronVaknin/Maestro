@@ -2,6 +2,7 @@
 
 var Projects = {};
 var ProjectsList = {};
+var ProjectsNamesList = {};
 var Hatches = {};
 var PNP = {}; //Pictures & Pins
 var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, ServiceCallsList[scID][1] - Customer details, ServiceCallsList[scID][2] - Project details
@@ -14,6 +15,7 @@ $(document).ready(function () {
 
     //some css settings
     $("#LoginBTN").parent().css({ "width": "36%", "margin": "auto" });
+    $("#ProblemDescriptionTA").val(""); //fix extra space issue
 });
 
 $(document).on("click", ".HatchesBTN", function () {
@@ -43,13 +45,14 @@ function Login() {
                 window.location = "#MainMenuPage";
                 GetProjectsList(); //  read all the projects
                 GetServiceCalls();
+                GetProjectsNamesList();
             }
             else alert("Username or password is incorrect");
         }, // end of success
         error: function (e) {
             alert("failed to login: " + e.responseText);
         } // end of error
-    });               // end of ajax call
+    });                // end of ajax call
 }
 
 //-----------------------------------------------------------------------
@@ -299,7 +302,7 @@ function BuildHatchPage(ProjectID) {
     for (var pID in Projects)
         for (var hID in Hatches[pID])
             BuildHatchDetailsPage(Hatches[pID][hID]); // build a page for each hatch
-    //    $('.HatchNavbar').navbar('refresh');
+//    $('.HatchNavbar').navbar('refresh');
 }
 
 function BuildHatchDetailsPage(oHatch) {
@@ -361,11 +364,12 @@ function GetServiceCalls() {
             $("#ServiceCallsList").html(BuildServiceCallsList(ServiceCallsList));
             for (var scID in ServiceCallsList)
                 BuildServiceCallPage(ServiceCallsList[scID]);
+            BuildServiceCallProjectsList();
         }, // end of success
         error: function (e) {
             alert("failed to load Service calls" + e.responseText);
         } // end of error
-    });            // end of ajax call
+    });              // end of ajax call
 }
 
 function BuildServiceCallsList(ServiceCallsList) {
@@ -373,7 +377,7 @@ function BuildServiceCallsList(ServiceCallsList) {
     for (var scID in ServiceCallsList) {
         str += "<li><a data-ajax = 'false' href= '#ServiceCall" + scID + "'>";
         str += "<h1>" + ServiceCallsList[scID][1].Fname + " " + ServiceCallsList[scID][1].Lname + "</h1>";
-        //        str += "<p>" + ServiceCallsList[scID][0].StatusName + "</p>";
+        str += "<p>" + ServiceCallsList[scID][1].City + "</p>";
         str += "</a></li>";
     }
     return str;
@@ -398,8 +402,10 @@ function BuildServiceCallPage(oServiceCall) {
     if (!IsEmpty(oServiceCall[1].Email)) str += "<p><b>דוא&quot;ל: </b>" + oServiceCall[1].Email + "</p>";
 
     str += "<h2>פרטי הקריאה</h2>";
-    if (!IsEmpty(oServiceCall[0].DateOpened)) str += "<p><b>תאריך פתיחה: </b>" + ConvertToDate(oServiceCall[0].DateOpened) + "</p>";
-    if (!IsEmpty(oServiceCall[0].DateClosed)) str += "<p><b>תאריך סגירה: </b>" + ConvertToDate(oServiceCall[0].DateClosed) + "</p>";
+    str += "<p><b>תיאור התקלה: </b>" + oServiceCall[0].Description + "</p>";
+    if (oServiceCall[0].Urgent) str += "<p><b>*קריאה דחופה*</b></p>";
+    str += "<p><b>תאריך פתיחה: </b>" + ConvertToDate(oServiceCall[0].DateOpened) + "</p>";
+    //    if (!IsEmpty(oServiceCall[0].DateClosed)) str += "<p><b>תאריך סגירה: </b>" + ConvertToDate(oServiceCall[0].DateClosed) + "</p>";
 
     str += "</div>";  // close the content
     str += "</div>";  // close the page
@@ -416,6 +422,72 @@ function BuildServiceCallHeader(sHeaderText) {
     str += "<a href='#ServiceCallsPage' data-icon='back' data-iconpos = 'notext' style = 'border:none;'></a>";
     str += "</div>"; //close the header
     return str;
+}
+
+function GetProjectsNamesList() {
+    dataString = "";
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/GetProjectsNames',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        async: false,
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            ProjectsNamesList = $.parseJSON(data.d);
+        }, // end of success
+        error: function (e) {
+            alert("failed to load Projects names list :( " + e.responseText);
+        } // end of error
+    });           // end of ajax call
+}
+
+function BuildServiceCallProjectsList() {
+    var str = "";
+    for (var i in ProjectsNamesList) {
+        str += "<option value='" + i + "'>" + ProjectsNamesList[i] + "</option>";
+    }
+    $("#ServiceCallProjectsDDL").html(str);
+}
+
+function PrepareServiceCall() {
+    var iProjectID = $("#ServiceCallProjectsDDL option:selected").val();
+    var sProblemDescription = $.trim($("#ProblemDescriptionTA").val());
+    var bUrgent = $("#UrgentCB").val() == "on" ? true : false;
+    var sCurrentDate = GetCurrentDate();
+    if (IsEmpty(sProblemDescription)) {
+        alert("יש להזין את תיאור התקלה טרם פתיחת קריאה");
+        return;
+    }
+    var ServiceCallDetails = {
+        ProjectID: iProjectID,
+        ProblemDescription: sProblemDescription,
+        Date: sCurrentDate,
+        Urgent: bUrgent
+    };
+    CreateServiceCall(ServiceCallDetails);
+    Goto("ServiceCallsMainPage");
+}
+
+function CreateServiceCall(oServiceCallDetails) {
+    dataString = JSON.stringify(oServiceCallDetails);
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/CreateServiceCall',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            if (data.d > 0)
+                alert("קריאת השירות נוצרה בהצלחה");
+            //                CurrentPageData = [];
+        }, // end of success
+        error: function (e) {
+            alert("failed to Create service call :( " + e.responseText);
+        } // end of error
+    });              // end of ajax call
 }
 
 //Misc

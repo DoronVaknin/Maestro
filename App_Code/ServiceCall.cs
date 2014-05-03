@@ -67,10 +67,11 @@ public class ServiceCall
         dbs.InsertExternalServiceCall(sc, CustomerID);
     }
 
-    public void InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
+    public int InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
     {
         DBservices dbs = new DBservices();
-        dbs.InsertServiceCallExistingProject(sc, CustomerID, ProjectID);
+        int RowAffected = dbs.InsertServiceCallExistingProject(sc, CustomerID, ProjectID);
+        return RowAffected;
     }
 
     public void CloseServiceCall(int ServiceCallID)

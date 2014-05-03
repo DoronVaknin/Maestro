@@ -266,5 +266,13 @@ public class Project
         dt = db.GetProjectListForProdApp();
         return dt;
     }
+
+    public DataTable GetProjectsNames()
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetProjectsNames();
+        return dt;
+    }
     
 }

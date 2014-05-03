@@ -334,7 +334,8 @@ public class MaestroWS : System.Web.Services.WebService
             sc.Description = dt.Rows[i].ItemArray[1].ToString();
             sc.Urgent = Convert.ToBoolean(dt.Rows[i].ItemArray[2]);
             sc.DateOpened = Convert.ToDateTime(dt.Rows[i].ItemArray[3]);
-            sc.DateClosed = Convert.ToDateTime(dt.Rows[i].ItemArray[4]);
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[4]))
+                sc.DateClosed = Convert.ToDateTime(dt.Rows[i].ItemArray[4]);
 
             c.cID = Convert.ToInt32(dt.Rows[i].ItemArray[7]);
             c.Fname = dt.Rows[i].ItemArray[8].ToString();
@@ -360,6 +361,43 @@ public class MaestroWS : System.Web.Services.WebService
         JavaScriptSerializer js = new JavaScriptSerializer();
         // serialize to string
         string jsonString = js.Serialize(myAL);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetProjectsNames()
+    {
+        Project p = new Project();
+        DataTable dt = p.GetProjectsNames();
+        Dictionary<string, string> dic = new Dictionary<string, string>();
+
+        for (int i = 0; i < dt.Rows.Count; i++)
+            dic.Add(dt.Rows[i].ItemArray[0].ToString(), dt.Rows[i].ItemArray[1].ToString());
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(dic);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string CreateServiceCall(int ProjectID, string ProblemDescription, string Date, bool Urgent)
+    {
+        ServiceCall sc = new ServiceCall(Convert.ToDateTime(Date), ProblemDescription, Urgent);
+        DataTable dt = new DataTable();
+
+        Project p = new Project();
+        dt = p.GetCustomerInformation(ProjectID);
+        int cID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
+        int RowAffected = sc.InsertServiceCallExistingProject(sc, cID, ProjectID);
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
         return jsonString;
     }
 

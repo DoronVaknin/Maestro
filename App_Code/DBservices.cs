@@ -471,10 +471,10 @@ public class DBservices
         }
     }
 
-    public void InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
+    public int InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
     {
         con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[InsertServiceCallExistingProject]", con))
+        using (SqlCommand sqlComm = new SqlCommand("[spInsertServiceCallExistingProject]", con))
         {
             if (con.State != ConnectionState.Open)
                 con.Open();
@@ -489,7 +489,8 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@pID", ProjectID);
 
                 sqlComm.CommandTimeout = 600;
-                sqlComm.ExecuteNonQuery();
+                int RowAffected = sqlComm.ExecuteNonQuery();
+                return RowAffected;
             }
             catch (Exception ex)
             {
@@ -562,6 +563,32 @@ public class DBservices
 
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetServiceCalls]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetProjectsNames()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectsNames]", con))
         {
             if (con.State != ConnectionState.Open)
                 con.Open();

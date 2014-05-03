@@ -16,12 +16,6 @@
 <body>
     <div data-role="page" id="LoginPage">
         <!-- Start of first page -->
-        <!--<div data-role="header" data-theme="a">
-            <h1>
-                מאסטרו אלומיניום
-            </h1>
-        </div>-->
-        <!-- /header -->
         <div data-role="content">
             <div data-role="fieldcontain" class="ui-hide-label">
                 <img id="MaestroLogoIMG" src="images/MaestroLogo.png" /><br />
@@ -51,8 +45,8 @@
         <!-- /header -->
         <div data-role="content">
             <br />
-            <a id="ProjectsBTN" href="#ProjectsPage" data-role="button">פרויקטים</a>
-            <a id="ServiceCallsBTN" href="#ServiceCallsPage" data-role="button">קריאות שירות</a>
+            <a id="ProjectsBTN" href="#ProjectsPage" data-role="button">פרויקטים</a> <a id="ServiceCallsBTN"
+                href="#ServiceCallsMainPage" data-role="button">קריאות שירות</a>
         </div>
         <!-- /content -->
     </div>
@@ -67,14 +61,16 @@
         </div>
         <!-- /header -->
         <div data-role="content">
-            <ul id="ProjectsList" data-role="listview" data-theme="c" data-inset="true" data-filter="true" data-filter-placeholder = "חפש פרויקט...">
+            <ul id="ProjectsList" data-role="listview" data-theme="c" data-inset="true" data-filter="true"
+                data-filter-placeholder="חפש פרויקט...">
             </ul>
         </div>
         <!-- /content -->
     </div>
     <!-- /page -->
-        <div data-role="page" id="ServiceCallsPage">
-        <div data-role="header" data-theme="a" data-position='fixed'>
+    <div data-role="page" id="ServiceCallsMainPage">
+        <!-- Start of first page -->
+        <div data-role="header" data-theme="a">
             <h1>
                 קריאות שירות
             </h1>
@@ -83,8 +79,76 @@
         </div>
         <!-- /header -->
         <div data-role="content">
-            <ul id="ServiceCallsList" data-role="listview" data-theme="c" data-inset="true" data-filter="true" data-filter-placeholder = "חפש קריאת שירות...">
+            <br />
+            <a href="#NewServiceCall" data-role="button">צור קריאת שירות</a> <a href="#ServiceCallsPage"
+                data-role="button">רשימת קריאות שירות</a> <a href="#ServiceCallsMap" data-role="button">
+                    מפת קריאות שירות</a>
+        </div>
+        <!-- /content -->
+    </div>
+    <!-- /page -->
+    <div data-role="page" id="ServiceCallsPage">
+        <div data-role="header" data-theme="a" data-position='fixed'>
+            <h1>
+                קריאות שירות
+            </h1>
+            <a href="#ServiceCallsMainPage" data-icon="back" data-iconpos="notext" style="border: none;">
+            </a>
+        </div>
+        <!-- /header -->
+        <div data-role="content">
+            <ul id="ServiceCallsList" data-role="listview" data-theme="c" data-inset="true" data-filter="true"
+                data-filter-placeholder="חפש קריאת שירות...">
             </ul>
+        </div>
+        <!-- /content -->
+    </div>
+    <!-- /page -->
+    <div data-role="page" id="NewServiceCall">
+        <div data-role="header" data-theme="a" data-position='fixed'>
+            <h1>
+                קריאות שירות
+            </h1>
+            <a href="#ServiceCallsMainPage" data-icon="back" data-iconpos="notext" style="border: none;">
+            </a>
+        </div>
+        <!-- /header -->
+        <div data-role="content">
+            <h3>
+                צור קריאת שירות
+            </h3>
+            <br />
+            <label for="ServiceCallProjectsDDL">
+                * שם הפרויקט:</label>
+            <select name="ServiceCallProjects" id="ServiceCallProjectsDDL">
+            </select>
+            <label for="ProblemDescriptionTA">
+                * תיאור התקלה:</label>
+            <textarea name="ProblemDescription" id="ProblemDescriptionTA">
+        </textarea>
+            <div data-role="fieldcontain" >
+                <fieldset data-role="controlgroup">
+                    <input type="checkbox" name="UrgentCB" id="UrgentCB" class="custom" />
+                    <label for="UrgentCB">
+                        קריאה דחופה</label>
+                </fieldset>
+            </div>
+            <br />
+            <a id="CreateServiceCallBTN" class="half" data-role="button" onclick = "PrepareServiceCall()" >צור קריאת שירות</a>
+        </div>
+        <!-- /content -->
+    </div>
+    <!-- /page -->
+    <div data-role="page" id="ServiceCallsMap">
+        <div data-role="header" data-theme="a" data-position='fixed'>
+            <h1>
+                מפת קריאות שירות
+            </h1>
+            <a href="#ServiceCallsMainPage" data-icon="back" data-iconpos="notext" style="border: none;">
+            </a>
+        </div>
+        <!-- /header -->
+        <div data-role="content">
         </div>
         <!-- /content -->
     </div>
