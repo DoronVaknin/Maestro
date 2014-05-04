@@ -9,14 +9,24 @@ var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, 
 
 
 $(document).ready(function () {
-    $("#LoginBTN").click(function () {
-        Login();
-    });
+    $("#LoginBTN").click(Login);
 
     //some css settings
     $("#LoginBTN").parent().css({ "width": "36%", "margin": "auto" });
     $("#ProblemDescriptionTA").val(""); //fix extra space issue
+
+    //Google map for service calls
+    InitializeGoogleMap();
+    ResizeMapCanvas();
 });
+
+$(window).resize(ResizeMapCanvas);
+
+function ResizeMapCanvas() {
+    var iWindowWidth = $.mobile.activePage.width();
+    var iWindowHeight = $.mobile.activePage.height();
+    $("#map-canvas").width(iWindowWidth).height(iWindowHeight);
+}
 
 $(document).on("click", ".HatchesBTN", function () {
     var sHref = $(this).attr("href");
@@ -52,7 +62,7 @@ function Login() {
         error: function (e) {
             alert("failed to login: " + e.responseText);
         } // end of error
-    });                // end of ajax call
+    });                 // end of ajax call
 }
 
 //-----------------------------------------------------------------------
@@ -365,11 +375,12 @@ function GetServiceCalls() {
             for (var scID in ServiceCallsList)
                 BuildServiceCallPage(ServiceCallsList[scID]);
             BuildServiceCallProjectsList();
+            AssignServiceCallsIntoGoogleMap();
         }, // end of success
         error: function (e) {
             alert("failed to load Service calls" + e.responseText);
         } // end of error
-    });              // end of ajax call
+    });               // end of ajax call
 }
 
 function BuildServiceCallsList(ServiceCallsList) {
@@ -546,4 +557,71 @@ function GetCurrentDate() {
 
     today = dd + '/' + mm + '/' + yyyy;
     return today;
+}
+
+/** Google API **/
+var Map;
+//var InfoWindow;
+var oPosition = {};
+
+function InitializeGoogleMap() {
+    var mapOptions = {
+        center: new google.maps.LatLng(32.434046, 34.919652),
+        zoom: 12
+    };
+    Map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+}
+
+function AssignServiceCallsIntoGoogleMap() {
+    var aAddresses = [];
+    var sFullAddress;
+    for (var scID in ServiceCallsList) {
+        sFullAddress = ServiceCallsList[scID][1].Address + ", " + ServiceCallsList[scID][1].City;
+        GetCoordinatesByAddress(sFullAddress);
+        ShowServiceCallPin(oPosition, scID);
+    }
+}
+
+function ShowServiceCallPin(oPosition, sID) {
+    var Position = new google.maps.LatLng(oPosition.lat, oPosition.lng);
+    var Image = "images/icons/red-pin.png";
+    var Marker = new google.maps.Marker({
+        position: Position,
+        map: Map,
+        title: "קריאת שירות",
+        icon: Image
+    });
+
+    var sContent = '<div id="content">' +
+                '<h3 class="firstHeading">' + ServiceCallsList[sID][1].Fname + " " + ServiceCallsList[sID][1].Lname + '</h3>' +
+                '<div class="bodyContent">' +
+                '<p><b>טלפון נייד: </b>' + ServiceCallsList[sID][1].Mobile + '</p>' +
+                '<p><b>תיאור התקלה: </b>' + ServiceCallsList[sID][0].Description + '</p>' +
+    //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
+                '</div>' +
+                '</div>';
+
+    var InfoWindow = new google.maps.InfoWindow({
+        content: sContent
+    });
+
+    google.maps.event.addListener(Marker, 'click', function () {
+        InfoWindow.open(Map, Marker);
+    });
+}
+
+function GetCoordinatesByAddress(sAddress) {
+    $.ajax({ // ajax call starts
+        url: 'http://maps.googleapis.com/maps/api/geocode/json?address=' + sAddress + '&sensor=false',   // JQuery call to the server side method
+        type: 'GET',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        async: false,
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            oPosition = data.results[0].geometry.location;
+        }, // end of success
+        error: function (e) {
+            alert("failed to get coordinates by address" + e.responseText);
+        } // end of error
+    });
 }

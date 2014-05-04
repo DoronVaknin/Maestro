@@ -36,5 +36,17 @@ div.ui-navbar ul li .ui-icon-camera-white
 
 #NewServiceCall .ui-br
 {
-    border-style: hidden;    
+    border-style: hidden;
+}
+
+#map-canvas
+{
+    width: 360px;
+    height: 440px;
+    margin: 0 auto;
+}
+
+#ServiceCallsMap .ui-content
+{
+    padding: 0;
 }

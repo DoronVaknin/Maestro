@@ -347,10 +347,14 @@ public class MaestroWS : System.Web.Services.WebService
             c.Fax = dt.Rows[i].ItemArray[14].ToString();
             c.Email = dt.Rows[i].ItemArray[15].ToString();
 
-            p.pID = Convert.ToInt32(dt.Rows[i].ItemArray[17]);
-            p.Name = dt.Rows[i].ItemArray[18].ToString();
-            p.DateOpened = Convert.ToDateTime(dt.Rows[i].ItemArray[20]);
-            p.ExpirationDate = Convert.ToDateTime(dt.Rows[i].ItemArray[21]);
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[17]))
+                p.pID = Convert.ToInt32(dt.Rows[i].ItemArray[17]);
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[18]))
+                p.Name = dt.Rows[i].ItemArray[18].ToString();
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[20]))
+                p.DateOpened = Convert.ToDateTime(dt.Rows[i].ItemArray[20]);
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[21]))
+                p.ExpirationDate = Convert.ToDateTime(dt.Rows[i].ItemArray[21]);
 
             myAL[i].Add(sc);
             myAL[i].Add(c);

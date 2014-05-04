@@ -11,8 +11,7 @@
     </div>
     <br />
     <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
-        SelectCommand="spGetOrders" SelectCommandType="StoredProcedure" 
-        UpdateCommand="update Orders set Quantity=@Quantity, EstimatedDateOfArrival=@EstimatedDateOfArrival where oID=@oID">
+        SelectCommand="spGetOrders" SelectCommandType="StoredProcedure" UpdateCommand="update Orders set Quantity=@Quantity, EstimatedDateOfArrival=@EstimatedDateOfArrival where oID=@oID">
         <UpdateParameters>
             <asp:Parameter Name="Quantity" />
             <asp:Parameter Name="EstimatedDateOfArrival" />
@@ -28,13 +27,14 @@
             <asp:BoundField DataField="oID" HeaderText="מס' הזמנה" InsertVisible="False" ReadOnly="True"
                 SortExpression="oID" />
             <asp:BoundField DataField="oID" HeaderText="מס' הזמנה" InsertVisible="False" ReadOnly="True" />
-            <asp:BoundField DataField="pName" HeaderText="שם הפרויקט" SortExpression="pName" ReadOnly="True" />
-            <asp:BoundField DataField="rName" HeaderText="שם הפריט" SortExpression="rName" ReadOnly="True"/>
+            <asp:BoundField DataField="pName" HeaderText="שם הפרויקט" SortExpression="pName"
+                ReadOnly="True" />
+            <asp:BoundField DataField="rName" HeaderText="שם הפריט" SortExpression="rName" ReadOnly="True" />
             <asp:BoundField DataField="Quantity" HeaderText="כמות" SortExpression="Quantity" />
-            <asp:BoundField DataField="osName" HeaderText="סטטוס" SortExpression="osName" ReadOnly="True"/>
-            <asp:BoundField DataField="sName" HeaderText="שם הספק" SortExpression="sName" ReadOnly="True"/>
+            <asp:BoundField DataField="osName" HeaderText="סטטוס" SortExpression="osName" ReadOnly="True" />
+            <asp:BoundField DataField="sName" HeaderText="שם הספק" SortExpression="sName" ReadOnly="True" />
             <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened"
-                DataFormatString="{0:dd/MM/yyyy}" ReadOnly="True"/>
+                DataFormatString="{0:dd/MM/yyyy}" ReadOnly="True" />
             <asp:BoundField DataField="EstimatedDateOfArrival" HeaderText="תאריך הגעה משוער"
                 SortExpression="EstimatedDateOfArrival" DataFormatString="{0:dd/MM/yyyy}" />
         </Columns>
