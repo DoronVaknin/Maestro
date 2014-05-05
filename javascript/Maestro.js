@@ -166,7 +166,6 @@ function RestoreCustomerDetails() {
     $("#ContentPlaceHolder3_ProjectInfoPhone").val(aCustomerDetails[2]);
     $("#ContentPlaceHolder3_ProjectInfoMobile").val(aCustomerDetails[3]);
     $("#ContentPlaceHolder3_ProjectInfoAddress").val(aCustomerDetails[4]);
-    $("#ContentPlaceHolder3_ProjectInfoCity").val(aCustomerDetails[5]);
     $("#ContentPlaceHolder3_ProjectInfoEmail").val(aCustomerDetails[6]);
     $("#ContentPlaceHolder3_ProjectInfoFax").val(aCustomerDetails[7]);
     $("#ContentPlaceHolder3_ProjectInfoArea").val(aCustomerDetails[8]);
@@ -211,7 +210,6 @@ function ValidateNewCustomer(Button) {
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerFirstName", function (s) { return s.length < 2; }, false, "השם הפרטי קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerLastName", function (s) { return s.length < 2; }, false, "שם המשפחה קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerAddress", function (s) { return s.length < 2; }, false, "כתובת המגורים קצרה מדי");
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerCity", function (s) { return s.length < 2; }, false, "שם העיר קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerPhone", function (s) { return s.length > 0 && !isValidPhoneNumber(s); }, false, "יש להזין מס' טלפון תקין");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerCellPhone", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerFaxNumber", function (s) { return s.length > 0 && !isValidPhoneNumber(s); }, false, "יש להזין מס' פקס תקין");
@@ -244,7 +242,6 @@ function ValidateNewSupplier(Button) {
     var bIsValid = true;
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierName", function (s) { return s.length < 2; }, false, "השם הפרטי קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierAddress", function (s) { return s.length < 2; }, false, "כתובת המגורים קצרה מדי");
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierCity", function (s) { return s.length < 2; }, false, "שם העיר קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierPhone", function (s) { return !isValidPhoneNumber(s); }, false, "יש להזין מס' טלפון תקין");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierCellPhone", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierFax", function (s) { return s.length > 0 && !isValidPhoneNumber(s); }, false, "יש להזין מס' פקס תקין");
@@ -270,7 +267,6 @@ function ValidateCustomerDetails() {
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoFirstName", function (s) { return s.length < 2; }, false, "השם הפרטי קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoLastName", function (s) { return s.length < 2; }, false, "שם המשפחה קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoAddress", function (s) { return s.length < 2; }, false, "כתובת המגורים קצרה מדי");
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoCity", function (s) { return s.length < 2; }, false, "שם העיר קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoPhone", function (s) { return s.length > 0 && !isValidPhoneNumber(s); }, false, "יש להזין מס' טלפון תקין");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoMobile", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectInfoFax", function (s) { return s.length > 0 && !isValidPhoneNumber(s); }, false, "יש להזין מס' פקס תקין");
@@ -348,7 +344,6 @@ function BackupCustomerDetails() {
     aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoPhone").val());
     aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoMobile").val());
     aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoAddress").val());
-    aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoCity").val());
     aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoEmail").val());
     aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoFax").val());
     aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoArea").val());

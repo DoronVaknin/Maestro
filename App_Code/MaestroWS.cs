@@ -340,21 +340,20 @@ public class MaestroWS : System.Web.Services.WebService
             c.cID = Convert.ToInt32(dt.Rows[i].ItemArray[7]);
             c.Fname = dt.Rows[i].ItemArray[8].ToString();
             c.Lname = dt.Rows[i].ItemArray[9].ToString();
-            c.City = dt.Rows[i].ItemArray[10].ToString();
-            c.Address = dt.Rows[i].ItemArray[11].ToString();
-            c.Phone = dt.Rows[i].ItemArray[12].ToString();
-            c.Mobile = dt.Rows[i].ItemArray[13].ToString();
-            c.Fax = dt.Rows[i].ItemArray[14].ToString();
-            c.Email = dt.Rows[i].ItemArray[15].ToString();
+            c.Address = dt.Rows[i].ItemArray[10].ToString();
+            c.Phone = dt.Rows[i].ItemArray[11].ToString();
+            c.Mobile = dt.Rows[i].ItemArray[12].ToString();
+            c.Fax = dt.Rows[i].ItemArray[13].ToString();
+            c.Email = dt.Rows[i].ItemArray[14].ToString();
 
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[16]))
+                p.pID = Convert.ToInt32(dt.Rows[i].ItemArray[16]);
             if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[17]))
-                p.pID = Convert.ToInt32(dt.Rows[i].ItemArray[17]);
-            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[18]))
-                p.Name = dt.Rows[i].ItemArray[18].ToString();
+                p.Name = dt.Rows[i].ItemArray[17].ToString();
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[19]))
+                p.DateOpened = Convert.ToDateTime(dt.Rows[i].ItemArray[19]);
             if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[20]))
-                p.DateOpened = Convert.ToDateTime(dt.Rows[i].ItemArray[20]);
-            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[21]))
-                p.ExpirationDate = Convert.ToDateTime(dt.Rows[i].ItemArray[21]);
+                p.ExpirationDate = Convert.ToDateTime(dt.Rows[i].ItemArray[20]);
 
             myAL[i].Add(sc);
             myAL[i].Add(c);

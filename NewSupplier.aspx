@@ -42,10 +42,10 @@
         </tr>
         <tr>
             <td>
-                <div class="input-group">
+<%--                <div class="input-group">
                     <input id="SupplierCity" type="text" class="form-control City" runat="server" maxlength="30">
                     <span class="input-group-addon">עיר *</span>
-                </div>
+                </div>--%>
             </td>
             <td>
                 <div class="input-group">

@@ -70,10 +70,10 @@
             </tr>
             <tr>
                 <td>
-                    <div class="input-group">
+<%--                    <div class="input-group">
                         <input id="CustomerCity" type="text" class="form-control City" runat="server" maxlength="15">
                         <span class="input-group-addon">עיר *</span>
-                    </div>
+                    </div>--%>
                 </td>
                 <td>
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"

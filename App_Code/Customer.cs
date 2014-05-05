@@ -21,12 +21,11 @@ public class Customer
         //
     }
 
-    public Customer(int _cID, string _fName, string _lName, string _City, string _Address, string _Email, int _Region)
+    public Customer(int _cID, string _fName, string _lName, string _Address, string _Email, int _Region)
     {
         cID = _cID;
         Fname = _fName;
         Lname = _lName;
-        City = _City;
         Address = _Address;
         Email = _Email;
         Region = _Region;
@@ -51,13 +50,6 @@ public class Customer
     {
         get { return lname; }
         set { lname = value; }
-    }
-
-    string city;
-    public string City
-    {
-        get { return city; }
-        set { city = value; }
     }
 
     string address;
@@ -135,7 +127,7 @@ public class Customer
         }
     }
 
-    public void SaveCustomerNewDetails(string ProjectInfoFirstName, string ProjectInfoLastName, string ProjectInfoPhone, string ProjectInfoMobile, string ProjectInfoFax, string ProjectInfoAddress, string ProjectInfoCity, string ProjectInfoEmail, int ProjectInfoRegion, int ProjectInfoID)
+    public void SaveCustomerNewDetails(string ProjectInfoFirstName, string ProjectInfoLastName, string ProjectInfoPhone, string ProjectInfoMobile, string ProjectInfoFax, string ProjectInfoAddress, string ProjectInfoEmail, int ProjectInfoRegion, int ProjectInfoID)
     {
         Fname = ProjectInfoFirstName;
         Lname = ProjectInfoLastName;
@@ -143,7 +135,6 @@ public class Customer
         Mobile = ProjectInfoMobile;
         Fax = ProjectInfoFax;
         Address = ProjectInfoAddress;
-        City = ProjectInfoCity;
         Email = ProjectInfoEmail;
         Region = ProjectInfoRegion;
         DBservices db = new DBservices();

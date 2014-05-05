@@ -41,7 +41,6 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@cID", c.cID);
                 sqlComm.Parameters.AddWithValue("@fName", c.Fname);
                 sqlComm.Parameters.AddWithValue("@lName", c.Lname);
-                sqlComm.Parameters.AddWithValue("@City", c.City);
                 sqlComm.Parameters.AddWithValue("@Address", c.Address);
                 sqlComm.Parameters.AddWithValue("@Phone", c.Phone);
                 sqlComm.Parameters.AddWithValue("@Mobile", c.Mobile);
@@ -195,7 +194,6 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@Mobile", c.Mobile);
                 sqlComm.Parameters.AddWithValue("@Fax", c.Fax);
                 sqlComm.Parameters.AddWithValue("@Address", c.Address);
-                sqlComm.Parameters.AddWithValue("@City", c.City);
                 sqlComm.Parameters.AddWithValue("@Email", c.Email);
                 sqlComm.Parameters.AddWithValue("@RegionID", c.Region);
                 sqlComm.CommandTimeout = 600;
@@ -511,7 +509,6 @@ public class DBservices
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@sName", s.Name);
-                sqlComm.Parameters.AddWithValue("@City", s.City);
                 sqlComm.Parameters.AddWithValue("@Address", s.Address);
                 sqlComm.Parameters.AddWithValue("@Phone", s.Phone);
                 sqlComm.Parameters.AddWithValue("@Mobile", s.Mobile);

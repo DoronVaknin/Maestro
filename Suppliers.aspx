@@ -21,7 +21,6 @@
             <asp:BoundField DataField="SupplierID" HeaderText="מס' ספק" InsertVisible="False"
                 ReadOnly="True" SortExpression="SupplierID" />
             <asp:BoundField DataField="sName" HeaderText="שם הספק" SortExpression="sName" />
-            <asp:BoundField DataField="City" HeaderText="עיר" SortExpression="City" />
             <asp:BoundField DataField="sAddress" HeaderText="כתובת" SortExpression="sAddress" />
             <asp:BoundField DataField="Phone" HeaderText="טלפון" SortExpression="Phone" />
             <asp:BoundField DataField="Mobile" HeaderText="נייד" SortExpression="Mobile" />

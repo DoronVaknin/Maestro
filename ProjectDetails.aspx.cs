@@ -45,7 +45,6 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoPhone.Attributes.Add("disabled", "disabled");
         ProjectInfoMobile.Attributes.Add("disabled", "disabled");
         ProjectInfoAddress.Attributes.Add("disabled", "disabled");
-        ProjectInfoCity.Attributes.Add("disabled", "disabled");
         ProjectInfoEmail.Attributes.Add("disabled", "disabled");
         ProjectInfoFax.Attributes.Add("disabled", "disabled");
         ProjectInfoArea.Attributes.Add("disabled", "disabled");
@@ -96,19 +95,18 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoMobile.Text = C_dt.Rows[0].ItemArray[4].ToString();
         ProjectInfoFax.Text = C_dt.Rows[0].ItemArray[5].ToString();
         ProjectInfoAddress.Text = C_dt.Rows[0].ItemArray[6].ToString();
-        ProjectInfoCity.Text = C_dt.Rows[0].ItemArray[7].ToString();
-        ProjectInfoEmail.Text = C_dt.Rows[0].ItemArray[8].ToString();
-        ProjectInfoArchitectName.Text = C_dt.Rows[0].ItemArray[9].ToString();
-        ProjectInfoArchitectMobile.Text = C_dt.Rows[0].ItemArray[10].ToString();
-        ProjectInfoContractorName.Text = C_dt.Rows[0].ItemArray[11].ToString();
-        ProjectInfoContractorMobile.Text = C_dt.Rows[0].ItemArray[12].ToString();
-        ProjectInfoSupervisorName.Text = C_dt.Rows[0].ItemArray[13].ToString();
-        ProjectInfoSupervisorMobile.Text = C_dt.Rows[0].ItemArray[14].ToString();
-        ProjectInfoArea.SelectedValue = C_dt.Rows[0].ItemArray[15].ToString();
+        ProjectInfoEmail.Text = C_dt.Rows[0].ItemArray[7].ToString();
+        ProjectInfoArchitectName.Text = C_dt.Rows[0].ItemArray[8].ToString();
+        ProjectInfoArchitectMobile.Text = C_dt.Rows[0].ItemArray[9].ToString();
+        ProjectInfoContractorName.Text = C_dt.Rows[0].ItemArray[10].ToString();
+        ProjectInfoContractorMobile.Text = C_dt.Rows[0].ItemArray[11].ToString();
+        ProjectInfoSupervisorName.Text = C_dt.Rows[0].ItemArray[12].ToString();
+        ProjectInfoSupervisorMobile.Text = C_dt.Rows[0].ItemArray[13].ToString();
+        ProjectInfoArea.SelectedValue = C_dt.Rows[0].ItemArray[14].ToString();
 
         //Populate project details
         GridViewRow row = (GridViewRow)Session["selectedrow"];
-        ProjectInfoStatus.Text = P_dt.Rows[0].ItemArray[27].ToString();
+        ProjectInfoStatus.Text = P_dt.Rows[0].ItemArray[26].ToString();
         ProjectInfoName.Text = P_dt.Rows[0].ItemArray[1].ToString();
         ProjectInfoHatches.Text = row.Cells[8].Text;
         ProjectInfoCost.Text = P_dt.Rows[0].ItemArray[6].ToString();
@@ -128,7 +126,7 @@ public partial class Default : System.Web.UI.Page
     protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)
     {
         Customer c = new Customer();
-        c.SaveCustomerNewDetails(ProjectInfoFirstName.Text, ProjectInfoLastName.Text, ProjectInfoPhone.Text, ProjectInfoMobile.Text, ProjectInfoFax.Text, ProjectInfoAddress.Text, ProjectInfoCity.Text, ProjectInfoEmail.Text, Convert.ToInt32(ProjectInfoArea.SelectedValue), Convert.ToInt32(ProjectInfoID.Text));
+        c.SaveCustomerNewDetails(ProjectInfoFirstName.Text, ProjectInfoLastName.Text, ProjectInfoPhone.Text, ProjectInfoMobile.Text, ProjectInfoFax.Text, ProjectInfoAddress.Text, ProjectInfoEmail.Text, Convert.ToInt32(ProjectInfoArea.SelectedValue), Convert.ToInt32(ProjectInfoID.Text));
         SaveCustomerDetailsBTN.Style.Add("display", "none");
         EditCustomerDetailsBTN.Style.Add("display", "inline-block");
     }

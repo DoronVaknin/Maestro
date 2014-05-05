@@ -88,10 +88,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <div class="input-group">
+<%--                        <div class="input-group">
                             <asp:TextBox ID="ProjectInfoCity" runat="server" CssClass="form-control City"></asp:TextBox>
                             <span class="input-group-addon">עיר *</span>
-                        </div>
+                        </div>--%>
                     </td>
                     <td>
                         <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
