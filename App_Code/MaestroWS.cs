@@ -314,10 +314,10 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string GetServiceCalls()
+    public string GetOpenedServiceCalls()
     {
         ServiceCall sc = new ServiceCall();
-        DataTable dt = sc.GetServiceCalls();
+        DataTable dt = sc.GetOpenedServiceCalls();
 
         ArrayList[] myAL = new ArrayList[dt.Rows.Count];
 
@@ -397,6 +397,20 @@ public class MaestroWS : System.Web.Services.WebService
         dt = p.GetCustomerInformation(ProjectID);
         int cID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
         int RowAffected = sc.InsertServiceCallExistingProject(sc, cID, ProjectID);
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string CloseServiceCall(int scID)
+    {
+        ServiceCall sc = new ServiceCall();
+        int RowAffected = sc.CloseServiceCall(scID);
 
         // create a json serializer object
         JavaScriptSerializer js = new JavaScriptSerializer();

@@ -74,10 +74,11 @@ public class ServiceCall
         return RowAffected;
     }
 
-    public void CloseServiceCall(int ServiceCallID)
+    public int CloseServiceCall(int ServiceCallID)
     {
         DBservices db = new DBservices();
-        db.CloseServiceCall(ServiceCallID);
+        int RowAffected = db.CloseServiceCall(ServiceCallID);
+        return RowAffected;
     }
 
     public DataTable GetServiceCallPopupMissingDetails(int ServicCallID)
@@ -91,6 +92,13 @@ public class ServiceCall
     {
         DBservices db = new DBservices();
         DataTable dt = db.GetServiceCalls();
+        return dt;
+    }
+
+    public DataTable GetOpenedServiceCalls()
+    {
+        DBservices db = new DBservices();
+        DataTable dt = db.GetOpenedServiceCalls();
         return dt;
     }
     

@@ -582,6 +582,32 @@ public class DBservices
         }
     }
 
+    public DataTable GetOpenedServiceCalls()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetOpenedServiceCalls]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
     public DataTable GetProjectsNames()
     {
         DataTable dt = new DataTable();
@@ -689,7 +715,7 @@ public class DBservices
         }
     }
 
-    public void CloseServiceCall(int ServiceCallID)
+    public int CloseServiceCall(int ServiceCallID)
     {
         DateTime date = DateTime.Now;
         con = connect("igroup9_prodConnectionString");
@@ -703,7 +729,8 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@date", date);
                 sqlComm.Parameters.AddWithValue("@ServiceCallID", ServiceCallID);
-                sqlComm.ExecuteNonQuery();
+                int RowAffected = sqlComm.ExecuteNonQuery();
+                return RowAffected;
             }
 
             catch (Exception ex)

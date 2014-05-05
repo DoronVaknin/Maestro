@@ -4,7 +4,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
-    <br />
+    <div class="cntr">
+        <h1>
+            קריאות שירות</h1>
+    </div>
     <br />
     <asp:SqlDataSource ID="ServiceCallsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
         SelectCommand="spGetAllServiceCalls" SelectCommandType="StoredProcedure" UpdateCommand="update ServiceCall set Urgent=@Urgent, ProblemDesc=@ProblemDesc where scID=@scID">
@@ -42,7 +45,7 @@
                 </div>
                 <br />
                 <div align="center">
-                    <table class="nav-justified" >
+                    <table class="nav-justified">
                         <tr>
                             <td>
                                 תאריך פתיחה:&nbsp;

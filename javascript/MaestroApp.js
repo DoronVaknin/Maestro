@@ -54,7 +54,7 @@ function Login() {
                 $("#UserName, #Password").val("");
                 window.location = "#MainMenuPage";
                 GetProjectsList(); //  read all the projects
-                GetServiceCalls();
+                GetOpenedServiceCalls();
                 GetProjectsNamesList();
             }
             else alert("Username or password is incorrect");
@@ -312,7 +312,7 @@ function BuildHatchPage(ProjectID) {
     for (var pID in Projects)
         for (var hID in Hatches[pID])
             BuildHatchDetailsPage(Hatches[pID][hID]); // build a page for each hatch
-//    $('.HatchNavbar').navbar('refresh');
+    //    $('.HatchNavbar').navbar('refresh');
 }
 
 function BuildHatchDetailsPage(oHatch) {
@@ -358,10 +358,10 @@ function BuildHatchDetailsPage(oHatch) {
     newPage.appendTo($.mobile.pageContainer);
 }
 
-function GetServiceCalls() {
+function GetOpenedServiceCalls() {
     dataString = "";
     $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/GetServiceCalls',   // JQuery call to the server side method
+        url: 'MaestroWS.asmx/GetOpenedServiceCalls',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -413,10 +413,12 @@ function BuildServiceCallPage(oServiceCall) {
     if (!IsEmpty(oServiceCall[1].Email)) str += "<p><b>דוא&quot;ל: </b>" + oServiceCall[1].Email + "</p>";
 
     str += "<h2>פרטי הקריאה</h2>";
-    str += "<p><b>תיאור התקלה: </b>" + oServiceCall[0].Description + "</p>";
     if (oServiceCall[0].Urgent) str += "<p><b>*קריאה דחופה*</b></p>";
-    str += "<p><b>תאריך פתיחה: </b>" + ConvertToDate(oServiceCall[0].DateOpened) + "</p>";
+    str += "<p><b>תיאור התקלה: </b>" + oServiceCall[0].Description + "</p>";
+    str += "<p><b>תאריך פתיחה: </b>" + ConvertToDate(oServiceCall[0].DateOpened) + "</p><br/>";
     //    if (!IsEmpty(oServiceCall[0].DateClosed)) str += "<p><b>תאריך סגירה: </b>" + ConvertToDate(oServiceCall[0].DateClosed) + "</p>";
+    str += "<a data-role='button' data-rel='popup' href='#ServiceCall" + oServiceCall[0].ScID + "Dialog' data-position-to='window'>סגור קריאת שירות</a>";
+    str += BuildServiceCallDialog(oServiceCall[0].ScID);
 
     str += "</div>";  // close the content
     str += "</div>";  // close the page
@@ -424,6 +426,45 @@ function BuildServiceCallPage(oServiceCall) {
     //append it to the page container
     var newPage = $(str);
     newPage.appendTo($.mobile.pageContainer);
+}
+
+function BuildServiceCallDialog(scID) {
+    var str = "";
+    str += '<div data-role="popup" id="ServiceCall' + scID + 'Dialog" class = "CloseServiceCallsPopup">';
+    str += '<div data-role="header">';
+    str += "<h1>סגור קריאה</h1>";
+    str += '</div>';
+    str += '<div data-role="main" class="ui-content">';
+    str += '<p>האם אתה בטוח?</p>';
+    str += '<a data-role="button" data-inline="true" data-theme="a" onclick="CloseServiceCall(' + scID + ')">סגור קריאה</a>';
+    str += '<a href="#ServiceCall' + scID + '" data-inline="true" data-role="button">בטל</a>';
+    str += '</div>';
+    return str;
+}
+
+function CloseServiceCall(scID) {
+    dataString = "{ scID: '" + scID + "'}";
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/CloseServiceCall',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            var iRowsAffected = $.parseJSON(data.d);
+            if (iRowsAffected > 0) {
+                alert("קריאת השירות נסגרה בהצלחה");
+                Goto("ServiceCallsPage");
+                $("#ServiceCallsPage").find("[href='#ServiceCall" + scID + "']").closest("li").remove();
+            }
+            else
+                alert("אירעה שגיאה בשרת, אנא נסה מאוחר יותר");
+        }, // end of success
+        error: function (e) {
+            alert("failed to close Service call" + e.responseText);
+        } // end of error
+    });                       // end of ajax call
 }
 
 function BuildServiceCallHeader(sHeaderText) {
