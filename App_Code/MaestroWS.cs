@@ -80,10 +80,11 @@ public class MaestroWS : System.Web.Services.WebService
 
         c.Fname = dt.Rows[0].ItemArray[17].ToString();
         c.Lname = dt.Rows[0].ItemArray[18].ToString();
-        c.Phone = dt.Rows[0].ItemArray[21].ToString();
-        c.Mobile = dt.Rows[0].ItemArray[22].ToString();
-        c.Fax = dt.Rows[0].ItemArray[23].ToString();
-        c.Email = dt.Rows[0].ItemArray[24].ToString();
+        c.Address = dt.Rows[0].ItemArray[19].ToString();
+        c.Phone = dt.Rows[0].ItemArray[20].ToString();
+        c.Mobile = dt.Rows[0].ItemArray[21].ToString();
+        c.Fax = dt.Rows[0].ItemArray[22].ToString();
+        c.Email = dt.Rows[0].ItemArray[23].ToString();
 
         p.ContractorName = dt.Rows[0].ItemArray[7].ToString();
         p.ContractorPhone = dt.Rows[0].ItemArray[8].ToString();
@@ -92,8 +93,8 @@ public class MaestroWS : System.Web.Services.WebService
         p.SupervisorName = dt.Rows[0].ItemArray[11].ToString();
         p.SupervisorPhone = dt.Rows[0].ItemArray[12].ToString();
 
-        ps.StatusNum = Convert.ToInt32(dt.Rows[0].ItemArray[26]);
-        ps.StatusName = dt.Rows[0].ItemArray[27].ToString();
+        ps.StatusNum = Convert.ToInt32(dt.Rows[0].ItemArray[25]);
+        ps.StatusName = dt.Rows[0].ItemArray[26].ToString();
 
         myAL.Add(c);
         myAL.Add(p);

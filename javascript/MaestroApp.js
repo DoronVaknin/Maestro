@@ -306,7 +306,7 @@ function BuildHatchPage(ProjectID) {
             }
         }, // end of success
         error: function (e) { // this function will be called upon failure
-            alert("failed to get project details: " + e.responseText);
+            alert("failed to get Pictures and Pins: " + e.responseText);
         } // end of error
     });               // end of ajax call
     for (var pID in Projects)
@@ -388,7 +388,7 @@ function BuildServiceCallsList(ServiceCallsList) {
     for (var scID in ServiceCallsList) {
         str += "<li><a data-ajax = 'false' href= '#ServiceCall" + scID + "'>";
         str += "<h1>" + ServiceCallsList[scID][1].Fname + " " + ServiceCallsList[scID][1].Lname + "</h1>";
-        str += "<p>" + ServiceCallsList[scID][1].City + "</p>";
+//        str += "<p>" + ServiceCallsList[scID][1].City + "</p>";
         str += "</a></li>";
     }
     return str;
@@ -417,7 +417,7 @@ function BuildServiceCallPage(oServiceCall) {
     str += "<p><b>תיאור התקלה: </b>" + oServiceCall[0].Description + "</p>";
     str += "<p><b>תאריך פתיחה: </b>" + ConvertToDate(oServiceCall[0].DateOpened) + "</p><br/>";
     //    if (!IsEmpty(oServiceCall[0].DateClosed)) str += "<p><b>תאריך סגירה: </b>" + ConvertToDate(oServiceCall[0].DateClosed) + "</p>";
-    str += "<a data-role='button' data-rel='popup' href='#ServiceCall" + oServiceCall[0].ScID + "Dialog' data-position-to='window'>סגור קריאת שירות</a>";
+    str += "<a data-role='button' data-rel='popup' class = 'half' href='#ServiceCall" + oServiceCall[0].ScID + "Dialog' data-position-to='window'>סגור קריאת שירות</a>";
     str += BuildServiceCallDialog(oServiceCall[0].ScID);
 
     str += "</div>";  // close the content
@@ -615,10 +615,8 @@ function InitializeGoogleMap() {
 
 function AssignServiceCallsIntoGoogleMap() {
     var aAddresses = [];
-    var sFullAddress;
     for (var scID in ServiceCallsList) {
-        sFullAddress = ServiceCallsList[scID][1].Address + ", " + ServiceCallsList[scID][1].City;
-        GetCoordinatesByAddress(sFullAddress);
+        GetCoordinatesByAddress(ServiceCallsList[scID][1].Address);
         ShowServiceCallPin(oPosition, scID);
     }
 }

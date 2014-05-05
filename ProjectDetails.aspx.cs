@@ -16,24 +16,27 @@ public partial class Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        GridViewRow row = (GridViewRow)Session["selectedrow"];
-        int ProjectID = Convert.ToInt32(row.Cells[1].Text);
-        Project p = new Project();
-        //שליפת נתוני הלקוח להצגה
-        DataTable CustomerDT = p.GetCustomerInformation(ProjectID);
-        DataTable ProjectDT = p.GetProjectDetails(ProjectID);
-        //הצבה של כל פרטי הלקוח בשדות המתאימים
-        SetOrdersGrid();
-        ProjectIDHolder.Value = Convert.ToString(row.Cells[1].Text);
-
-        if (!Page.IsPostBack)
+        if (Session["selectedrow"] != null)
         {
-            SetPageDetails(CustomerDT, ProjectDT);
-            SetProjCurrentStatus();
-            LoadSuppliers();
+            GridViewRow row = (GridViewRow)Session["selectedrow"];
+            int ProjectID = Convert.ToInt32(row.Cells[1].Text);
+            Project p = new Project();
+            //שליפת נתוני הלקוח להצגה
+            DataTable CustomerDT = p.GetCustomerInformation(ProjectID);
+            DataTable ProjectDT = p.GetProjectDetails(ProjectID);
+            //הצבה של כל פרטי הלקוח בשדות המתאימים
+            SetOrdersGrid();
+            ProjectIDHolder.Value = Convert.ToString(row.Cells[1].Text);
+
+            if (!Page.IsPostBack)
+            {
+                SetPageDetails(CustomerDT, ProjectDT);
+                //SetProjCurrentStatus();
+                LoadSuppliers();
+            }
+            else
+                DisableAllFields();
         }
-        else
-            DisableAllFields();
     }
 
     public void DisableAllFields()
@@ -107,6 +110,7 @@ public partial class Default : System.Web.UI.Page
         //Populate project details
         GridViewRow row = (GridViewRow)Session["selectedrow"];
         ProjectInfoStatus.Text = P_dt.Rows[0].ItemArray[26].ToString();
+        ProjectInfoStatus.Attributes.Add("value", P_dt.Rows[0].ItemArray[15].ToString());
         ProjectInfoName.Text = P_dt.Rows[0].ItemArray[1].ToString();
         ProjectInfoHatches.Text = row.Cells[8].Text;
         ProjectInfoCost.Text = P_dt.Rows[0].ItemArray[6].ToString();
@@ -120,7 +124,7 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoArchitectMobile.Text = P_dt.Rows[0].ItemArray[10].ToString();
         ProjectInfoSupervisorName.Text = P_dt.Rows[0].ItemArray[11].ToString();
         ProjectInfoSupervisorMobile.Text = P_dt.Rows[0].ItemArray[12].ToString();
-        
+
     }
 
     protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)

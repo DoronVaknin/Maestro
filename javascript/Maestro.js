@@ -14,6 +14,7 @@ $(document).ready(function () {
         DisableCustomerDetailsFields();
         DisableProjectDetailsFields();
         FixTextAreaIssue();
+        $("#ProjectDetailsStatusIcon").popover({content: "2 בלה בלה"});
     }
     if (IsPage("ProjectOrders"))
         ActivatePlusMinus();
@@ -166,9 +167,9 @@ function RestoreCustomerDetails() {
     $("#ContentPlaceHolder3_ProjectInfoPhone").val(aCustomerDetails[2]);
     $("#ContentPlaceHolder3_ProjectInfoMobile").val(aCustomerDetails[3]);
     $("#ContentPlaceHolder3_ProjectInfoAddress").val(aCustomerDetails[4]);
-    $("#ContentPlaceHolder3_ProjectInfoEmail").val(aCustomerDetails[6]);
-    $("#ContentPlaceHolder3_ProjectInfoFax").val(aCustomerDetails[7]);
-    $("#ContentPlaceHolder3_ProjectInfoArea").val(aCustomerDetails[8]);
+    $("#ContentPlaceHolder3_ProjectInfoEmail").val(aCustomerDetails[5]);
+    $("#ContentPlaceHolder3_ProjectInfoFax").val(aCustomerDetails[6]);
+    $("#ContentPlaceHolder3_ProjectInfoArea").val(aCustomerDetails[7]);
 
     DisableCustomerDetailsFields();
     SwitchCustomerDetailsEditSaveButtons(true);
