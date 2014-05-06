@@ -46,6 +46,7 @@
                     <ul>
                         <li id="ToolbarBtnCreateProject"><a>צור פרויקט חדש</a></li>
                         <li><a href="Projects.aspx">רשימת פרויקטים</a></li>
+                        <li><a href="ProjectsArchive.aspx">ארכיון פרויקטים</a></li>
                     </ul>
                 </li>
                 <li><a>טכני</a>
@@ -76,7 +77,8 @@
                                 <li id="ToolbarBtnCreateServiceCallExternalCustomer"><a>לקוח חיצוני</a></li>
                             </ul>
                         </li>
-                        <li><a href="ServiceCalls.aspx">רשימת קריאות שירות</a> </li>
+                        <li><a href="ServiceCalls.aspx">קריאות שירות פתוחות</a> </li>
+                        <li><a href="ServiceCallsArchive.aspx">ארכיון קריאות שירות</a> </li>
                     </ul>
                 </li>
                 <li id="UserManagement"><a href="UserManagement.aspx">ניהול משתמשים</a></li>

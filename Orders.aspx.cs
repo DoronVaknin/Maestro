@@ -19,6 +19,6 @@ public partial class Default2 : System.Web.UI.Page
     {
             int value = OrderStatusDDL.SelectedIndex+1;
             Order o = new Order();
-            o.UpdateOrderStatus(value,Convert.ToInt32(OrdersGV.SelectedRow.Cells[3].Text));
+            o.UpdateOrderStatus(value,Convert.ToInt32(OrdersGV.SelectedRow.Cells[2].Text));
     }
 }

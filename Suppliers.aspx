@@ -16,7 +16,7 @@
         AllowSorting="True" DataSourceID="SqlDataSource2" AutoGenerateColumns="False"
         DataKeyNames="SupplierID">
         <Columns>
-            <asp:CommandField EditText="ערוך" ShowEditButton="true" />
+            <asp:CommandField SelectText = "בחר" ShowSelectButton = "true" />
             <asp:CommandField DeleteText="מחק" ShowDeleteButton="true" />
             <asp:BoundField DataField="SupplierID" HeaderText="מס' ספק" InsertVisible="False"
                 ReadOnly="True" SortExpression="SupplierID" />

@@ -6,27 +6,26 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
     <div class="cntr">
         <h1>
-            קריאות שירות</h1>
+            קריאות שירות פתוחות</h1>
     </div>
     <br />
     <asp:SqlDataSource ID="ServiceCallsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
-        SelectCommand="spGetAllServiceCalls" SelectCommandType="StoredProcedure" UpdateCommand="update ServiceCall set Urgent=@Urgent, ProblemDesc=@ProblemDesc where scID=@scID">
+        SelectCommand="spGetOpenedServiceCalls" SelectCommandType="StoredProcedure" UpdateCommand="update ServiceCall set Urgent=@Urgent, ProblemDesc=@ProblemDesc where scID=@scID">
     </asp:SqlDataSource>
     <asp:GridView runat="server" ID="ServiceCallsGridView" AutoGenerateColumns="False"
         DataKeyNames="scID" DataSourceID="ServiceCallsDataSource" CssClass="DataTables"
         AllowPaging="True" AllowSorting="True" OnSelectedIndexChanged="ServiceCallsGridView_SelectedIndexChanged">
         <Columns>
             <asp:CommandField ShowSelectButton="true" SelectText="בחר" />
-            <asp:CommandField ShowEditButton="true" EditText="ערוך" />
-            <asp:BoundField DataField="scID" HeaderText="מספר קריאה" InsertVisible="False" ReadOnly="True"
+            <asp:BoundField DataField="scID" HeaderText="מס' קריאה" InsertVisible="False" ReadOnly="True"
                 SortExpression="scID" />
             <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" ReadOnly="True" />
             <asp:BoundField DataField="lName" HeaderText="שם משפחה" SortExpression="lName" ReadOnly="True" />
             <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened"
                 ReadOnly="True" DataFormatString="{0:dd/MM/yyyy}" />
             <asp:BoundField DataField="DateClosed" HeaderText="תאריך סגירה" SortExpression="DateClosed"
-                ReadOnly="True" DataFormatString="{0:dd/MM/yyyy}" />
-            <asp:BoundField DataField="ProblemDesc" HeaderText="תיאור" SortExpression="ProblemDesc" />
+                ReadOnly="True" DataFormatString="{0:dd/MM/yyyy}" Visible = "false" />
+            <asp:BoundField DataField="ProblemDesc" HeaderText="התקלה" SortExpression="ProblemDesc" />
             <asp:CheckBoxField DataField="Urgent" HeaderText="דחוף" SortExpression="Urgent" />
         </Columns>
     </asp:GridView>

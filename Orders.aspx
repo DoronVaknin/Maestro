@@ -23,7 +23,6 @@
         OnSelectedIndexChanged="OrdersGV_SelectedIndexChanged">
         <Columns>
             <asp:CommandField SelectText="עדכן סטטוס" ShowSelectButton="True" />
-            <asp:CommandField EditText="ערוך" ShowEditButton="true" />
             <asp:CommandField DeleteText="מחק" ShowDeleteButton="true" />
             <asp:BoundField DataField="oID" HeaderText="מס' הזמנה" InsertVisible="False" ReadOnly="True" />
             <asp:BoundField DataField="pName" HeaderText="שם הפרויקט" SortExpression="pName"
