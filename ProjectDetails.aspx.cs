@@ -71,12 +71,15 @@ public partial class Default : System.Web.UI.Page
 
     public void SetOrdersGrid()
     {
-        GridViewRow row = (GridViewRow)Session["selectedrow"];
-        Project p = new Project();
-        DataTable OrdersDataTable = p.GetOrderDetails(Convert.ToInt32(row.Cells[1].Text));
-        DataTable statustable = p.GetOrderStatus(); // להחליט מה לעשות
-        OrderGrid.DataSource = OrdersDataTable;
-        OrderGrid.DataBind();
+        if (Session["selectedrow"] != null)
+        {
+            GridViewRow row = (GridViewRow)Session["selectedrow"];
+            Project p = new Project();
+            DataTable OrdersDataTable = p.GetOrderDetails(Convert.ToInt32(row.Cells[1].Text));
+            DataTable statustable = p.GetOrderStatus(); // להחליט מה לעשות
+            OrderGrid.DataSource = OrdersDataTable;
+            OrderGrid.DataBind();
+        }
     }
 
     public void SetProjCurrentStatus()
@@ -137,12 +140,15 @@ public partial class Default : System.Web.UI.Page
 
     protected void SaveProjectDetailsBTN_Click(object sender, EventArgs e)
     {
-        GridViewRow row = (GridViewRow)Session["selectedrow"];
-        Project p = new Project();
-        p.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectInfoStatus.SelectedIndex + 1);
-        p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoCost.Text), ProjectInfoName.Text, ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text, DateTime.ParseExact(ProjectInfoExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInfoInstallationDate.Value, "MM/dd/yyyy", null));
-        SaveProjectDetailsBTN.Style.Add("display", "none");
-        EditProjectDetailsBTN.Style.Add("display", "inline-block");
+        if (Session["selectedrow"] != null)
+        {
+            GridViewRow row = (GridViewRow)Session["selectedrow"];
+            Project p = new Project();
+            p.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectInfoStatus.SelectedIndex + 1);
+            p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoCost.Text), ProjectInfoName.Text, ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text, DateTime.ParseExact(ProjectInfoExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInfoInstallationDate.Value, "MM/dd/yyyy", null));
+            SaveProjectDetailsBTN.Style.Add("display", "none");
+            EditProjectDetailsBTN.Style.Add("display", "inline-block");
+        }
     }
 
     public void LoadSuppliers()
@@ -158,7 +164,7 @@ public partial class Default : System.Web.UI.Page
 
     public void CreateOrder(int Count, string Supplier, int RawMeterialID)
     {
-        if (Count > 0)
+        if (Count > 0 && Session["selectedrow"] != null)
         {
             GridViewRow row = (GridViewRow)Session["selectedrow"];
             DBservices db = new DBservices();

@@ -14,15 +14,15 @@ $(document).ready(function () {
         DisableCustomerDetailsFields();
         DisableProjectDetailsFields();
         FixTextAreaIssue();
-        $("#ProjectDetailsStatusIcon").popover({content: "2 בלה בלה"});
+        $("#ProjectDetailsStatusIcon").popover({ html: true, content: GetProgressBarContent() });
     }
     if (IsPage("ProjectOrders"))
         ActivatePlusMinus();
-    if (IsPage("NewProject", "NewCustomer"))
+    else if (IsPage("NewProject", "NewCustomer"))
         ActivateModal("ModalCustomerCreated");
-    if (IsPage("NewCustomer", "CreateProject"))
+    else if (IsPage("NewCustomer", "CreateProject"))
         $("#CustomerForServiceCallBTN").addClass("HiddenButtons");
-    if (IsPage("NewCustomer", "CreateServiceCall"))
+    else if (IsPage("NewCustomer", "CreateServiceCall"))
         $("#CustomerForProjectBTN").addClass("HiddenButtons");
 });
 
@@ -55,6 +55,19 @@ function ActivateQuickSearch() {
             }
         });
     });
+}
+
+//Progress Bar
+function GetProgressBarContent() {
+    var iProjectStatusID = $("#ContentPlaceHolder3_ProjectInfoStatus")[0].selectedIndex + 1;
+    var iPercent = parseInt(100 * iProjectStatusID / 9);
+    var str = "";
+    str += '<div class="progress">';
+    str += '<div class="progress-bar" role="progressbar" aria-valuenow="' + iPercent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + iPercent + '%; min-width:30px;">';
+    str += '<span>' + iPercent + '%' + '</span>';
+    str += '</div>';
+    str += '</div>';
+    return str;
 }
 
 //Modals Activation

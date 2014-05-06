@@ -46,7 +46,7 @@ public partial class Default2 : System.Web.UI.Page
 
     protected void CreateOrder(int Count, string SupplierID, int RawMeterialID, string EstArrDate)
     {
-        if (Count > 0)
+        if (Count > 0 && Session["ProjectIDForProjectOrders"] != null)
         {
             string ProjectID = Session["ProjectIDForProjectOrders"].ToString();
             DBservices db = new DBservices();
