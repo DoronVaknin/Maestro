@@ -67,16 +67,18 @@ public class ServiceCall
         dbs.InsertExternalServiceCall(sc, CustomerID);
     }
 
-    public void InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
+    public int InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
     {
         DBservices dbs = new DBservices();
-        dbs.InsertServiceCallExistingProject(sc, CustomerID, ProjectID);
+        int RowAffected = dbs.InsertServiceCallExistingProject(sc, CustomerID, ProjectID);
+        return RowAffected;
     }
 
-    public void CloseServiceCall(int ServiceCallID)
+    public int CloseServiceCall(int ServiceCallID)
     {
         DBservices db = new DBservices();
-        db.CloseServiceCall(ServiceCallID);
+        int RowAffected = db.CloseServiceCall(ServiceCallID);
+        return RowAffected;
     }
 
     public DataTable GetServiceCallPopupMissingDetails(int ServicCallID)
@@ -90,6 +92,13 @@ public class ServiceCall
     {
         DBservices db = new DBservices();
         DataTable dt = db.GetServiceCalls();
+        return dt;
+    }
+
+    public DataTable GetOpenedServiceCalls()
+    {
+        DBservices db = new DBservices();
+        DataTable dt = db.GetOpenedServiceCalls();
         return dt;
     }
     

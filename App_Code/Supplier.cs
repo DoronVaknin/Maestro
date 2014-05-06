@@ -8,11 +8,10 @@ using System.Web;
 /// </summary>
 public class Supplier
 {
-    public Supplier(string _Name, string _Address, string _City, string _Phone, string _Mobile, string _Fax, string _Email)
+    public Supplier(string _Name, string _Address, string _Phone, string _Mobile, string _Fax, string _Email)
     {
         Name = _Name;
         Address = _Address;
-        City = _City;
         Phone = _Phone;
         Mobile = _Mobile;
         Fax = _Fax;
@@ -31,13 +30,6 @@ public class Supplier
     {
         get { return address; }
         set { address = value; }
-    }
-
-    string city;
-    public string City
-    {
-        get { return city; }
-        set { city = value; }
     }
 
     string phone;

@@ -19,7 +19,6 @@
             <asp:BoundField DataField="cID" HeaderText="תעודת זהות" ReadOnly="True" SortExpression="cID" />
             <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" />
             <asp:BoundField DataField="lName" HeaderText="שם משפחה" SortExpression="lName" />
-            <asp:BoundField DataField="City" HeaderText="יישוב" SortExpression="City" />
             <asp:BoundField DataField="cAddress" HeaderText="כתובת" SortExpression="cAddress" />
             <asp:BoundField DataField="Phone" HeaderText="טלפון" SortExpression="Phone" />
             <asp:BoundField DataField="Mobile" HeaderText="נייד" SortExpression="Mobile" />

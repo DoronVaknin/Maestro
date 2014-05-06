@@ -2,19 +2,31 @@
 
 var Projects = {};
 var ProjectsList = {};
+var ProjectsNamesList = {};
 var Hatches = {};
 var PNP = {}; //Pictures & Pins
 var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, ServiceCallsList[scID][1] - Customer details, ServiceCallsList[scID][2] - Project details
 
 
 $(document).ready(function () {
-    $("#LoginBTN").click(function () {
-        Login();
-    });
+    $("#LoginBTN").click(Login);
 
     //some css settings
     $("#LoginBTN").parent().css({ "width": "36%", "margin": "auto" });
+    $("#ProblemDescriptionTA").val(""); //fix extra space issue
+
+    //Google map for service calls
+    InitializeGoogleMap();
+    ResizeMapCanvas();
 });
+
+$(window).resize(ResizeMapCanvas);
+
+function ResizeMapCanvas() {
+    var iWindowWidth = $.mobile.activePage.width();
+    var iWindowHeight = $.mobile.activePage.height();
+    $("#map-canvas").width(iWindowWidth).height(iWindowHeight);
+}
 
 $(document).on("click", ".HatchesBTN", function () {
     var sHref = $(this).attr("href");
@@ -42,14 +54,15 @@ function Login() {
                 $("#UserName, #Password").val("");
                 window.location = "#MainMenuPage";
                 GetProjectsList(); //  read all the projects
-                GetServiceCalls();
+                GetOpenedServiceCalls();
+                GetProjectsNamesList();
             }
             else alert("Username or password is incorrect");
         }, // end of success
         error: function (e) {
             alert("failed to login: " + e.responseText);
         } // end of error
-    });               // end of ajax call
+    });                 // end of ajax call
 }
 
 //-----------------------------------------------------------------------
@@ -293,7 +306,7 @@ function BuildHatchPage(ProjectID) {
             }
         }, // end of success
         error: function (e) { // this function will be called upon failure
-            alert("failed to get project details: " + e.responseText);
+            alert("failed to get Pictures and Pins: " + e.responseText);
         } // end of error
     });               // end of ajax call
     for (var pID in Projects)
@@ -345,10 +358,10 @@ function BuildHatchDetailsPage(oHatch) {
     newPage.appendTo($.mobile.pageContainer);
 }
 
-function GetServiceCalls() {
+function GetOpenedServiceCalls() {
     dataString = "";
     $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/GetServiceCalls',   // JQuery call to the server side method
+        url: 'MaestroWS.asmx/GetOpenedServiceCalls',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -361,11 +374,13 @@ function GetServiceCalls() {
             $("#ServiceCallsList").html(BuildServiceCallsList(ServiceCallsList));
             for (var scID in ServiceCallsList)
                 BuildServiceCallPage(ServiceCallsList[scID]);
+            BuildServiceCallProjectsList();
+            AssignServiceCallsIntoGoogleMap();
         }, // end of success
         error: function (e) {
             alert("failed to load Service calls" + e.responseText);
         } // end of error
-    });            // end of ajax call
+    });               // end of ajax call
 }
 
 function BuildServiceCallsList(ServiceCallsList) {
@@ -373,7 +388,7 @@ function BuildServiceCallsList(ServiceCallsList) {
     for (var scID in ServiceCallsList) {
         str += "<li><a data-ajax = 'false' href= '#ServiceCall" + scID + "'>";
         str += "<h1>" + ServiceCallsList[scID][1].Fname + " " + ServiceCallsList[scID][1].Lname + "</h1>";
-        //        str += "<p>" + ServiceCallsList[scID][0].StatusName + "</p>";
+//        str += "<p>" + ServiceCallsList[scID][1].City + "</p>";
         str += "</a></li>";
     }
     return str;
@@ -398,8 +413,12 @@ function BuildServiceCallPage(oServiceCall) {
     if (!IsEmpty(oServiceCall[1].Email)) str += "<p><b>דוא&quot;ל: </b>" + oServiceCall[1].Email + "</p>";
 
     str += "<h2>פרטי הקריאה</h2>";
-    if (!IsEmpty(oServiceCall[0].DateOpened)) str += "<p><b>תאריך פתיחה: </b>" + ConvertToDate(oServiceCall[0].DateOpened) + "</p>";
-    if (!IsEmpty(oServiceCall[0].DateClosed)) str += "<p><b>תאריך סגירה: </b>" + ConvertToDate(oServiceCall[0].DateClosed) + "</p>";
+    if (oServiceCall[0].Urgent) str += "<p><b>*קריאה דחופה*</b></p>";
+    str += "<p><b>תיאור התקלה: </b>" + oServiceCall[0].Description + "</p>";
+    str += "<p><b>תאריך פתיחה: </b>" + ConvertToDate(oServiceCall[0].DateOpened) + "</p><br/>";
+    //    if (!IsEmpty(oServiceCall[0].DateClosed)) str += "<p><b>תאריך סגירה: </b>" + ConvertToDate(oServiceCall[0].DateClosed) + "</p>";
+    str += "<a data-role='button' data-rel='popup' class = 'half' href='#ServiceCall" + oServiceCall[0].ScID + "Dialog' data-position-to='window'>סגור קריאת שירות</a>";
+    str += BuildServiceCallDialog(oServiceCall[0].ScID);
 
     str += "</div>";  // close the content
     str += "</div>";  // close the page
@@ -409,6 +428,45 @@ function BuildServiceCallPage(oServiceCall) {
     newPage.appendTo($.mobile.pageContainer);
 }
 
+function BuildServiceCallDialog(scID) {
+    var str = "";
+    str += '<div data-role="popup" id="ServiceCall' + scID + 'Dialog" class = "CloseServiceCallsPopup">';
+    str += '<div data-role="header">';
+    str += "<h1>סגור קריאה</h1>";
+    str += '</div>';
+    str += '<div data-role="main" class="ui-content">';
+    str += '<p>האם אתה בטוח?</p>';
+    str += '<a data-role="button" data-inline="true" data-theme="a" onclick="CloseServiceCall(' + scID + ')">סגור קריאה</a>';
+    str += '<a href="#ServiceCall' + scID + '" data-inline="true" data-role="button">בטל</a>';
+    str += '</div>';
+    return str;
+}
+
+function CloseServiceCall(scID) {
+    dataString = "{ scID: '" + scID + "'}";
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/CloseServiceCall',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            var iRowsAffected = $.parseJSON(data.d);
+            if (iRowsAffected > 0) {
+                alert("קריאת השירות נסגרה בהצלחה");
+                Goto("ServiceCallsPage");
+                $("#ServiceCallsPage").find("[href='#ServiceCall" + scID + "']").closest("li").remove();
+            }
+            else
+                alert("אירעה שגיאה בשרת, אנא נסה מאוחר יותר");
+        }, // end of success
+        error: function (e) {
+            alert("failed to close Service call" + e.responseText);
+        } // end of error
+    });                       // end of ajax call
+}
+
 function BuildServiceCallHeader(sHeaderText) {
     var str = "";
     str += "<div data-role = 'header' data-position='fixed' data-theme='a'>";
@@ -416,6 +474,72 @@ function BuildServiceCallHeader(sHeaderText) {
     str += "<a href='#ServiceCallsPage' data-icon='back' data-iconpos = 'notext' style = 'border:none;'></a>";
     str += "</div>"; //close the header
     return str;
+}
+
+function GetProjectsNamesList() {
+    dataString = "";
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/GetProjectsNames',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        async: false,
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            ProjectsNamesList = $.parseJSON(data.d);
+        }, // end of success
+        error: function (e) {
+            alert("failed to load Projects names list :( " + e.responseText);
+        } // end of error
+    });           // end of ajax call
+}
+
+function BuildServiceCallProjectsList() {
+    var str = "";
+    for (var i in ProjectsNamesList) {
+        str += "<option value='" + i + "'>" + ProjectsNamesList[i] + "</option>";
+    }
+    $("#ServiceCallProjectsDDL").html(str);
+}
+
+function PrepareServiceCall() {
+    var iProjectID = $("#ServiceCallProjectsDDL option:selected").val();
+    var sProblemDescription = $.trim($("#ProblemDescriptionTA").val());
+    var bUrgent = $("#UrgentCB").val() == "on" ? true : false;
+    var sCurrentDate = GetCurrentDate();
+    if (IsEmpty(sProblemDescription)) {
+        alert("יש להזין את תיאור התקלה טרם פתיחת קריאה");
+        return;
+    }
+    var ServiceCallDetails = {
+        ProjectID: iProjectID,
+        ProblemDescription: sProblemDescription,
+        Date: sCurrentDate,
+        Urgent: bUrgent
+    };
+    CreateServiceCall(ServiceCallDetails);
+    Goto("ServiceCallsMainPage");
+}
+
+function CreateServiceCall(oServiceCallDetails) {
+    dataString = JSON.stringify(oServiceCallDetails);
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/CreateServiceCall',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            if (data.d > 0)
+                alert("קריאת השירות נוצרה בהצלחה");
+            //                CurrentPageData = [];
+        }, // end of success
+        error: function (e) {
+            alert("failed to Create service call :( " + e.responseText);
+        } // end of error
+    });              // end of ajax call
 }
 
 //Misc
@@ -474,4 +598,69 @@ function GetCurrentDate() {
 
     today = dd + '/' + mm + '/' + yyyy;
     return today;
+}
+
+/** Google API **/
+var Map;
+//var InfoWindow;
+var oPosition = {};
+
+function InitializeGoogleMap() {
+    var mapOptions = {
+        center: new google.maps.LatLng(32.434046, 34.919652),
+        zoom: 12
+    };
+    Map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+}
+
+function AssignServiceCallsIntoGoogleMap() {
+    var aAddresses = [];
+    for (var scID in ServiceCallsList) {
+        GetCoordinatesByAddress(ServiceCallsList[scID][1].Address);
+        ShowServiceCallPin(oPosition, scID);
+    }
+}
+
+function ShowServiceCallPin(oPosition, sID) {
+    var Position = new google.maps.LatLng(oPosition.lat, oPosition.lng);
+    var Image = "images/icons/red-pin.png";
+    var Marker = new google.maps.Marker({
+        position: Position,
+        map: Map,
+        title: "קריאת שירות",
+        icon: Image
+    });
+
+    var sContent = '<div id="content">' +
+                '<h3 class="firstHeading">' + ServiceCallsList[sID][1].Fname + " " + ServiceCallsList[sID][1].Lname + '</h3>' +
+                '<div class="bodyContent">' +
+                '<p><b>טלפון נייד: </b>' + ServiceCallsList[sID][1].Mobile + '</p>' +
+                '<p><b>תיאור התקלה: </b>' + ServiceCallsList[sID][0].Description + '</p>' +
+    //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
+                '</div>' +
+                '</div>';
+
+    var InfoWindow = new google.maps.InfoWindow({
+        content: sContent
+    });
+
+    google.maps.event.addListener(Marker, 'click', function () {
+        InfoWindow.open(Map, Marker);
+    });
+}
+
+function GetCoordinatesByAddress(sAddress) {
+    $.ajax({ // ajax call starts
+        url: 'http://maps.googleapis.com/maps/api/geocode/json?address=' + sAddress + '&sensor=false',   // JQuery call to the server side method
+        type: 'GET',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        async: false,
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            oPosition = data.results[0].geometry.location;
+        }, // end of success
+        error: function (e) {
+            alert("failed to get coordinates by address" + e.responseText);
+        } // end of error
+    });
 }

@@ -6,6 +6,8 @@ var HatchStatusList = {};
 var FailureTypeList = {};
 var HatchDetails = {};
 var sEmployeeID = "";
+var CurrentPageData = [];
+
 
 $(document).ready(function () {
     $("#LoginBTN").click(function () {
@@ -23,11 +25,10 @@ $(document).on("change", ".HatchStatusDDL", function () {
 });
 
 $(document).on("click", ".HatchBTN", function () {
-    setTimeout(BackupPage, 2000);
+    setTimeout(BackupPage, 1000);
 });
 
 function BackupPage() {
-    CurrentPageData = [];
     var Page = $.mobile.activePage;
     var PageID = $(Page).attr("id");
     var iHatchStatusID = $("#" + PageID + " .HatchStatusDDL option:selected").val();
@@ -145,7 +146,7 @@ function GetHatchStatusList() {
 }
 
 //-----------------------------------------------------------------------
-// Load the projects to client-side
+// get failure type list
 //-----------------------------------------------------------------------
 function GetFailureTypeList() {
     dataString = "";
@@ -402,19 +403,20 @@ function PrepareHatchDetails(hID, pID) {
     var sHatchID = hID;
     var iHatchStatusID = $("#Hatch" + hID + " .HatchStatusDDL option:selected").val();
     var iFailureTypeID = $("#Hatch" + hID + " .FailureTypeDDL option:selected").val();
+    var sHatchStatus = $("#Hatch" + hID + " .FailureTypeDDL option:selected").text();
+    var bReportFailureType = sHatchStatus == "תקלה";
     var sCurrentDate = GetCurrentDate();
-    var sComments = $("#Hatch" + hID + " .HatchCommentsTB").val();
+    var sComments = $.trim($("#Hatch" + hID + " .HatchCommentsTB").val());
     GetUsernameID(); // Need to identify worker and send his ID to DB
-    HatchDetails = {
+    var HatchDetails = {
         HatchID: sHatchID,
         HatchStatusID: iHatchStatusID,
-        FailureTypeID: (!IsEmpty(iFailureTypeID) ? iFailureTypeID : 0),
+        FailureTypeID: (bReportFailureType ? iFailureTypeID : 0),
         EmployeeID: sEmployeeID,
         Date: sCurrentDate,
         Comments: (!IsEmpty(sComments) ? sComments : "")
     };
     UpdateHatchDetails(HatchDetails);
-    Goto("HatchesOfProject" + pID);
 }
 
 function GetUsernameID() {
@@ -447,8 +449,9 @@ function UpdateHatchDetails(oHatchDetails) {
         contentType: 'application/json; charset = utf-8', // of the data received
         success: function (data) // Variable data contains the data we get from serverside
         {
-            //            HatchStatusList = $.parseJSON(data.d);
+            CurrentPageData = [];
             alert("הדיווח נשלח בהצלחה");
+            Goto("HatchesOfProject" + pID);
         }, // end of success
         error: function (e) {
             alert("failed to send a report :( " + e.responseText);

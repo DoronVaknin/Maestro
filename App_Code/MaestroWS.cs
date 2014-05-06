@@ -80,10 +80,11 @@ public class MaestroWS : System.Web.Services.WebService
 
         c.Fname = dt.Rows[0].ItemArray[17].ToString();
         c.Lname = dt.Rows[0].ItemArray[18].ToString();
-        c.Phone = dt.Rows[0].ItemArray[21].ToString();
-        c.Mobile = dt.Rows[0].ItemArray[22].ToString();
-        c.Fax = dt.Rows[0].ItemArray[23].ToString();
-        c.Email = dt.Rows[0].ItemArray[24].ToString();
+        c.Address = dt.Rows[0].ItemArray[19].ToString();
+        c.Phone = dt.Rows[0].ItemArray[20].ToString();
+        c.Mobile = dt.Rows[0].ItemArray[21].ToString();
+        c.Fax = dt.Rows[0].ItemArray[22].ToString();
+        c.Email = dt.Rows[0].ItemArray[23].ToString();
 
         p.ContractorName = dt.Rows[0].ItemArray[7].ToString();
         p.ContractorPhone = dt.Rows[0].ItemArray[8].ToString();
@@ -92,8 +93,8 @@ public class MaestroWS : System.Web.Services.WebService
         p.SupervisorName = dt.Rows[0].ItemArray[11].ToString();
         p.SupervisorPhone = dt.Rows[0].ItemArray[12].ToString();
 
-        ps.StatusNum = Convert.ToInt32(dt.Rows[0].ItemArray[26]);
-        ps.StatusName = dt.Rows[0].ItemArray[27].ToString();
+        ps.StatusNum = Convert.ToInt32(dt.Rows[0].ItemArray[25]);
+        ps.StatusName = dt.Rows[0].ItemArray[26].ToString();
 
         myAL.Add(c);
         myAL.Add(p);
@@ -314,10 +315,10 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string GetServiceCalls()
+    public string GetOpenedServiceCalls()
     {
         ServiceCall sc = new ServiceCall();
-        DataTable dt = sc.GetServiceCalls();
+        DataTable dt = sc.GetOpenedServiceCalls();
 
         ArrayList[] myAL = new ArrayList[dt.Rows.Count];
 
@@ -334,22 +335,26 @@ public class MaestroWS : System.Web.Services.WebService
             sc.Description = dt.Rows[i].ItemArray[1].ToString();
             sc.Urgent = Convert.ToBoolean(dt.Rows[i].ItemArray[2]);
             sc.DateOpened = Convert.ToDateTime(dt.Rows[i].ItemArray[3]);
-            sc.DateClosed = Convert.ToDateTime(dt.Rows[i].ItemArray[4]);
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[4]))
+                sc.DateClosed = Convert.ToDateTime(dt.Rows[i].ItemArray[4]);
 
             c.cID = Convert.ToInt32(dt.Rows[i].ItemArray[7]);
             c.Fname = dt.Rows[i].ItemArray[8].ToString();
             c.Lname = dt.Rows[i].ItemArray[9].ToString();
-            c.City = dt.Rows[i].ItemArray[10].ToString();
-            c.Address = dt.Rows[i].ItemArray[11].ToString();
-            c.Phone = dt.Rows[i].ItemArray[12].ToString();
-            c.Mobile = dt.Rows[i].ItemArray[13].ToString();
-            c.Fax = dt.Rows[i].ItemArray[14].ToString();
-            c.Email = dt.Rows[i].ItemArray[15].ToString();
+            c.Address = dt.Rows[i].ItemArray[10].ToString();
+            c.Phone = dt.Rows[i].ItemArray[11].ToString();
+            c.Mobile = dt.Rows[i].ItemArray[12].ToString();
+            c.Fax = dt.Rows[i].ItemArray[13].ToString();
+            c.Email = dt.Rows[i].ItemArray[14].ToString();
 
-            p.pID = Convert.ToInt32(dt.Rows[i].ItemArray[17]);
-            p.Name = dt.Rows[i].ItemArray[18].ToString();
-            p.DateOpened = Convert.ToDateTime(dt.Rows[i].ItemArray[20]);
-            p.ExpirationDate = Convert.ToDateTime(dt.Rows[i].ItemArray[21]);
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[16]))
+                p.pID = Convert.ToInt32(dt.Rows[i].ItemArray[16]);
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[17]))
+                p.Name = dt.Rows[i].ItemArray[17].ToString();
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[19]))
+                p.DateOpened = Convert.ToDateTime(dt.Rows[i].ItemArray[19]);
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[20]))
+                p.ExpirationDate = Convert.ToDateTime(dt.Rows[i].ItemArray[20]);
 
             myAL[i].Add(sc);
             myAL[i].Add(c);
@@ -360,6 +365,57 @@ public class MaestroWS : System.Web.Services.WebService
         JavaScriptSerializer js = new JavaScriptSerializer();
         // serialize to string
         string jsonString = js.Serialize(myAL);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetProjectsNames()
+    {
+        Project p = new Project();
+        DataTable dt = p.GetProjectsNames();
+        Dictionary<string, string> dic = new Dictionary<string, string>();
+
+        for (int i = 0; i < dt.Rows.Count; i++)
+            dic.Add(dt.Rows[i].ItemArray[0].ToString(), dt.Rows[i].ItemArray[1].ToString());
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(dic);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string CreateServiceCall(int ProjectID, string ProblemDescription, string Date, bool Urgent)
+    {
+        ServiceCall sc = new ServiceCall(Convert.ToDateTime(Date), ProblemDescription, Urgent);
+        DataTable dt = new DataTable();
+
+        Project p = new Project();
+        dt = p.GetCustomerInformation(ProjectID);
+        int cID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
+        int RowAffected = sc.InsertServiceCallExistingProject(sc, cID, ProjectID);
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string CloseServiceCall(int scID)
+    {
+        ServiceCall sc = new ServiceCall();
+        int RowAffected = sc.CloseServiceCall(scID);
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
         return jsonString;
     }
 

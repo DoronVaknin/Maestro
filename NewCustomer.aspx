@@ -70,12 +70,6 @@
             </tr>
             <tr>
                 <td>
-                    <div class="input-group">
-                        <input id="CustomerCity" type="text" class="form-control City" runat="server" maxlength="15">
-                        <span class="input-group-addon">עיר *</span>
-                    </div>
-                </td>
-                <td>
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
                         SelectCommand="spGetRegion" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
                     <div class="cntr">
@@ -85,14 +79,16 @@
                         </asp:DropDownList>
                     </div>
                 </td>
+                <td>
+                </td>
             </tr>
         </table>
         <br />
         <div class="cntr">
-            <button id="CustomerForProjectBTN" class="btn btn-default" type = "button" onclick="ValidateNewCustomer(this)">
+            <button id="CustomerForProjectBTN" class="btn btn-default" type="button" onclick="ValidateNewCustomer(this)">
                 המשך ליצירת פרויקט&nbsp;&nbsp;<span class="glyphicon glyphicon-circle-arrow-left"></span>
             </button>
-            <button id="CustomerForServiceCallBTN" class="btn btn-default" type = "button" onclick="ValidateNewCustomer(this)">
+            <button id="CustomerForServiceCallBTN" class="btn btn-default" type="button" onclick="ValidateNewCustomer(this)">
                 המשך ליצירת קריאת שירות&nbsp;&nbsp;<span class="glyphicon glyphicon-circle-arrow-left"></span>
             </button>
             <asp:Button ID="CreateCustomerForProject" runat="server" Text="המשך לפרויקט" CssClass="btn btn-default HiddenButtons"

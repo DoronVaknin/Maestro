@@ -41,7 +41,6 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@cID", c.cID);
                 sqlComm.Parameters.AddWithValue("@fName", c.Fname);
                 sqlComm.Parameters.AddWithValue("@lName", c.Lname);
-                sqlComm.Parameters.AddWithValue("@City", c.City);
                 sqlComm.Parameters.AddWithValue("@Address", c.Address);
                 sqlComm.Parameters.AddWithValue("@Phone", c.Phone);
                 sqlComm.Parameters.AddWithValue("@Mobile", c.Mobile);
@@ -195,7 +194,6 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@Mobile", c.Mobile);
                 sqlComm.Parameters.AddWithValue("@Fax", c.Fax);
                 sqlComm.Parameters.AddWithValue("@Address", c.Address);
-                sqlComm.Parameters.AddWithValue("@City", c.City);
                 sqlComm.Parameters.AddWithValue("@Email", c.Email);
                 sqlComm.Parameters.AddWithValue("@RegionID", c.Region);
                 sqlComm.CommandTimeout = 600;
@@ -471,10 +469,10 @@ public class DBservices
         }
     }
 
-    public void InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
+    public int InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
     {
         con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[InsertServiceCallExistingProject]", con))
+        using (SqlCommand sqlComm = new SqlCommand("[spInsertServiceCallExistingProject]", con))
         {
             if (con.State != ConnectionState.Open)
                 con.Open();
@@ -489,7 +487,8 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@pID", ProjectID);
 
                 sqlComm.CommandTimeout = 600;
-                sqlComm.ExecuteNonQuery();
+                int RowAffected = sqlComm.ExecuteNonQuery();
+                return RowAffected;
             }
             catch (Exception ex)
             {
@@ -510,7 +509,6 @@ public class DBservices
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@sName", s.Name);
-                sqlComm.Parameters.AddWithValue("@City", s.City);
                 sqlComm.Parameters.AddWithValue("@Address", s.Address);
                 sqlComm.Parameters.AddWithValue("@Phone", s.Phone);
                 sqlComm.Parameters.AddWithValue("@Mobile", s.Mobile);
@@ -562,6 +560,58 @@ public class DBservices
 
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetServiceCalls]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetOpenedServiceCalls()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetOpenedServiceCalls]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetProjectsNames()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectsNames]", con))
         {
             if (con.State != ConnectionState.Open)
                 con.Open();
@@ -662,7 +712,7 @@ public class DBservices
         }
     }
 
-    public void CloseServiceCall(int ServiceCallID)
+    public int CloseServiceCall(int ServiceCallID)
     {
         DateTime date = DateTime.Now;
         con = connect("igroup9_prodConnectionString");
@@ -676,7 +726,8 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@date", date);
                 sqlComm.Parameters.AddWithValue("@ServiceCallID", ServiceCallID);
-                sqlComm.ExecuteNonQuery();
+                int RowAffected = sqlComm.ExecuteNonQuery();
+                return RowAffected;
             }
 
             catch (Exception ex)

@@ -14,7 +14,7 @@ public partial class Default : System.Web.UI.Page
         {
             Customer c = new Customer();
             c = (Customer)Session["Customer"];
-            ProjectName.Value = c.Fname + " " + c.Lname + " - " + c.City;
+            ProjectName.Value = c.Fname + " " + c.Lname;
         }
         ProjectDateOpened.Value = (DateTime.Today).ToString("MM/dd/yyyy");
         ProjectExpirationDate.Value = (DateTime.Now.AddYears(7)).ToString("MM/dd/yyyy");

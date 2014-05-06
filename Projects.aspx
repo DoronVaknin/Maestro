@@ -23,7 +23,8 @@
             <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened" DataFormatString="{0:dd/MM/yyyy}" />
             <asp:BoundField DataField="psName" HeaderText="סטטוס" SortExpression="psName" />
             <asp:BoundField DataField="Comments" HeaderText="הערות" SortExpression="Comments" />
-            <asp:BoundField DataField="Cost" HeaderText="עלות" SortExpression="Cost" />
+            <asp:BoundField DataField="Cost" HeaderText="עלות (ש&quot;ח)" 
+                SortExpression="Cost" />
             <asp:BoundField DataField="NumOfHatches" HeaderText="מס' פתחים" ReadOnly="True" SortExpression="NumOfHatches" Visible = "false" />
         </Columns>
     </asp:GridView>
