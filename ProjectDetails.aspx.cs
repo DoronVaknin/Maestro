@@ -25,7 +25,7 @@ public partial class Default : System.Web.UI.Page
             DataTable CustomerDT = p.GetCustomerInformation(ProjectID);
             DataTable ProjectDT = p.GetProjectDetails(ProjectID);
             //הצבה של כל פרטי הלקוח בשדות המתאימים
-            SetOrdersGrid();
+            //SetOrdersGrid();
             ProjectIDHolder.Value = Convert.ToString(row.Cells[1].Text);
 
             if (!Page.IsPostBack)
@@ -36,6 +36,9 @@ public partial class Default : System.Web.UI.Page
             }
             else
                 DisableAllFields();
+
+            string ProjectName = ProjectInfoName.Text;
+            ModalHeader.InnerHtml = PageHeader.InnerHtml = "הזמנות עבור הפרויקט " + ProjectName;
         }
     }
 
@@ -77,8 +80,8 @@ public partial class Default : System.Web.UI.Page
             Project p = new Project();
             DataTable OrdersDataTable = p.GetOrderDetails(Convert.ToInt32(row.Cells[1].Text));
             DataTable statustable = p.GetOrderStatus(); // להחליט מה לעשות
-            OrderGrid.DataSource = OrdersDataTable;
-            OrderGrid.DataBind();
+            OrdersGV.DataSource = OrdersDataTable;
+            OrdersGV.DataBind();
         }
     }
 
@@ -151,27 +154,46 @@ public partial class Default : System.Web.UI.Page
         }
     }
 
-    public void LoadSuppliers()
+    protected void LoadSuppliers()
     {
         Project p = new Project();
-        p.LoadSuppliers(ShutterProvider, CollectedProvider, CollectedProvider, ValimProvider, UProvider, ShoeingProvider, EngineProvider, ProtectedSpaceProvider, GlassProvider, BoxesProvider);
+        p.LoadSuppliers(ShutterProvider, CollectedProvider, AluminiumProvider, ValimProvider, UProvider, ShoeingProvider, EngineProvider, ProtectedSpaceProvider, GlassProvider, BoxesProvider);
     }
 
-    protected void Button1_Click(object sender, EventArgs e)
+    protected void CreateOrderBTN_Click(object sender, EventArgs e)
     {
-        CreateOrder(Convert.ToInt32(ShutterCount.Text), Convert.ToString(ShutterProvider.SelectedValue), 1);
+        CreateOrder(Convert.ToInt32(ShutterCount.Text), ShutterProvider.SelectedValue, 1, ShutterEstArrDate.Text);
+        CreateOrder(Convert.ToInt32(CollectedCount.Text), CollectedProvider.SelectedValue, 2, CollectedEstArrDate.Text);
+        CreateOrder(Convert.ToInt32(AluminiumCount.Text), AluminiumProvider.SelectedValue, 3, AluminiumEstArrDate.Text);
+        CreateOrder(Convert.ToInt32(ValimCount.Text), ValimProvider.SelectedValue, 4, ValimEstArrDate.Text);
+        CreateOrder(Convert.ToInt32(UCount.Text), UProvider.SelectedValue, 5, UEstArrDate.Text);
+        CreateOrder(Convert.ToInt32(ShoeingCount.Text), ShoeingProvider.SelectedValue, 6, ShoeingEstArrDate.Text);
+        CreateOrder(Convert.ToInt32(EngineCount.Text), EngineProvider.SelectedValue, 7, EngineEstArrDate.Text);
+        CreateOrder(Convert.ToInt32(ProtectedSpaceCount.Text), ProtectedSpaceProvider.SelectedValue, 8, ProtectedSpaceEstArrDate.Text);
+        CreateOrder(Convert.ToInt32(GlassCount.Text), GlassProvider.SelectedValue, 9, GlassEstArrDate.Text);
+        CreateOrder(Convert.ToInt32(BoxesCount.Text), BoxesProvider.SelectedValue, 10, BoxesEstArrDate.Text);
+        OrdersGV.DataBind();
     }
 
-    public void CreateOrder(int Count, string Supplier, int RawMeterialID)
+    protected void CreateOrder(int Count, string SupplierID, int RawMeterialID, string EstArrDate)
     {
-        if (Count > 0 && Session["selectedrow"] != null)
+        if (Count > 0 && Session["ProjectIDForProjectOrders"] != null)
         {
-            GridViewRow row = (GridViewRow)Session["selectedrow"];
+            string ProjectID = Session["ProjectIDForProjectOrders"].ToString();
             DBservices db = new DBservices();
-            //Order o = new Order(Convert.ToInt32(row.Cells[1].Text), Supplier, RawMeterialID, Count);
+            Order o = new Order(Convert.ToInt32(ProjectID), Convert.ToInt32(SupplierID), RawMeterialID, Count, DateTime.ParseExact(EstArrDate, "MM/dd/yyyy", null));
+            o.CreateNewOrder(o);
 
-            SetOrdersGrid();
+            //OrdersGV.DataBind();
+            //SetOrdersGrid();
         }
+    }
+
+    protected void OrdersGV_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "ActivateModal('ModalOrderDetails')", true);
+        GridViewRow row = OrdersGV.SelectedRow;
+        //OrderStatusDDL.SelectedItem = 2;
     }
 }
 

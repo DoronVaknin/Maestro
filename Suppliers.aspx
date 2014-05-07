@@ -30,6 +30,8 @@
     </asp:GridView>
     <br />
     <div class="cntr">
-        <input type="button" value="צור ספק חדש" class="btn btn-default" onclick="GotoNewSupplier()" />
+        <button type="button" value="צור ספק חדש" class="btn btn-default" onclick="Goto('NewSupplier')" >
+            צור ספק חדש&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
+        </button>
     </div>
 </asp:Content>

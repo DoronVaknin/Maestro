@@ -15,15 +15,25 @@ $(document).ready(function () {
         DisableProjectDetailsFields();
         FixTextAreaIssue();
         $("#ProjectDetailsStatusIcon").popover({ html: true, content: GetProgressBarContent() });
+        ActivateGoogleAutoCompletion("ContentPlaceHolder3_ProjectInfoAddress");
+        ActivatePlusMinus();
     }
     if (IsPage("ProjectOrders"))
         ActivatePlusMinus();
     else if (IsPage("NewProject", "NewCustomer"))
         ActivateModal("ModalCustomerCreated");
-    else if (IsPage("NewCustomer", "CreateProject"))
+    else if (IsPage("NewCustomer"))
+        ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
+    else if (IsPage("NewCustomer", "CreateProject")) {
         $("#CustomerForServiceCallBTN").addClass("HiddenButtons");
-    else if (IsPage("NewCustomer", "CreateServiceCall"))
+        ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
+    }
+    else if (IsPage("NewCustomer", "CreateServiceCall")) {
         $("#CustomerForProjectBTN").addClass("HiddenButtons");
+        ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
+    }
+    else if (IsPage("NewSupplier"))
+        ActivateGoogleAutoCompletion("ContentPlaceHolder3_SupplierAddress");
 });
 
 //Mark current tabs
@@ -209,12 +219,8 @@ function RestoreProjectDetails() {
 }
 
 //Navigation
-function GotoNewCustomer() {
-    window.location = "NewCustomer.aspx";
-}
-
-function GotoNewSupplier() {
-    window.location = "NewSupplier.aspx";
+function Goto(sPage, sQuery) {
+    window.location = sPage + ".aspx" + (!IsEmpty(sQuery) ? sQuery : "");
 }
 
 //Validators
@@ -573,3 +579,12 @@ $(document).ready(function () {
     });
 
 });
+
+//Google Autocompletion
+function ActivateGoogleAutoCompletion(sID) {
+    // Create the autocomplete object, restricting the search
+    // to geographical location types.
+    autocomplete = new google.maps.places.Autocomplete(
+    (document.getElementById(sID)),
+      { types: ['geocode'] });
+}

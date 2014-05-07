@@ -36,8 +36,9 @@
     </asp:GridView>
     <br />
     <div class="cntr">
-        <input id="OpenModalCreateOrdersBTN" type="button" value="צור הזמנה חדשה" class="btn btn-default"
-            onclick="ActivateModal('ModalCreateOrders')" />
+        <button id="OpenModalCreateOrdersBTN" type="button" class="btn btn-default" onclick="ActivateModal('ModalCreateOrders')">
+            צור הזמנה חדשה&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
+        </button>
     </div>
     <div class="modal fade" id="ModalCreateOrders" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
@@ -274,7 +275,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <asp:SqlDataSource runat="server" ID="StausDataSource" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
+    <asp:SqlDataSource runat="server" ID="StatusDataSource" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
         SelectCommand="spGetOrderStatus" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
     <!-- Order Details and editing Modal -->
     <div class="modal fade" id="ModalOrderDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -303,7 +304,7 @@
                     <asp:Label runat="server" Text="שם הספק:" ID="SupplierLBL"></asp:Label>
                     <br />
                     סטטוס הזמנה: &nbsp &nbsp
-                    <asp:DropDownList ID="OrderStausDDL" runat="server" DataSourceID="StausDataSource"
+                    <asp:DropDownList ID="OrderStatusDDL" runat="server" DataSourceID="StatusDataSource"
                         DataTextField="osName" DataValueField="osID">
                     </asp:DropDownList>
                     <br />

@@ -191,7 +191,7 @@ html[xmlns] #nav
     float: left;
 }
 
-#Customers, #ServiceCalls
+.default
 {
     cursor: default;
 }
@@ -382,7 +382,7 @@ div.cntr input[type=button], div.cntr button
     margin-right: auto;
 }
 
-.plus, .minus
+.plus, .minus, .pointer
 {
     cursor: pointer;
 }

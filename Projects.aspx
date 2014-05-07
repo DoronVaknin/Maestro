@@ -29,4 +29,9 @@
         </Columns>
     </asp:GridView>
     <br />
+    <div class="cntr">
+        <button type="button" class="btn btn-default" onclick="Goto('NewCustomer','?Source=CreateProject')">
+            צור פרויקט חדש&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
 </asp:Content>

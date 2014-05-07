@@ -38,8 +38,9 @@
         </table>
     </div>
     <div class="cntr">
-        <input id="CreateServiceCallExternalBTN" type="button" value="צור קריאה" class="btn btn-default"
-            onclick="ValidateServiceCallExternal()" />
+        <button id="CreateServiceCallExternalBTN" type="button" class="btn btn-default" onclick="ValidateServiceCallExternal()">
+            צור קריאה&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
+        </button>
         <asp:Button ID="CreateServiceCallExternal" runat="server" CssClass="btn btn-default HiddenButtons"
             OnClick="CreateServiceCallExternal_Click" />
         <br />
