@@ -18,7 +18,7 @@ $(document).ready(function () {
         ActivateGoogleAutoCompletion("ContentPlaceHolder3_ProjectInfoAddress");
         ActivatePlusMinus();
     }
-    if (IsPage("ProjectOrders"))
+    else if (IsPage("ProjectOrders"))
         ActivatePlusMinus();
     else if (IsPage("NewProject", "NewCustomer"))
         ActivateModal("ModalCustomerCreated");
@@ -146,6 +146,10 @@ function DisableProjectDetailsFields() {
     $("#ProjectDetailsTBL input, #ProjectDetailsTBL textarea, #ProjectDetailsTBL select").attr("disabled", "disabled");
 }
 
+function DisableServiceCallDetailsFields() {
+    $("#ServiceCallTBL input, #ServiceCallTBL textarea").attr("disabled", "disabled");
+}
+
 function FixTextAreaIssue() {
     var sValue = $("#ProjectDetailsTBL textarea").val();
     if (sValue == "&nbsp;")
@@ -216,6 +220,31 @@ function RestoreProjectDetails() {
     DisableProjectDetailsFields();
     SwitchProjectDetailsEditSaveButtons(true);
     ClearInvalidFields("#ProjectDetailsTBL");
+}
+
+function EnableServiceCallDetails() {
+    $("#ContentPlaceHolder3_ServiceCallProblemDesc, #ContentPlaceHolder3_ServiceCallUrgent").removeAttr("disabled");
+    SwitchServiceCallEditSaveButtons(false);
+    BackupServiceCallDetails();
+}
+
+function SwitchServiceCallEditSaveButtons(bShowEditButton) {
+    $("#ContentPlaceHolder3_EditServiceCallDetailsBTN").toggle(bShowEditButton);
+    $("#ContentPlaceHolder3_SaveServiceCallDetailsBTN").toggle(!bShowEditButton);
+    $("#ContentPlaceHolder3_CancelServiceCallDetailsBTN").toggle(!bShowEditButton);
+}
+
+function ValidateServiceCallDetails() {
+
+}
+
+function RestoreServiceCallDetails() {
+    $("#ContentPlaceHolder3_ServiceCallProblemDesc").val(aServiceCallDetails[0]);
+    var bUrgent = aServiceCallDetails[1] == "on" ? false : true;
+    $("#ContentPlaceHolder3_ServiceCallUrgent").prop('checked', bUrgent);
+    DisableServiceCallDetailsFields();
+    SwitchServiceCallEditSaveButtons(true);
+    ClearInvalidFields("#ServiceCallTBL");
 }
 
 //Navigation
@@ -383,6 +412,12 @@ function BackupProjectDetails() {
     aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoArchitectMobile").val());
     aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoContractorMobile").val());
     aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoSupervisorMobile").val());
+}
+
+function BackupServiceCallDetails() {
+    aServiceCallDetails = [];
+    aServiceCallDetails.push($("#ContentPlaceHolder3_ServiceCallProblemDesc").val());
+    aServiceCallDetails.push($("#ContentPlaceHolder3_ServiceCallUrgent").val());
 }
 
 function IsPage(sPageName, sSource) {

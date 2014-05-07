@@ -1,5 +1,4 @@
-﻿
-<%@ Application Language="C#" %>
+﻿<%@ Application Language="C#" %>
 
 <script runat="server">
 
