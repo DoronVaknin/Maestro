@@ -101,5 +101,11 @@ public class ServiceCall
         DataTable dt = db.GetOpenedServiceCalls();
         return dt;
     }
-    
+
+    public int UpdateServiceCallDetails(int scID, string ProblemDesc, bool Urgent)
+    {
+        DBservices db = new DBservices();
+        int RowAffected = db.UpdateServiceCallDetails(scID, ProblemDesc, Urgent);
+        return RowAffected;
+    }
 }

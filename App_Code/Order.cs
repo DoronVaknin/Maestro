@@ -100,4 +100,11 @@ public class Order
         DBservices db = new DBservices();
         db.CreateNewOrder(o);
     }
+
+    public int UpdateOrderDetails(int oID, int Quantity, int OrderStatus, DateTime EstimatedDOA)
+    {
+        DBservices db = new DBservices();
+        int RowAffected = db.UpdateOrderDetails(oID, Quantity, OrderStatus, EstimatedDOA);
+        return RowAffected;
+    }
 }

@@ -927,7 +927,58 @@ public class DBservices
         }
     }
 
-    public void UpdateOrderStatus( int StatusID,int OrderID)
+    public int UpdateServiceCallDetails(int scID, string ProblemDesc, bool Urgent)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spUpdateServiceCallDetails]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@scID", scID);
+                sqlComm.Parameters.AddWithValue("@ProblemDesc", ProblemDesc);
+                sqlComm.Parameters.AddWithValue("@Urgent", Urgent);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public int UpdateOrderDetails(int oID, int Quantity, int OrderStatus, DateTime EstimatedDOA)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spUpdateOrderDetails]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@OrderID", oID);
+                sqlComm.Parameters.AddWithValue("@Quantity", Quantity);
+                sqlComm.Parameters.AddWithValue("@OrderStatus", OrderStatus);
+                sqlComm.Parameters.AddWithValue("@EstimatedDateOfArrival", EstimatedDOA);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public void UpdateOrderStatus(int StatusID, int OrderID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateOrderStatus]", con))

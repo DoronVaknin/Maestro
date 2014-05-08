@@ -110,9 +110,8 @@
                                 <tr>
                                     <td>
                                         <div class="TextAreaHolder">
-                                            <span style="float: right">תיאור התקלה:</span>
-                                            <asp:TextBox ID="ServiceCallProblemDesc" runat="server" CssClass="form-control" TextMode="multiline"
-                                                placeholder="התקלה"></asp:TextBox>
+                                            <span style="float: right">* תיאור התקלה:</span>
+                                            <asp:TextBox ID="ServiceCallProblemDesc" runat="server" CssClass="form-control" TextMode="multiline"></asp:TextBox>
                                         </div>
                                     </td>
                                     <td>
@@ -148,6 +147,31 @@
                             OnClick="SaveServiceCallDetailsBTN_Click" Font-Bold="true" />
                     </div>
                 </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+        <!-- Modal -->
+    <div class="modal fade" id="ModalServiceCallUpdated" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" dir="rtl">
+                        &times;</button>
+                    <h4 class="modal-title">
+                        הודעת מערכת</h4>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <%--                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close</button>
+                    <button type="button" class="btn btn-primary">
+                        Save changes</button>
+                </div>--%>
             </div>
             <!-- /.modal-content -->
         </div>

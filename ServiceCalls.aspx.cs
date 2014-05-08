@@ -21,7 +21,7 @@ public partial class Default : System.Web.UI.Page
     protected void ServiceCallsGridView_SelectedIndexChanged(object sender, EventArgs e)
     {
         DataTable dt = new DataTable();
-        Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "ActivateModal('ModalServiceCalls')", true);
+        Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalServiceCalls", "ActivateModal('ModalServiceCalls');", true);
         //GridViewRow row = ServiceCallsGridView.SelectedRow;
         int scID = Convert.ToInt32(ServiceCallsGridView.SelectedRow.Cells[1].Text);
         ServiceCall sc = new ServiceCall();
@@ -66,7 +66,14 @@ public partial class Default : System.Web.UI.Page
 
     protected void SaveServiceCallDetailsBTN_Click(object sender, EventArgs e)
     {
-
-
+        ServiceCall sc = new ServiceCall();
+        int scID = Convert.ToInt32(ServiceCallsGridView.SelectedRow.Cells[1].Text);
+        string ProblemDesc = ServiceCallProblemDesc.Text;
+        bool Urgent = ServiceCallUrgent.Checked;
+        int RowAffected = sc.UpdateServiceCallDetails(scID, ProblemDesc, Urgent);
+        //if (RowAffected > 0)
+        //    Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalServiceCallUpdated", "ActivateModal('ModalServiceCallUpdated','קריאת השירות עודכנה בהצלחה','ModalServiceCalls');", true);
+        //else
+        //    Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalServiceCallUpdated", "ActivateModal('ModalServiceCallUpdated','אירעה שגיאה בשרת, אנא נסה מאוחר יותר','ModalServiceCalls');", true);
     }
 }
