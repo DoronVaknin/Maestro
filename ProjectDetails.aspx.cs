@@ -18,19 +18,15 @@ public partial class Default : System.Web.UI.Page
     {
         if (Session["selectedrow"] != null)
         {
-            GridViewRow row = (GridViewRow)Session["selectedrow"];
-            int ProjectID = Convert.ToInt32(row.Cells[1].Text);
+            int ProjectID = Convert.ToInt32(Session["selectedrow"]);
+
             Project p = new Project();
-            //שליפת נתוני הלקוח להצגה
-            DataTable CustomerDT = p.GetCustomerInformation(ProjectID);
-            DataTable ProjectDT = p.GetProjectDetails(ProjectID);
-            //הצבה של כל פרטי הלקוח בשדות המתאימים
-            //SetOrdersGrid();
-            ProjectIDHolder.Value = Convert.ToString(row.Cells[1].Text);
+            DataTable DetailsTable = p.GetAllDetails(ProjectID);
+
 
             if (!Page.IsPostBack)
             {
-                SetPageDetails(CustomerDT, ProjectDT);
+                SetPageDetails(DetailsTable);
                 //SetProjCurrentStatus();
                 LoadSuppliers();
             }
@@ -76,9 +72,9 @@ public partial class Default : System.Web.UI.Page
     {
         if (Session["selectedrow"] != null)
         {
-            GridViewRow row = (GridViewRow)Session["selectedrow"];
+            int ProjectID = Convert.ToInt32(Session["selectedrow"]);
             Project p = new Project();
-            DataTable OrdersDataTable = p.GetOrderDetails(Convert.ToInt32(row.Cells[1].Text));
+            DataTable OrdersDataTable = p.GetOrderDetails(ProjectID);
             DataTable statustable = p.GetOrderStatus(); // להחליט מה לעשות
             OrdersGV.DataSource = OrdersDataTable;
             OrdersGV.DataBind();
@@ -94,42 +90,46 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoStatus.SelectedIndex = (StatusNumber - 1);
     }
 
-    public void SetPageDetails(DataTable C_dt, DataTable P_dt)
+    public void SetPageDetails(DataTable DetailsTable)
     {
         //Populate customer details
-        ProjectInfoID.Text = C_dt.Rows[0].ItemArray[0].ToString();
-        ProjectInfoFirstName.Text = C_dt.Rows[0].ItemArray[1].ToString();
-        ProjectInfoLastName.Text = C_dt.Rows[0].ItemArray[2].ToString();
-        ProjectInfoPhone.Text = C_dt.Rows[0].ItemArray[3].ToString();
-        ProjectInfoMobile.Text = C_dt.Rows[0].ItemArray[4].ToString();
-        ProjectInfoFax.Text = C_dt.Rows[0].ItemArray[5].ToString();
-        ProjectInfoAddress.Text = C_dt.Rows[0].ItemArray[6].ToString();
-        ProjectInfoEmail.Text = C_dt.Rows[0].ItemArray[7].ToString();
-        ProjectInfoArchitectName.Text = C_dt.Rows[0].ItemArray[8].ToString();
-        ProjectInfoArchitectMobile.Text = C_dt.Rows[0].ItemArray[9].ToString();
-        ProjectInfoContractorName.Text = C_dt.Rows[0].ItemArray[10].ToString();
-        ProjectInfoContractorMobile.Text = C_dt.Rows[0].ItemArray[11].ToString();
-        ProjectInfoSupervisorName.Text = C_dt.Rows[0].ItemArray[12].ToString();
-        ProjectInfoSupervisorMobile.Text = C_dt.Rows[0].ItemArray[13].ToString();
-        ProjectInfoArea.SelectedValue = C_dt.Rows[0].ItemArray[14].ToString();
+        ProjectInfoID.Text = DetailsTable.Rows[0].ItemArray[0].ToString();
+        ProjectInfoFirstName.Text = DetailsTable.Rows[0].ItemArray[1].ToString();
+        ProjectInfoLastName.Text = DetailsTable.Rows[0].ItemArray[2].ToString();
+        ProjectInfoPhone.Text = DetailsTable.Rows[0].ItemArray[4].ToString();
+        ProjectInfoMobile.Text = DetailsTable.Rows[0].ItemArray[5].ToString();
+        ProjectInfoFax.Text = DetailsTable.Rows[0].ItemArray[6].ToString();
+        ProjectInfoAddress.Text = DetailsTable.Rows[0].ItemArray[3].ToString();
+        ProjectInfoEmail.Text = DetailsTable.Rows[0].ItemArray[7].ToString();
+        ProjectInfoArchitectName.Text = DetailsTable.Rows[0].ItemArray[10].ToString();
+        ProjectInfoArchitectMobile.Text = DetailsTable.Rows[0].ItemArray[11].ToString();
+        ProjectInfoContractorName.Text = DetailsTable.Rows[0].ItemArray[12].ToString();
+        ProjectInfoContractorMobile.Text = DetailsTable.Rows[0].ItemArray[13].ToString();
+        ProjectInfoSupervisorName.Text = DetailsTable.Rows[0].ItemArray[14].ToString();
+        ProjectInfoSupervisorMobile.Text = DetailsTable.Rows[0].ItemArray[15].ToString();
+        //אזור לא עובד 
+        ListItem li = ProjectInfoArea.Items.FindByText(DetailsTable.Rows[0].ItemArray[21].ToString());
+        if (li != null)
+        {
+            li.Selected = true;
+        }
 
-        //Populate project details
-        GridViewRow row = (GridViewRow)Session["selectedrow"];
-        ProjectInfoStatus.Text = P_dt.Rows[0].ItemArray[26].ToString();
-        ProjectInfoStatus.Attributes.Add("value", P_dt.Rows[0].ItemArray[15].ToString());
-        ProjectInfoName.Text = P_dt.Rows[0].ItemArray[1].ToString();
-        ProjectInfoHatches.Text = row.Cells[8].Text;
-        ProjectInfoCost.Text = P_dt.Rows[0].ItemArray[6].ToString();
-        ProjectInfoComments.Text = P_dt.Rows[0].ItemArray[2].ToString();
-        ProjectInfoDateOpened.Value = ((DateTime)P_dt.Rows[0].ItemArray[3]).ToString("MM/dd/yyyy");
-        ProjectInfoExpirationDate.Value = ((DateTime)P_dt.Rows[0].ItemArray[4]).ToString("MM/dd/yyyy");
-        ProjectInfoInstallationDate.Value = ((DateTime)P_dt.Rows[0].ItemArray[5]).ToString("MM/dd/yyyy");
-        ProjectInfoContractorName.Text = P_dt.Rows[0].ItemArray[7].ToString();
-        ProjectInfoContractorMobile.Text = P_dt.Rows[0].ItemArray[8].ToString();
-        ProjectInfoArchitectName.Text = P_dt.Rows[0].ItemArray[9].ToString();
-        ProjectInfoArchitectMobile.Text = P_dt.Rows[0].ItemArray[10].ToString();
-        ProjectInfoSupervisorName.Text = P_dt.Rows[0].ItemArray[11].ToString();
-        ProjectInfoSupervisorMobile.Text = P_dt.Rows[0].ItemArray[12].ToString();
+
+        //ProjectInfoStatus.Text = DetailsTable.Rows[0].ItemArray[2].ToString();
+        //ProjectInfoStatus.Attributes.Add("value", P_dt.Rows[0].ItemArray[15].ToString());
+        ProjectInfoName.Text = DetailsTable.Rows[0].ItemArray[8].ToString();
+        ProjectInfoHatches.Text = DetailsTable.Rows[0].ItemArray[21].ToString();
+        ProjectInfoCost.Text = DetailsTable.Rows[0].ItemArray[10].ToString();
+        ProjectInfoComments.Text = DetailsTable.Rows[0].ItemArray[20].ToString();
+        ProjectInfoDateOpened.Value = DetailsTable.Rows[0].ItemArray[17].ToString();
+        ProjectInfoExpirationDate.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[18]).ToString("MM/dd/yyyy");
+        ProjectInfoInstallationDate.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[19]).ToString("MM/dd/yyyy");
+        ProjectInfoContractorName.Text = DetailsTable.Rows[0].ItemArray[13].ToString();
+        ProjectInfoContractorMobile.Text = DetailsTable.Rows[0].ItemArray[14].ToString();
+        ProjectInfoArchitectName.Text = DetailsTable.Rows[0].ItemArray[11].ToString();
+        ProjectInfoArchitectMobile.Text = DetailsTable.Rows[0].ItemArray[12].ToString();
+        ProjectInfoSupervisorName.Text = DetailsTable.Rows[0].ItemArray[16].ToString();
+        ProjectInfoSupervisorMobile.Text = DetailsTable.Rows[0].ItemArray[17].ToString();
 
     }
 
