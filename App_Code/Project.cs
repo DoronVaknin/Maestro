@@ -274,5 +274,12 @@ public class Project
         dt = db.GetProjectsNames();
         return dt;
     }
-    
+
+    public DataTable GetAllDetails(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt=db.GetAllDetails(ProjectID);
+        return dt;
+    }
 }

@@ -21,8 +21,8 @@ public partial class Default : System.Web.UI.Page
     {
         int SelectedIndex = ProjectsTBL.SelectedIndex;
         SelectedIndex += 1;
-        GridViewRow row = ProjectsTBL.Rows[SelectedIndex];
-        Session["selectedrow"] = row;
+        int ProjectID =Convert.ToInt32(ProjectsTBL.Rows[SelectedIndex].Cells[1].Text);
+        Session["selectedrow"] = ProjectID;
         Response.Redirect("ProjectDetails.aspx");
     }
 
