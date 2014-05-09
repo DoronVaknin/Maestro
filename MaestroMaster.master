@@ -57,7 +57,8 @@
                             <ul>
                                 <li id="ToolbarBtnProjectOrders" class="ChooseProjectToolbarButtons pointer"><a>הזמנות
                                     עבור פרויקט</a></li>
-                                <li><a href="Orders.aspx">רשימת הזמנות</a></li>
+                                <li><a id="ToolbarBtnSupplierOrders" class="ChooseProjectToolbarButtons pointer">הזמנות עבור
+                                    ספק</a></li>
                             </ul>
                         </li>
                         <li><a>ספקים</a>
@@ -103,9 +104,14 @@
                 <div class="modal-body">
                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
                         SelectCommand="spGetProjectsNames" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+                    <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
+                        SelectCommand="spGetSuppliersList" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
                     <div class="cntr">
                         <asp:DropDownList ID="ProjectNamesDDL" runat="server" DataSourceID="SqlDataSource1"
                             CssClass="btn btn-default" DataTextField="pName" DataValueField="pID">
+                        </asp:DropDownList>
+                        <asp:DropDownList ID="SupplierNamesDDL" runat="server" DataSourceID="SqlDataSource2"
+                            CssClass="btn btn-default" DataTextField="sName" DataValueField="SupplierID">
                         </asp:DropDownList>
                         <br />
                         <br />
@@ -115,6 +121,8 @@
                             CssClass="btn btn-default" Font-Bold="true" OnClick="ChooseProjectForProjectOrdersBTN_Click" />
                         <asp:Button ID="ChooseProjectForProjectHatchesBTN" runat="server" Text="בחר פרויקט"
                             CssClass="btn btn-default" Font-Bold="true" OnClick="ChooseProjectForProjectHatchesBTN_Click" />
+                        <asp:Button ID="ChooseSupplierForSupplierOrdersBTN" runat="server" Text="בחר ספק"
+                            CssClass="btn btn-default" Font-Bold="true" OnClick="ChooseSupplierForSupplierOrdersBTN_Click" />
                     </div>
                 </div>
                 <%--<div class="modal-footer">

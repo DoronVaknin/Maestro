@@ -26,12 +26,6 @@ public class Order
         Quantity = _Quantity;
     }
 
-    public void UpdateOrderStatus(int statusNUM, int OrderID)
-    {
-        DBservices db = new DBservices();
-        db.UpdateOrderStatus(statusNUM, OrderID);
-    }
-
     int orderID;
     public int OrderID
     {

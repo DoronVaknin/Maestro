@@ -363,15 +363,15 @@
                 <div class="modal-footer">
                     <div class="cntr">
                         <button id="EditOrderDetailsBTN" runat="server" type="button" class="btn btn-default"
-                            onclick="EnableOrderDetails()">
+                            onclick="EnableOrderDetails('Project')">
                             ערוך&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span>
                         </button>
                         <button id="SaveOrderDetailsBTN" runat="server" type="button" class="btn btn-default HiddenButtons"
-                            onclick="ValidateOrderDetails()">
+                            onclick="ValidateOrderDetails('Project')">
                             שמור&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
                         </button>
                         <button id="CancelOrderDetailsBTN" runat="server" type="button" class="btn btn-default HiddenButtons"
-                            onclick="RestoreOrderDetails()">
+                            onclick="RestoreOrderDetails('Project')">
                             בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
                         </button>
                         <br />

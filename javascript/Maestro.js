@@ -97,23 +97,26 @@ function ActivateServiceCallExistingProjectModal() {
         switch (sButtonID) {
             case "ToolbarBtnCreateServiceCallExistingProject":
                 $("#ModalChooseProject .modal-title").html("קריאת שירות - פרויקט קיים");
-                $("#ChooseProjectForProjectOrdersBTN").addClass("HiddenButtons");
-                $("#ChooseProjectForProjectHatchesBTN").addClass("HiddenButtons");
-                $("#ChooseProjectForServiceCallBTN").removeClass("HiddenButtons");
+                $("#ModalChooseProject .modal-body input[type=submit], #SupplierNamesDDL").hide();
+                $("#ChooseProjectForServiceCallBTN").show();
                 break;
 
             case "ToolbarBtnProjectOrders":
                 $("#ModalChooseProject .modal-title").html("הזמנות עבור פרויקט");
-                $("#ChooseProjectForServiceCallBTN").addClass("HiddenButtons");
-                $("#ChooseProjectForProjectHatchesBTN").addClass("HiddenButtons");
-                $("#ChooseProjectForProjectOrdersBTN").removeClass("HiddenButtons");
+                $("#ModalChooseProject .modal-body input[type=submit], #SupplierNamesDDL").hide();
+                $("#ChooseProjectForProjectOrdersBTN").show();
                 break;
 
             case "ToolbarBtnProjectHatches":
                 $("#ModalChooseProject .modal-title").html("פתחים עבור פרויקט");
-                $("#ChooseProjectForServiceCallBTN").addClass("HiddenButtons");
-                $("#ChooseProjectForProjectOrdersBTN").addClass("HiddenButtons");
-                $("#ChooseProjectForProjectHatchesBTN").removeClass("HiddenButtons");
+                $("#ModalChooseProject .modal-body input[type=submit], #SupplierNamesDDL").hide();
+                $("#ChooseProjectForProjectHatchesBTN").show();
+                break;
+
+            case "ToolbarBtnSupplierOrders":
+                $("#ModalChooseProject .modal-title").html("הזמנות עבור ספק");
+                $("#ModalChooseProject .modal-body input[type=submit], #ProjectNamesDDL").hide();
+                $("#ChooseSupplierForSupplierOrdersBTN, #SupplierNamesDDL").show();
                 break;
         }
         ActivateModal("ModalChooseProject");
@@ -156,8 +159,8 @@ function DisableServiceCallDetailsFields() {
     $("#ServiceCallTBL input, #ServiceCallTBL textarea").attr("disabled", "disabled");
 }
 
-function DisableProjectOrderDetailsFields() {
-    $("#EditProjectOrderTBL input, #EditProjectOrderTBL select").attr("disabled", "disabled");
+function DisableOrderDetailsFields(sName) {
+    $("#Edit" + sName + "OrderTBL input, #Edit" + sName + "OrderTBL select").attr("disabled", "disabled");
 }
 
 function FixTextAreaIssue() {
@@ -240,19 +243,19 @@ function RestoreServiceCallDetails() {
     ClearInvalidFields("#ServiceCallTBL");
 }
 
-function EnableOrderDetails() {
-    $("#ContentPlaceHolder3_ProjectOrderQuantity, #ContentPlaceHolder3_ProjectOrderStatus, #ContentPlaceHolder3_ProjectOrderEstimatedDOA").removeAttr("disabled");
+function EnableOrderDetails(sName) {
+    $("#ContentPlaceHolder3_" + sName + "OrderQuantity, #ContentPlaceHolder3_" + sName + "OrderStatus, #ContentPlaceHolder3_" + sName + "OrderEstimatedDOA").removeAttr("disabled");
     SwitchEditSaveButtons(false, "Order");
-    BackupProjectOrderDetails();
+    BackupOrderDetails(sName);
 }
 
-function RestoreOrderDetails() {
-    $("#ContentPlaceHolder3_ProjectOrderQuantity").val(aProjectOrderDetails[0]);
-    $("#ContentPlaceHolder3_ProjectOrderStatus").val(aProjectOrderDetails[1]);
-    $("#ContentPlaceHolder3_ProjectOrderEstimatedDOA").val(aProjectOrderDetails[2]);
-    DisableProjectOrderDetailsFields();
+function RestoreOrderDetails(sName) {
+    $("#ContentPlaceHolder3_" + sName + "OrderQuantity").val(aOrderDetails[0]);
+    $("#ContentPlaceHolder3_" + sName + "OrderStatus").val(aOrderDetails[1]);
+    $("#ContentPlaceHolder3_" + sName + "OrderEstimatedDOA").val(aOrderDetails[2]);
+    DisableOrderDetailsFields(sName);
     SwitchEditSaveButtons(true, "Order");
-    ClearInvalidFields("#EditProjectOrderTBL");
+    ClearInvalidFields("#Edit" + sName + "OrderTBL");
 }
 
 //Navigation
@@ -364,10 +367,10 @@ function ValidateServiceCallDetails() {
     }
 }
 
-function ValidateOrderDetails() {
+function ValidateOrderDetails(sName) {
     var bIsValid = true;
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectOrderQuantity", function (s) { return s <= 0 || isNaN(s); }, false, "יש להזין כמות חיובית");
-    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectOrderEstimatedDOA", function (s) { return s.length > 0 && !isValidDate(s); }, false, "יש להזין תאריך חוקי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_" + sName + "OrderQuantity", function (s) { return s <= 0 || isNaN(s); }, false, "יש להזין כמות חיובית");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_" + sName + "OrderEstimatedDOA", function (s) { return s.length > 0 && !isValidDate(s); }, false, "יש להזין תאריך חוקי");
     if (bIsValid) {
         $(".ErrorLabel").html("");
         SwitchEditSaveButtons(true, "Order");
@@ -449,11 +452,11 @@ function BackupServiceCallDetails() {
     aServiceCallDetails.push($("#ContentPlaceHolder3_ServiceCallUrgent").val());
 }
 
-function BackupProjectOrderDetails() {
-    aProjectOrderDetails = [];
-    aProjectOrderDetails.push($("#ContentPlaceHolder3_ProjectOrderQuantity").val());
-    aProjectOrderDetails.push($("#ContentPlaceHolder3_ProjectOrderStatus").val());
-    aProjectOrderDetails.push($("#ContentPlaceHolder3_ProjectOrderEstimatedDOA").val());
+function BackupOrderDetails(sName) {
+    aOrderDetails = [];
+    aOrderDetails.push($("#ContentPlaceHolder3_" + sName + "OrderQuantity").val());
+    aOrderDetails.push($("#ContentPlaceHolder3_" + sName + "OrderStatus").val());
+    aOrderDetails.push($("#ContentPlaceHolder3_" + sName + "OrderEstimatedDOA").val());
 }
 
 function IsPage(sPageName, sSource) {

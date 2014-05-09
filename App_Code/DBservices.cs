@@ -977,29 +977,6 @@ public class DBservices
             }
         }
     }
-
-    public void UpdateOrderStatus(int StatusID, int OrderID)
-    {
-        con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[spUpdateOrderStatus]", con))
-        {
-            if (con.State != ConnectionState.Open)
-                con.Open();
-
-            try
-            {
-                sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@projectid", OrderID);
-                sqlComm.Parameters.AddWithValue("@OrderStatusID", StatusID);
-                sqlComm.CommandTimeout = 600;
-                sqlComm.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
-        }
-    }
 }
 
 

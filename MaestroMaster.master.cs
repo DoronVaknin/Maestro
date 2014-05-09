@@ -46,4 +46,12 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
         Session["ProjectNameForProjectHatches"] = ProjectNamesDDL.SelectedItem;
         Response.Redirect("ProjectHatches.aspx");
     }
+
+    protected void ChooseSupplierForSupplierOrdersBTN_Click(object sender, EventArgs e)
+    {
+        Session["SupplierIDForSupplierOrders"] = SupplierNamesDDL.SelectedValue;
+        Session["SupplierNameForSupplierOrders"] = SupplierNamesDDL.SelectedItem;
+        Response.Redirect("SupplierOrders.aspx");
+    }
+
 }

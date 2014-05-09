@@ -344,7 +344,7 @@ function BuildHatchDetailsPage(oHatch) {
     str += "<div data-role='footer' data-position='fixed' data-theme='a'>";
     str += "<div class = 'HatchNavbar' data-role='navbar'>";
     str += "<ul>";
-    str += "<li><a data-ajax = 'false' href='#TakePhotoHatch" + oHatch.HatchID + "' class = 'ui-icon-camera-white' >צלם תמונה</a></li>";
+    str += "<li><a data-ajax = 'false' href='#TakePhotoHatch" + oHatch.HatchID + "' class = 'ui-icon-camera-white' onclick='workManager()' >צלם תמונה</a></li>";
     str += "<li><a data-ajax = 'false' href='#PicturesOfHatch" + oHatch.HatchID + "' class = 'HatchPicturesBTN' data-icon='grid' data-iconpos='left'>תמונות</a></li>";
     str += "<li><a data-ajax = 'false' href='#QAForHatch" + oHatch.HatchID + "' data-icon='star'>בקרת איכות</a></li>";
     str += "</ul>";
@@ -388,7 +388,7 @@ function BuildServiceCallsList(ServiceCallsList) {
     for (var scID in ServiceCallsList) {
         str += "<li><a data-ajax = 'false' href= '#ServiceCall" + scID + "'>";
         str += "<h1>" + ServiceCallsList[scID][1].Fname + " " + ServiceCallsList[scID][1].Lname + "</h1>";
-//        str += "<p>" + ServiceCallsList[scID][1].City + "</p>";
+        //        str += "<p>" + ServiceCallsList[scID][1].City + "</p>";
         str += "</a></li>";
     }
     return str;
@@ -664,3 +664,53 @@ function GetCoordinatesByAddress(sAddress) {
         } // end of error
     });
 }
+
+
+//PhoneGap functions
+
+function workManager() {
+    if (document.getElementById("PointNameTB").value != "") {
+        getPicture();
+    } // If
+    else {
+        alert("אנא הכנס שם ותיאור לתמונה");
+    } // Else
+} // Work Manager
+
+
+function getPicture() {
+    navigator.camera.getPicture(uploadPhoto,
+                                        function (message) { alert('get picture failed'); },
+                                        {
+                                            quality: 50,
+                                            destinationType: navigator.camera.DestinationType.FILE_URI,
+                                            sourceType: navigator.camera.PictureSourceType.CAMERA
+                                        }
+                                        ); // PhoneGap method for retrieving an image from the phone's camera
+
+} // Get Picture
+
+function uploadPhoto(imageURI) {
+    Load(); // Start the spinning "working" animation
+    var options = new FileUploadOptions(); // PhoneGap object to allow server upload
+    options.fileKey = "file";
+    options.fileName = document.getElementById("PointNameTB").value; // file name
+    options.mimeType = "image/jpeg"; // file type
+    var params = {}; // Optional parameters
+    params.value1 = "test";
+    params.value2 = "param";
+
+    options.params = params; // add parameters to the FileUploadOptions object
+
+    var ft = new FileTransfer();
+    ft.upload(imageURI, encodeURI("http://proj.ruppin.ac.il/igroup9/prod/images/hatches/ReturnValue.ashx"), win, fail, options); // Upload
+} // Upload Photo
+
+function win() {
+    alert("התמונה הועלתה בהצלחה");
+    UnLoad();
+} // win (upload success)
+
+function fail(error) {
+    alert("An error has occurred: Code = " + error.code);
+} // fail (upload not successful)

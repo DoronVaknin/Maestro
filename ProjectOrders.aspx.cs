@@ -14,8 +14,8 @@ public partial class Default2 : System.Web.UI.Page
         {
             if (Session["ProjectNameForProjectOrders"] != null)
             {
-                string sProjectName = Session["ProjectNameForProjectOrders"].ToString();
-                ModalHeader.InnerHtml = PageHeader.InnerHtml = "הזמנות עבור הפרויקט " + sProjectName;
+                string ProjectName = Session["ProjectNameForProjectOrders"].ToString();
+                ModalHeader.InnerHtml = PageHeader.InnerHtml = "הזמנות עבור הפרויקט " + ProjectName;
             }
             LoadSuppliers();
         }
