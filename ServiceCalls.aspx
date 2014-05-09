@@ -24,7 +24,7 @@
             <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened"
                 ReadOnly="True" DataFormatString="{0:dd/MM/yyyy}" />
             <asp:BoundField DataField="DateClosed" HeaderText="תאריך סגירה" SortExpression="DateClosed"
-                ReadOnly="True" DataFormatString="{0:dd/MM/yyyy}" Visible = "false" />
+                ReadOnly="True" DataFormatString="{0:dd/MM/yyyy}" Visible="false" />
             <asp:BoundField DataField="ProblemDesc" HeaderText="התקלה" SortExpression="ProblemDesc" />
             <asp:CheckBoxField DataField="Urgent" HeaderText="דחוף" SortExpression="Urgent" />
         </Columns>
@@ -37,90 +37,141 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" dir="rtl"
                         id="CloseBTN">
                         &times;</button>
-                    <h4 class="modal-title">
-                        פרטי הקריאה</h4>
+                    <div class="cntr">
+                        <h4 class="modal-title">
+                            פרטי הקריאה</h4>
+                    </div>
                 </div>
                 <div class="modal-body">
+                    <asp:ScriptManager ID="ScriptManager1" runat="server">
+                    </asp:ScriptManager>
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="SaveServiceCallDetailsHiddenBTN" EventName="Click" />
+                        </Triggers>
+                        <ContentTemplate>
+                            <table id="ServiceCallTBL" class="table">
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ServiceCallID" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <span class="input-group-addon">מס' קריאה</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ServiceCallPhone" runat="server" CssClass="form-control" MaxLength="10"></asp:TextBox>
+                                            <span class="input-group-addon">טלפון</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ServiceCallFirstName" runat="server" CssClass="form-control" MaxLength="15"></asp:TextBox>
+                                            <span class="input-group-addon">שם פרטי</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ServiceCallMobile" runat="server" CssClass="form-control" MaxLength="10"></asp:TextBox>
+                                            <span class="input-group-addon">טלפון נייד</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ServiceCallLastName" runat="server" CssClass="form-control" MaxLength="15"></asp:TextBox>
+                                            <span class="input-group-addon">שם משפחה</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ServiceCallDateOpened" runat="server" CssClass="form-control datepicker"></asp:TextBox>
+                                            <span class="input-group-addon">תאריך פתיחה</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ServiceCallAddress" runat="server" CssClass="form-control" MaxLength="30"></asp:TextBox>
+                                            <span class="input-group-addon">כתובת</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ServiceCallExpirationDate" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <span class="input-group-addon">תפוגת אחריות</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="TextAreaHolder">
+                                            <span style="float: right">* תיאור התקלה:</span>
+                                            <asp:TextBox ID="ServiceCallProblemDesc" runat="server" CssClass="form-control" TextMode="multiline"></asp:TextBox>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label>
+                                            <input id="ServiceCallUrgent" runat="server" type="checkbox">
+                                            קריאה דחופה
+                                        </label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                 </div>
                 <br />
-                <div align="center">
-                    <table class="nav-justified">
-                        <tr>
-                            <td>
-                                תאריך פתיחה:&nbsp;
-                                <asp:Label ID="OpenDateLBL" runat="server" Text="Label"></asp:Label>
-                            </td>
-                            <td>
-                                תאריך סגירה :
-                                <asp:Label ID="CloseDateLBL" runat="server" Text="Label"></asp:Label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                שם פרטי:
-                                <asp:Label ID="FNameLBL" runat="server" Text="Label"></asp:Label>
-                            </td>
-                            <td>
-                                שם משפחה:
-                                <asp:Label ID="LNameLBL" runat="server" Text="Label"></asp:Label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                נייד:
-                                <asp:Label ID="PhoneLBL" runat="server" Text="Label"></asp:Label>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                שם פרויקט:
-                                <asp:Label ID="ProjectNameLBL" runat="server" Text="Label"></asp:Label>
-                            </td>
-                            <td>
-                                &nbsp;
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right" colspan="2">
-                                פרטי הקריאה:
-                                <asp:Label ID="ServiceCallDescriptionLBL" runat="server" Text="Label"></asp:Label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                אזור:
-                                <asp:Label ID="RegionLBL" runat="server" Text="Label"></asp:Label>
-                            </td>
-                            <td>
-                                &nbsp;
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                כתובת:
-                                <asp:Label ID="AdressLBL" runat="server" Text="Label"></asp:Label>
-                            </td>
-                            <td>
-                                &nbsp;
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                &nbsp;
-                            </td>
-                        </tr>
-                    </table>
-                    <asp:Button ID="ServiceCallBTN" runat="server" Text="סגור קריאה" CssClass="btn btn-default"
-                        Font-Bold="true" OnClick="ServiceCallBTN_Click" />
-                </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 50%">
-                        סגור ללא שינויים</button>
-                    <%--  <button type="button" class="btn btn-primary">
-                        save changes</button>--%>
+                    <div class="cntr">
+                        <button id="EditServiceCallDetailsBTN" runat="server" type="button" class="btn btn-default"
+                            onclick="EnableServiceCallDetails()">
+                            ערוך&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button id="SaveServiceCallDetailsBTN" runat="server" type="button" class="btn btn-default HiddenButtons"
+                            onclick="ValidateServiceCallDetails()">
+                            שמור&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                        <button id="CancelServiceCallDetailsBTN" runat="server" type="button" class="btn btn-default HiddenButtons"
+                            onclick="RestoreServiceCallDetails()">
+                            בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <br />
+                        <br />
+                        <span id="ServiceCallDetailsErrorLabel" class="ErrorLabel"></span>
+                        <asp:Button ID="SaveServiceCallDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default HiddenButtons"
+                            OnClick="SaveServiceCallDetailsBTN_Click" Font-Bold="true" />
+                    </div>
                 </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+        <!-- Modal -->
+    <div class="modal fade" id="ModalServiceCallUpdated" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" dir="rtl">
+                        &times;</button>
+                    <h4 class="modal-title">
+                        הודעת מערכת</h4>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <%--                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close</button>
+                    <button type="button" class="btn btn-primary">
+                        Save changes</button>
+                </div>--%>
             </div>
             <!-- /.modal-content -->
         </div>

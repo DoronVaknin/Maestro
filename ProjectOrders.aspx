@@ -27,8 +27,8 @@
             <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened"
                 DataFormatString="{0:dd/MM/yyyy}" />
             <asp:BoundField DataField="rName" HeaderText="שם הפריט" SortExpression="rName" />
-            <asp:BoundField DataField="DateOfArrival" HeaderText="תאריך הגעה" SortExpression="DateOfArrival"
-                DataFormatString="{0:dd/MM/yyyy}" />
+            <asp:BoundField DataField="EstimatedDateOfArrival" HeaderText="תאריך הגעה משוער"
+                SortExpression="EstimatedDateOfArrival" DataFormatString="{0:dd/MM/yyyy}" />
             <asp:BoundField DataField="Quantity" HeaderText="כמות" SortExpression="Quantity" />
             <asp:BoundField DataField="sName" HeaderText="שם הספק" SortExpression="sName" />
             <asp:BoundField DataField="osName" HeaderText="סטטוס" SortExpression="osName" />
@@ -36,7 +36,7 @@
     </asp:GridView>
     <br />
     <div class="cntr">
-        <button id="OpenModalCreateOrdersBTN" type="button" class="btn btn-default" onclick="ActivateModal('ModalCreateOrders')">
+        <button id="OpenModalCreateOrdersBTN" type="button" class="btn btn-default" onclick="ActivateModal('ModalCreateOrders');">
             צור הזמנה חדשה&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
         </button>
     </div>
@@ -275,46 +275,111 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <asp:SqlDataSource runat="server" ID="StatusDataSource" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
-        SelectCommand="spGetOrderStatus" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-    <!-- Order Details and editing Modal -->
     <div class="modal fade" id="ModalOrderDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-sm">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" dir="rtl"
-                        id="CloseBTN">
+                        id="Button1">
                         &times;</button>
-                    <h4 class="modal-title">
-                        פרטי ההזמנה</h4>
+                    <div class="cntr">
+                        <h4 class="modal-title">
+                            פרטי ההזמנה</h4>
+                    </div>
                 </div>
-                <div class="modal-body" style="text-align: right;">
-                    <br />
-                    <asp:Label runat="server" Text="מספר הזמנה:" ID="OrderNumLBL"></asp:Label>
-                    <br />
-                    <asp:Label runat="server" Text="תאריך ההזמנה:" ID="OrderDateLBL"></asp:Label>
-                    <br />
-                    <asp:Label runat="server" Text="תאריך הגעה משוער:" ID="EstimateDateLBL"></asp:Label>
-                    <br />
-                    <asp:Label runat="server" Text="שם הפריט:" ID="RawMeterialLBL"></asp:Label>
-                    <br />
-                    <asp:Label runat="server" Text="כמות שהוזמנה:" ID="QuantityLBL"></asp:Label>
-                    <br />
-                    <asp:Label runat="server" Text="שם הספק:" ID="SupplierLBL"></asp:Label>
-                    <br />
-                    סטטוס הזמנה: &nbsp &nbsp
-                    <asp:DropDownList ID="OrderStatusDDL" runat="server" DataSourceID="StatusDataSource"
-                        DataTextField="osName" DataValueField="osID">
-                    </asp:DropDownList>
-                    <br />
+                <div class="modal-body">
+                    <asp:ScriptManager ID="ScriptManager1" runat="server">
+                    </asp:ScriptManager>
+                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="SaveOrderDetailsHiddenBTN" EventName="Click" />
+                        </Triggers>
+                        <ContentTemplate>
+                            <table id="EditProjectOrderTBL" class="table">
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ProjectOrderID" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <span class="input-group-addon">מס' הזמנה</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ProjectOrderSupplier" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <span class="input-group-addon">שם הספק</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ProjectOrderItemName" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <span class="input-group-addon">שם הפריט</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ProjectOrderDateOpened" runat="server" CssClass="form-control datepicker"
+                                                MaxLength="10"></asp:TextBox>
+                                            <span class="input-group-addon">תאריך פתיחה</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ProjectOrderQuantity" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <span class="input-group-addon">כמות</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="ProjectOrderEstimatedDOA" runat="server" CssClass="form-control datepicker"
+                                                MaxLength="10"></asp:TextBox>
+                                            <span class="input-group-addon">הגעה משוערת</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
+                                            SelectCommand="spGetOrderStatus" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+                                        <div class="cntr">
+                                            סטטוס: &nbsp;
+                                            <asp:DropDownList ID="ProjectOrderStatus" runat="server" DataSourceID="SqlDataSource2"
+                                                CssClass="btn btn-default" DataTextField="osName" DataValueField="osID">
+                                            </asp:DropDownList>
+                                        </div>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </table>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
                 </div>
                 <br />
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-left: 50%">
-                        סגור ללא שינויים</button>
-                    <%--  <button type="button" class="btn btn-primary">
-                        save changes</button>--%>
+                    <div class="cntr">
+                        <button id="EditOrderDetailsBTN" runat="server" type="button" class="btn btn-default"
+                            onclick="EnableOrderDetails()">
+                            ערוך&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button id="SaveOrderDetailsBTN" runat="server" type="button" class="btn btn-default HiddenButtons"
+                            onclick="ValidateOrderDetails()">
+                            שמור&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                        <button id="CancelOrderDetailsBTN" runat="server" type="button" class="btn btn-default HiddenButtons"
+                            onclick="RestoreOrderDetails()">
+                            בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                        <br />
+                        <br />
+                        <span id="OrderDetailsErrorLabel" class="ErrorLabel"></span>
+                        <asp:Button ID="SaveOrderDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default HiddenButtons"
+                            OnClick="SaveOrderDetailsBTN_Click" Font-Bold="true" />
+                    </div>
                 </div>
             </div>
             <!-- /.modal-content -->

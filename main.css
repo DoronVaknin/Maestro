@@ -244,7 +244,7 @@ html[xmlns] #nav
     width: 50px;
 }
 
-#NewCustomerTBL td, #NewProjectTBL td, #NewSupplierTBL td, #CustomerDetailsTBL td, #ProjectDetailsTBL td, #NewSCExistingProjectTBL td, #NewServiceCallExternalTBL td
+#NewCustomerTBL td, #NewProjectTBL td, #NewSupplierTBL td, #CustomerDetailsTBL td, #ProjectDetailsTBL td, #NewSCExistingProjectTBL td, #NewServiceCallExternalTBL td, #ServiceCallTBL td, #EditProjectOrderTBL td
 {
     border-top: none;
 }
