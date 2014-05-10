@@ -167,6 +167,10 @@ function DisableSupplierDetailsFields() {
     $("#EditSupplierTBL input").attr("disabled", "disabled");
 }
 
+function DisableHatchDetailsFields() {
+    $("#EditHatchTBL select, #EditHatchTBL textarea").attr("disabled", "disabled");
+}
+
 function FixTextAreaIssue() {
     var sValue = $("#ProjectDetailsTBL textarea").val();
     if (sValue == "&nbsp;")
@@ -278,6 +282,22 @@ function RestoreSupplierDetails() {
     DisableSupplierDetailsFields();
     SwitchEditSaveButtons(true, "Supplier");
     ClearInvalidFields("#EditSupplierTBL");
+}
+
+function EnableHatchDetails() {
+    $("#EditHatchTBL select, #EditHatchTBL textarea").removeAttr("disabled");
+    SwitchEditSaveButtons(false, "Hatch");
+    BackupHatchDetails();
+}
+
+function RestoreHatchDetails() {
+    $("#ContentPlaceHolder3_HatchType").val(aHatchDetails[0]);
+    $("#ContentPlaceHolder3_HatchStatus").val(aHatchDetails[1]);
+    $("#ContentPlaceHolder3_HatchFailureType").val(aHatchDetails[2]);
+    $("#ContentPlaceHolder3_HatchComments").val(aHatchDetails[3]);
+    DisableHatchDetailsFields();
+    SwitchEditSaveButtons(true, "Hatch");
+    ClearInvalidFields("#EditHatchTBL");
 }
 
 //Navigation
@@ -392,6 +412,7 @@ function ValidateServiceCallDetails() {
     if (bIsValid) {
         $(".ErrorLabel").html("");
         SwitchEditSaveButtons(true, "ServiceCall");
+        DisableServiceCallDetailsFields();
         $("#ContentPlaceHolder3_SaveServiceCallDetailsHiddenBTN").click();
     }
 }
@@ -403,8 +424,16 @@ function ValidateOrderDetails(sName) {
     if (bIsValid) {
         $(".ErrorLabel").html("");
         SwitchEditSaveButtons(true, "Order");
+        DisableOrderDetailsFields(sName);
         $("#ContentPlaceHolder3_SaveOrderDetailsHiddenBTN").click();
     }
+}
+
+function ValidateHatchDetails() {
+        $(".ErrorLabel").html("");
+        SwitchEditSaveButtons(true, "Hatch");
+        DisableHatchDetailsFields();
+        $("#ContentPlaceHolder3_SaveHatchDetailsHiddenBTN").click();
 }
 
 function MarkInvalid(id, cb, bSelector, sMessage) {
@@ -496,6 +525,14 @@ function BackupSupplierDetails() {
     aSupplierDetails.push($("#ContentPlaceHolder3_SupplierPhone").val());
     aSupplierDetails.push($("#ContentPlaceHolder3_SupplierCellPhone").val());
     aSupplierDetails.push($("#ContentPlaceHolder3_SupplierFax").val());
+}
+
+function BackupHatchDetails() {
+    aHatchDetails = [];
+    aHatchDetails.push($("#ContentPlaceHolder3_HatchType").val());
+    aHatchDetails.push($("#ContentPlaceHolder3_HatchStatus").val());
+    aHatchDetails.push($("#ContentPlaceHolder3_HatchFailureType").val());
+    aHatchDetails.push($("#ContentPlaceHolder3_HatchComments").val());
 }
 
 function IsPage(sPageName, sSource) {

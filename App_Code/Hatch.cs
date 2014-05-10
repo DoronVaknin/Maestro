@@ -28,6 +28,19 @@ public class Hatch
         Comments = _Comments;
     }
 
+    public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, int _EmployeeID, DateTime _StatusLastModified, string _Comments, int _HatchTypeID)
+    {
+        HatchID = _HatchID;
+        HatchStatusID = _HatchStatusID;
+        HatchTypeID = _HatchTypeID;
+        if (_FailureTypeID != 0)
+            ftID = _FailureTypeID;
+        EmployeeID = _EmployeeID;
+        StatusLastModified = _StatusLastModified;
+        //if (_Comments != "")
+        Comments = _Comments;
+    }
+
     int hatchID;
     public int HatchID
     {
@@ -150,12 +163,13 @@ public class Hatch
         return RowAffected;
     }
 
-    public DataTable GetUsernameID(string Username)
+    public int GetUsernameID(string Username)
     {
         DataTable dt = new DataTable();
         DBservices db = new DBservices();
         dt = db.GetUsernameID(Username);
-        return dt;
+        int eID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
+        return eID;
     }
 
 }

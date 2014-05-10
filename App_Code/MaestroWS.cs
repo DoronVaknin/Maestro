@@ -289,8 +289,7 @@ public class MaestroWS : System.Web.Services.WebService
     public string GetUsernameID()
     {
         Hatch h = new Hatch();
-        DataTable dt = h.GetUsernameID(User.Identity.Name);
-        int eID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
+        int eID = h.GetUsernameID(User.Identity.Name);
 
         // create a json serializer object
         JavaScriptSerializer js = new JavaScriptSerializer();

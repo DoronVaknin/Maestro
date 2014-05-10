@@ -938,6 +938,10 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@HatchID", h.HatchID);
                 sqlComm.Parameters.AddWithValue("@HatchStatusID", h.HatchStatusID);
+                if (h.HatchTypeID != null)
+                    sqlComm.Parameters.AddWithValue("@HatchTypeID", h.HatchStatusID);
+                else
+                    sqlComm.Parameters.AddWithValue("@HatchTypeID", null);
                 if (h.FtID == 0)
                     sqlComm.Parameters.AddWithValue("@FailureTypeID", null);
                 else
