@@ -140,11 +140,18 @@
                             onclick="RestoreServiceCallDetails()">
                             בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
                         </button>
+                        &nbsp;&nbsp;
+                        <button runat="server" type="button" class="btn btn-default" onclick="ActivateCloseServiceCallDialog()">
+                            סגור קריאת שירות&nbsp;&nbsp;<span class="glyphicon glyphicon-folder-close"></span>
+                        </button>
                         <br />
                         <br />
                         <span id="ServiceCallDetailsErrorLabel" class="ErrorLabel"></span>
                         <asp:Button ID="SaveServiceCallDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default HiddenButtons"
                             OnClick="SaveServiceCallDetailsBTN_Click" Font-Bold="true" />
+                        <asp:Button ID="CloseServiceCallHiddenBTN" runat="server" Text="סגור קריאת שירות"
+                            CssClass="btn btn-default HiddenButtons" OnClick="CloseServiceCallHiddenBTN_Click"
+                            Font-Bold="true" />
                     </div>
                 </div>
             </div>
@@ -152,9 +159,9 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-        <!-- Modal -->
-    <div class="modal fade" id="ModalServiceCallUpdated" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true">
+    <!-- Modal -->
+    <div class="modal fade" id="ModalServiceCallUpdated" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -164,7 +171,45 @@
                         הודעת מערכת</h4>
                 </div>
                 <div class="modal-body">
-                    
+                </div>
+                <%--                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close</button>
+                    <button type="button" class="btn btn-primary">
+                        Save changes</button>
+                </div>--%>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="CloseServiceCallDialogModal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" dir="rtl">
+                        &times;</button>
+                    <div class="cntr">
+                        <h4 class="modal-title">
+                            סגירת קריאת שירות</h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="QuestionContainer">
+                    </div>
+                    <br />
+                    <div class="cntr">
+                        <button id="CloseServiceCallBTN" runat="server" type="button" class="btn btn-danger"
+                            onclick="CloseServiceCall()">
+                            סגור קריאה&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                        <button id="CancelCloseServiceCallBTN" runat="server" data-dismiss="modal" type="button"
+                            class="btn btn-default">
+                            בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
                 </div>
                 <%--                <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">

@@ -16,13 +16,12 @@ public partial class Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["selectedrow"] != null)
+        if (Session["ProjectID"] != null)
         {
-            int ProjectID = Convert.ToInt32(Session["selectedrow"]);
+            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
 
             Project p = new Project();
             DataTable DetailsTable = p.GetAllDetails(ProjectID);
-
 
             if (!Page.IsPostBack)
             {
@@ -70,9 +69,9 @@ public partial class Default : System.Web.UI.Page
 
     public void SetOrdersGrid()
     {
-        if (Session["selectedrow"] != null)
+        if (Session["ProjectID"] != null)
         {
-            int ProjectID = Convert.ToInt32(Session["selectedrow"]);
+            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
             Project p = new Project();
             DataTable OrdersDataTable = p.GetOrderDetails(ProjectID);
             DataTable statustable = p.GetOrderStatus(); // להחליט מה לעשות
@@ -81,14 +80,14 @@ public partial class Default : System.Web.UI.Page
         }
     }
 
-    public void SetProjCurrentStatus()
-    {
-        Project p = new Project();
-        GridViewRow row = (GridViewRow)Session["selectedrow"];
-        string StatusNum = Convert.ToString(row.Cells[5].Text);
-        int StatusNumber = p.GetStatusNumber(StatusNum);
-        ProjectInfoStatus.SelectedIndex = (StatusNumber - 1);
-    }
+    //public void SetProjCurrentStatus()
+    //{
+    //    Project p = new Project();
+    //    GridViewRow row = (GridViewRow)Session["ProjectID"];
+    //    string StatusNum = Convert.ToString(row.Cells[5].Text);
+    //    int StatusNumber = p.GetStatusNumber(StatusNum);
+    //    ProjectInfoStatus.SelectedIndex = (StatusNumber - 1);
+    //}
 
     public void SetPageDetails(DataTable DetailsTable)
     {
@@ -96,10 +95,10 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoID.Text = DetailsTable.Rows[0].ItemArray[0].ToString();
         ProjectInfoFirstName.Text = DetailsTable.Rows[0].ItemArray[1].ToString();
         ProjectInfoLastName.Text = DetailsTable.Rows[0].ItemArray[2].ToString();
+        ProjectInfoAddress.Text = DetailsTable.Rows[0].ItemArray[3].ToString();
         ProjectInfoPhone.Text = DetailsTable.Rows[0].ItemArray[4].ToString();
         ProjectInfoMobile.Text = DetailsTable.Rows[0].ItemArray[5].ToString();
         ProjectInfoFax.Text = DetailsTable.Rows[0].ItemArray[6].ToString();
-        ProjectInfoAddress.Text = DetailsTable.Rows[0].ItemArray[3].ToString();
         ProjectInfoEmail.Text = DetailsTable.Rows[0].ItemArray[7].ToString();
         ProjectInfoArchitectName.Text = DetailsTable.Rows[0].ItemArray[10].ToString();
         ProjectInfoArchitectMobile.Text = DetailsTable.Rows[0].ItemArray[11].ToString();
@@ -107,30 +106,26 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoContractorMobile.Text = DetailsTable.Rows[0].ItemArray[13].ToString();
         ProjectInfoSupervisorName.Text = DetailsTable.Rows[0].ItemArray[14].ToString();
         ProjectInfoSupervisorMobile.Text = DetailsTable.Rows[0].ItemArray[15].ToString();
-        //אזור לא עובד 
-        ListItem li = ProjectInfoArea.Items.FindByText(DetailsTable.Rows[0].ItemArray[21].ToString());
-        if (li != null)
-        {
-            li.Selected = true;
-        }
+        //ListItem li = ProjectInfoArea.Items.FindByText(DetailsTable.Rows[0].ItemArray[21].ToString());
+        //ProjectInfoArea.SelectedValue = li.Value;
 
 
         //ProjectInfoStatus.Text = DetailsTable.Rows[0].ItemArray[2].ToString();
         //ProjectInfoStatus.Attributes.Add("value", P_dt.Rows[0].ItemArray[15].ToString());
+
         ProjectInfoName.Text = DetailsTable.Rows[0].ItemArray[8].ToString();
-        ProjectInfoHatches.Text = DetailsTable.Rows[0].ItemArray[21].ToString();
+        ProjectInfoHatches.Text = DetailsTable.Rows[0].ItemArray[22].ToString();
         ProjectInfoCost.Text = DetailsTable.Rows[0].ItemArray[10].ToString();
         ProjectInfoComments.Text = DetailsTable.Rows[0].ItemArray[20].ToString();
-        ProjectInfoDateOpened.Value = DetailsTable.Rows[0].ItemArray[17].ToString();
+        ProjectInfoDateOpened.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[17]).ToString("MM/dd/yyyy");
         ProjectInfoExpirationDate.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[18]).ToString("MM/dd/yyyy");
         ProjectInfoInstallationDate.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[19]).ToString("MM/dd/yyyy");
-        ProjectInfoContractorName.Text = DetailsTable.Rows[0].ItemArray[13].ToString();
-        ProjectInfoContractorMobile.Text = DetailsTable.Rows[0].ItemArray[14].ToString();
         ProjectInfoArchitectName.Text = DetailsTable.Rows[0].ItemArray[11].ToString();
         ProjectInfoArchitectMobile.Text = DetailsTable.Rows[0].ItemArray[12].ToString();
-        ProjectInfoSupervisorName.Text = DetailsTable.Rows[0].ItemArray[16].ToString();
-        ProjectInfoSupervisorMobile.Text = DetailsTable.Rows[0].ItemArray[17].ToString();
-
+        ProjectInfoContractorName.Text = DetailsTable.Rows[0].ItemArray[13].ToString();
+        ProjectInfoContractorMobile.Text = DetailsTable.Rows[0].ItemArray[14].ToString();
+        ProjectInfoSupervisorName.Text = DetailsTable.Rows[0].ItemArray[15].ToString();
+        ProjectInfoSupervisorMobile.Text = DetailsTable.Rows[0].ItemArray[16].ToString();
     }
 
     protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)
@@ -143,9 +138,9 @@ public partial class Default : System.Web.UI.Page
 
     protected void SaveProjectDetailsBTN_Click(object sender, EventArgs e)
     {
-        if (Session["selectedrow"] != null)
+        if (Session["ProjectID"] != null)
         {
-            GridViewRow row = (GridViewRow)Session["selectedrow"];
+            GridViewRow row = (GridViewRow)Session["ProjectID"];
             Project p = new Project();
             p.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectInfoStatus.SelectedIndex + 1);
             p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoCost.Text), ProjectInfoName.Text, ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text, DateTime.ParseExact(ProjectInfoExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInfoInstallationDate.Value, "MM/dd/yyyy", null));
@@ -177,9 +172,9 @@ public partial class Default : System.Web.UI.Page
 
     protected void CreateOrder(int Count, string SupplierID, int RawMeterialID, string EstArrDate)
     {
-        if (Count > 0 && Session["ProjectIDForProjectOrders"] != null)
+        if (Count > 0 && Session["ProjectID"] != null)
         {
-            string ProjectID = Session["ProjectIDForProjectOrders"].ToString();
+            string ProjectID = Session["ProjectID"].ToString();
             DBservices db = new DBservices();
             Order o = new Order(Convert.ToInt32(ProjectID), Convert.ToInt32(SupplierID), RawMeterialID, Count, DateTime.ParseExact(EstArrDate, "MM/dd/yyyy", null));
             o.CreateNewOrder(o);

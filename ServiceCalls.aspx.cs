@@ -76,4 +76,11 @@ public partial class Default : System.Web.UI.Page
         //else
         //    Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalServiceCallUpdated", "ActivateModal('ModalServiceCallUpdated','אירעה שגיאה בשרת, אנא נסה מאוחר יותר','ModalServiceCalls');", true);
     }
+
+    protected void CloseServiceCallHiddenBTN_Click(object sender, EventArgs e)
+    {
+        int scID = Convert.ToInt32(ServiceCallsGridView.SelectedRow.Cells[1].Text);
+        ServiceCall sc = new ServiceCall();
+        sc.CloseServiceCall(scID);
+    }
 }

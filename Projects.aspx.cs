@@ -22,7 +22,7 @@ public partial class Default : System.Web.UI.Page
         int SelectedIndex = ProjectsTBL.SelectedIndex;
         SelectedIndex += 1;
         int ProjectID =Convert.ToInt32(ProjectsTBL.Rows[SelectedIndex].Cells[1].Text);
-        Session["selectedrow"] = ProjectID;
+        Session["ProjectID"] = ProjectID;
         Response.Redirect("ProjectDetails.aspx");
     }
 

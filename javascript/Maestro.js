@@ -91,6 +91,17 @@ function ActivateModal(sID, sContent, sModalToHide) {
         $("#" + sID + " .modal-body").html(sContent);
 }
 
+function ActivateCloseServiceCallDialog() {
+    var sFirstName = $("#ContentPlaceHolder3_ServiceCallFirstName").val();
+    var sLastName = $("#ContentPlaceHolder3_ServiceCallLastName").val();
+    $("#CloseServiceCallDialogModal .modal-body .QuestionContainer").html("האם אתה בטוח שברצונך לסגור את קריאת השירות של הלקוח " + sFirstName + " " + sLastName + "?");
+    ActivateModal('CloseServiceCallDialogModal');
+}
+
+function CloseServiceCall() {
+    $("#ContentPlaceHolder3_CloseServiceCallHiddenBTN").click();
+}
+
 function ActivateServiceCallExistingProjectModal() {
     $(".ChooseProjectToolbarButtons").click(function () {
         var sButtonID = this.id;
@@ -430,10 +441,10 @@ function ValidateOrderDetails(sName) {
 }
 
 function ValidateHatchDetails() {
-        $(".ErrorLabel").html("");
-        SwitchEditSaveButtons(true, "Hatch");
-        DisableHatchDetailsFields();
-        $("#ContentPlaceHolder3_SaveHatchDetailsHiddenBTN").click();
+    $(".ErrorLabel").html("");
+    SwitchEditSaveButtons(true, "Hatch");
+    DisableHatchDetailsFields();
+    $("#ContentPlaceHolder3_SaveHatchDetailsHiddenBTN").click();
 }
 
 function MarkInvalid(id, cb, bSelector, sMessage) {
