@@ -8,6 +8,11 @@ using System.Web;
 /// </summary>
 public class Supplier
 {
+    public Supplier()
+    {
+
+    }
+
     public Supplier(string _Name, string _Address, string _Phone, string _Mobile, string _Fax, string _Email)
     {
         Name = _Name;
@@ -16,6 +21,24 @@ public class Supplier
         Mobile = _Mobile;
         Fax = _Fax;
         Email = _Email;
+    }
+
+    public Supplier(int _SupplierID, string _Name, string _Address, string _Phone, string _Mobile, string _Fax, string _Email)
+    {
+        sID = _SupplierID;
+        Name = _Name;
+        Address = _Address;
+        Phone = _Phone;
+        Mobile = _Mobile;
+        Fax = _Fax;
+        Email = _Email;
+    }
+
+    int sid;
+    public int sID
+    {
+        get { return sid; }
+        set { sid = value; }
     }
 
     string name;
@@ -62,10 +85,10 @@ public class Supplier
 
     public int InsertNewSupplier()
     {
-        DBservices db = new DBservices();
+        DBservices dbs = new DBservices();
         try
         {
-            int RowsAffected = db.InsertNewSupplier(this);
+            int RowsAffected = dbs.InsertNewSupplier(this);
             return RowsAffected;
         }
 
@@ -73,5 +96,12 @@ public class Supplier
         {
             throw (ex);
         }
+    }
+
+    public int UpdateSupplierDetails()
+    {
+        DBservices dbs = new DBservices();
+        int RowAffected = dbs.UpdateSupplierDetails(this);
+        return RowAffected;
     }
 }

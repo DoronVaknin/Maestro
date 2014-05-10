@@ -63,7 +63,7 @@
         </table>
     </div>
     <div class="cntr">
-        <button id="CreateSupplierBTN" type="button" class="btn btn-default" onclick="ValidateNewSupplier(this)">
+        <button id="CreateSupplierBTN" type="button" class="btn btn-default" onclick="ValidateSupplierDetails(this)">
             צור ספק&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
         </button>
         <asp:Button ID="CreateSupplierHiddenBTN" runat="server" Text="צור ספק" CssClass="btn btn-default HiddenButtons"

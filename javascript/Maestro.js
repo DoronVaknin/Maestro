@@ -163,6 +163,10 @@ function DisableOrderDetailsFields(sName) {
     $("#Edit" + sName + "OrderTBL input, #Edit" + sName + "OrderTBL select").attr("disabled", "disabled");
 }
 
+function DisableSupplierDetailsFields() {
+    $("#EditSupplierTBL input").attr("disabled", "disabled");
+}
+
 function FixTextAreaIssue() {
     var sValue = $("#ProjectDetailsTBL textarea").val();
     if (sValue == "&nbsp;")
@@ -258,6 +262,24 @@ function RestoreOrderDetails(sName) {
     ClearInvalidFields("#Edit" + sName + "OrderTBL");
 }
 
+function EnableSupplierDetails() {
+    $("#EditSupplierTBL input").removeAttr("disabled");
+    SwitchEditSaveButtons(false, "Supplier");
+    BackupSupplierDetails();
+}
+
+function RestoreSupplierDetails() {
+    $("#ContentPlaceHolder3_SupplierName").val(aSupplierDetails[0]);
+    $("#ContentPlaceHolder3_SupplierAddress").val(aSupplierDetails[1]);
+    $("#ContentPlaceHolder3_SupplierEmail").val(aSupplierDetails[2]);
+    $("#ContentPlaceHolder3_SupplierPhone").val(aSupplierDetails[3]);
+    $("#ContentPlaceHolder3_SupplierCellPhone").val(aSupplierDetails[4]);
+    $("#ContentPlaceHolder3_SupplierFax").val(aSupplierDetails[5]);
+    DisableSupplierDetailsFields();
+    SwitchEditSaveButtons(true, "Supplier");
+    ClearInvalidFields("#EditSupplierTBL");
+}
+
 //Navigation
 function Goto(sPage, sQuery) {
     window.location = sPage + ".aspx" + (!IsEmpty(sQuery) ? sQuery : "");
@@ -298,7 +320,7 @@ function ValidateNewProject() {
     }
 }
 
-function ValidateNewSupplier() {
+function ValidateSupplierDetails(button) {
     var bIsValid = true;
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierName", function (s) { return s.length < 2; }, false, "השם הפרטי קצר מדי");
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierAddress", function (s) { return s.length < 2; }, false, "כתובת המגורים קצרה מדי");
@@ -308,7 +330,14 @@ function ValidateNewSupplier() {
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierEmail", function (s) { return s.length > 0 && !IsEmail(s); }, false, "יש להזין כתובת מייל חוקית");
     if (bIsValid) {
         $(".ErrorLabel").html("");
-        $("#ContentPlaceHolder3_CreateSupplierHiddenBTN").click();
+        if (button.id == "ContentPlaceHolder3_CreateSupplierBTN")
+            $("#ContentPlaceHolder3_CreateSupplierHiddenBTN").click();
+        else {
+            $("#SupplierDetailsErrorLabel").html("");
+            SwitchEditSaveButtons(true, "Supplier");
+            DisableSupplierDetailsFields();
+            $("#ContentPlaceHolder3_SaveSupplierDetailsHiddenBTN").click();
+        }
     }
 }
 
@@ -457,6 +486,16 @@ function BackupOrderDetails(sName) {
     aOrderDetails.push($("#ContentPlaceHolder3_" + sName + "OrderQuantity").val());
     aOrderDetails.push($("#ContentPlaceHolder3_" + sName + "OrderStatus").val());
     aOrderDetails.push($("#ContentPlaceHolder3_" + sName + "OrderEstimatedDOA").val());
+}
+
+function BackupSupplierDetails() {
+    aSupplierDetails = [];
+    aSupplierDetails.push($("#ContentPlaceHolder3_SupplierName").val());
+    aSupplierDetails.push($("#ContentPlaceHolder3_SupplierAddress").val());
+    aSupplierDetails.push($("#ContentPlaceHolder3_SupplierEmail").val());
+    aSupplierDetails.push($("#ContentPlaceHolder3_SupplierPhone").val());
+    aSupplierDetails.push($("#ContentPlaceHolder3_SupplierCellPhone").val());
+    aSupplierDetails.push($("#ContentPlaceHolder3_SupplierFax").val());
 }
 
 function IsPage(sPageName, sSource) {

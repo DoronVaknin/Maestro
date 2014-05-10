@@ -525,6 +525,35 @@ public class DBservices
         }
     }
 
+    public int UpdateSupplierDetails(Supplier s)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spUpdateSupplierDetails]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@SupplierID", s.sID);
+                sqlComm.Parameters.AddWithValue("@sName", s.Name);
+                sqlComm.Parameters.AddWithValue("@Address", s.Address);
+                sqlComm.Parameters.AddWithValue("@Phone", s.Phone);
+                sqlComm.Parameters.AddWithValue("@Mobile", s.Mobile);
+                sqlComm.Parameters.AddWithValue("@Fax", s.Fax);
+                sqlComm.Parameters.AddWithValue("@Email", s.Email);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
     //Mobile Application Methods
 
     public DataTable GetProjects()

@@ -247,7 +247,7 @@ html[xmlns] #nav
 #NewCustomerTBL td, #NewProjectTBL td, #NewSupplierTBL td,
 #CustomerDetailsTBL td, #ProjectDetailsTBL td, #NewSCExistingProjectTBL td,
 #NewServiceCallExternalTBL td, #ServiceCallTBL td, #EditProjectOrderTBL td,
-#EditSupplierOrderTBL td
+#EditSupplierOrderTBL td, #EditSupplierTBL td
 {
     border-top: none;
 }
