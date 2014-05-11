@@ -131,7 +131,7 @@ function GetProjectDetails(ProjectsList) {
             error: function (e) { // this function will be called upon failure
                 alert("failed to get project details: " + e.responseText);
             } // end of error
-        });        // end of ajax call
+        });         // end of ajax call
     } // end of loop on all the projects
 
     str = "";
@@ -312,7 +312,7 @@ function BuildHatchPage(ProjectID) {
     for (var pID in Projects)
         for (var hID in Hatches[pID])
             BuildHatchDetailsPage(Hatches[pID][hID]); // build a page for each hatch
-    //    $('.HatchNavbar').navbar('refresh');
+//    $('.HatchNavbar').navbar('refresh');
 }
 
 function BuildHatchDetailsPage(oHatch) {
@@ -375,7 +375,7 @@ function GetOpenedServiceCalls() {
             for (var scID in ServiceCallsList)
                 BuildServiceCallPage(ServiceCallsList[scID]);
             BuildServiceCallProjectsList();
-            AssignServiceCallsIntoGoogleMap();
+            PopulateGoogleMap();
         }, // end of success
         error: function (e) {
             alert("failed to load Service calls" + e.responseText);
@@ -613,8 +613,11 @@ function InitializeGoogleMap() {
     Map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 }
 
-function AssignServiceCallsIntoGoogleMap() {
-    var aAddresses = [];
+function PopulateGoogleMap() {
+    for (var pID in Projects) {
+        GetCoordinatesByAddress(Projects[pID].Address);
+        ShowProjectPin(oPosition, pID);
+    }
     for (var scID in ServiceCallsList) {
         GetCoordinatesByAddress(ServiceCallsList[scID][1].Address);
         ShowServiceCallPin(oPosition, scID);
@@ -636,6 +639,34 @@ function ShowServiceCallPin(oPosition, sID) {
                 '<div class="bodyContent">' +
                 '<p><b>טלפון נייד: </b>' + ServiceCallsList[sID][1].Mobile + '</p>' +
                 '<p><b>תיאור התקלה: </b>' + ServiceCallsList[sID][0].Description + '</p>' +
+    //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
+                '</div>' +
+                '</div>';
+
+    var InfoWindow = new google.maps.InfoWindow({
+        content: sContent
+    });
+
+    google.maps.event.addListener(Marker, 'click', function () {
+        InfoWindow.open(Map, Marker);
+    });
+}
+
+function ShowProjectPin(oPosition, pID) {
+    var Position = new google.maps.LatLng(oPosition.lat, oPosition.lng);
+    var Image = "images/icons/blue-pin.png";
+    var Marker = new google.maps.Marker({
+        position: Position,
+        map: Map,
+        title: "פרויקט",
+        icon: Image
+    });
+
+    var sContent = '<div id="content">' +
+                '<h3 class="firstHeading">' + Projects[pID].Name + '</h3>' +
+                '<div class="bodyContent">' +
+                '<p><b>טלפון נייד: </b>' + Projects[pID].Mobile + '</p>' +
+                '<p><b>כתובת: </b>' + Projects[pID].Address + '</p>' +
     //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
                 '</div>' +
                 '</div>';
