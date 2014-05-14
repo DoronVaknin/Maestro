@@ -4,9 +4,9 @@ var Projects = {};
 var ProjectsList = {};
 var ProjectsNamesList = {};
 var Hatches = {};
-var PNP = {}; //Pictures & Pins
+var PicsAndPins = {};  //Pictures & Pins
 var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, ServiceCallsList[scID][1] - Customer details, ServiceCallsList[scID][2] - Project details
-
+var Picture = {};
 
 $(document).ready(function () {
     $("#LoginBTN").click(Login);
@@ -15,9 +15,12 @@ $(document).ready(function () {
     $("#LoginBTN").parent().css({ "width": "36%", "margin": "auto" });
     $("#ProblemDescriptionTA").val(""); //fix extra space issue
 
-    //Google map for service calls
+    //Google map for service calls and projects
     InitializeGoogleMap();
-    ResizeMapCanvas();
+    $("#MapBTN").click(function () {
+        Goto("ServiceCallsMap");
+//        ResizeMapCanvas();
+    });
 });
 
 $(window).resize(ResizeMapCanvas);
@@ -28,10 +31,10 @@ function ResizeMapCanvas() {
     $("#map-canvas").width(iWindowWidth).height(iWindowHeight);
 }
 
-$(document).on("click", ".HatchesBTN", function () {
+$(document).on("click", ".HatchBTN", function () {
     var sHref = $(this).attr("href");
-    var sProjectID = sHref.substring(17, sHref.length + 1);
-    BuildHatchPage(sProjectID);
+    var sHatchID = sHref.substring(6, sHref.length + 1);
+    BuildHatchPage(sHatchID);
 });
 
 function Login() {
@@ -41,9 +44,10 @@ function Login() {
         alert("אנא הזן שם משתמש וסיסמה לפני התחברות");
         return;
     }
+    ShowLoading("מתחבר");
     dataString = "{ Username: '" + sUsername + "', Password: '" + sPassword + "' }";
     $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/Login',   // JQuery call to the server side method
+        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/Login',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -52,17 +56,22 @@ function Login() {
         {
             if (data.d == "true") {
                 $("#UserName, #Password").val("");
+                HideLoading();
                 window.location = "#MainMenuPage";
                 GetProjectsList(); //  read all the projects
                 GetOpenedServiceCalls();
                 GetProjectsNamesList();
             }
-            else alert("Username or password is incorrect");
+            else {
+                HideLoading();
+                alert("שם משתמש או סיסמה לא נכונים");
+            }
         }, // end of success
         error: function (e) {
+            HideLoading();
             alert("failed to login: " + e.responseText);
         } // end of error
-    });                 // end of ajax call
+    });                   // end of ajax call
 }
 
 //-----------------------------------------------------------------------
@@ -71,7 +80,7 @@ function Login() {
 function GetProjectsList() {
     dataString = "";
     $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/GetProjectsList',   // JQuery call to the server side method
+        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/GetProjectsList',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -85,12 +94,6 @@ function GetProjectsList() {
 
             var newPage = $(BuildHatchesListPerProject());
             newPage.appendTo($.mobile.pageContainer);
-
-            //            $(".HatchesBTN").click(function () {
-            //                var sHref = $(this).attr("href");
-            //                var sProjectID = sHref.substring(17, sHref.length + 1);
-            //                BuildHatchPage(sProjectID);
-            //            });
 
             // initializing popup event for images
             $(document).on("pageinit", function () {
@@ -117,7 +120,7 @@ function GetProjectsList() {
 function GetProjectDetails(ProjectsList) {
     for (var i = 0; i < ProjectsList.length; i++) { // run on all the files in the list
         $.ajax({ // ajax call start
-            url: 'MaestroWS.asmx/GetProjectDetails',
+            url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/GetProjectDetails',
             data: "{ pID: " + ProjectsList[i] + "}", // Send value of the project id
             dataType: 'json', // Choosing a JSON datatype for the data sent
             type: 'POST',
@@ -225,7 +228,7 @@ function BuildProjectHeader(sHeaderText) {
 function GetProjectHatches(ProjectsList) {
     for (var i = 0; i < ProjectsList.length; i++) { // run on all the files in the list
         $.ajax({ // ajax call start
-            url: 'MaestroWS.asmx/GetProjectHatches',
+            url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/GetProjectHatches',
             data: "{ pID: " + ProjectsList[i] + "}", // Send value of the project id
             dataType: 'json', // Choosing a JSON datatype for the data sent
             type: 'POST',
@@ -289,10 +292,10 @@ function BuildHatchesListPerProject() {
 //----------------------------------------------------------------------------
 // build the Hatch details page
 //----------------------------------------------------------------------------
-function BuildHatchPage(ProjectID) {
+function BuildHatchPage(HatchID) {
     $.ajax({ // ajax call start
-        url: 'MaestroWS.asmx/GetPicsAndPins',
-        data: "{ ProjectID : " + ProjectID + "}", // Send value of the project id
+        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/GetPicsAndPins',
+        data: "{ HatchID : " + HatchID + "}", // Send value of the project id
         dataType: 'json', // Choosing a JSON datatype for the data sent
         type: 'POST',
         async: false, // this is a synchronous call
@@ -301,14 +304,20 @@ function BuildHatchPage(ProjectID) {
         {
             var pnp = $.parseJSON(data.d); // parse the data as json
             if (!IsEmpty(pnp)) {
-                var HatchID = pnp[0][0].HatchID;
-                PNP = MergeInsideArrays(pnp);
+                pnp = MergeInsideArrays(pnp);
+                var hID = pnp[0].HatchID;
+                //                    if (typeof PicsAndPins[hID] != "object")
+                PicsAndPins[hID] = {};
+                for (var i in pnp) {
+                    var picID = pnp[i].PictureID;
+                    PicsAndPins[hID][picID] = pnp[i];
+                }
             }
         }, // end of success
         error: function (e) { // this function will be called upon failure
             alert("failed to get Pictures and Pins: " + e.responseText);
         } // end of error
-    });               // end of ajax call
+    });                    // end of ajax call
     for (var pID in Projects)
         for (var hID in Hatches[pID])
             BuildHatchDetailsPage(Hatches[pID][hID]); // build a page for each hatch
@@ -338,13 +347,13 @@ function BuildHatchDetailsPage(oHatch) {
     //    str += '</br><div id="myPopup" data-role="popup" class = "photopopup">';
     //    str += '<a href="#Hatch' + iHatchID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
     //    str += '<img src = "' + Projects[iProjID][1].HatchesImageURL + '" /></div>';
+    str += BuildHatchDialog(oHatch.HatchID);
 
     str += "</div>" // close the content
-
     str += "<div data-role='footer' data-position='fixed' data-theme='a'>";
     str += "<div class = 'HatchNavbar' data-role='navbar'>";
     str += "<ul>";
-    str += "<li><a data-ajax = 'false' href='#TakePhotoHatch" + oHatch.HatchID + "' class = 'ui-icon-camera-white' onclick='workManager()' >צלם תמונה</a></li>";
+    str += "<li><a data-role = 'button' data-rel='popup' class = 'ui-icon-camera-white' href='#Hatch" + oHatch.HatchID + "Dialog' data-position-to='window'>צלם תמונה</a></li>";
     str += "<li><a data-ajax = 'false' href='#PicturesOfHatch" + oHatch.HatchID + "' class = 'HatchPicturesBTN' data-icon='grid' data-iconpos='left'>תמונות</a></li>";
     str += "<li><a data-ajax = 'false' href='#QAForHatch" + oHatch.HatchID + "' data-icon='star'>בקרת איכות</a></li>";
     str += "</ul>";
@@ -358,10 +367,34 @@ function BuildHatchDetailsPage(oHatch) {
     newPage.appendTo($.mobile.pageContainer);
 }
 
+function BuildHatchDialog(hID) {
+    var str = "";
+    str += '<div data-role="popup" id="Hatch' + hID + 'Dialog" class = "CloseServiceCallsPopup">';
+    str += '<div data-role="header">';
+    str += "<h1>תמונה חדשה</h1>";
+    str += '</div>';
+    str += '<div data-role="main" class="ui-content">';
+    str += "<p><b>תיאור התמונה: </b>" + BuildPictureDescTextBox(hID) + "</p></br>";
+    str += '<a data-role="button" data-inline="true" data-theme="a" onclick="TakePicturePrepare(' + hID + ')">צלם תמונה</a>';
+    str += '<a id = "Hatch' + hID + 'CancelButton" data-role="button" onclick = "CloseHatchDialog(' + hID + ')" data-inline="true">בטל</a>';
+    str += '</div>';
+    return str;
+}
+
+function CloseHatchDialog(hID) {
+    $("#Hatch" + hID + "PicDesc").val("");
+    Goto("Hatch" + hID);
+}
+
+function BuildPictureDescTextBox(hID) {
+    var str = '<input type="text" id="Hatch' + hID + 'PicDesc" value="" />';
+    return str;
+}
+
 function GetOpenedServiceCalls() {
     dataString = "";
     $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/GetOpenedServiceCalls',   // JQuery call to the server side method
+        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/GetOpenedServiceCalls',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -445,7 +478,7 @@ function BuildServiceCallDialog(scID) {
 function CloseServiceCall(scID) {
     dataString = "{ scID: '" + scID + "'}";
     $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/CloseServiceCall',   // JQuery call to the server side method
+        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/CloseServiceCall',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -479,7 +512,7 @@ function BuildServiceCallHeader(sHeaderText) {
 function GetProjectsNamesList() {
     dataString = "";
     $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/GetProjectsNames',   // JQuery call to the server side method
+        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/GetProjectsNames',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -525,7 +558,7 @@ function PrepareServiceCall() {
 function CreateServiceCall(oServiceCallDetails) {
     dataString = JSON.stringify(oServiceCallDetails);
     $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/CreateServiceCall',   // JQuery call to the server side method
+        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/CreateServiceCall',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -588,16 +621,22 @@ function GetCurrentDate() {
     var mm = today.getMonth() + 1; //January is 0!
     var yyyy = today.getFullYear();
 
-    if (dd < 10) {
+    if (dd < 10)
         dd = '0' + dd;
-    }
 
-    if (mm < 10) {
+    if (mm < 10)
         mm = '0' + mm;
-    }
 
     today = dd + '/' + mm + '/' + yyyy;
     return today;
+}
+
+function GetObjectSize(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
 }
 
 /** Google API **/
@@ -650,6 +689,8 @@ function ShowServiceCallPin(oPosition, sID) {
     google.maps.event.addListener(Marker, 'click', function () {
         InfoWindow.open(Map, Marker);
     });
+
+    google.maps.event.trigger(Map, "resize");
 }
 
 function ShowProjectPin(oPosition, pID) {
@@ -696,52 +737,87 @@ function GetCoordinatesByAddress(sAddress) {
     });
 }
 
+function UploadPicture() {
+    //    dataString = "{ HatchID: '" + Picture.HatchID + "', PictureDesc: '" + Picture.PictureDesc + "', DateTaken: '" + Picture.DateTaken + "', ImageURL: '" + Picture.ImageURL + "' }";
+    dataString = JSON.stringify(Picture);
+    //    alert(dataString);
+    $.ajax({ // ajax call starts
+        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/UploadPicture',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            HideLoading();
+            data.d > 0 ? alert("התמונה הועלתה בהצלחה") : alert("אירעה שגיאה בשרת, אנא נסה מאוחר יותר");
+        }, // end of success
+        error: function (e) {
+            alert("failed to upload picture: " + e.responseText);
+        } // end of error
+    });                       // end of ajax call
+}
 
 //PhoneGap functions
 
-function workManager() {
-    if (document.getElementById("PointNameTB").value != "") {
-        getPicture();
-    } // If
-    else {
-        alert("אנא הכנס שם ותיאור לתמונה");
-    } // Else
-} // Work Manager
+function TakePicturePrepare(hID) {
+    Picture.HatchID = hID;
+    Picture.PictureDesc = $.trim($("#Hatch" + hID + "PicDesc").val());
+    $("#Hatch" + hID + "PicDesc").val("");
+    $("#Hatch" + hID + "CancelButton").click();
+    TakePicture();
+}
 
-
-function getPicture() {
-    navigator.camera.getPicture(uploadPhoto,
-                                        function (message) { alert('get picture failed'); },
-                                        {
-                                            quality: 50,
-                                            destinationType: navigator.camera.DestinationType.FILE_URI,
-                                            sourceType: navigator.camera.PictureSourceType.CAMERA
-                                        }
-                                        ); // PhoneGap method for retrieving an image from the phone's camera
-
+function TakePicture() {
+    navigator.camera.getPicture(
+    uploadPhoto,
+    function (message) { alert('get picture failed' + message); },
+    {
+        quality: 50,
+        destinationType: navigator.camera.DestinationType.FILE_URI,
+        sourceType: navigator.camera.PictureSourceType.CAMERA
+    });  // PhoneGap method for retrieving an image from the phone's camera
 } // Get Picture
 
 function uploadPhoto(imageURI) {
-    Load(); // Start the spinning "working" animation
+    ShowLoading("מעלה תמונה"); // Start the spinning "working" animation
     var options = new FileUploadOptions(); // PhoneGap object to allow server upload
     options.fileKey = "file";
-    options.fileName = document.getElementById("PointNameTB").value; // file name
+    var iPicIndex = GetObjectSize(PicsAndPins[Picture.hID]) + 1;
+    //    alert("iPicIndex: " + iPicIndex);
+    options.fileName = $.mobile.activePage.attr("id") + "_" + iPicIndex; // file name
+    //    alert("filename: " + options.fileName);
     options.mimeType = "image/jpeg"; // file type
     var params = {}; // Optional parameters
     params.value1 = "test";
     params.value2 = "param";
-
     options.params = params; // add parameters to the FileUploadOptions object
 
+    Picture.DateTaken = GetCurrentDate();
+    Picture.ImageURL = "http://proj.ruppin.ac.il/igroup9/prod/images/hatches/" + options.fileName + ".jpg";
+    //    alert("URL: " + Picture.ImageURL);
     var ft = new FileTransfer();
     ft.upload(imageURI, encodeURI("http://proj.ruppin.ac.il/igroup9/prod/images/hatches/ReturnValue.ashx"), win, fail, options); // Upload
 } // Upload Photo
 
 function win() {
-    alert("התמונה הועלתה בהצלחה");
-    UnLoad();
-} // win (upload success)
+    HideLoading();
+    UploadPicture();
+}
 
 function fail(error) {
+    HideLoading();
     alert("An error has occurred: Code = " + error.code);
-} // fail (upload not successful)
+}
+
+function ShowLoading(sText) {
+    $.mobile.loading('show', {
+        text: sText,
+        theme: 'c',
+        textVisible: true
+    });
+} // loading
+
+function HideLoading() {
+    $.mobile.loading('hide');
+} // Unload

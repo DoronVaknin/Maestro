@@ -147,11 +147,11 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string GetPicsAndPins(int ProjectID)
+    public string GetPicsAndPins(int HatchID)
     {
         Hatch h = new Hatch();
 
-        DataTable dt = h.GetPicsAndPins(ProjectID);
+        DataTable dt = h.GetPicsAndPins(HatchID);
         ArrayList[] myAL = new ArrayList[dt.Rows.Count];
 
         for (int i = 0; i < myAL.Length; i++)
@@ -159,13 +159,10 @@ public class MaestroWS : System.Web.Services.WebService
 
         for (int i = 0; i < myAL.Length; i++)
         {
-            h = new Hatch();
             Picture pic = new Picture();
             Pin pin = new Pin();
 
-            h.ProjectID = ProjectID;
-            h.HatchID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
-
+            pic.HatchID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
             pic.PictureID = Convert.ToInt32(dt.Rows[i].ItemArray[1]);
             pic.PictureDescription = dt.Rows[i].ItemArray[2].ToString();
             pic.DateTaken = Convert.ToDateTime(dt.Rows[i].ItemArray[3]);
@@ -178,7 +175,6 @@ public class MaestroWS : System.Web.Services.WebService
             pin.AudioURL = dt.Rows[i].ItemArray[9].ToString();
             pin.VideoURL = dt.Rows[i].ItemArray[10].ToString();
 
-            myAL[i].Add(h);
             myAL[i].Add(pic);
             myAL[i].Add(pin);
         }
@@ -418,4 +414,17 @@ public class MaestroWS : System.Web.Services.WebService
         return jsonString;
     }
 
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string UploadPicture(int HatchID, string PictureDesc, string DateTaken, string ImageURL)
+    {
+        Picture pic = new Picture(HatchID, PictureDesc, Convert.ToDateTime(DateTaken), ImageURL);
+        int RowAffected = pic.UploadPicture();
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
+        return jsonString;
+    }
 }

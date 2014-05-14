@@ -714,7 +714,7 @@ public class DBservices
         }
     }
 
-    public DataTable GetPicsAndPins(int ProjectID)
+    public DataTable GetPicsAndPins(int HatchID)
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
@@ -728,7 +728,7 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
+                sqlComm.Parameters.AddWithValue("@HatchID", HatchID);
                 da.SelectCommand = sqlComm;
                 da.Fill(dt);
                 return dt;
@@ -1031,6 +1031,32 @@ public class DBservices
                 return dt;
             }
 
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public int UploadPicture(Picture pic)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spUploadPicture]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@HatchID", pic.HatchID);
+                sqlComm.Parameters.AddWithValue("@PictureDesc", pic.PictureDescription);
+                sqlComm.Parameters.AddWithValue("@DateTaken", pic.DateTaken);
+                sqlComm.Parameters.AddWithValue("@ImageURL", pic.ImageURL);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
             catch (Exception ex)
             {
                 throw (ex);

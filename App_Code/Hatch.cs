@@ -132,11 +132,11 @@ public class Hatch
         set { comments = value; }
     }
 
-    public DataTable GetPicsAndPins(int ProjectID)
+    public DataTable GetPicsAndPins(int HatchID)
     {
         DataTable dt = new DataTable();
         DBservices db = new DBservices();
-        dt = db.GetPicsAndPins(ProjectID);
+        dt = db.GetPicsAndPins(HatchID);
         return dt;
     }
 

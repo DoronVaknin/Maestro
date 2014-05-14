@@ -8,12 +8,20 @@ using System.Web;
 /// </summary>
 public class Picture
 {
-	public Picture()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
+    public Picture()
+    {
+        //
+        // TODO: Add constructor logic here
+        //
+    }
+
+    public Picture(int _HatchID, string _PictureDesc, DateTime _DateTaken, string _ImageURL)
+    {
+        HatchID = _HatchID;
+        PictureDescription = _PictureDesc;
+        DateTaken = _DateTaken;
+        ImageURL = _ImageURL;
+    }
 
     int pictureID;
     public int PictureID
@@ -41,5 +49,19 @@ public class Picture
     {
         get { return imageURL; }
         set { imageURL = value; }
+    }
+
+    int hID;
+    public int HatchID
+    {
+        get { return hID; }
+        set { hID = value; }
+    }
+
+    public int UploadPicture()
+    {
+        DBservices dbs = new DBservices();
+        int RowAffected = dbs.UploadPicture(this);
+        return RowAffected;
     }
 }
