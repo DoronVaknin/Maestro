@@ -64,41 +64,49 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string GetProjectDetails(int pID)
+    public string GetProjects()
     {
         Project p = new Project();
-        DataTable dt = p.GetProjectDetails(pID);
+        DataTable dt = p.GetProjectDetails();
 
-        Customer c = new Customer();
-        ProjectStatus ps = new ProjectStatus();
-        ArrayList myAL = new ArrayList();
+        ArrayList[] myAL = new ArrayList[dt.Rows.Count];
 
-        p.pID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
-        p.Name = dt.Rows[0].ItemArray[1].ToString();
-        p.Cost = Convert.ToInt32(dt.Rows[0].ItemArray[6]);
-        p.HatchesImageURL = dt.Rows[0].ItemArray[13].ToString();
+        for (int i = 0; i < myAL.Length; i++)
+            myAL[i] = new ArrayList();
 
-        c.Fname = dt.Rows[0].ItemArray[17].ToString();
-        c.Lname = dt.Rows[0].ItemArray[18].ToString();
-        c.Address = dt.Rows[0].ItemArray[19].ToString();
-        c.Phone = dt.Rows[0].ItemArray[20].ToString();
-        c.Mobile = dt.Rows[0].ItemArray[21].ToString();
-        c.Fax = dt.Rows[0].ItemArray[22].ToString();
-        c.Email = dt.Rows[0].ItemArray[23].ToString();
+        for (int i = 0; i < myAL.Length; i++)
+        {
+            p = new Project();
+            Customer c = new Customer();
+            ProjectStatus ps = new ProjectStatus();
 
-        p.ContractorName = dt.Rows[0].ItemArray[7].ToString();
-        p.ContractorPhone = dt.Rows[0].ItemArray[8].ToString();
-        p.ArchitectName = dt.Rows[0].ItemArray[9].ToString();
-        p.ArchitectPhone = dt.Rows[0].ItemArray[10].ToString();
-        p.SupervisorName = dt.Rows[0].ItemArray[11].ToString();
-        p.SupervisorPhone = dt.Rows[0].ItemArray[12].ToString();
+            p.pID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+            p.Name = dt.Rows[i].ItemArray[1].ToString();
+            p.Cost = Convert.ToInt32(dt.Rows[i].ItemArray[6]);
+            p.HatchesImageURL = dt.Rows[i].ItemArray[13].ToString();
 
-        ps.StatusNum = Convert.ToInt32(dt.Rows[0].ItemArray[25]);
-        ps.StatusName = dt.Rows[0].ItemArray[26].ToString();
+            c.Fname = dt.Rows[i].ItemArray[17].ToString();
+            c.Lname = dt.Rows[i].ItemArray[18].ToString();
+            c.Address = dt.Rows[i].ItemArray[19].ToString();
+            c.Phone = dt.Rows[i].ItemArray[20].ToString();
+            c.Mobile = dt.Rows[i].ItemArray[21].ToString();
+            c.Fax = dt.Rows[i].ItemArray[22].ToString();
+            c.Email = dt.Rows[i].ItemArray[23].ToString();
 
-        myAL.Add(c);
-        myAL.Add(p);
-        myAL.Add(ps);
+            p.ContractorName = dt.Rows[i].ItemArray[7].ToString();
+            p.ContractorPhone = dt.Rows[i].ItemArray[8].ToString();
+            p.ArchitectName = dt.Rows[i].ItemArray[9].ToString();
+            p.ArchitectPhone = dt.Rows[i].ItemArray[10].ToString();
+            p.SupervisorName = dt.Rows[i].ItemArray[11].ToString();
+            p.SupervisorPhone = dt.Rows[i].ItemArray[12].ToString();
+
+            ps.StatusNum = Convert.ToInt32(dt.Rows[i].ItemArray[25]);
+            ps.StatusName = dt.Rows[i].ItemArray[26].ToString();
+
+            myAL[i].Add(c);
+            myAL[i].Add(p);
+            myAL[i].Add(ps);
+        }
 
         // create a json serializer object
         JavaScriptSerializer js = new JavaScriptSerializer();
@@ -109,11 +117,11 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string GetProjectHatches(int pID)
+    public string GetHatches()
     {
         Project p = new Project();
 
-        DataTable dt = p.GetProjectHatches(pID);
+        DataTable dt = p.GetHatches();
         ArrayList[] myAL = new ArrayList[dt.Rows.Count];
 
         for (int i = 0; i < myAL.Length; i++)
@@ -132,8 +140,8 @@ public class MaestroWS : System.Web.Services.WebService
             h.FtName = dt.Rows[i].ItemArray[5].ToString();
             h.Comments = dt.Rows[i].ItemArray[6].ToString();
 
-            p.pID = pID;
             p.HatchesImageURL = dt.Rows[i].ItemArray[7].ToString();
+            p.pID = Convert.ToInt32(dt.Rows[i].ItemArray[8]);
 
             myAL[i].Add(p);
             myAL[i].Add(h);
@@ -185,7 +193,6 @@ public class MaestroWS : System.Web.Services.WebService
         return jsonString;
     }
 
-    //Prod App functions
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public string GetProjectListForProdApp()

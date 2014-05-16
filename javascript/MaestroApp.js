@@ -1,7 +1,6 @@
 ﻿/// <reference path="jquery-1.11.0.js" />
 
 var Projects = {};
-var ProjectsList = {};
 var ProjectsNamesList = {};
 var Hatches = {};
 var PicsAndPins = {};  //Pictures & Pins
@@ -19,7 +18,7 @@ $(document).ready(function () {
     InitializeGoogleMap();
     $("#MapBTN").click(function () {
         Goto("ServiceCallsMap");
-//        ResizeMapCanvas();
+        //        ResizeMapCanvas();
     });
 });
 
@@ -47,7 +46,7 @@ function Login() {
     ShowLoading("מתחבר");
     dataString = "{ Username: '" + sUsername + "', Password: '" + sPassword + "' }";
     $.ajax({ // ajax call starts
-        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/Login',   // JQuery call to the server side method
+        url: 'MaestroWS.asmx/Login',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -58,7 +57,8 @@ function Login() {
                 $("#UserName, #Password").val("");
                 HideLoading();
                 window.location = "#MainMenuPage";
-                GetProjectsList(); //  read all the projects
+                GetProjects(); //  read all the projects
+                GetHatches();
                 GetOpenedServiceCalls();
                 GetProjectsNamesList();
             }
@@ -71,125 +71,85 @@ function Login() {
             HideLoading();
             alert("failed to login: " + e.responseText);
         } // end of error
-    });                   // end of ajax call
-}
-
-//-----------------------------------------------------------------------
-// Load the projects to client-side
-//-----------------------------------------------------------------------
-function GetProjectsList() {
-    dataString = "";
-    $.ajax({ // ajax call starts
-        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/GetProjectsList',   // JQuery call to the server side method
-        data: dataString,    // the parameters sent to the server
-        type: 'POST',        // can be post or get
-        dataType: 'json',    // Choosing a JSON datatype
-        contentType: 'application/json; charset = utf-8', // of the data received
-        success: function (data) // Variable data contains the data we get from serverside
-        {
-            ProjectsList = $.parseJSON(data.d);
-            $("#ProjectsList").html(GetProjectDetails(ProjectsList));
-
-            GetProjectHatches(ProjectsList);
-
-            var newPage = $(BuildHatchesListPerProject());
-            newPage.appendTo($.mobile.pageContainer);
-
-            // initializing popup event for images
-            $(document).on("pageinit", function () {
-                $(".photopopup").on({
-                    popupbeforeposition: function () {
-                        var maxHeight = $(window).height() - 30 + "px";
-                        $(".photopopup img").css("max-height", maxHeight);
-                    }
-                });
-            });
-
-            //$("#ProjectsList").listview("refresh"); // this is important for the jQueryMobile to assign the style to a dynamically added list
-        }, // end of success
-        error: function (e) {
-            alert("failed to load projects :( " + e.responseText);
-        } // end of error
-    });       // end of ajax call
+    });                    // end of ajax call
 }
 
 //----------------------------------------------------------------------------
 // build the Projects page
 // ProjectsList contains all the names of the projects
 //----------------------------------------------------------------------------
-function GetProjectDetails(ProjectsList) {
-    for (var i = 0; i < ProjectsList.length; i++) { // run on all the files in the list
-        $.ajax({ // ajax call start
-            url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/GetProjectDetails',
-            data: "{ pID: " + ProjectsList[i] + "}", // Send value of the project id
-            dataType: 'json', // Choosing a JSON datatype for the data sent
-            type: 'POST',
-            async: false, // this is a synchronous call
-            contentType: 'application/json; charset = utf-8', // for the data received
-            success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
-            {
-                p = $.parseJSON(data.d); // parse the data as json
-                Projects[p[1].pID] = MergeObjects(p);
-            }, // end of success
-            error: function (e) { // this function will be called upon failure
-                alert("failed to get project details: " + e.responseText);
-            } // end of error
-        });         // end of ajax call
-    } // end of loop on all the projects
+function GetProjects() {
+    dataString = "";
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/GetProjects',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            p = $.parseJSON(data.d); // parse the data as json
+            p = MergeInsideArrays(p);
+            for (var i in p)
+                Projects[p[i].pID] = p[i];
+            $("#ProjectsList").html(BuildProjectsList());
+            for (var pID in Projects)
+                BuildProjectPage(Projects[pID]);
+            //            BuildServiceCallProjectsList();
 
-    str = "";
-    for (var pID in Projects) {
-        str += BuildProjectsList(pID); // add item to the list in the main projects page
-        BuildProjectPage(pID); // build a page for each project
-    }
-    return str;
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to get project details: " + e.responseText);
+        } // end of error
+    });             // end of ajax call
 }
 
 //------------------------------------------------------
 // build projects list items
 //------------------------------------------------------
-function BuildProjectsList(pID) {
+function BuildProjectsList() {
     var str = "";
-    str += "<li><a data-ajax = 'false' href= '#Project" + pID + "'>";
-    str += "<h1>" + Projects[pID].Name + "</h1>";
-    str += "<p>" + Projects[pID].StatusName + "</p>";
-    str += "</a></li>";
+    for (var pID in Projects) {
+        str += "<li><a data-ajax = 'false' href= '#Project" + pID + "'>";
+        str += "<h1>" + Projects[pID].Name + "</h1>";
+        str += "<p>" + Projects[pID].StatusName + "</p>";
+        str += "</a></li>";
+    }
     return str;
 }
 
 //----------------------------------------------------------------------------
 // build a page per project
 //----------------------------------------------------------------------------
-function BuildProjectPage(pID) {
-    var p = Projects[pID];
-
+function BuildProjectPage(oProject) {
     var str = "";
     // build a page
-    str += "<div data-role = 'page' id = 'Project" + pID + "'>";
+    str += "<div data-role = 'page' id = 'Project" + oProject.pID + "'>";
     // build the header
 
-    str += BuildProjectHeader(p.Name);
+    str += BuildProjectHeader(oProject.Name);
 
     // add the content div
     str += "<div data-role = 'content'>";
     str += "<h2>פרטי הלקוח</h2>";
-    str += "<p><b>שם הלקוח: </b>" + p.Fname + " " + p.Lname + "</p>";
-    if (!IsEmpty(p.Phone)) str += "<p><b>טלפון: </b>" + p.Phone + "</p>";
-    str += "<p><b>טלפון נייד: </b>" + p.Mobile + "</p>";
-    if (!IsEmpty(p.Fax)) str += "<p><b>פקס: </b>" + p.Fax + "</p>";
-    if (!IsEmpty(p.Email)) str += "<p><b>דוא&quot;ל: </b>" + p.Email + "</p>";
+    str += "<p><b>שם הלקוח: </b>" + oProject.Fname + " " + oProject.Lname + "</p>";
+    if (!IsEmpty(oProject.Phone)) str += "<p><b>טלפון: </b>" + oProject.Phone + "</p>";
+    str += "<p><b>טלפון נייד: </b>" + oProject.Mobile + "</p>";
+    if (!IsEmpty(oProject.Fax)) str += "<p><b>פקס: </b>" + oProject.Fax + "</p>";
+    if (!IsEmpty(oProject.Email)) str += "<p><b>דוא&quot;ל: </b>" + oProject.Email + "</p>";
 
     str += "<h2>פרטי הפרויקט</h2>";
-    str += "<p><b>סטטוס: </b>" + p.StatusName + "</p>";
-    str += "<p><b>עלות: </b>" + p.Cost + "</p>";
-    if (!IsEmpty(p.Comments)) str += "<p><b>הערות: </b>" + p.Comments + "</p>";
+    str += "<p><b>סטטוס: </b>" + oProject.StatusName + "</p>";
+    str += "<p><b>עלות: </b>" + oProject.Cost + "</p>";
+    if (!IsEmpty(oProject.Comments)) str += "<p><b>הערות: </b>" + oProject.Comments + "</p>";
 
     str += "<h2>אנשי קשר</h2>";
-    if (!IsEmpty(p.ContractorName)) str += "<p><b>קבלן: </b>" + p.ContractorName + "  " + p.ContractorPhone + "</p>";
-    if (!IsEmpty(p.ArchitectName)) str += "<p><b>אדריכל: </b>" + p.ArchitectName + "  " + p.ArchitectPhone + "</p>";
-    if (!IsEmpty(p.SupervisorName)) str += "<p><b>מפקח: </b>" + p.SupervisorName + "  " + p.SupervisorPhone + "</p><br/>";
+    if (!IsEmpty(oProject.ContractorName)) str += "<p><b>קבלן: </b>" + oProject.ContractorName + "  " + oProject.ContractorPhone + "</p>";
+    if (!IsEmpty(oProject.ArchitectName)) str += "<p><b>אדריכל: </b>" + oProject.ArchitectName + "  " + oProject.ArchitectPhone + "</p>";
+    if (!IsEmpty(oProject.SupervisorName)) str += "<p><b>מפקח: </b>" + oProject.SupervisorName + "  " + oProject.SupervisorPhone + "</p><br/>";
 
-    str += "<a class = 'HatchesBTN' href='#HatchesOfProject" + pID + "' data-role='button'>צפה בפתחים</a>";
+    str += "<a class = 'HatchesBTN' href='#HatchesOfProject" + oProject.pID + "' data-role='button'>צפה בפתחים</a>";
 
     str += "</div>";  // close the content
     str += "</div>";  // close the page
@@ -225,39 +185,41 @@ function BuildProjectHeader(sHeaderText) {
 //----------------------------------------------------------------------------
 // build Hatch pages
 //----------------------------------------------------------------------------
-function GetProjectHatches(ProjectsList) {
-    for (var i = 0; i < ProjectsList.length; i++) { // run on all the files in the list
-        $.ajax({ // ajax call start
-            url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/GetProjectHatches',
-            data: "{ pID: " + ProjectsList[i] + "}", // Send value of the project id
-            dataType: 'json', // Choosing a JSON datatype for the data sent
-            type: 'POST',
-            async: false, // this is a synchronous call
-            contentType: 'application/json; charset = utf-8', // for the data received
-            success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
-            {
-                var h = $.parseJSON(data.d); // parse the data as json
-                if (h.length != 0) {
-                    var ProjID = h[0][0].pID;
-                    Hatches[ProjID] = MergeInsideArrays(h);
-                }
-            }, // end of success
-            error: function (e) { // this function will be called upon failure
-                alert("failed to get project's hatches: " + e.responseText);
-            } // end of error
-        });             // end of ajax call
-    } // end of loop on all the hatches
+function GetHatches() {
+    dataString = "";
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/GetHatches',
+        data: dataString,
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            var h = $.parseJSON(data.d); // parse the data as json
+            h = MergeInsideArrays(h);
+            for (var i in h) {
+                if (typeof Hatches[h[i].pID] != "object")
+                    Hatches[h[i].pID] = [];
+                Hatches[h[i].pID].push(h[i]);
+            }
+            BuildHatchesListPerProject();
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to get project's hatches: " + e.responseText);
+        } // end of error
+    });                    // end of ajax call
 }
 
 //------------------------------------------------------
 // build Hatches list items
 //------------------------------------------------------
-function BuildHatchesList(ProjID) {
+function BuildHatchesList(pID) {
     var str = "";
-    for (var j in Hatches[ProjID]) {
-        str += "<li><a class = 'HatchBTN' data-ajax = 'false' href = '#Hatch" + Hatches[ProjID][j].HatchID + "'>";
-        str += "<h1>פתח מס' " + Hatches[ProjID][j].HatchID + "</h1>";
-        str += "<p>" + Hatches[ProjID][j].HatchStatus + "</p>";
+    for (var j in Hatches[pID]) {
+        str += "<li><a class = 'HatchBTN' data-ajax = 'false' href = '#Hatch" + Hatches[pID][j].HatchID + "'>";
+        str += "<h1>פתח מס' " + Hatches[pID][j].HatchID + "</h1>";
+        str += "<p>" + Hatches[pID][j].HatchStatus + "</p>";
         str += "</a></li>";
     }
     return str;
@@ -267,7 +229,7 @@ function BuildHatchesList(ProjID) {
 // build Hatches list per project
 //------------------------------------------------------
 function BuildHatchesListPerProject() {
-    str = "";
+    var str = "";
     for (var pID in Projects) {
         //Projects[Project][1].HatchesImageURL
         str += '<div data-role="page" id="HatchesOfProject' + pID + '">';
@@ -286,7 +248,8 @@ function BuildHatchesListPerProject() {
         str += "</div>"; // end of content
         str += "</div>"; // end of page
     }
-    return str;
+    var newPage = $(str);
+    newPage.appendTo($.mobile.pageContainer);
 }
 
 //----------------------------------------------------------------------------
@@ -294,7 +257,7 @@ function BuildHatchesListPerProject() {
 //----------------------------------------------------------------------------
 function BuildHatchPage(HatchID) {
     $.ajax({ // ajax call start
-        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/GetPicsAndPins',
+        url: 'MaestroWS.asmx/GetPicsAndPins',
         data: "{ HatchID : " + HatchID + "}", // Send value of the project id
         dataType: 'json', // Choosing a JSON datatype for the data sent
         type: 'POST',
@@ -321,7 +284,7 @@ function BuildHatchPage(HatchID) {
     for (var pID in Projects)
         for (var hID in Hatches[pID])
             BuildHatchDetailsPage(Hatches[pID][hID]); // build a page for each hatch
-//    $('.HatchNavbar').navbar('refresh');
+    //    $('.HatchNavbar').navbar('refresh');
 }
 
 function BuildHatchDetailsPage(oHatch) {
@@ -394,7 +357,7 @@ function BuildPictureDescTextBox(hID) {
 function GetOpenedServiceCalls() {
     dataString = "";
     $.ajax({ // ajax call starts
-        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/GetOpenedServiceCalls',   // JQuery call to the server side method
+        url: 'MaestroWS.asmx/GetOpenedServiceCalls',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -421,7 +384,7 @@ function BuildServiceCallsList(ServiceCallsList) {
     for (var scID in ServiceCallsList) {
         str += "<li><a data-ajax = 'false' href= '#ServiceCall" + scID + "'>";
         str += "<h1>" + ServiceCallsList[scID][1].Fname + " " + ServiceCallsList[scID][1].Lname + "</h1>";
-        //        str += "<p>" + ServiceCallsList[scID][1].City + "</p>";
+        str += "<p>" + ServiceCallsList[scID][1].Address + "</p>";
         str += "</a></li>";
     }
     return str;
@@ -478,7 +441,7 @@ function BuildServiceCallDialog(scID) {
 function CloseServiceCall(scID) {
     dataString = "{ scID: '" + scID + "'}";
     $.ajax({ // ajax call starts
-        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/CloseServiceCall',   // JQuery call to the server side method
+        url: 'MaestroWS.asmx/CloseServiceCall',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -512,7 +475,7 @@ function BuildServiceCallHeader(sHeaderText) {
 function GetProjectsNamesList() {
     dataString = "";
     $.ajax({ // ajax call starts
-        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/GetProjectsNames',   // JQuery call to the server side method
+        url: 'MaestroWS.asmx/GetProjectsNames',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -558,7 +521,7 @@ function PrepareServiceCall() {
 function CreateServiceCall(oServiceCallDetails) {
     dataString = JSON.stringify(oServiceCallDetails);
     $.ajax({ // ajax call starts
-        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/CreateServiceCall',   // JQuery call to the server side method
+        url: 'MaestroWS.asmx/CreateServiceCall',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
@@ -676,6 +639,7 @@ function ShowServiceCallPin(oPosition, sID) {
     var sContent = '<div id="content">' +
                 '<h3 class="firstHeading">' + ServiceCallsList[sID][1].Fname + " " + ServiceCallsList[sID][1].Lname + '</h3>' +
                 '<div class="bodyContent">' +
+                '<p><b>כתובת: </b>' + ServiceCallsList[sID][1].Address + '</p>' +
                 '<p><b>טלפון נייד: </b>' + ServiceCallsList[sID][1].Mobile + '</p>' +
                 '<p><b>תיאור התקלה: </b>' + ServiceCallsList[sID][0].Description + '</p>' +
     //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
@@ -742,7 +706,7 @@ function UploadPicture() {
     dataString = JSON.stringify(Picture);
     //    alert(dataString);
     $.ajax({ // ajax call starts
-        url: 'http://proj.ruppin.ac.il/igroup9/prod/MaestroWS.asmx/UploadPicture',   // JQuery call to the server side method
+        url: 'MaestroWS.asmx/UploadPicture',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype

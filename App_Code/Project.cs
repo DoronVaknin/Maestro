@@ -235,19 +235,19 @@ public class Project
         return dt;
     }
 
-    public DataTable GetProjectDetails(int ProjectID)
+    public DataTable GetProjectDetails()
     {
         DataTable dt = new DataTable();
         DBservices db = new DBservices();
-        dt = db.GetProjectDetails(ProjectID);
+        dt = db.GetProjectDetails();
         return dt;
     }
 
-    public DataTable GetProjectHatches(int ProjectID)
+    public DataTable GetHatches()
     {
         DataTable dt = new DataTable();
         DBservices db = new DBservices();
-        dt = db.GetProjectHatches(ProjectID);
+        dt = db.GetHatches();
         return dt;
     }
 

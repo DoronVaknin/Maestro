@@ -660,7 +660,7 @@ public class DBservices
         }
     }
 
-    public DataTable GetProjectDetails(int ProjectID)
+    public DataTable GetProjectDetails()
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
@@ -674,7 +674,6 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
                 da.SelectCommand = sqlComm;
                 da.Fill(dt);
                 return dt;
@@ -687,13 +686,13 @@ public class DBservices
         }
     }
 
-    public DataTable GetProjectHatches(int ProjectID)
+    public DataTable GetHatches()
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
 
         con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectHatches]", con))
+        using (SqlCommand sqlComm = new SqlCommand("[spGetHatches]", con))
         {
             if (con.State != ConnectionState.Open)
                 con.Open();
@@ -701,7 +700,6 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
                 da.SelectCommand = sqlComm;
                 da.Fill(dt);
                 return dt;
