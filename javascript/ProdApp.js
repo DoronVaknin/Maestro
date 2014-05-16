@@ -28,6 +28,11 @@ $(document).on("click", ".HatchBTN", function () {
     setTimeout(BackupPage, 1000);
 });
 
+function Logout() {
+    $('div[id^="Hatch"]').remove();
+    Goto("LoginPage");
+}
+
 function BackupPage() {
     var Page = $.mobile.activePage;
     var PageID = $(Page).attr("id");
@@ -58,6 +63,7 @@ function Login() {
         alert("אנא הזן שם משתמש וסיסמה לפני התחברות");
         return;
     }
+    ShowLoading("מתחבר");
     dataString = "{ Username: '" + sUsername + "', Password: '" + sPassword + "' }";
     $.ajax({ // ajax call starts
         url: 'MaestroWS.asmx/Login',   // JQuery call to the server side method
@@ -68,15 +74,21 @@ function Login() {
         success: function (data) // Variable data contains the data we get from serverside
         {
             if (data.d == "true") {
-                window.location = "#ProjectsPage";
+                $("#UserName, #Password").val("");
+                HideLoading();
+                Goto("ProjectsPage");
                 LoadProjectsList(); //  read all the projects
             }
-            else alert("Username or password is incorrect");
+            else {
+                HideLoading();
+                alert("שם משתמש או סיסמה לא נכונים");
+            }
         }, // end of success
         error: function (e) {
+            HideLoading();
             alert("failed to login: " + e.responseText);
         } // end of error
-    });            // end of ajax call
+    });             // end of ajax call
 }
 
 //-----------------------------------------------------------------------
@@ -490,7 +502,7 @@ function BuildHatchDetailsPage(oHatch) {
     str += "<div data-role='footer' data-position='fixed' data-theme='a'>";
     str += "<div class = 'HatchNavbar' data-role='navbar'>";
     str += "<ul>";
-    str += "<li><a data-ajax = 'false' href='#TakePhotoHatch" + iHatchID + "' class = 'ui-icon-camera-white' >צלם תמונה</a></li>";
+    str += "<li><a data-ajax = 'false' href='#TakePhotoHatch" + iHatchID + "' class = 'ui-icon-camera-white'>צלם תמונה</a></li>";
     str += "<li><a data-ajax = 'false' href='#PicturesOfHatch" + iHatchID + "' class = 'HatchPicturesBTN' data-icon='grid' data-iconpos='left'>תמונות</a></li>";
     str += "<li><a data-ajax = 'false' href='#QAForHatch" + iHatchID + "' data-icon='star'>בקרת איכות</a></li>";
     str += "</ul>";
@@ -597,3 +609,15 @@ function GetCurrentDate() {
     today = dd + '/' + mm + '/' + yyyy;
     return today;
 }
+
+function ShowLoading(sText) {
+    $.mobile.loading('show', {
+        text: sText,
+        theme: 'c',
+        textVisible: true
+    });
+} // loading
+
+function HideLoading() {
+    $.mobile.loading('hide');
+} // Unload
