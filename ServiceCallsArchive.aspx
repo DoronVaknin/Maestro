@@ -13,7 +13,7 @@
         SelectCommand="spGetServiceCallsArchive" SelectCommandType="StoredProcedure">
     </asp:SqlDataSource>
     <asp:GridView ID="ServiceCallsArchiveGV" CssClass="DataTables" runat="server" AllowPaging="True"
-        AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="scID" DataSourceID="ServiceCallsArchiveDS">
+        AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="scID" DataSourceID="ServiceCallsArchiveDS" OnDataBound = "OnDataBound">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
             <asp:BoundField DataField="scID" HeaderText="מס' קריאה" InsertVisible="False" ReadOnly="True"

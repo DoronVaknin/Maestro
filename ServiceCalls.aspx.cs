@@ -23,7 +23,7 @@ public partial class Default : System.Web.UI.Page
         DataTable dt = new DataTable();
         Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalServiceCalls", "ActivateModal('ModalServiceCalls');", true);
         //GridViewRow row = ServiceCallsGridView.SelectedRow;
-        int scID = Convert.ToInt32(ServiceCallsGridView.SelectedRow.Cells[1].Text);
+        int scID = Convert.ToInt32(ServiceCallsGV.SelectedRow.Cells[1].Text);
         ServiceCall sc = new ServiceCall();
         dt = sc.GetServiceCallPopupMissingDetails(scID);
 
@@ -59,7 +59,7 @@ public partial class Default : System.Web.UI.Page
 
     protected void ServiceCallBTN_Click(object sender, EventArgs e)
     {
-        GridViewRow row = ServiceCallsGridView.SelectedRow;
+        GridViewRow row = ServiceCallsGV.SelectedRow;
         ServiceCall sc = new ServiceCall();
         sc.CloseServiceCall(Convert.ToInt32(row.Cells[1].Text));
     }
@@ -67,7 +67,7 @@ public partial class Default : System.Web.UI.Page
     protected void SaveServiceCallDetailsBTN_Click(object sender, EventArgs e)
     {
         ServiceCall sc = new ServiceCall();
-        int scID = Convert.ToInt32(ServiceCallsGridView.SelectedRow.Cells[1].Text);
+        int scID = Convert.ToInt32(ServiceCallsGV.SelectedRow.Cells[1].Text);
         string ProblemDesc = ServiceCallProblemDesc.Text;
         bool Urgent = ServiceCallUrgent.Checked;
         int RowAffected = sc.UpdateServiceCallDetails(scID, ProblemDesc, Urgent);
@@ -79,8 +79,23 @@ public partial class Default : System.Web.UI.Page
 
     protected void CloseServiceCallHiddenBTN_Click(object sender, EventArgs e)
     {
-        int scID = Convert.ToInt32(ServiceCallsGridView.SelectedRow.Cells[1].Text);
+        int scID = Convert.ToInt32(ServiceCallsGV.SelectedRow.Cells[1].Text);
         ServiceCall sc = new ServiceCall();
         sc.CloseServiceCall(scID);
+    }
+
+    protected void OnDataBound(object sender, EventArgs e)
+    {
+        if (ServiceCallsGV.Rows.Count > 0)
+        {
+            GridViewRow row = ServiceCallsGV.Rows[0];
+            for (int i = 0; i < ServiceCallsGV.Columns.Count - 1; i++)
+            {
+                TextBox txtSearch = new TextBox();
+                txtSearch.Attributes["placeholder"] = ServiceCallsGV.Columns[i].HeaderText;
+                txtSearch.CssClass = "search_textbox form-control";
+                ServiceCallsGV.HeaderRow.Cells[i].Controls.Add(txtSearch);
+            }
+        }
     }
 }

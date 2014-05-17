@@ -38,4 +38,19 @@ public partial class Default2 : System.Web.UI.Page
         SupplierFax.Value = SuppliersGV.SelectedRow.Cells[7].Text;
         SupplierEmail.Value = SuppliersGV.SelectedRow.Cells[8].Text;
     }
+
+    protected void OnDataBound(object sender, EventArgs e)
+    {
+        if (SuppliersGV.Rows.Count > 0)
+        {
+            GridViewRow row = SuppliersGV.Rows[0];
+            for (int i = 1; i < SuppliersGV.Columns.Count; i++)
+            {
+                TextBox txtSearch = new TextBox();
+                txtSearch.Attributes["placeholder"] = SuppliersGV.Columns[i].HeaderText;
+                txtSearch.CssClass = "search_textbox form-control";
+                SuppliersGV.HeaderRow.Cells[i].Controls.Add(txtSearch);
+            }
+        }
+    }
 }

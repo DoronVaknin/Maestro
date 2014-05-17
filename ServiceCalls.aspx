@@ -12,9 +12,9 @@
     <asp:SqlDataSource ID="ServiceCallsDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
         SelectCommand="spGetOpenedServiceCalls" SelectCommandType="StoredProcedure" UpdateCommand="update ServiceCall set Urgent=@Urgent, ProblemDesc=@ProblemDesc where scID=@scID">
     </asp:SqlDataSource>
-    <asp:GridView runat="server" ID="ServiceCallsGridView" AutoGenerateColumns="False"
+    <asp:GridView runat="server" ID="ServiceCallsGV" AutoGenerateColumns="False"
         DataKeyNames="scID" DataSourceID="ServiceCallsDataSource" CssClass="DataTables"
-        AllowPaging="True" AllowSorting="True" OnSelectedIndexChanged="ServiceCallsGridView_SelectedIndexChanged">
+        AllowPaging="True" AllowSorting="True" OnSelectedIndexChanged="ServiceCallsGridView_SelectedIndexChanged" OnDataBound = "OnDataBound">
         <Columns>
             <asp:CommandField ShowSelectButton="true" SelectText="בחר" />
             <asp:BoundField DataField="scID" HeaderText="מס' קריאה" InsertVisible="False" ReadOnly="True"

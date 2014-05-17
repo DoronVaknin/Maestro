@@ -13,30 +13,25 @@ public partial class Default : System.Web.UI.Page
     }
     protected void Customers_SelectedIndexChanged(object sender, EventArgs e)
     {
-        int SelectedIndex = CustomersTBL.SelectedIndex;
-        SelectedIndex += 1;
-        GridViewRow row = CustomersTBL.Rows[SelectedIndex];
+        int SelectedIndex = CustomersGV.SelectedIndex;
+        GridViewRow row = CustomersGV.Rows[SelectedIndex];
         Session["CustomerRow"] = row;
         Session["CustomerID"] = row.Cells[1].Text;
-        //Session["FirstName"] = CustomersTBL.Rows[SelectedIndex].Cells[2].Text;
-        //Session["LastName"] = CustomersTBL.Rows[SelectedIndex].Cells[3].Text;
         Response.Redirect("ProjectsPerCustomer.aspx");
     }
 
     protected void OnDataBound(object sender, EventArgs e)
     {
-        GridViewRow row = new GridViewRow(0, 0, DataControlRowType.Header, DataControlRowState.Normal);
-        for (int i = 0; i < CustomersTBL.Columns.Count - 3; i++)
+        if (CustomersGV.Rows.Count > 0)
         {
-                TableHeaderCell cell = new TableHeaderCell();
+            GridViewRow row = CustomersGV.Rows[0];
+            for (int i = 0; i < CustomersGV.Columns.Count - 1; i++)
+            {
                 TextBox txtSearch = new TextBox();
-                txtSearch.Attributes["placeholder"] = CustomersTBL.Columns[i].HeaderText;
+                txtSearch.Attributes["placeholder"] = CustomersGV.Columns[i].HeaderText;
                 txtSearch.CssClass = "search_textbox form-control";
-                cell.Controls.Add(txtSearch);
-                row.Controls.Add(cell);
+                CustomersGV.HeaderRow.Cells[i].Controls.Add(txtSearch);
+            }
         }
-        CustomersTBL.HeaderRow.Parent.Controls.AddAt(1, row);
-        //int RowsNum = CustomersTBL.Rows.Count;
-        //CustomersTBL.Rows[RowsNum + 1].RowIndex = RowsNum;
     }
 }

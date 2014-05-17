@@ -93,4 +93,19 @@ public partial class Default2 : System.Web.UI.Page
         }
         return EmployeeName;
     }
+
+    protected void OnDataBound(object sender, EventArgs e)
+    {
+        if (ProjectHatchesGV.Rows.Count > 0)
+        {
+            GridViewRow row = ProjectHatchesGV.Rows[0];
+            for (int i = 1; i < ProjectHatchesGV.Columns.Count; i++)
+            {
+                TextBox txtSearch = new TextBox();
+                txtSearch.Attributes["placeholder"] = ProjectHatchesGV.Columns[i].HeaderText;
+                txtSearch.CssClass = "search_textbox form-control";
+                ProjectHatchesGV.HeaderRow.Cells[i].Controls.Add(txtSearch);
+            }
+        }
+    }
 }

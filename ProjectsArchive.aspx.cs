@@ -15,7 +15,6 @@ public partial class Default2 : System.Web.UI.Page
     protected void ProjectsArchiveGV_SelectedIndexChanged(object sender, EventArgs e)
     {
         int SelectedIndex = ProjectsArchiveGV.SelectedIndex;
-        SelectedIndex += 1;
         GridViewRow row = ProjectsArchiveGV.Rows[SelectedIndex];
         Session["selectedrow"] = row;
         Response.Redirect("ProjectDetails.aspx");
@@ -23,16 +22,16 @@ public partial class Default2 : System.Web.UI.Page
 
     protected void OnDataBound(object sender, EventArgs e)
     {
-        GridViewRow row = new GridViewRow(0, 0, DataControlRowType.Header, DataControlRowState.Normal);
-        for (int i = 0; i < ProjectsArchiveGV.Columns.Count - 1; i++)
+        if (ProjectsArchiveGV.Rows.Count > 0)
         {
-            TableHeaderCell cell = new TableHeaderCell();
-            TextBox txtSearch = new TextBox();
-            txtSearch.Attributes["placeholder"] = ProjectsArchiveGV.Columns[i].HeaderText;
-            txtSearch.CssClass = "search_textbox form-control";
-            cell.Controls.Add(txtSearch);
-            row.Controls.Add(cell);
+            GridViewRow row = ProjectsArchiveGV.Rows[0];
+            for (int i = 0; i < ProjectsArchiveGV.Columns.Count - 1; i++)
+            {
+                TextBox txtSearch = new TextBox();
+                txtSearch.Attributes["placeholder"] = ProjectsArchiveGV.Columns[i].HeaderText;
+                txtSearch.CssClass = "search_textbox form-control";
+                ProjectsArchiveGV.HeaderRow.Cells[i].Controls.Add(txtSearch);
+            }
         }
-        ProjectsArchiveGV.HeaderRow.Parent.Controls.AddAt(1, row);
     }
 }

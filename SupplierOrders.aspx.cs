@@ -53,4 +53,19 @@ public partial class Default2 : System.Web.UI.Page
         SupplierOrderProject.Attributes.Add("disabled", "disabled");
         SupplierOrderStatus.Attributes.Add("disabled", "disabled");
     }
+
+    protected void OnDataBound(object sender, EventArgs e)
+    {
+        if (SupplierOrdersGV.Rows.Count > 0)
+        {
+            GridViewRow row = SupplierOrdersGV.Rows[0];
+            for (int i = 0; i < SupplierOrdersGV.Columns.Count; i++)
+            {
+                TextBox txtSearch = new TextBox();
+                txtSearch.Attributes["placeholder"] = SupplierOrdersGV.Columns[i].HeaderText;
+                txtSearch.CssClass = "search_textbox form-control";
+                SupplierOrdersGV.HeaderRow.Cells[i].Controls.Add(txtSearch);
+            }
+        }
+    }
 }

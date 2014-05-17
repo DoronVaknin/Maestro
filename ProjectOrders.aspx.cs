@@ -42,7 +42,7 @@ public partial class Default2 : System.Web.UI.Page
         CreateOrder(Convert.ToInt32(ProtectedSpaceCount.Text), ProtectedSpaceProvider.SelectedValue, 8, ProtectedSpaceEstArrDate.Text);
         CreateOrder(Convert.ToInt32(GlassCount.Text), GlassProvider.SelectedValue, 9, GlassEstArrDate.Text);
         CreateOrder(Convert.ToInt32(BoxesCount.Text), BoxesProvider.SelectedValue, 10, BoxesEstArrDate.Text);
-        OrdersGV.DataBind();
+        ProjectOrdersGV.DataBind();
     }
 
     protected void CreateOrder(int Count, string SupplierID, int RawMeterialID, string EstArrDate)
@@ -69,16 +69,16 @@ public partial class Default2 : System.Web.UI.Page
     //    OrdersGV.DataBind();
     //}
 
-    protected void OrdersGV_SelectedIndexChanged(object sender, EventArgs e)
+    protected void ProjectOrdersGV_SelectedIndexChanged(object sender, EventArgs e)
     {
         Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalOrderDetails", "ActivateModal('ModalOrderDetails');", true);
-        ProjectOrderID.Text = OrdersGV.SelectedRow.Cells[2].Text;
-        ProjectOrderDateOpened.Text = OrdersGV.SelectedRow.Cells[3].Text;
-        ProjectOrderItemName.Text = OrdersGV.SelectedRow.Cells[4].Text;
-        ProjectOrderEstimatedDOA.Text = OrdersGV.SelectedRow.Cells[5].Text;
-        ProjectOrderQuantity.Text = OrdersGV.SelectedRow.Cells[6].Text;
-        ProjectOrderSupplier.Text = OrdersGV.SelectedRow.Cells[7].Text;
-        ListItem li = ProjectOrderStatus.Items.FindByText(OrdersGV.SelectedRow.Cells[8].Text);
+        ProjectOrderID.Text = ProjectOrdersGV.SelectedRow.Cells[2].Text;
+        ProjectOrderDateOpened.Text = ProjectOrdersGV.SelectedRow.Cells[3].Text;
+        ProjectOrderItemName.Text = ProjectOrdersGV.SelectedRow.Cells[4].Text;
+        ProjectOrderEstimatedDOA.Text = ProjectOrdersGV.SelectedRow.Cells[5].Text;
+        ProjectOrderQuantity.Text = ProjectOrdersGV.SelectedRow.Cells[6].Text;
+        ProjectOrderSupplier.Text = ProjectOrdersGV.SelectedRow.Cells[7].Text;
+        ListItem li = ProjectOrderStatus.Items.FindByText(ProjectOrdersGV.SelectedRow.Cells[8].Text);
         ProjectOrderStatus.SelectedValue = li.Value;
     }
 
@@ -101,5 +101,20 @@ public partial class Default2 : System.Web.UI.Page
         ProjectOrderQuantity.Attributes.Add("disabled", "disabled");
         ProjectOrderSupplier.Attributes.Add("disabled", "disabled");
         ProjectOrderStatus.Attributes.Add("disabled", "disabled");
+    }
+
+    protected void OnDataBound(object sender, EventArgs e)
+    {
+        if (ProjectOrdersGV.Rows.Count > 0)
+        {
+            GridViewRow row = ProjectOrdersGV.Rows[0];
+            for (int i = 1; i < ProjectOrdersGV.Columns.Count; i++)
+            {
+                TextBox txtSearch = new TextBox();
+                txtSearch.Attributes["placeholder"] = ProjectOrdersGV.Columns[i].HeaderText;
+                txtSearch.CssClass = "search_textbox form-control";
+                ProjectOrdersGV.HeaderRow.Cells[i].Controls.Add(txtSearch);
+            }
+        }
     }
 }

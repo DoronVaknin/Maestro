@@ -381,8 +381,7 @@ div.cntr input[type=button], div.cntr button
 {
     width: 100px;
     font-size: inherit;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 10px auto 0 auto;
 }
 
 .plus, .minus, .pointer
