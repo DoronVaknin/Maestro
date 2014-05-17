@@ -3,6 +3,9 @@
 var aCustomerDetails = [];
 var aProjectDetails = [];
 
+var Projects = {};
+var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, ServiceCallsList[scID][1] - Customer details, ServiceCallsList[scID][2] - Project details
+
 $(document).ready(function () {
     ActivateTabsMarking();
     ActivateToolbarButton("ToolbarBtnCreateProject", "NewCustomer", "CreateProject");
@@ -20,8 +23,12 @@ $(document).ready(function () {
     }
     else if (IsPage("ProjectOrders"))
         ActivatePlusMinus();
-    else if (IsPage("NewProject", "NewCustomer"))
+    else if (IsPage("NewProject", "NewCustomer")) {
         ActivateModal("ModalCustomerCreated");
+        ActivateDragAndDrop();
+    }
+    else if (IsPage("NewProject", "ProjectsPerCustomer"))
+        ActivateDragAndDrop();
     else if (IsPage("NewCustomer"))
         ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
     else if (IsPage("NewCustomer", "CreateProject")) {
@@ -34,7 +41,16 @@ $(document).ready(function () {
     }
     else if (IsPage("NewSupplier"))
         ActivateGoogleAutoCompletion("ContentPlaceHolder3_SupplierAddress");
+    else if (IsPage("Home")) {
+        InitializeGoogleMap();
+        GetProjects();
+        GetOpenedServiceCalls();
+        PopulateGoogleMap();
+        ResizeGoogleMap();
+    }
 });
+
+$(window).resize(ResizeGoogleMap);
 
 //Mark current tabs
 function ActivateTabsMarking() {
@@ -618,7 +634,7 @@ function isValidMobileNumber(s) {
 
 //DRAG & DROP
 function sendFileToServer(formData, status) {
-    var uploadURL = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) + "files/";   //Upload URL
+    var uploadURL = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) + "files/ReturnValue.ashx";   //Upload URL
     var extraData = {}; //Extra Data.
     var jqXHR = $.ajax({
         xhr: function () {
@@ -645,8 +661,10 @@ function sendFileToServer(formData, status) {
         data: formData,
         success: function (data) {
             status.setProgress(100);
-
             //$("#status1").append("File upload Done<br>");
+        },
+        error: function (e) {
+            alert("Failed to upload files: " + e.responseText);
         }
     });
 
@@ -705,7 +723,7 @@ function handleFileUpload(files, obj) {
 
     }
 }
-$(document).ready(function () {
+function ActivateDragAndDrop() {
     var obj = $("#dragandrophandler");
     obj.on('dragenter', function (e) {
         e.stopPropagation();
@@ -738,8 +756,7 @@ $(document).ready(function () {
         e.stopPropagation();
         e.preventDefault();
     });
-
-});
+}
 
 //Google Autocompletion
 function ActivateGoogleAutoCompletion(sID) {
@@ -748,4 +765,169 @@ function ActivateGoogleAutoCompletion(sID) {
     autocomplete = new google.maps.places.Autocomplete(
     (document.getElementById(sID)),
       { types: ['geocode'] });
+}
+
+/** Google Maps **/
+var Map;
+//var InfoWindow;
+var oPosition = {};
+
+function InitializeGoogleMap() {
+    var mapOptions = {
+        center: new google.maps.LatLng(32.321458, 34.853196),
+        zoom: 10
+    };
+    Map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+}
+
+function PopulateGoogleMap() {
+    for (var pID in Projects) {
+        GetCoordinatesByAddress(Projects[pID].Address);
+        ShowProjectPin(oPosition, pID);
+    }
+    for (var scID in ServiceCallsList) {
+        GetCoordinatesByAddress(ServiceCallsList[scID][1].Address);
+        ShowServiceCallPin(oPosition, scID);
+    }
+}
+
+function ShowServiceCallPin(oPosition, sID) {
+    var Position = new google.maps.LatLng(oPosition.lat, oPosition.lng);
+    var Image = "images/icons/red-pin.png";
+    var Marker = new google.maps.Marker({
+        position: Position,
+        map: Map,
+        title: "קריאת שירות",
+        icon: Image
+    });
+
+    var sContent = '<div id="content">' +
+                '<h3 class="firstHeading">' + ServiceCallsList[sID][1].Fname + " " + ServiceCallsList[sID][1].Lname + '</h3>' +
+                '<div class="bodyContent">' +
+                '<p><b>כתובת: </b>' + ServiceCallsList[sID][1].Address + '</p>' +
+                '<p><b>טלפון נייד: </b>' + ServiceCallsList[sID][1].Mobile + '</p>' +
+                '<p><b>תיאור התקלה: </b>' + ServiceCallsList[sID][0].Description + '</p>' +
+    //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
+                '</div>' +
+                '</div>';
+
+    var InfoWindow = new google.maps.InfoWindow({
+        content: sContent
+    });
+
+    google.maps.event.addListener(Marker, 'click', function () {
+        InfoWindow.open(Map, Marker);
+    });
+
+    google.maps.event.trigger(Map, "resize");
+}
+
+function ShowProjectPin(oPosition, pID) {
+    var Position = new google.maps.LatLng(oPosition.lat, oPosition.lng);
+    var Image = "images/icons/blue-pin.png";
+    var Marker = new google.maps.Marker({
+        position: Position,
+        map: Map,
+        title: "פרויקט",
+        icon: Image
+    });
+
+    var sContent = '<div id="content">' +
+                '<h3 class="firstHeading">' + Projects[pID].Name + '</h3>' +
+                '<div class="bodyContent">' +
+                '<p><b>טלפון נייד: </b>' + Projects[pID].Mobile + '</p>' +
+                '<p><b>כתובת: </b>' + Projects[pID].Address + '</p>' +
+    //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
+                '</div>' +
+                '</div>';
+
+    var InfoWindow = new google.maps.InfoWindow({
+        content: sContent
+    });
+
+    google.maps.event.addListener(Marker, 'click', function () {
+        InfoWindow.open(Map, Marker);
+    });
+}
+
+//----------------------------------------------------------------------------
+// build the Projects page
+// ProjectsList contains all the names of the projects
+//----------------------------------------------------------------------------
+function GetProjects() {
+    dataString = "";
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/GetProjects',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            p = $.parseJSON(data.d); // parse the data as json
+            p = MergeInsideArrays(p);
+            for (var i in p)
+                Projects[p[i].pID] = p[i];
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to get project details: " + e.responseText);
+        } // end of error
+    });             // end of ajax call
+}
+
+function GetOpenedServiceCalls() {
+    dataString = "";
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/GetOpenedServiceCalls',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        async: false,
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            sc = $.parseJSON(data.d);
+            for (var i in sc)
+                ServiceCallsList[sc[i][0].ScID] = sc[i];
+        }, // end of success
+        error: function (e) {
+            alert("failed to load Service calls" + e.responseText);
+        } // end of error
+    });               // end of ajax call
+}
+
+function GetCoordinatesByAddress(sAddress) {
+    $.ajax({ // ajax call starts
+        url: 'http://maps.googleapis.com/maps/api/geocode/json?address=' + sAddress + '&sensor=false',   // JQuery call to the server side method
+        type: 'GET',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        async: false,
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            oPosition = data.results[0].geometry.location;
+        }, // end of success
+        error: function (e) {
+            alert("failed to get coordinates by address" + e.responseText);
+        } // end of error
+    });
+}
+
+function MergeInsideArrays(Arr) {
+    var UniArr = [];
+    for (var i = 0; i < Arr.length; i++) {
+        var TempArr = [];
+        for (var j = 0; j < Arr[i].length; j++) {
+            for (var k in Arr[i][j]) {
+                TempArr[k] = eval("Arr[i][j]." + k);
+            }
+        }
+        UniArr.push(TempArr);
+    }
+    return UniArr;
+}
+
+function ResizeGoogleMap() {
+    var iWindowHeight = $(window).height();
+    $("#map-canvas").height(0.68 * iWindowHeight);
 }

@@ -279,7 +279,7 @@ public class Project
     {
         DataTable dt = new DataTable();
         DBservices db = new DBservices();
-        dt=db.GetAllDetails(ProjectID);
+        dt = db.GetAllDetails(ProjectID);
         return dt;
     }
 }

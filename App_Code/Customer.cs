@@ -21,12 +21,18 @@ public class Customer
         //
     }
 
-    public Customer(int _cID, string _fName, string _lName, string _Address, string _Email, int _Region)
+    public Customer(int _cID, string _fName, string _lName, string _Address, string _Phone, string _Mobile, string _Fax, string _Email, int _Region)
     {
         cID = _cID;
         Fname = _fName;
         Lname = _lName;
         Address = _Address;
+        //if (_Phone != "")
+            phone = _Phone;
+        //if (_Mobile != "")
+            Mobile = _Mobile;
+        //if (_Fax != "")
+            Fax = _Fax;
         Email = _Email;
         Region = _Region;
     }
@@ -92,24 +98,6 @@ public class Customer
     {
         get { return region; }
         set { region = value; }
-    }
-
-    public void SetPhones(string _Phone, string _Mobile, string _Fax)
-    {
-        if (_Phone != "")
-            phone = _Phone;
-        else
-            phone = "0";
-
-        if (_Mobile != "")
-            Mobile = _Mobile;
-        else
-            Mobile = "0";
-
-        if (_Fax != "")
-            Fax = _Fax;
-        else
-            Fax = "0";
     }
 
     public int InsertNewCustomer()

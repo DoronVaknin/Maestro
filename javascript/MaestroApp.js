@@ -362,6 +362,7 @@ function GetOpenedServiceCalls() {
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
         contentType: 'application/json; charset = utf-8', // of the data received
+        async: false,
         success: function (data) // Variable data contains the data we get from serverside
         {
             sc = $.parseJSON(data.d);
@@ -602,15 +603,15 @@ function GetObjectSize(obj) {
     return size;
 }
 
-/** Google API **/
+/** Google Maps **/
 var Map;
 //var InfoWindow;
 var oPosition = {};
 
 function InitializeGoogleMap() {
     var mapOptions = {
-        center: new google.maps.LatLng(32.434046, 34.919652),
-        zoom: 12
+        center: new google.maps.LatLng(32.321458, 34.853196),
+        zoom: 10
     };
     Map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 }

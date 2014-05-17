@@ -134,7 +134,7 @@
                             <span id="ProjectDetailsStatusIcon" class="glyphicon glyphicon-info-sign" data-placement="top"
                                 data-trigger="hover" data-title="התקדמות הפרויקט"></span>&nbsp;&nbsp;סטטוס הפרויקט:
                             <asp:DropDownList ID="ProjectInfoStatus" runat="server" CssClass="btn btn-default"
-                                DataSourceID="SqlDataSource1" DataTextField="psName" DataValueField="psName"
+                                DataSourceID="SqlDataSource1" DataTextField="psName" DataValueField="psID"
                                 AutoPostBack="false">
                             </asp:DropDownList>
                         </td>

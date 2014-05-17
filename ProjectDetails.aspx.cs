@@ -100,32 +100,23 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoMobile.Text = DetailsTable.Rows[0].ItemArray[5].ToString();
         ProjectInfoFax.Text = DetailsTable.Rows[0].ItemArray[6].ToString();
         ProjectInfoEmail.Text = DetailsTable.Rows[0].ItemArray[7].ToString();
-        ProjectInfoArchitectName.Text = DetailsTable.Rows[0].ItemArray[10].ToString();
-        ProjectInfoArchitectMobile.Text = DetailsTable.Rows[0].ItemArray[11].ToString();
-        ProjectInfoContractorName.Text = DetailsTable.Rows[0].ItemArray[12].ToString();
-        ProjectInfoContractorMobile.Text = DetailsTable.Rows[0].ItemArray[13].ToString();
-        ProjectInfoSupervisorName.Text = DetailsTable.Rows[0].ItemArray[14].ToString();
-        ProjectInfoSupervisorMobile.Text = DetailsTable.Rows[0].ItemArray[15].ToString();
-        //ListItem li = ProjectInfoArea.Items.FindByText(DetailsTable.Rows[0].ItemArray[21].ToString());
-        //ProjectInfoArea.SelectedValue = li.Value;
+        ProjectInfoArea.SelectedValue = DetailsTable.Rows[0].ItemArray[21].ToString();
 
-
-        //ProjectInfoStatus.Text = DetailsTable.Rows[0].ItemArray[2].ToString();
-        //ProjectInfoStatus.Attributes.Add("value", P_dt.Rows[0].ItemArray[15].ToString());
-
+        //Populate project details
         ProjectInfoName.Text = DetailsTable.Rows[0].ItemArray[8].ToString();
-        ProjectInfoHatches.Text = DetailsTable.Rows[0].ItemArray[22].ToString();
-        ProjectInfoCost.Text = DetailsTable.Rows[0].ItemArray[10].ToString();
-        ProjectInfoComments.Text = DetailsTable.Rows[0].ItemArray[20].ToString();
-        ProjectInfoDateOpened.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[17]).ToString("MM/dd/yyyy");
-        ProjectInfoExpirationDate.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[18]).ToString("MM/dd/yyyy");
-        ProjectInfoInstallationDate.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[19]).ToString("MM/dd/yyyy");
+        ProjectInfoStatus.SelectedValue = DetailsTable.Rows[0].ItemArray[9].ToString();
         ProjectInfoArchitectName.Text = DetailsTable.Rows[0].ItemArray[11].ToString();
         ProjectInfoArchitectMobile.Text = DetailsTable.Rows[0].ItemArray[12].ToString();
         ProjectInfoContractorName.Text = DetailsTable.Rows[0].ItemArray[13].ToString();
         ProjectInfoContractorMobile.Text = DetailsTable.Rows[0].ItemArray[14].ToString();
         ProjectInfoSupervisorName.Text = DetailsTable.Rows[0].ItemArray[15].ToString();
         ProjectInfoSupervisorMobile.Text = DetailsTable.Rows[0].ItemArray[16].ToString();
+        ProjectInfoHatches.Text = DetailsTable.Rows[0].ItemArray[22].ToString();
+        ProjectInfoCost.Text = DetailsTable.Rows[0].ItemArray[10].ToString();
+        ProjectInfoComments.Text = DetailsTable.Rows[0].ItemArray[20].ToString();
+        ProjectInfoDateOpened.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[17]).ToString("MM/dd/yyyy");
+        ProjectInfoExpirationDate.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[18]).ToString("MM/dd/yyyy");
+        ProjectInfoInstallationDate.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[19]).ToString("MM/dd/yyyy");
     }
 
     protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)
