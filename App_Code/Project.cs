@@ -251,11 +251,11 @@ public class Project
         return dt;
     }
 
-    public DataTable GetProjectHatchesForProdApp(int ProjectID)
+    public DataTable GetHatchesForProdApp()
     {
         DataTable dt = new DataTable();
         DBservices db = new DBservices();
-        dt = db.GetProjectHatchesForProdApp(ProjectID);
+        dt = db.GetHatchesForProdApp();
         return dt;
     }
 

@@ -791,13 +791,13 @@ public class DBservices
     }
 
     //Production App functions
-    public DataTable GetProjectHatchesForProdApp(int ProjectID)
+    public DataTable GetHatchesForProdApp()
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
 
         con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectHatchesForProdApp]", con))
+        using (SqlCommand sqlComm = new SqlCommand("[spGetHatchesForProdApp]", con))
         {
             if (con.State != ConnectionState.Open)
                 con.Open();
@@ -805,7 +805,6 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
                 da.SelectCommand = sqlComm;
                 da.Fill(dt);
                 return dt;

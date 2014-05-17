@@ -1,12 +1,12 @@
 ﻿/// <reference path="jquery-1.11.0.js" />
 
-var ProjectsList = [];
 var Hatches = {};
 var HatchStatusList = {};
 var FailureTypeList = {};
 var HatchDetails = {};
 var sEmployeeID = "";
 var CurrentPageData = [];
+var bFirstLogin = true;
 
 
 $(document).ready(function () {
@@ -30,6 +30,14 @@ $(document).on("click", ".HatchBTN", function () {
 
 function Logout() {
     $('div[id^="Hatch"]').remove();
+    $("#ProjectsList li").remove();
+    Hatches = {};
+    HatchStatusList = {};
+    FailureTypeList = {};
+    HatchDetails = {};
+    sEmployeeID = "";
+    CurrentPageData = [];
+    bFirstLogin = false;
     Goto("LoginPage");
 }
 
@@ -76,8 +84,18 @@ function Login() {
             if (data.d == "true") {
                 $("#UserName, #Password").val("");
                 HideLoading();
+
+                BuildProjectsPage();
+                if (!bFirstLogin)
+                    $("#ProjectsList").listview("refresh"); // this is important for the jQueryMobile to assign the style to a dynamically added list
                 Goto("ProjectsPage");
-                LoadProjectsList(); //  read all the projects
+
+                BuildHatchesListPerProject();
+
+                GetHatchStatusList();
+                GetFailureTypeList();
+
+                BuildHatchesPagePerProject();
             }
             else {
                 HideLoading();
@@ -88,51 +106,7 @@ function Login() {
             HideLoading();
             alert("failed to login: " + e.responseText);
         } // end of error
-    });             // end of ajax call
-}
-
-//-----------------------------------------------------------------------
-// Load the projects to client-side
-//-----------------------------------------------------------------------
-function LoadProjectsList() {
-    dataString = "";
-    $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/GetProjectListForProdApp',   // JQuery call to the server side method
-        data: dataString,    // the parameters sent to the server
-        type: 'POST',        // can be post or get
-        dataType: 'json',    // Choosing a JSON datatype
-        contentType: 'application/json; charset = utf-8', // of the data received
-        success: function (data) // Variable data contains the data we get from serverside
-        {
-            ProjectsList = $.parseJSON(data.d);
-            $("#ProjectsList").html(BuildProjectsPage(ProjectsList));
-
-            var newPage = $(BuildHatchesListPerProject());
-            newPage.appendTo($.mobile.pageContainer);
-
-            $("#ProjectsList").listview("refresh"); // this is important for the jQueryMobile to assign the style to a dynamically added list
-
-            GetHatchStatusList();
-            GetFailureTypeList();
-
-            newPage = $(BuildHatchesPagePerProject());
-            newPage.appendTo($.mobile.pageContainer);
-
-            // initializing popup event for images
-            $(document).on("pageinit", function () {
-                $(".photopopup").on({
-                    popupbeforeposition: function () {
-                        var maxHeight = $(window).height() - 30 + "px";
-                        $(".photopopup img").css("max-height", maxHeight);
-                    }
-                });
-            });
-
-        }, // end of success
-        error: function (e) {
-            alert("failed to load projects :( " + e.responseText);
-        } // end of error
-    });                 // end of ajax call
+    });               // end of ajax call
 }
 
 //-----------------------------------------------------------------------
@@ -183,135 +157,44 @@ function GetFailureTypeList() {
 // build the Projects page
 // ProjectsList contains all the names of the projects
 //----------------------------------------------------------------------------
-function BuildProjectsPage(ProjectsList) {
-    for (var i = 0; i < ProjectsList.length; i++) { // run on all the files in the list
-        $.ajax({ // ajax call start
-            url: 'MaestroWS.asmx/GetProjectHatchesForProdApp',
-            data: "{ pID: " + ProjectsList[i] + "}", // Send value of the project id
-            dataType: 'json', // Choosing a JSON datatype for the data sent
-            type: 'POST',
-            async: false, // this is a synchronous call
-            contentType: 'application/json; charset = utf-8', // for the data received
-            success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
-            {
-                p = $.parseJSON(data.d); // parse the data as json
-                Hatches[p[0][0].pID] = MergeInsideArrays(p);
-            }, // end of success
-            error: function (e) { // this function will be called upon failure
-                alert("failed to get project details: " + e.responseText);
-            } // end of error
-        });         // end of ajax call
-    } // end of loop on all the projects
-    str = "";
-    for (var i in Hatches) {
-        str += BuildProjectsList(i); // add item to the list in the main projects page
-        //        BuildProjectPage(Hatches[i][1].pID); // build a page for each project
-    }
-    return str;
+function BuildProjectsPage() {
+    dataString = "";
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/GetHatchesForProdApp',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            var h = $.parseJSON(data.d); // parse the data as json
+            h = MergeInsideArrays(h);
+            for (var i in h) {
+                if (typeof Hatches[h[i].pID] != "object")
+                    Hatches[h[i].pID] = [];
+                Hatches[h[i].pID].push(h[i]);
+            }
+            $("#ProjectsList").html(BuildProjectsList());
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to get project details: " + e.responseText);
+        } // end of error
+    });           // end of ajax call
 }
 
 //------------------------------------------------------
 // build projects list items
 //------------------------------------------------------
-function BuildProjectsList(i) {
+function BuildProjectsList() {
     var str = "";
-    str += "<li><a data-ajax = 'false' href= '#HatchesOfProject" + Hatches[i][0].pID + "'>";
-    str += "<h1>" + Hatches[i][0].Name + "</h1>";
-    str += "<p></p>";
-    str += "</a></li>";
+    for (var pID in Hatches) {
+        str += "<li><a data-ajax = 'false' href= '#HatchesOfProject" + pID + "'>";
+        str += "<h1>" + Hatches[pID][0].Name + "</h1>";
+        str += "<p></p>";
+        str += "</a></li>";
+    }
     return str;
-}
-
-//----------------------------------------------------------------------------
-// build a page per project
-//----------------------------------------------------------------------------
-function BuildProjectPage(ProjectID) {
-    var p = Hatches[ProjectID];
-
-    var str = "";
-    // build a page
-    str += "<div data-role = 'page' id = 'Project" + ProjectID + "'>";
-    // build the header
-
-    str += BuildProjectHeader(p.Name);
-
-    // add the content div
-    str += "<div data-role = 'content'>";
-    str += "<h2>פרטי הלקוח</h2>";
-    str += "<p><b>שם הלקוח: </b>" + CustomerFullName + "</p>";
-    if (!IsEmpty(Project.Phone)) str += "<p><b>טלפון: </b>" + Customer.Phone + "</p>";
-    str += "<p><b>טלפון נייד: </b>" + Customer.Mobile + "</p>";
-    if (!IsEmpty(Project.Fax)) str += "<p><b>פקס: </b>" + Customer.Fax + "</p>";
-    if (!IsEmpty(Project.Email)) str += "<p><b>דוא&quot;ל: </b>" + Customer.Email + "</p>";
-
-    str += "<h2>פרטי הפרויקט</h2>";
-    str += "<p><b>סטטוס: </b>" + ProjectStatus.StatusName + "</p>";
-    str += "<p><b>עלות: </b>" + Project.Cost + "</p>";
-    if (!IsEmpty(Project.Comments)) str += "<p><b>הערות: </b>" + Project.Comments + "</p>";
-
-    str += "<h2>אנשי קשר</h2>";
-    if (!IsEmpty(Project.ContractorName)) str += "<p><b>קבלן: </b>" + Project.ContractorName + "  " + Project.ContractorPhone + "</p>";
-    if (!IsEmpty(Project.ArchitectName)) str += "<p><b>אדריכל: </b>" + Project.ArchitectName + "  " + Project.ArchitectPhone + "</p>";
-    if (!IsEmpty(Project.SupervisorName)) str += "<p><b>מפקח: </b>" + Project.SupervisorName + "  " + Project.SupervisorPhone + "</p><br/>";
-
-    //    str += "<a class = 'HatchesBTN' href='#HatchesOfProject" + ProjectID + "' data-role='button'>צפה בפתחים</a>";
-
-    str += "</div>";  // close the content
-    str += "</div>";  // close the page
-
-    //append it to the page container
-    var newPage = $(str);
-    newPage.appendTo($.mobile.pageContainer);
-    //hatches button design
-    //    $(".HatchesBTN").css({ "width": "55%", "margin": "auto" });
-}
-
-//----------------------------------------------------------------------------
-// build a common header for project page
-//----------------------------------------------------------------------------
-function BuildProjectHeader(sHeaderText) {
-    var str = "";
-    str += "<div data-role = 'header' data-position='fixed' data-theme='a'>";
-    str += "<h1>" + sHeaderText + "</h1>";
-    str += "<a href='#ProjectsPage' data-icon='back' data-iconpos = 'notext' style = 'border:none;'></a>";
-    str += "</div>"; //close the header
-    //    str += "<div data-role='footer' data-position='fixed' data-theme='a'>";
-    //    str += "<div data-role='navbar' >";
-    //    str += "<ul>"
-    //    str += "<li><a data-ajax = 'false' href='#" + "students" + p.groupCode + "' class = 'ui-icon-group'>Students</a></li>";
-    //    str += "<li><a data-ajax = 'false'  href='#" + "Screenshots" + p.groupCode + " 'class = 'ui-icon-screenshot'>Screenshots</a></li>";
-    //    str += "<li><a data-ajax = 'false'  href='#" + "Videos" + p.groupCode + "' class = 'ui-icon-video'>Videos</a></li>";
-    //    str += "</ul>";
-    //    str += "</div>";
-    //    str += "</div>";
-    return str;
-}
-
-//----------------------------------------------------------------------------
-// build Hatch pages
-//----------------------------------------------------------------------------
-function BuildHatchesPage(ProjectsList) {
-    for (var i = 0; i < ProjectsList.length; i++) { // run on all the files in the list
-        $.ajax({ // ajax call start
-            url: 'MaestroWS.asmx/GetHatches',
-            data: "{ pID: " + ProjectsList[i].pID + "}", // Send value of the project id
-            dataType: 'json', // Choosing a JSON datatype for the data sent
-            type: 'POST',
-            async: false, // this is a synchronous call
-            contentType: 'application/json; charset = utf-8', // for the data received
-            success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
-            {
-                var h = $.parseJSON(data.d); // parse the data as json
-                if (h.length != 0) {
-                    var ProjID = h[0][0].pID;
-                    Hatches[ProjID] = MakeAssociativeArray(h, true, 1);
-                }
-            }, // end of success
-            error: function (e) { // this function will be called upon failure
-                alert("failed to get project's hatches: " + e.responseText);
-            } // end of error
-        });          // end of ajax call
-    } // end of loop on all the hatches
 }
 
 //------------------------------------------------------
@@ -344,14 +227,15 @@ function BuildHatchesListPerProject() {
         str += BuildHatchesList(pID);
         str += "</ul>"; // end of ul
 
-        str += '</br><div id="HatchesImage' + pID + '" data-role="popup" class = "photopopup">';
+        str += '<br/><div id="HatchesImage' + pID + '" data-role="popup" class = "photopopup">';
         str += '<a href="#HatchesOfProject' + pID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
         str += '<img src = "' + Hatches[pID][0].HatchesImageURL + '" /></div>';
 
         str += "</div>"; // end of content
         str += "</div>"; // end of page
     }
-    return str;
+    var newPage = $(str);
+    newPage.appendTo($.mobile.pageContainer);
 }
 
 //------------------------------------------------------
@@ -381,34 +265,18 @@ function BuildHatchesPagePerProject() {
             str += "</div>"; // end of page
         }
     }
-    return str;
-}
+    newPage = $(str);
+    newPage.appendTo($.mobile.pageContainer);
 
-//----------------------------------------------------------------------------
-// build the Hatch details page
-//----------------------------------------------------------------------------
-function BuildHatchPage(ProjectID) {
-    $.ajax({ // ajax call start
-        url: 'MaestroWS.asmx/GetPicsAndPins',
-        data: "{ ProjectID : " + ProjectID + "}", // Send value of the project id
-        dataType: 'json', // Choosing a JSON datatype for the data sent
-        type: 'POST',
-        async: false, // this is a synchronous call
-        contentType: 'application/json; charset = utf-8', // for the data received
-        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
-        {
-            var Arr = $.parseJSON(data.d); // parse the data as json
-            var HatchID = Arr[0][0].HatchID;
-            PNP = MakeAssociativeArray(Arr, true, 0);
-        }, // end of success
-        error: function (e) { // this function will be called upon failure
-            alert("failed to get project details: " + e.responseText);
-        } // end of error
-    });             // end of ajax call
-
-    for (var Hatch in PNP)
-        BuildHatchDetailsPage(PNP[Hatch]); // build a page for each hatch
-    //    $('.HatchNavbar').navbar('refresh');
+    // initializing popup event for images
+    $(document).on("pageinit", function () {
+        $(".photopopup").on({
+            popupbeforeposition: function () {
+                var maxHeight = $(window).height() - 30 + "px";
+                $(".photopopup img").css("max-height", maxHeight);
+            }
+        });
+    });
 }
 
 function PrepareHatchDetails(hID, pID) {

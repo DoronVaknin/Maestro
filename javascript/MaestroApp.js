@@ -241,7 +241,7 @@ function BuildHatchesListPerProject() {
         str += BuildHatchesList(pID);
         str += "</ul>"; // end of ul
 
-        str += '</br><div id="HatchesImage' + pID + '" data-role="popup" class = "photopopup">';
+        str += '<br/><div id="HatchesImage' + pID + '" data-role="popup" class = "photopopup">';
         str += '<a href="#HatchesOfProject' + pID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
         str += '<img src = "' + Projects[pID].HatchesImageURL + '" /></div>';
 
@@ -305,9 +305,9 @@ function BuildHatchDetailsPage(oHatch) {
     str += "<p><b>סטטוס: </b>" + oHatch.HatchStatus + "</p>";
     str += "<p><b>סוג הפתח: </b>" + oHatch.HatchType + "</p>";
 
-    //    str += '</br><a href = "#myPopup" data-role = "button" data-rel="popup">Popup Image</a>';
+    //    str += '<br/><a href = "#myPopup" data-role = "button" data-rel="popup">Popup Image</a>';
 
-    //    str += '</br><div id="myPopup" data-role="popup" class = "photopopup">';
+    //    str += '<br/><div id="myPopup" data-role="popup" class = "photopopup">';
     //    str += '<a href="#Hatch' + iHatchID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
     //    str += '<img src = "' + Projects[iProjID][1].HatchesImageURL + '" /></div>';
     str += BuildHatchDialog(oHatch.HatchID);
@@ -337,7 +337,7 @@ function BuildHatchDialog(hID) {
     str += "<h1>תמונה חדשה</h1>";
     str += '</div>';
     str += '<div data-role="main" class="ui-content">';
-    str += "<p><b>תיאור התמונה: </b>" + BuildPictureDescTextBox(hID) + "</p></br>";
+    str += "<p><b>תיאור התמונה: </b>" + BuildPictureDescTextBox(hID) + "</p><br/>";
     str += '<a data-role="button" data-inline="true" data-theme="a" onclick="TakePicturePrepare(' + hID + ')">צלם תמונה</a>';
     str += '<a id = "Hatch' + hID + 'CancelButton" data-role="button" onclick = "CloseHatchDialog(' + hID + ')" data-inline="true">בטל</a>';
     str += '</div>';

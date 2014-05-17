@@ -20,12 +20,13 @@
                 SortExpression="pID" />
             <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" />
             <asp:BoundField DataField="lName" HeaderText="שם משפחה" SortExpression="lName" />
-            <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened" DataFormatString="{0:dd/MM/yyyy}" />
+            <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened"
+                DataFormatString="{0:dd/MM/yyyy}" />
             <asp:BoundField DataField="psName" HeaderText="סטטוס" SortExpression="psName" />
             <asp:BoundField DataField="Comments" HeaderText="הערות" SortExpression="Comments" />
-            <asp:BoundField DataField="Cost" HeaderText="עלות (ש&quot;ח)" 
-                SortExpression="Cost" />
-            <asp:BoundField DataField="NumOfHatches" HeaderText="מס' פתחים" ReadOnly="True" SortExpression="NumOfHatches" Visible = "false" />
+            <asp:BoundField DataField="Cost" HeaderText="עלות (ש&quot;ח)" SortExpression="Cost" />
+            <asp:BoundField DataField="NumOfHatches" HeaderText="מס' פתחים" ReadOnly="True" SortExpression="NumOfHatches"
+                Visible="false" />
         </Columns>
     </asp:GridView>
     <br />

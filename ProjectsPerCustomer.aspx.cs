@@ -16,12 +16,7 @@ public partial class Default : System.Web.UI.Page
     }
     protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
     {
-        Session["ProjectID"] = GridView1.SelectedRow;
+        Session["ProjectID"] = ProjectsPerCustomerGV.SelectedRow.Cells[1].Text;
         Response.Redirect("ProjectDetails.aspx");
-    }
-
-    protected void AddProjectForCustomer_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("NewProject.aspx?" + "Source=ProjectsPerCustomer");
     }
 }

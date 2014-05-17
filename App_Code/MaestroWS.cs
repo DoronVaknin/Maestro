@@ -213,10 +213,10 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string GetProjectHatchesForProdApp(int pID)
+    public string GetHatchesForProdApp()
     {
         Project p = new Project();
-        DataTable dt = p.GetProjectHatchesForProdApp(pID);
+        DataTable dt = p.GetHatchesForProdApp();
 
         Hatch h = new Hatch();
         ArrayList[] myAL = new ArrayList[dt.Rows.Count];
