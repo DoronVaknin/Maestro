@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
+using System.Text;
 
 public partial class MaestroMaster : System.Web.UI.MasterPage
 {
@@ -18,6 +19,7 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
             case "BettiY": Welcome.InnerText = "שלום, בטי"; break;
             default: break;
         }
+        this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "expirescript", "ActivateCountdown()", true);
     }
 
     protected void LogoutBTN_Click(object sender, EventArgs e)

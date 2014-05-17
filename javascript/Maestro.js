@@ -5,6 +5,7 @@ var aProjectDetails = [];
 
 var Projects = {};
 var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, ServiceCallsList[scID][1] - Customer details, ServiceCallsList[scID][2] - Project details
+var iTimeoutMin = 90;
 
 $(document).ready(function () {
     ActivateTabsMarking();
@@ -585,8 +586,8 @@ function isValidDate(date) {
     var y = matches[3];
     var composedDate = new Date(y, m, d);
     return composedDate.getDate() == d &&
-            composedDate.getMonth() == m &&
-            composedDate.getFullYear() == y;
+			composedDate.getMonth() == m &&
+			composedDate.getFullYear() == y;
 }
 
 function isNumber(n) {
@@ -763,8 +764,8 @@ function ActivateGoogleAutoCompletion(sID) {
     // Create the autocomplete object, restricting the search
     // to geographical location types.
     autocomplete = new google.maps.places.Autocomplete(
-    (document.getElementById(sID)),
-      { types: ['geocode'] });
+	(document.getElementById(sID)),
+	  { types: ['geocode'] });
 }
 
 /** Google Maps **/
@@ -802,14 +803,14 @@ function ShowServiceCallPin(oPosition, sID) {
     });
 
     var sContent = '<div id="content">' +
-                '<h3 class="firstHeading">' + ServiceCallsList[sID][1].Fname + " " + ServiceCallsList[sID][1].Lname + '</h3>' +
-                '<div class="bodyContent">' +
-                '<p><b>כתובת: </b>' + ServiceCallsList[sID][1].Address + '</p>' +
-                '<p><b>טלפון נייד: </b>' + ServiceCallsList[sID][1].Mobile + '</p>' +
-                '<p><b>תיאור התקלה: </b>' + ServiceCallsList[sID][0].Description + '</p>' +
+				'<h3 class="firstHeading">' + ServiceCallsList[sID][1].Fname + " " + ServiceCallsList[sID][1].Lname + '</h3>' +
+				'<div class="bodyContent">' +
+				'<p><b>כתובת: </b>' + ServiceCallsList[sID][1].Address + '</p>' +
+				'<p><b>טלפון נייד: </b>' + ServiceCallsList[sID][1].Mobile + '</p>' +
+				'<p><b>תיאור התקלה: </b>' + ServiceCallsList[sID][0].Description + '</p>' +
     //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
-                '</div>' +
-                '</div>';
+				'</div>' +
+				'</div>';
 
     var InfoWindow = new google.maps.InfoWindow({
         content: sContent
@@ -833,13 +834,13 @@ function ShowProjectPin(oPosition, pID) {
     });
 
     var sContent = '<div id="content">' +
-                '<h3 class="firstHeading">' + Projects[pID].Name + '</h3>' +
-                '<div class="bodyContent">' +
-                '<p><b>טלפון נייד: </b>' + Projects[pID].Mobile + '</p>' +
-                '<p><b>כתובת: </b>' + Projects[pID].Address + '</p>' +
+				'<h3 class="firstHeading">' + Projects[pID].Name + '</h3>' +
+				'<div class="bodyContent">' +
+				'<p><b>טלפון נייד: </b>' + Projects[pID].Mobile + '</p>' +
+				'<p><b>כתובת: </b>' + Projects[pID].Address + '</p>' +
     //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
-                '</div>' +
-                '</div>';
+				'</div>' +
+				'</div>';
 
     var InfoWindow = new google.maps.InfoWindow({
         content: sContent
@@ -930,4 +931,13 @@ function MergeInsideArrays(Arr) {
 function ResizeGoogleMap() {
     var iWindowHeight = $(window).height();
     $("#map-canvas").height(0.68 * iWindowHeight);
+}
+
+function ActivateCountdown() {
+    setTimeout('ActivateModal("ModalSessionTimeout")', (iTimeoutMin - 1) * 60 * 1000); //Timer till warning
+    setTimeout(Logout, iTimeoutMin * 60 * 1000); //Timer till logout
+}
+
+function Logout() {
+    __doPostBack('ctl00$LogoutBTN', '');
 }
