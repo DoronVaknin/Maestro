@@ -24,16 +24,9 @@ public partial class Default : System.Web.UI.Page
             DataTable DetailsTable = p.GetAllDetails(ProjectID);
 
             if (!Page.IsPostBack)
-            {
                 SetPageDetails(DetailsTable);
-                //SetProjCurrentStatus();
-                LoadSuppliers();
-            }
             else
                 DisableAllFields();
-
-            string ProjectName = ProjectInfoName.Text;
-            ModalHeader.InnerHtml = PageHeader.InnerHtml = "הזמנות עבור הפרויקט " + ProjectName;
         }
     }
 
@@ -65,19 +58,6 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoContractorMobile.Attributes.Add("disabled", "disabled");
         ProjectInfoSupervisorName.Attributes.Add("disabled", "disabled");
         ProjectInfoSupervisorMobile.Attributes.Add("disabled", "disabled");
-    }
-
-    public void SetOrdersGrid()
-    {
-        if (Session["ProjectID"] != null)
-        {
-            int ProjectID = Convert.ToInt32(Session["ProjectID"]);
-            Project p = new Project();
-            DataTable OrdersDataTable = p.GetOrderDetails(ProjectID);
-            DataTable statustable = p.GetOrderStatus(); // להחליט מה לעשות
-            OrdersGV.DataSource = OrdersDataTable;
-            OrdersGV.DataBind();
-        }
     }
 
     public void SetPageDetails(DataTable DetailsTable)
@@ -124,53 +104,29 @@ public partial class Default : System.Web.UI.Page
         {
             int pID = (int)Session["ProjectID"];
             Project p = new Project();
-            //p.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), );
             p.UpdateProjectDetails(pID, Convert.ToDouble(ProjectInfoCost.Text), ProjectInfoName.Text, ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text, DateTime.ParseExact(ProjectInfoExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInfoInstallationDate.Value, "MM/dd/yyyy", null), Convert.ToInt32(ProjectInfoStatus.SelectedValue));
             SaveProjectDetailsBTN.Style.Add("display", "none");
             EditProjectDetailsBTN.Style.Add("display", "inline-block");
         }
     }
 
-    protected void LoadSuppliers()
+    protected void GotoProjectOrdersHiddenBTN_Click(object sender, EventArgs e)
     {
-        Project p = new Project();
-        p.LoadSuppliers(ShutterProvider, CollectedProvider, AluminiumProvider, ValimProvider, UProvider, ShoeingProvider, EngineProvider, ProtectedSpaceProvider, GlassProvider, BoxesProvider);
-    }
-
-    protected void CreateOrderBTN_Click(object sender, EventArgs e)
-    {
-        CreateOrder(Convert.ToInt32(ShutterCount.Text), ShutterProvider.SelectedValue, 1, ShutterEstArrDate.Text);
-        CreateOrder(Convert.ToInt32(CollectedCount.Text), CollectedProvider.SelectedValue, 2, CollectedEstArrDate.Text);
-        CreateOrder(Convert.ToInt32(AluminiumCount.Text), AluminiumProvider.SelectedValue, 3, AluminiumEstArrDate.Text);
-        CreateOrder(Convert.ToInt32(ValimCount.Text), ValimProvider.SelectedValue, 4, ValimEstArrDate.Text);
-        CreateOrder(Convert.ToInt32(UCount.Text), UProvider.SelectedValue, 5, UEstArrDate.Text);
-        CreateOrder(Convert.ToInt32(ShoeingCount.Text), ShoeingProvider.SelectedValue, 6, ShoeingEstArrDate.Text);
-        CreateOrder(Convert.ToInt32(EngineCount.Text), EngineProvider.SelectedValue, 7, EngineEstArrDate.Text);
-        CreateOrder(Convert.ToInt32(ProtectedSpaceCount.Text), ProtectedSpaceProvider.SelectedValue, 8, ProtectedSpaceEstArrDate.Text);
-        CreateOrder(Convert.ToInt32(GlassCount.Text), GlassProvider.SelectedValue, 9, GlassEstArrDate.Text);
-        CreateOrder(Convert.ToInt32(BoxesCount.Text), BoxesProvider.SelectedValue, 10, BoxesEstArrDate.Text);
-        OrdersGV.DataBind();
-    }
-
-    protected void CreateOrder(int Count, string SupplierID, int RawMeterialID, string EstArrDate)
-    {
-        if (Count > 0 && Session["ProjectID"] != null)
+        if (Session["ProjectID"] != null)
         {
-            string ProjectID = Session["ProjectID"].ToString();
-            DBservices db = new DBservices();
-            Order o = new Order(Convert.ToInt32(ProjectID), Convert.ToInt32(SupplierID), RawMeterialID, Count, DateTime.ParseExact(EstArrDate, "MM/dd/yyyy", null));
-            o.CreateNewOrder(o);
-
-            //OrdersGV.DataBind();
-            //SetOrdersGrid();
+            Session["ProjectIDForProjectOrders"] = Session["ProjectID"];
+            Session["ProjectNameForProjectOrders"] = ProjectInfoName.Text;
+            Response.Redirect("ProjectOrders.aspx");
         }
     }
-
-    protected void OrdersGV_SelectedIndexChanged(object sender, EventArgs e)
+    protected void OpenServiceCallHiddenBTN_Click(object sender, EventArgs e)
     {
-        Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "ActivateModal('ModalOrderDetails')", true);
-        GridViewRow row = OrdersGV.SelectedRow;
-        //OrderStatusDDL.SelectedItem = 2;
+        if (Session["ProjectID"] != null)
+        {
+            Session["ProjectIDForServiceCall"] = Session["ProjectID"];
+            Session["ProjectNameForServiceCall"] = ProjectInfoName.Text;
+            Response.Redirect("NewServiceCall.aspx?Source=ExistingProject");
+        }
     }
 }
 

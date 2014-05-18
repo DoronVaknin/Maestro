@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true"
-    CodeFile="ProjectOrders.aspx.cs" Inherits="Default2" %>
+    CodeFile="ProjectOrders.aspx.cs" Inherits="Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 </asp:Content>
@@ -261,8 +261,11 @@
                     </table>
                     <br />
                     <div class="cntr">
-                        <asp:Button ID="CreateOrderBTN" runat="server" OnClick="CreateOrderBTN_Click" Text="צור הזמנה"
-                            CssClass="btn btn-default" Font-Bold="true" />
+                        <button type="button" class="btn btn-default" onclick="CreateOrder()">
+                            צור הזמנה&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                        <asp:Button ID="CreateOrderHiddenBTN" runat="server" OnClick="CreateOrderHiddenBTN_Click"
+                            Text="צור הזמנה" CssClass="btn btn-default HiddenButtons" Font-Bold="true" />
                     </div>
                 </div>
                 <%--                <div class="modal-footer">

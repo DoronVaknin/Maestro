@@ -19,7 +19,7 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
             case "BettiY": Welcome.InnerText = "שלום, בטי"; break;
             default: break;
         }
-        this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "expirescript", "ActivateCountdown()", true);
+        this.Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "expirescript", "ActivateCountdown();", true);
     }
 
     protected void LogoutBTN_Click(object sender, EventArgs e)

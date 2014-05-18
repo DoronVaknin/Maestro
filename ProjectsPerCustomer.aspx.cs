@@ -14,7 +14,7 @@ public partial class Default : System.Web.UI.Page
         string Lname = CustomerRow.Cells[3].Text;
         PageHeader.InnerHtml = "פרויקטים עבור הלקוח " + Fname + " " + Lname;
     }
-    protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+    protected void ProjectsPerCustomerGV_SelectedIndexChanged(object sender, EventArgs e)
     {
         Session["ProjectID"] = ProjectsPerCustomerGV.SelectedRow.Cells[1].Text;
         Response.Redirect("ProjectDetails.aspx");

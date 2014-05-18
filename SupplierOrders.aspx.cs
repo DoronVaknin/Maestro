@@ -28,7 +28,7 @@ public partial class Default2 : System.Web.UI.Page
         SupplierOrderID.Text = SupplierOrdersGV.SelectedRow.Cells[1].Text;
         SupplierOrderDateOpened.Text = SupplierOrdersGV.SelectedRow.Cells[2].Text;
         SupplierOrderItemName.Text = SupplierOrdersGV.SelectedRow.Cells[3].Text;
-        SupplierOrderEstimatedDOA.Text = SupplierOrdersGV.SelectedRow.Cells[4].Text;
+        SupplierOrderEstimatedDOA.Text = (Convert.ToDateTime(SupplierOrdersGV.SelectedRow.Cells[4].Text)).ToString("MM/dd/yyyy");
         SupplierOrderQuantity.Text = SupplierOrdersGV.SelectedRow.Cells[5].Text;
         SupplierOrderProject.Text = SupplierOrdersGV.SelectedRow.Cells[6].Text;
         ListItem li = SupplierOrderStatus.Items.FindByText(SupplierOrdersGV.SelectedRow.Cells[7].Text);

@@ -35,4 +35,5 @@
             צור לקוח חדש&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
         </button>
     </div>
+    <br />
 </asp:Content>

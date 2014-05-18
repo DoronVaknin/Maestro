@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 
-public partial class Default2 : System.Web.UI.Page
+public partial class Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -19,11 +19,15 @@ public partial class Default2 : System.Web.UI.Page
             }
             LoadSuppliers();
         }
+        //else
+        //{
+        //    string controlName = this.Request.Params.Get("__EVENTTARGET");
+        //}
+
         Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "ResetCreateOrderForm();", true);
-        //SetOrdersGrid();
         DisableOrderDetailsFields();
         if (Page.IsPostBack)
-            OnDataBound(null,null);
+            OnDataBound(null, null);
     }
 
     protected void LoadSuppliers()
@@ -32,7 +36,7 @@ public partial class Default2 : System.Web.UI.Page
         p.LoadSuppliers(ShutterProvider, CollectedProvider, AluminiumProvider, ValimProvider, UProvider, ShoeingProvider, EngineProvider, ProtectedSpaceProvider, GlassProvider, BoxesProvider);
     }
 
-    protected void CreateOrderBTN_Click(object sender, EventArgs e)
+    protected void CreateOrderHiddenBTN_Click(object sender, EventArgs e)
     {
         CreateOrder(Convert.ToInt32(ShutterCount.Text), ShutterProvider.SelectedValue, 1, ShutterEstArrDate.Text);
         CreateOrder(Convert.ToInt32(CollectedCount.Text), CollectedProvider.SelectedValue, 2, CollectedEstArrDate.Text);
@@ -55,21 +59,8 @@ public partial class Default2 : System.Web.UI.Page
             DBservices db = new DBservices();
             Order o = new Order(Convert.ToInt32(ProjectID), Convert.ToInt32(SupplierID), RawMeterialID, Count, DateTime.ParseExact(EstArrDate, "MM/dd/yyyy", null));
             o.CreateNewOrder(o);
-
-            //OrdersGV.DataBind();
-            //SetOrdersGrid();
         }
     }
-
-    //public void SetOrdersGrid()
-    //{
-    //    string ProjectID = Session["ProjectIDForProjectOrders"].ToString();
-    //    Project p = new Project();
-    //    DataTable OrdersDT = p.GetOrderDetails(Convert.ToInt32(ProjectID));
-    //    //DataTable StatusTable = p.GetOrderStatus(); // להחליט מה לעשות
-    //    OrdersGV.DataSource = OrdersDT;
-    //    OrdersGV.DataBind();
-    //}
 
     protected void ProjectOrdersGV_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -77,11 +68,12 @@ public partial class Default2 : System.Web.UI.Page
         ProjectOrderID.Text = ProjectOrdersGV.SelectedRow.Cells[2].Text;
         ProjectOrderDateOpened.Text = ProjectOrdersGV.SelectedRow.Cells[3].Text;
         ProjectOrderItemName.Text = ProjectOrdersGV.SelectedRow.Cells[4].Text;
-        ProjectOrderEstimatedDOA.Text = ProjectOrdersGV.SelectedRow.Cells[5].Text;
+        ProjectOrderEstimatedDOA.Text = (Convert.ToDateTime(ProjectOrdersGV.SelectedRow.Cells[5].Text)).ToString("MM/dd/yyyy");
         ProjectOrderQuantity.Text = ProjectOrdersGV.SelectedRow.Cells[6].Text;
         ProjectOrderSupplier.Text = ProjectOrdersGV.SelectedRow.Cells[7].Text;
         ListItem li = ProjectOrderStatus.Items.FindByText(ProjectOrdersGV.SelectedRow.Cells[8].Text);
         ProjectOrderStatus.SelectedValue = li.Value;
+        ProjectOrdersGV.SelectedIndex = -1;
     }
 
     protected void SaveOrderDetailsBTN_Click(object sender, EventArgs e)
@@ -92,11 +84,12 @@ public partial class Default2 : System.Web.UI.Page
         int OrderStatus = Convert.ToInt32(ProjectOrderStatus.SelectedValue);
         DateTime EstimatedDOA = DateTime.ParseExact(ProjectOrderEstimatedDOA.Text, "MM/dd/yyyy", null);
         int RowAffected = o.UpdateOrderDetails(oID, Quantity, OrderStatus, EstimatedDOA);
+        ProjectOrdersGV.SelectedIndex = -1;
     }
 
     public void DisableOrderDetailsFields()
     {
-        ProjectOrderID.Attributes.Add("disabled","disabled");
+        ProjectOrderID.Attributes.Add("disabled", "disabled");
         ProjectOrderDateOpened.Attributes.Add("disabled", "disabled");
         ProjectOrderItemName.Attributes.Add("disabled", "disabled");
         ProjectOrderEstimatedDOA.Attributes.Add("disabled", "disabled");

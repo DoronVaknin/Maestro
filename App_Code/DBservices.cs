@@ -230,30 +230,6 @@ public class DBservices
         }
     }
 
-    public void UpdateProjectStatus(int ProjectID, int ProjectStatusNum)
-    {
-        con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[spUpdateProjectStatus]", con))
-        {
-            if (con.State != ConnectionState.Open)
-                con.Open();
-
-            try
-            {
-                sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
-                sqlComm.Parameters.AddWithValue("@ProjectStatusNum", ProjectStatusNum);
-
-                sqlComm.CommandTimeout = 600;
-                sqlComm.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
-        }
-    }
-
     public void UpdateProjectDetails(int ProjectID, double Cost, string Name, string Comments, string ArchitectName, string ArchitectPhone, string ContractorName, string ContractorPhone, string SupervisorName, string SupervisorPhone, DateTime ExpirationDate, DateTime InstallationDate, int ProjectStatusID)
     {
         con = connect("igroup9_prodConnectionString");

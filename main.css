@@ -398,7 +398,7 @@ div.cntr input[type=button], div.cntr button
     z-index: 1050;
 }
 
-#CustomerForProjectBTN
+#CustomerForProjectBTN, #GotoProjectOrdersBTN
 {
     margin-left: 20px;
 }

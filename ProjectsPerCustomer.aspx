@@ -18,13 +18,12 @@
     </asp:SqlDataSource>
     <asp:GridView ID="ProjectsPerCustomerGV" runat="server" AutoGenerateColumns="False"
         CssClass="DataTables" DataKeyNames="pID" DataSourceID="SqlDataSource1" AllowSorting="True"
-        OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
+        OnSelectedIndexChanged="ProjectsPerCustomerGV_SelectedIndexChanged">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
             <asp:BoundField DataField="pID" HeaderText="מס' פרויקט" InsertVisible="False" ReadOnly="True"
                 SortExpression="pID" />
-            <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" />
-            <asp:BoundField DataField="lName" HeaderText="שם משפחה" SortExpression="lName" />
+            <asp:BoundField DataField="pName" HeaderText="שם פרויקט" SortExpression="pName" />
             <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened"
                 DataFormatString="{0:dd/MM/yyyy}" />
             <asp:BoundField DataField="psName" HeaderText="סטטוס" SortExpression="psName" />

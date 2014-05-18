@@ -332,6 +332,18 @@ function Goto(sPage, sQuery) {
     window.location = sPage + ".aspx" + (!IsEmpty(sQuery) ? sQuery : "");
 }
 
+function GotoProjectOrders() {
+    $("#ContentPlaceHolder3_GotoProjectOrdersHiddenBTN").click();
+}
+
+function GotoOpenServiceCall() {
+    $("#ContentPlaceHolder3_OpenServiceCallHiddenBTN").click();
+}
+
+function CreateOrder() {
+    $("#ContentPlaceHolder3_CreateOrderHiddenBTN").click();
+}
+
 //Validators
 function ValidateNewCustomer(Button) {
     var bIsValid = true;
