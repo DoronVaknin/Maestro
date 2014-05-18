@@ -10,6 +10,8 @@ public partial class Default2 : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         DisableSupplierDetailsFields();
+        if (Page.IsPostBack)
+            OnDataBound(null, null);
     }
 
     public void DisableSupplierDetailsFields()
@@ -44,7 +46,7 @@ public partial class Default2 : System.Web.UI.Page
         if (SuppliersGV.Rows.Count > 0)
         {
             GridViewRow row = SuppliersGV.Rows[0];
-            for (int i = 1; i < SuppliersGV.Columns.Count; i++)
+            for (int i = 0; i < SuppliersGV.Columns.Count; i++)
             {
                 TextBox txtSearch = new TextBox();
                 txtSearch.Attributes["placeholder"] = SuppliersGV.Columns[i].HeaderText;

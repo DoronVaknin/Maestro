@@ -11,14 +11,15 @@
     </div>
     <br />
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
-        SelectCommand="spGetOrdersListForProject" SelectCommandType="StoredProcedure">
+        SelectCommand="spGetOrdersListForProject" SelectCommandType="StoredProcedure"
+        DeleteCommand="DELETE FROM Orders WHERE oID=@oID" DeleteCommandType="Text">
         <SelectParameters>
             <asp:SessionParameter Name="ProjectID" SessionField="ProjectIDForProjectOrders" Type="Int32" />
         </SelectParameters>
     </asp:SqlDataSource>
     <asp:GridView runat="server" CssClass="DataTables" ID="ProjectOrdersGV" AllowPaging="True"
         AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="oID" DataSourceID="SqlDataSource1"
-        OnSelectedIndexChanged="ProjectOrdersGV_SelectedIndexChanged" OnDataBound = "OnDataBound">
+        OnSelectedIndexChanged="ProjectOrdersGV_SelectedIndexChanged" OnDataBound="OnDataBound">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
             <asp:CommandField DeleteText="מחק" ShowDeleteButton="true" />

@@ -18,6 +18,8 @@ public partial class Default2 : System.Web.UI.Page
             }
         }
         DisableOrderDetailsFields();
+        if (Page.IsPostBack)
+            OnDataBound(null, null);
     }
 
     protected void SupplierOrdersGV_SelectedIndexChanged(object sender, EventArgs e)

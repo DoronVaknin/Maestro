@@ -64,7 +64,7 @@
                     <tr>
                         <td>
                             <div class="input-group">
-                                <asp:TextBox ID="ProjectInfoAddress" runat="server" CssClass="form-control" MaxLength="30"></asp:TextBox>
+                                <asp:TextBox ID="ProjectInfoAddress" runat="server" CssClass="form-control" MaxLength="30" placeholder=""></asp:TextBox>
                                 <span class="input-group-addon">כתובת *</span>
                             </div>
                         </td>
@@ -134,8 +134,7 @@
                             <span id="ProjectDetailsStatusIcon" class="glyphicon glyphicon-info-sign" data-placement="top"
                                 data-trigger="hover" data-title="התקדמות הפרויקט"></span>&nbsp;&nbsp;סטטוס הפרויקט:
                             <asp:DropDownList ID="ProjectInfoStatus" runat="server" CssClass="btn btn-default"
-                                DataSourceID="SqlDataSource1" DataTextField="psName" DataValueField="psID"
-                                AutoPostBack="false">
+                                DataSourceID="SqlDataSource1" DataTextField="psName" DataValueField="psID" AutoPostBack="false">
                             </asp:DropDownList>
                         </td>
                         <td>

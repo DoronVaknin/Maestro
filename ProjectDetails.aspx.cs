@@ -80,15 +80,6 @@ public partial class Default : System.Web.UI.Page
         }
     }
 
-    //public void SetProjCurrentStatus()
-    //{
-    //    Project p = new Project();
-    //    GridViewRow row = (GridViewRow)Session["ProjectID"];
-    //    string StatusNum = Convert.ToString(row.Cells[5].Text);
-    //    int StatusNumber = p.GetStatusNumber(StatusNum);
-    //    ProjectInfoStatus.SelectedIndex = (StatusNumber - 1);
-    //}
-
     public void SetPageDetails(DataTable DetailsTable)
     {
         //Populate customer details
@@ -131,10 +122,10 @@ public partial class Default : System.Web.UI.Page
     {
         if (Session["ProjectID"] != null)
         {
-            GridViewRow row = (GridViewRow)Session["ProjectID"];
+            int pID = (int)Session["ProjectID"];
             Project p = new Project();
-            p.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), ProjectInfoStatus.SelectedIndex + 1);
-            p.UpdateProjectDetails(Convert.ToInt32(row.Cells[1].Text), Convert.ToDouble(ProjectInfoCost.Text), ProjectInfoName.Text, ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text, DateTime.ParseExact(ProjectInfoExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInfoInstallationDate.Value, "MM/dd/yyyy", null));
+            //p.UpdateProjectStatus(Convert.ToInt32(row.Cells[1].Text), );
+            p.UpdateProjectDetails(pID, Convert.ToDouble(ProjectInfoCost.Text), ProjectInfoName.Text, ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text, DateTime.ParseExact(ProjectInfoExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInfoInstallationDate.Value, "MM/dd/yyyy", null), Convert.ToInt32(ProjectInfoStatus.SelectedValue));
             SaveProjectDetailsBTN.Style.Add("display", "none");
             EditProjectDetailsBTN.Style.Add("display", "inline-block");
         }

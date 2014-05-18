@@ -22,6 +22,8 @@ public partial class Default2 : System.Web.UI.Page
         Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "ResetCreateOrderForm();", true);
         //SetOrdersGrid();
         DisableOrderDetailsFields();
+        if (Page.IsPostBack)
+            OnDataBound(null,null);
     }
 
     protected void LoadSuppliers()
@@ -108,7 +110,7 @@ public partial class Default2 : System.Web.UI.Page
         if (ProjectOrdersGV.Rows.Count > 0)
         {
             GridViewRow row = ProjectOrdersGV.Rows[0];
-            for (int i = 1; i < ProjectOrdersGV.Columns.Count; i++)
+            for (int i = 0; i < ProjectOrdersGV.Columns.Count; i++)
             {
                 TextBox txtSearch = new TextBox();
                 txtSearch.Attributes["placeholder"] = ProjectOrdersGV.Columns[i].HeaderText;

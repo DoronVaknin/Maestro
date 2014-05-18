@@ -74,7 +74,6 @@ function ActivateDatepicker() {
 
 //Quick search activation
 function ActivateQuickSearch() {
-    $('.search_textbox').first().hide();
     $('.search_textbox').each(function (i) {
         $(this).quicksearch("[class*=DataTables] tr:not(:has(th))", {
             'testQuery': function (query, txt, row) {
@@ -126,19 +125,19 @@ function ActivateServiceCallExistingProjectModal() {
             case "ToolbarBtnCreateServiceCallExistingProject":
                 $("#ModalChooseProject .modal-title").html("קריאת שירות - פרויקט קיים");
                 $("#ModalChooseProject .modal-body input[type=submit], #SupplierNamesDDL").hide();
-                $("#ChooseProjectForServiceCallBTN").show();
+                $("#ChooseProjectForServiceCallBTN, #ProjectNamesDDL").show();
                 break;
 
             case "ToolbarBtnProjectOrders":
                 $("#ModalChooseProject .modal-title").html("הזמנות עבור פרויקט");
                 $("#ModalChooseProject .modal-body input[type=submit], #SupplierNamesDDL").hide();
-                $("#ChooseProjectForProjectOrdersBTN").show();
+                $("#ChooseProjectForProjectOrdersBTN, #ProjectNamesDDL").show();
                 break;
 
             case "ToolbarBtnProjectHatches":
                 $("#ModalChooseProject .modal-title").html("פתחים עבור פרויקט");
                 $("#ModalChooseProject .modal-body input[type=submit], #SupplierNamesDDL").hide();
-                $("#ChooseProjectForProjectHatchesBTN").show();
+                $("#ChooseProjectForProjectHatchesBTN, #ProjectNamesDDL").show();
                 break;
 
             case "ToolbarBtnSupplierOrders":

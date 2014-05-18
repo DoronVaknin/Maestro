@@ -254,7 +254,7 @@ public class DBservices
         }
     }
 
-    public void UpdateProjectDetails(int ProjectID, double Cost, string Name, string Comments, string ArchitectName, string ArchitectPhone, string ContractorName, string ContractorPhone, string SupervisorName, string SupervisorPhone, DateTime ExpirationDate, DateTime InstallationDate)
+    public void UpdateProjectDetails(int ProjectID, double Cost, string Name, string Comments, string ArchitectName, string ArchitectPhone, string ContractorName, string ContractorPhone, string SupervisorName, string SupervisorPhone, DateTime ExpirationDate, DateTime InstallationDate, int ProjectStatusID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateProjectDetails]", con))
@@ -266,6 +266,7 @@ public class DBservices
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
+                sqlComm.Parameters.AddWithValue("@ProjectStatusID", ProjectStatusID);
                 sqlComm.Parameters.AddWithValue("@pName", Name);
                 sqlComm.Parameters.AddWithValue("@ExpirationDate", ExpirationDate);
                 sqlComm.Parameters.AddWithValue("@InstallationDate", InstallationDate);

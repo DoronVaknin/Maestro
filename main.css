@@ -1,4 +1,4 @@
-body
+    body
 {
     font: normal 1.5em/1.5em Arial, Helvetica, sans-serif;
     background: #ddd url(images/bg.jpg) repeat;
@@ -375,6 +375,11 @@ div.cntr input[type=button], div.cntr button
     width: 100px;
     font-size: inherit;
     margin: 10px auto 0 auto;
+}
+
+.search_textbox:nth-child(1)
+{
+    display: none;
 }
 
 .plus, .minus, .pointer

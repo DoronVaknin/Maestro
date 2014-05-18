@@ -200,16 +200,16 @@ public class Project
         return StatusNum;
     }
 
-    public void UpdateProjectStatus(int ProjectID, int StatusNum)
-    {
-        DBservices db = new DBservices();
-        db.UpdateProjectStatus(ProjectID, StatusNum);
-    }
+    //public void UpdateProjectStatus(int ProjectID, int StatusNum)
+    //{
+    //    DBservices db = new DBservices();
+    //    db.UpdateProjectStatus(ProjectID, StatusNum);
+    //}
 
-    public void UpdateProjectDetails(int _ProjectID, double _Cost, string _Name, string _Comments, string _ArchitectName, string _ArchitectPhone, string _ContractorName, string _ContractorPhone, string _SupervisorName, string _SupervisorPhone, DateTime _ExpirationDate, DateTime _InstallationDate)
+    public void UpdateProjectDetails(int _ProjectID, double _Cost, string _Name, string _Comments, string _ArchitectName, string _ArchitectPhone, string _ContractorName, string _ContractorPhone, string _SupervisorName, string _SupervisorPhone, DateTime _ExpirationDate, DateTime _InstallationDate, int _ProjectStatusID)
     {
         DBservices db = new DBservices();
-        db.UpdateProjectDetails(_ProjectID, _Cost, _Name, _Comments, _ArchitectName, _ArchitectPhone, _ContractorName, _ContractorPhone, _SupervisorName, _SupervisorPhone, _ExpirationDate, _InstallationDate);
+        db.UpdateProjectDetails(_ProjectID, _Cost, _Name, _Comments, _ArchitectName, _ArchitectPhone, _ContractorName, _ContractorPhone, _SupervisorName, _SupervisorPhone, _ExpirationDate, _InstallationDate, _ProjectStatusID);
     }
 
     public void LoadSuppliers(DropDownList ShutterProvider, DropDownList CollectedProvider, DropDownList AluminiumProvider, DropDownList ValimProvider, DropDownList UProvider, DropDownList ShoeingProvider, DropDownList EngineProvider, DropDownList ProtectedSpaceProvider, DropDownList GlassProvider, DropDownList BoxesProvider)

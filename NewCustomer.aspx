@@ -57,7 +57,7 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input id="CustomerAddress" type="text" class="form-control Address" runat="server">
+                        <input id="CustomerAddress" runat="server" type="text" class="form-control Address" placeholder = "">
                         <span class="input-group-addon">כתובת *</span>
                     </div>
                 </td>

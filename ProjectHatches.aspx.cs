@@ -15,6 +15,8 @@ public partial class Default2 : System.Web.UI.Page
             PageHeader.InnerHtml = "פתחים עבור הפרויקט " + sProjectName;
         }
         DisableAllFields();
+        if (Page.IsPostBack)
+            OnDataBound(null, null);
     }
 
     public void DisableAllFields()
@@ -99,7 +101,7 @@ public partial class Default2 : System.Web.UI.Page
         if (ProjectHatchesGV.Rows.Count > 0)
         {
             GridViewRow row = ProjectHatchesGV.Rows[0];
-            for (int i = 1; i < ProjectHatchesGV.Columns.Count; i++)
+            for (int i = 0; i < ProjectHatchesGV.Columns.Count; i++)
             {
                 TextBox txtSearch = new TextBox();
                 txtSearch.Attributes["placeholder"] = ProjectHatchesGV.Columns[i].HeaderText;
