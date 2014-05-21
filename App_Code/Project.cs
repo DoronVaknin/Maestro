@@ -29,25 +29,14 @@ public class Project
         ExpirationDate = _ExpirationDate;
         InstallationDate = _InstallationDate;
         Comments = _Comments;
-        if (_Cost != "")
-            Cost = Convert.ToDouble(_Cost);
-        if (_Hatches != "")
-            NumOfHatches = Convert.ToInt32(_Hatches);
+        Cost = Convert.ToDouble(_Cost);
+        NumOfHatches = Convert.ToInt32(_Hatches);
         ArchitectName = _ArchitectName;
-        if (_ArchitectPhone != "")
-            ArchitectPhone = _ArchitectPhone;
-        else
-            ArchitectPhone = "0";
+        ArchitectPhone = _ArchitectPhone;
         ContractorName = _ContractorName;
-        if (_ContractorPhone != "")
-            ContractorPhone = _ContractorPhone;
-        else
-            ContractorPhone = "0";
+        ContractorPhone = _ContractorPhone;
         SupervisorName = _SupervisorName;
-        if (_SupervisorPhone != "")
-            SupervisorPhone = _SupervisorPhone;
-        else
-            SupervisorPhone = "0";
+        SupervisorPhone = _SupervisorPhone;
     }
 
     string name;
@@ -199,12 +188,6 @@ public class Project
         int StatusNum = db.StatusNumber(StatusName);
         return StatusNum;
     }
-
-    //public void UpdateProjectStatus(int ProjectID, int StatusNum)
-    //{
-    //    DBservices db = new DBservices();
-    //    db.UpdateProjectStatus(ProjectID, StatusNum);
-    //}
 
     public void UpdateProjectDetails(int _ProjectID, double _Cost, string _Name, string _Comments, string _ArchitectName, string _ArchitectPhone, string _ContractorName, string _ContractorPhone, string _SupervisorName, string _SupervisorPhone, DateTime _ExpirationDate, DateTime _InstallationDate, int _ProjectStatusID)
     {

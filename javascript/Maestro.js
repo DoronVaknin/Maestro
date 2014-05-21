@@ -327,6 +327,13 @@ function RestoreHatchDetails() {
     ClearInvalidFields("#EditHatchTBL");
 }
 
+//Gridview Update
+function UpdateSupplierOrder(iRowIndex, sEstimatedDOA, sQuantity, sOrderStatus) {
+    $('#ContentPlaceHolder3_SupplierOrdersGV tr:nth(' + iRowIndex + ') td:nth(4)').text(sEstimatedDOA);
+    $('#ContentPlaceHolder3_SupplierOrdersGV tr:nth(' + iRowIndex + ') td:nth(5)').text(sQuantity);
+    $('#ContentPlaceHolder3_SupplierOrdersGV tr:nth(' + iRowIndex + ') td:nth(7)').text(sOrderStatus);
+}
+
 //Navigation
 function Goto(sPage, sQuery) {
     window.location = sPage + ".aspx" + (!IsEmpty(sQuery) ? sQuery : "");
@@ -575,7 +582,14 @@ function BackupHatchDetails() {
 }
 
 function IsPage(sPageName, sSource) {
-    return location.pathname + location.search == "/Maestro/" + sPageName + ".aspx" + (!IsEmpty(sSource) ? "?Source=" + sSource : "");
+    return GetPageName() + location.search == sPageName + ".aspx" + (!IsEmpty(sSource) ? "?Source=" + sSource : "");
+}
+
+function GetPageName() {
+    var sFullPath = window.location.href;
+    var iIndex = sFullPath.lastIndexOf("/");
+    var sPageName = sFullPath.substr(iIndex + 1);
+    return sPageName;
 }
 
 //Misc

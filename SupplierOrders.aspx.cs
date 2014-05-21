@@ -20,6 +20,11 @@ public partial class Default2 : System.Web.UI.Page
         DisableOrderDetailsFields();
         if (Page.IsPostBack)
             OnDataBound(null, null);
+        foreach (GridViewRow GVR in SupplierOrdersGV.Rows)
+        {
+            if (GVR.Cells[7].Text == "מתעכב")
+                GVR.Cells[7].Attributes.Add("class","Late");
+        }
     }
 
     protected void SupplierOrdersGV_SelectedIndexChanged(object sender, EventArgs e)
@@ -43,6 +48,18 @@ public partial class Default2 : System.Web.UI.Page
         int OrderStatus = Convert.ToInt32(SupplierOrderStatus.SelectedValue);
         DateTime EstimatedDOA = DateTime.ParseExact(SupplierOrderEstimatedDOA.Text, "MM/dd/yyyy", null);
         int RowAffected = o.UpdateOrderDetails(oID, Quantity, OrderStatus, EstimatedDOA);
+        if (RowAffected > 0)
+        {
+            int RowIndex = SupplierOrdersGV.SelectedIndex + 1;
+            //SupplierOrdersGV.SelectedRow.Cells[4].Text = SupplierOrderEstimatedDOA.Text;
+            //SupplierOrdersGV.SelectedRow.Cells[5].Text = SupplierOrderQuantity.Text;
+            //SupplierOrdersGV.SelectedRow.Cells[7].Text = SupplierOrderStatus.SelectedItem.Text;
+
+            string EstimatedDateOfArrival = SupplierOrderEstimatedDOA.Text;
+            string OrderQuantity = SupplierOrderQuantity.Text;
+            string Status = SupplierOrderStatus.SelectedItem.Text;
+            //Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "UpdateSupplierOrder(" + +");", true);
+        }
     }
 
     public void DisableOrderDetailsFields()

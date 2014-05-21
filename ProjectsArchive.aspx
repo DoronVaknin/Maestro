@@ -18,8 +18,7 @@
             <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
             <asp:BoundField DataField="pID" HeaderText="מס' פרויקט" InsertVisible="False" ReadOnly="True"
                 SortExpression="pID" />
-            <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" />
-            <asp:BoundField DataField="lName" HeaderText="שם משפחה" SortExpression="lName" />
+            <asp:BoundField DataField="pName" HeaderText="שם פרויקט" SortExpression="pName" />
             <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened"
                 DataFormatString="{0:dd/MM/yyyy}" />
             <asp:BoundField DataField="psName" HeaderText="סטטוס" SortExpression="psName" />

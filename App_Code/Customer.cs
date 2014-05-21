@@ -27,12 +27,9 @@ public class Customer
         Fname = _fName;
         Lname = _lName;
         Address = _Address;
-        //if (_Phone != "")
-            phone = _Phone;
-        //if (_Mobile != "")
-            Mobile = _Mobile;
-        //if (_Fax != "")
-            Fax = _Fax;
+        phone = _Phone;
+        Mobile = _Mobile;
+        Fax = _Fax;
         Email = _Email;
         Region = _Region;
     }

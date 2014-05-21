@@ -1,4 +1,4 @@
-    body
+body
 {
     font: normal 1.5em/1.5em Arial, Helvetica, sans-serif;
     background: #ddd url(images/bg.jpg) repeat;
@@ -10,7 +10,6 @@
     color: #666;
     direction: rtl;
 }
-
 a
 {
     color: #333;
@@ -393,16 +392,18 @@ div.cntr input[type=button], div.cntr button
     float: left;
 }
 
+/*Datepicker*/
 .datepicker
 {
     z-index: 1050;
 }
-
+/*Buttons*/
 #CustomerForProjectBTN, #GotoProjectOrdersBTN
 {
     margin-left: 20px;
 }
 
+/*Google Map*/
 #map-canvas
 {
     width: 90%;
@@ -413,4 +414,11 @@ div.cntr input[type=button], div.cntr button
     -moz-border-radius: 15px;
     border-radius: 15px;
     box-shadow: 2px 2px 2px;
+}
+
+/*Late Orders in gridview*/
+.Late
+{
+    color: red;
+    font-weight: bold;
 }
