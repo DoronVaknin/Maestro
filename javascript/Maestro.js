@@ -14,44 +14,153 @@ $(document).ready(function () {
     ActivateDatepicker();
     ActivateQuickSearch();
     ActivateServiceCallExistingProjectModal();
-    if (IsPage("ProjectDetails")) {
-        DisableCustomerDetailsFields();
-        DisableProjectDetailsFields();
-        FixTextAreaIssue();
-        $("#ProjectDetailsStatusIcon").popover({ html: true, content: GetProgressBarContent() });
-        ActivateGoogleAutoCompletion("ContentPlaceHolder3_ProjectInfoAddress");
-        ActivatePlusMinus();
-    }
-    else if (IsPage("ProjectOrders"))
-        ActivatePlusMinus();
-    else if (IsPage("NewProject", "NewCustomer")) {
-        ActivateModal("ModalCustomerCreated");
-        ActivateDragAndDrop();
-    }
-    else if (IsPage("NewProject", "ProjectsPerCustomer"))
-        ActivateDragAndDrop();
-    else if (IsPage("NewCustomer"))
-        ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
-    else if (IsPage("NewCustomer", "CreateProject")) {
-        $("#CustomerForServiceCallBTN").addClass("HiddenButtons");
-        ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
-    }
-    else if (IsPage("NewCustomer", "CreateServiceCall")) {
-        $("#CustomerForProjectBTN").addClass("HiddenButtons");
-        ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
-    }
-    else if (IsPage("NewSupplier"))
-        ActivateGoogleAutoCompletion("ContentPlaceHolder3_SupplierAddress");
-    else if (IsPage("Home")) {
-        InitializeGoogleMap();
-        GetProjects();
-        GetOpenedServiceCalls();
-        PopulateGoogleMap();
-        ResizeGoogleMap();
+    var sPageFullName = GetPageName();
+    var iLength = sPageFullName.length;
+    var sPageName = sPageFullName.substring(0, iLength - 5);
+    switch (sPageName) {
+        case "ProjectDetails":
+            DisableCustomerDetailsFields();
+            DisableProjectDetailsFields();
+            FixTextAreaIssue();
+            $("#ProjectDetailsStatusIcon").popover({ html: true, content: GetProgressBarContent() });
+            ActivateGoogleAutoCompletion("ContentPlaceHolder3_ProjectInfoAddress");
+            ActivatePlusMinus();
+            break;
+
+        case "ProjectOrders":
+            ActivatePlusMinus();
+            break;
+
+        case "NewProject?Source=NewCustomer":
+            ActivateModal("ModalCustomerCreated");
+            ActivateDragAndDrop();
+            break;
+
+        case "NewProject?Source=ProjectsPerCustomer":
+            ActivateDragAndDrop();
+            break;
+
+        case "NewCustomer":
+            ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
+            break;
+
+        case "NewCustomer?Source=CreateProject":
+            $("#CustomerForServiceCallBTN").addClass("HiddenButtons");
+            ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
+            break;
+
+        case "NewCustomer?Source=CreateServiceCall":
+            $("#CustomerForProjectBTN").addClass("HiddenButtons");
+            ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
+            break;
+
+        case "NewSupplier":
+            ActivateGoogleAutoCompletion("ContentPlaceHolder3_SupplierAddress");
+            break;
+
+        case "HomeSales":
+            ResizeHomeContainer();
+            ResizePriceOfferTable();
+            ActivateNewsBox();
+            SetupPieChart();
+            break;
+
+        case "HomeInstallations":
+            ResizeHomeContainer();
+            ActivateNewsBox();
+            InitializeGoogleMap();
+            GetProjects();
+            GetOpenedServiceCalls();
+            PopulateGoogleMap();
+            break;
+
+        case "HomeTechnical":
+            ResizeHomeContainer();
+            ActivateNewsBox();
+            break;
+
+        default: break;
     }
 });
 
-$(window).resize(ResizeGoogleMap);
+$(window).resize(function () {
+    ResizeHomeContainer();
+    ResizeNewsBox();
+});
+
+//Pie Chart
+function SetupPieChart() {
+    Morris.Donut({
+        element: 'PieChart',
+        data: [
+    { label: "דורון וקנין - חדרה", value: 45 },
+    { label: "ליונל מסי - תל אביב", value: 20 },
+    { label: "ליאור זיני - פרדס חנה", value: 25 },
+    { label: "שמוליק חזן - חדרה", value: 10 }
+  ],
+        colors: ["#0066CC", "#006600", "#CC3300", "#FF9900"]
+    });
+}
+
+//News Box
+function ActivateNewsBox() {
+    $(".News").bootstrapNews({
+        newsPerPage: 4,
+        navigation: true,
+        autoplay: true,
+        direction: 'up', // up or down
+        animationSpeed: 'normal',
+        newsTickerInterval: 4000, //4 secs
+        pauseOnHover: true,
+        onStop: null,
+        onPause: null,
+        onReset: null,
+        onPrev: null,
+        onNext: null,
+        onToDo: null
+    });
+    ResizeNewsBox();
+}
+
+function ResizeNewsBox() {
+    $(".News").height("inherit");
+}
+
+//Undecided customers gridview
+function ResizePriceOfferTable() {
+    $("#ContentPlaceHolder3_PriceOfferGV").parent().width("67%");
+}
+
+//Suppliers ranks
+function BuildLateProgressBar(dPercent, iIndex) {
+    function GetRelevantDesc() {
+        return dPercent >= 50 ? 'danger' : 'warning';
+    }
+    var sHTML = "";
+    sHTML += '<div class="progress">';
+    sHTML += '<div class="progress-bar progress-bar-' + GetRelevantDesc() + '" role="progressbar" aria-valuenow="' + dPercent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + dPercent + '%">';
+    //    sHTML += '<span class="sr-only">' + dPercent + '% Complete</span>';
+    sHTML += dPercent > 15 ? dPercent + "%" : "";
+    sHTML += '</div>';
+    var Cells = $("#ContentPlaceHolder3_WorstSuppliersGV td:nth-child(3)");
+    var Cell = Cells[iIndex];
+    $(Cell).html(sHTML);
+}
+
+function BuildEarlyProgressBar(dPercent, iIndex) {
+    function GetRelevantDesc() {
+        return dPercent >= 50 ? 'success' : 'info';
+    }
+    var sHTML = "";
+    sHTML += '<div class="progress">';
+    sHTML += '<div class="progress-bar progress-bar-' + GetRelevantDesc() + '" role="progressbar" aria-valuenow="' + dPercent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + dPercent + '%">';
+    //    sHTML += '<span class="sr-only">' + dPercent + '% Complete</span>';
+    sHTML += dPercent > 15 ? dPercent + "%" : "";
+    sHTML += '</div>';
+    var Cells = $("#ContentPlaceHolder3_BestSuppliersGV td:nth-child(3)");
+    var Cell = Cells[iIndex];
+    $(Cell).html(sHTML);
+}
 
 //Mark current tabs
 function ActivateTabsMarking() {
@@ -581,9 +690,9 @@ function BackupHatchDetails() {
     aHatchDetails.push($("#ContentPlaceHolder3_HatchComments").val());
 }
 
-function IsPage(sPageName, sSource) {
-    return GetPageName() + location.search == sPageName + ".aspx" + (!IsEmpty(sSource) ? "?Source=" + sSource : "");
-}
+//function IsPage(sPageName, sSource) {
+//    return GetPageName() + location.search == sPageName + ".aspx" + (!IsEmpty(sSource) ? "?Source=" + sSource : "");
+//}
 
 function GetPageName() {
     var sFullPath = window.location.href;
@@ -953,9 +1062,9 @@ function MergeInsideArrays(Arr) {
     return UniArr;
 }
 
-function ResizeGoogleMap() {
+function ResizeHomeContainer() {
     var iWindowHeight = $(window).height();
-    $("#map-canvas").height(0.68 * iWindowHeight);
+    $("#HomeContainer").height(0.68 * iWindowHeight);
 }
 
 function ActivateCountdown() {

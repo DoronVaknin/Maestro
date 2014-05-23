@@ -403,22 +403,113 @@ div.cntr input[type=button], div.cntr button
     margin-left: 20px;
 }
 
-/*Google Map*/
-#map-canvas
-{
-    width: 90%;
-    height: 500px;
-    margin: 12px auto;
-    border: solid 2px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-radius: 15px;
-    box-shadow: 2px 2px 2px;
-}
-
 /*Late Orders in gridview*/
 .Late
 {
     color: red;
     font-weight: bold;
+}
+
+/* News Box */
+.glyphicon
+{
+    margin-right: 4px; /*override*/
+}
+.pagination .glyphicon
+{
+    margin-right: 0px; /*override*/
+}
+.pagination a
+{
+    color: #555;
+}
+.panel ul
+{
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+.news-item
+{
+    padding: 4px 4px;
+    margin: 0px;
+    border-bottom: 1px dotted #555;
+}
+
+#HomeContainer
+{
+    margin-top: 40px;
+}
+
+/*Google Map*/
+#map-canvas
+{
+    width: 30%;
+    height: 100%;
+    margin: 20px auto;
+    border: solid 2px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 2px;
+    float: right;
+}
+
+#NewsBox
+{
+    float: left;
+    width: 30%;
+    height: 100%;
+}
+
+#NewsBox .panel-body
+{
+    height: 97%;
+}
+
+#NewsBox .panel-body .row
+{
+    height: inherit;
+}
+
+#NewsBox .panel-body .row .col-xs-12
+{
+    height: inherit;
+}
+
+#NewsBox .panel-footer
+{
+    margin-top: -45px;
+}
+
+/* Pie Chart */
+#PieChart
+{
+    width: 25%;
+    float: right;
+    margin-right: 23%;
+    margin-top: 30px;
+}
+
+/* Suppliers table */
+#ContentPlaceHolder3_WorstSuppliersGV td:nth-child(3), #ContentPlaceHolder3_BestSuppliersGV td:nth-child(3)
+{
+    width: 400px;
+}
+
+#ContentPlaceHolder3_WorstSuppliersGV
+{
+    margin-right: 0;
+}
+
+#ContentPlaceHolder3_BestSuppliersGV
+{
+    margin-top: 30px;
+    margin-right: 0;
+}
+
+/* Progress bars */
+.progress
+{
+    margin: 0;
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
 
 /// <summary>
 /// Summary description for Supplier
@@ -103,5 +104,13 @@ public class Supplier
         DBservices dbs = new DBservices();
         int RowAffected = dbs.UpdateSupplierDetails(this);
         return RowAffected;
+    }
+
+    public DataTable GetSuppliersRankTable() 
+    {
+        DataTable dt = new DataTable();
+        DBservices dbs = new DBservices();
+        dt = dbs.GetSuppliersRankTable();
+        return dt;
     }
 }

@@ -295,7 +295,7 @@ public class DBservices
 
     public DataTable GetOrderStatus()
     {
-        DataTable dt3 = new DataTable();
+        DataTable dt = new DataTable();
         con = connect("igroup9_prodConnectionString");
         SqlDataAdapter da = new SqlDataAdapter();
         using (SqlCommand sqlComm = new SqlCommand("[spGetOrderStatus]", con))
@@ -308,8 +308,8 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.CommandTimeout = 600;
                 da.SelectCommand = sqlComm;
-                da.Fill(dt3);
-                return dt3;
+                da.Fill(dt);
+                return dt;
             }
             catch (Exception ex)
             {
@@ -1031,6 +1031,32 @@ public class DBservices
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;
             }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetSuppliersRankTable()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetSuppliersRankTable]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
             catch (Exception ex)
             {
                 throw (ex);

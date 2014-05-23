@@ -102,7 +102,7 @@ public partial class Default : System.Web.UI.Page
     {
         if (Session["ProjectID"] != null)
         {
-            int pID = (int)Session["ProjectID"];
+            int pID = Convert.ToInt32(Session["ProjectID"]);
             Project p = new Project();
             p.UpdateProjectDetails(pID, Convert.ToDouble(ProjectInfoCost.Text), ProjectInfoName.Text, ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text, DateTime.ParseExact(ProjectInfoExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInfoInstallationDate.Value, "MM/dd/yyyy", null), Convert.ToInt32(ProjectInfoStatus.SelectedValue));
             SaveProjectDetailsBTN.Style.Add("display", "none");
