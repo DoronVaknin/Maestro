@@ -48,6 +48,13 @@ public partial class Default : System.Web.UI.Page
                 ftID = Convert.ToInt32(HatchFailureType.SelectedValue);
             h = new Hatch(hID, hsID, ftID, eID, StatusLastModified, Comments, htID);
             int RowAffected = h.UpdateHatchDetails();
+            if (RowAffected > 0 && hsID == 2) //Notification to Technical Manager
+            {
+                string ProjectName = Session["ProjectNameForProjectHatches"].ToString();
+                string Message = String.Format("דווחה תקלה עבור פתח מס' {0} בפרויקט {1}", hID, ProjectName);
+                Notification n = new Notification(Message, DateTime.Now.Date, 302042267);
+                RowAffected = n.InsertNewNotification();
+            }
         }
     }
 

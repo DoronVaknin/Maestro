@@ -93,6 +93,31 @@ public class DBservices
         }
     }
 
+    public int InsertNewNotification(Notification n)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spInsertNewNotification]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@Message", n.Message);
+                sqlComm.Parameters.AddWithValue("@MessageDate", n.MessageDate);
+                sqlComm.Parameters.AddWithValue("@EmployeeID", n.eID);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
     public void CreateHatches(Project p, int pID)
     {
         con = connect("igroup9_prodConnectionString");
@@ -531,7 +556,7 @@ public class DBservices
         }
     }
 
-    public int UpdateUndecidedCustomerDetails(Project p, int ProjectStatusID,int CustomerID, string CustomerMobilePhone)
+    public int UpdateUndecidedCustomerDetails(Project p, int ProjectStatusID, int CustomerID, string CustomerMobilePhone)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateUndecidedCustomerDetails]", con))
@@ -1133,6 +1158,33 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetNotifications(int eID)
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetNotifications]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@EmployeeID", eID);
                 da.SelectCommand = sqlComm;
                 da.Fill(dt);
                 return dt;

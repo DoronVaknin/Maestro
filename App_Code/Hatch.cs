@@ -168,7 +168,11 @@ public class Hatch
         DataTable dt = new DataTable();
         DBservices db = new DBservices();
         dt = db.GetUsernameID(Username);
-        int eID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
+        int eID = 0;
+        if (dt.Rows.Count > 0)
+            eID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
+        else
+            eID = 300843637;
         return eID;
     }
 

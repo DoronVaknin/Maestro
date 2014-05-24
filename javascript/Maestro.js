@@ -12,6 +12,9 @@ var iTimeoutMin = 90;
 //Used for Pie Chart
 var ProjectsIncome = {};
 
+//Used for Notifications
+var Notifications = {};
+
 $(document).ready(function () {
     WireHomeButtons();
     ActivateTabsMarking();
@@ -82,6 +85,7 @@ $(document).ready(function () {
         case "HomeTechnical":
             ResizeHomeContainer();
             ActivateNewsBox();
+            GetNotifications(302042267);
             break;
 
         default: break;
@@ -872,6 +876,15 @@ function isValidMobileNumber(s) {
     return s.indexOf("05") == 0 && s.length == 10;
 }
 
+function ConvertToDate(sDate) {
+    //Remove all non-numeric (except the plus)
+    sDate = sDate.replace(/[^0-9 +]/g, '');
+    //Create date
+    var date = new Date(parseInt(sDate));
+    var sFixedDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    return sFixedDate;
+}
+
 //Cities AutoCompletion
 //$.ajax({
 //    url: "xmlFiles/IsraelCities.xml",
@@ -1224,4 +1237,47 @@ function GetProjectsIncome() {
             alert("failed to get projects income: " + e.responseText);
         } // end of error
     });               // end of ajax call
+}
+
+//Notifications
+function GetNotifications(iEmployeeID) {
+    dataString = JSON.stringify({ eID: iEmployeeID });
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/GetNotifications',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            Notifications = $.parseJSON(data.d); // parse the data as json
+            Notifications = MergeInsideArrays(Notifications);
+            BuildNewsBox();
+            //            for (var i in Notifications)
+            //                Projects[p[i].pID] = p[i];
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to get project details: " + e.responseText);
+        } // end of error
+    });                // end of ajax call
+}
+
+function BuildNewsBox() {
+    var sHTML = "";
+    for (var i in Notifications) {
+        sHTML += '<li class="news-item">';
+        sHTML += '<table cellpadding="4">';
+        sHTML += '<tr>';
+        sHTML += '<td>';
+        sHTML += '<img src="images/1.png" width="60" class="img-circle" />';
+        sHTML += '</td>';
+        sHTML += ConvertToDate(Notifications[i].MessageDate) + ": " + Notifications[i].Message;
+        sHTML += '<td>';
+        sHTML += '</td>';
+        sHTML += '</tr>';
+        sHTML += '</table>';
+        sHTML += '</li>';
+    }
+    $("#NewsBox ul.News").html(sHTML);
 }

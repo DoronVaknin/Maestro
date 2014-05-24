@@ -462,4 +462,32 @@ public class MaestroWS : System.Web.Services.WebService
         string jsonString = js.Serialize(myAL);
         return jsonString;
     }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetNotifications(int eID)
+    {
+        Notification n = new Notification();
+        DataTable dt = n.GetNotifications(eID);
+
+        ArrayList[] myAL = new ArrayList[dt.Rows.Count];
+
+        for (int i = 0; i < myAL.Length; i++)
+            myAL[i] = new ArrayList();
+
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            n = new Notification();
+            n.Message = dt.Rows[i].ItemArray[0].ToString();
+            n.MessageDate = Convert.ToDateTime(dt.Rows[i].ItemArray[1]).Date;
+
+            myAL[i].Add(n);
+        }
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(myAL);
+        return jsonString;
+    }
 }
