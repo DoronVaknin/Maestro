@@ -265,4 +265,27 @@ public class Project
         dt = db.GetAllDetails(ProjectID);
         return dt;
     }
+
+    public DataTable GetProjectsIncome()
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetProjectsIncome();
+        return dt;
+    }
+
+    public DataTable GetUndecidedCustomers()
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetUndecidedCustomers();
+        return dt;
+    }
+
+    public int UpdateUndecidedCustomerDetails(Project p, int ProjectStatusID, int CustomerID, string CustomerMobilePhone)
+    {
+        DBservices dbs = new DBservices();
+        int RowAffected = dbs.UpdateUndecidedCustomerDetails(p, ProjectStatusID, CustomerID, CustomerMobilePhone);
+        return RowAffected;
+    }
 }

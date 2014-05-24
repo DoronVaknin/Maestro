@@ -1,27 +1,31 @@
 ﻿/// <reference path="jquery-1.11.0.js" />
 
+//Used for Forms backup
 var aCustomerDetails = [];
 var aProjectDetails = [];
 
+//Used for google maps
 var Projects = {};
 var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, ServiceCallsList[scID][1] - Customer details, ServiceCallsList[scID][2] - Project details
 var iTimeoutMin = 90;
 
+//Used for Pie Chart
+var ProjectsIncome = {};
+
 $(document).ready(function () {
+    WireHomeButtons();
     ActivateTabsMarking();
     ActivateToolbarButton("ToolbarBtnCreateProject", "NewCustomer", "CreateProject");
     ActivateToolbarButton("ToolbarBtnCreateServiceCallExternalCustomer", "NewCustomer", "CreateServiceCall");
     ActivateDatepicker();
     ActivateQuickSearch();
     ActivateServiceCallExistingProjectModal();
-    var sPageFullName = GetPageName();
-    var iLength = sPageFullName.length;
-    var sPageName = sPageFullName.substring(0, iLength - 5);
+    var sPageName = GetPageName();
     switch (sPageName) {
         case "ProjectDetails":
             DisableCustomerDetailsFields();
             DisableProjectDetailsFields();
-            FixTextAreaIssue();
+            FixTextAreaIssue("ProjectDetailsTBL");
             $("#ProjectDetailsStatusIcon").popover({ html: true, content: GetProgressBarContent() });
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_ProjectInfoAddress");
             ActivatePlusMinus();
@@ -31,12 +35,12 @@ $(document).ready(function () {
             ActivatePlusMinus();
             break;
 
-        case "NewProject?Source=NewCustomer":
+        case "NewProject.aspx?Source=NewCustomer":
             ActivateModal("ModalCustomerCreated");
             ActivateDragAndDrop();
             break;
 
-        case "NewProject?Source=ProjectsPerCustomer":
+        case "NewProject.aspx?Source=ProjectsPerCustomer":
             ActivateDragAndDrop();
             break;
 
@@ -44,12 +48,12 @@ $(document).ready(function () {
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
             break;
 
-        case "NewCustomer?Source=CreateProject":
+        case "NewCustomer.aspx?Source=CreateProject":
             $("#CustomerForServiceCallBTN").addClass("HiddenButtons");
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
             break;
 
-        case "NewCustomer?Source=CreateServiceCall":
+        case "NewCustomer.aspx?Source=CreateServiceCall":
             $("#CustomerForProjectBTN").addClass("HiddenButtons");
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
             break;
@@ -62,6 +66,7 @@ $(document).ready(function () {
             ResizeHomeContainer();
             ResizePriceOfferTable();
             ActivateNewsBox();
+            GetProjectsIncome();
             SetupPieChart();
             break;
 
@@ -88,17 +93,53 @@ $(window).resize(function () {
     ResizeNewsBox();
 });
 
+function WireHomeButtons() {
+    var sUserName = $("#UserNameHolder").val();
+
+    var bAdmin = sUserName.toUpperCase() === "Admin".toUpperCase();
+    var bInstallationsManager = sUserName.toUpperCase() === "ShimonY".toUpperCase();
+    var bSalesManager = sUserName.toUpperCase() === "MaliY".toUpperCase();
+    var bTechnicalManager = sUserName.toUpperCase() === "BettiY".toUpperCase();
+
+    if (bAdmin || bInstallationsManager)
+        $("#Home a, #LogoWrapper").attr("href", "HomeInstallations.aspx");
+    else if (bSalesManager)
+        $("#Home a, #LogoWrapper").attr("href", "HomeSales.aspx");
+    else if (bTechnicalManager)
+        $("#Home a, #LogoWrapper").attr("href", "HomeTechnical.aspx");
+    else
+        $("#Home a, #LogoWrapper").attr("href", "HomeInstallations.aspx");
+}
+
 //Pie Chart
 function SetupPieChart() {
+    function GetRandomColor() {
+        var letters = '0123456789ABCDEF'.split('');
+        var sColor = '#';
+        for (var i = 0; i < 6; i++) {
+            sColor += letters[Math.floor(Math.random() * 16)];
+        }
+        return sColor;
+    }
+    var dTotalIncome = 0;
+    for (var i in ProjectsIncome) {
+        dTotalIncome += ProjectsIncome[i].Cost;
+    }
+    var aData = [];
+    var aColors = [];
+    for (var i in ProjectsIncome) {
+        var Project = {};
+        Project.label = ProjectsIncome[i].Name;
+        Project.value = (100 * ProjectsIncome[i].Cost / dTotalIncome).toFixed(2);
+        aData.push(Project);
+        var sColor = GetRandomColor();
+        aColors.push(sColor);
+    }
+
     Morris.Donut({
         element: 'PieChart',
-        data: [
-    { label: "דורון וקנין - חדרה", value: 45 },
-    { label: "ליונל מסי - תל אביב", value: 20 },
-    { label: "ליאור זיני - פרדס חנה", value: 25 },
-    { label: "שמוליק חזן - חדרה", value: 10 }
-  ],
-        colors: ["#0066CC", "#006600", "#CC3300", "#FF9900"]
+        data: aData,
+        colors: aColors
     });
 }
 
@@ -164,9 +205,44 @@ function BuildEarlyProgressBar(dPercent, iIndex) {
 
 //Mark current tabs
 function ActivateTabsMarking() {
-    var sFileName = location.pathname.split('/').pop();
-    sFileName = sFileName.substring(0, sFileName.length - 5);
-    $("#" + sFileName).addClass("current");
+    var sPageName = GetPageName();
+    switch (sPageName) {
+        case "HomeSales":
+        case "HomeTechnical":
+        case "HomeInstallations":
+            $("#Home").addClass("current");
+            break;
+
+        case "NewCustomer":
+        case "Customers":
+            $("#Customers").addClass("current");
+            break;
+
+        case "NewCustomer.aspx?Source=CreateProject":
+        case "NewProject.aspx?Source=NewCustomer":
+        case "Projects":
+        case "ProjectsArchive":
+            $("#Projects").addClass("current");
+            break;
+
+        case "ProjectOrders":
+        case "SupplierOrders":
+        case "NewSupplier":
+        case "Suppliers":
+        case "ProjectHatches":
+            $("#Technical").addClass("current");
+            break;
+
+        case "NewServiceCall":
+        case "NewCustomer.aspx?Source=CreateServiceCall":
+        case "NewServiceCall.aspx?Source=ExistingProject":
+        case "ServiceCalls":
+        case "ServiceCallsArchive":
+            $("#ServiceCalls").addClass("current");
+            break;
+
+        default: break;
+    }
 }
 
 //Toolbar buttons
@@ -291,6 +367,10 @@ function DisableProjectDetailsFields() {
     $("#ProjectDetailsTBL input, #ProjectDetailsTBL textarea, #ProjectDetailsTBL select").attr("disabled", "disabled");
 }
 
+function DisableUndecidedCustomerDetailsFields() {
+    $("#EditUndecidedCustomerTBL input, #EditUndecidedCustomerTBL textarea, #EditUndecidedCustomerTBL select").attr("disabled", "disabled");
+}
+
 function DisableServiceCallDetailsFields() {
     $("#ServiceCallTBL input, #ServiceCallTBL textarea").attr("disabled", "disabled");
 }
@@ -307,17 +387,17 @@ function DisableHatchDetailsFields() {
     $("#EditHatchTBL select, #EditHatchTBL textarea").attr("disabled", "disabled");
 }
 
-function FixTextAreaIssue() {
-    var sValue = $("#ProjectDetailsTBL textarea").val();
+function FixTextAreaIssue(sTableID) {
+    var sValue = $("#" + sTableID + " textarea").val();
     if (sValue == "&nbsp;")
-        $("#ProjectDetailsTBL textarea").val("");
+        $("#" + sTableID + " textarea").val("");
 }
 
 function ClickLoginBTN() {
     $("#LoginBTN").click();
 }
 
-//Project Details edit buttons
+//Edit, Save & Cancel buttons
 function EnableCustomerDetails() {
     $("#CustomerDetailsTBL input, #CustomerDetailsTBL select").removeAttr("disabled");
     $("#ContentPlaceHolder3_ProjectInfoID").attr("disabled", "disabled");
@@ -370,6 +450,24 @@ function RestoreProjectDetails() {
     DisableProjectDetailsFields();
     SwitchEditSaveButtons(true, "Project");
     ClearInvalidFields("#ProjectDetailsTBL");
+}
+
+function EnableUndecidedCustomerDetails() {
+    $("#EditUndecidedCustomerTBL input, #EditUndecidedCustomerTBL textarea, #EditUndecidedCustomerTBL select").removeAttr("disabled");
+    SwitchEditSaveButtons(false, "UndecidedCustomer");
+    BackupUndecidedCustomerDetails();
+}
+
+function RestoreUndecidedCustomerDetails() {
+    $("#ContentPlaceHolder3_ProjectName").val(aUndecidedCustomerDetails[0]);
+    $("#ContentPlaceHolder3_CustomerMobilePhone").val(aUndecidedCustomerDetails[1]);
+    $("#ContentPlaceHolder3_ProjectComments").val(aUndecidedCustomerDetails[2]);
+    $("#ContentPlaceHolder3_CustomerBackDate").val(aUndecidedCustomerDetails[3]);
+    $("#ContentPlaceHolder3_ProjectStatus").val(aUndecidedCustomerDetails[4]);
+
+    DisableUndecidedCustomerDetailsFields();
+    SwitchEditSaveButtons(true, "UndecidedCustomer");
+    ClearInvalidFields("#EditUndecidedCustomerTBL");
 }
 
 function EnableServiceCallDetails() {
@@ -516,6 +614,20 @@ function ValidateSupplierDetails(button) {
     }
 }
 
+function ValidateUndecidedCustomerDetails() {
+    var bIsValid = true;
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_ProjectName", function (s) { return s.length < 2; }, false, "שם הפרויקט קצר מדי");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerMobilePhone", function (s) { return s.length > 0 && !isValidMobileNumber(s); }, false, "יש להזין מס' טלפון תקין");
+    bIsValid &= MarkInvalid("#ContentPlaceHolder3_CustomerBackDate", function (s) { return s.length > 0 && !isValidDate(s); }, false, "יש להזין תאריך חוקי");
+    if (bIsValid) {
+        $(".ErrorLabel").html("");
+        ClearInvalidFields("#EditUndecidedCustomerTBL");
+        SwitchEditSaveButtons(true, "UndecidedCustomer");
+        DisableUndecidedCustomerDetailsFields();
+        $("#ContentPlaceHolder3_SaveUndecidedCustomerDetailsHiddenBTN").click();
+    }
+}
+
 function ValidateServiceCallExternal() {
     var bIsValid = true;
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_ServiceCallDateOpened", function (s) { return !isValidDate(s); }, false, "יש להזין תאריך חוקי");
@@ -643,6 +755,15 @@ function BackupCustomerDetails() {
     aCustomerDetails.push($("#ContentPlaceHolder3_ProjectInfoArea").val());
 }
 
+function BackupUndecidedCustomerDetails() {
+    aUndecidedCustomerDetails = [];
+    aUndecidedCustomerDetails.push($("#ContentPlaceHolder3_ProjectName").val());
+    aUndecidedCustomerDetails.push($("#ContentPlaceHolder3_CustomerMobilePhone").val());
+    aUndecidedCustomerDetails.push($("#ContentPlaceHolder3_ProjectComments").val());
+    aUndecidedCustomerDetails.push($("#ContentPlaceHolder3_CustomerBackDate").val());
+    aUndecidedCustomerDetails.push($("#ContentPlaceHolder3_ProjectStatus").val());
+}
+
 function BackupProjectDetails() {
     aProjectDetails = [];
     aProjectDetails.push($("#ContentPlaceHolder3_ProjectInfoStatus").val());
@@ -698,12 +819,20 @@ function GetPageName() {
     var sFullPath = window.location.href;
     var iIndex = sFullPath.lastIndexOf("/");
     var sPageName = sFullPath.substr(iIndex + 1);
+    if (!Contains(sPageName, "?")) {
+        var iLength = sPageName.length;
+        sPageName = sPageName.substring(0, iLength - 5);
+    }
     return sPageName;
 }
 
 //Misc
 function IsEmpty(o) {
     return (o == "" || o == null);
+}
+
+function Contains(S, c) {
+    return S.indexOf(c) > -1;
 }
 
 function IsEmail(email) {
@@ -1074,4 +1203,25 @@ function ActivateCountdown() {
 
 function Logout() {
     __doPostBack('ctl00$LogoutBTN', '');
+}
+
+//Pie Chart
+function GetProjectsIncome() {
+    dataString = "";
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/GetProjectsIncome',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            ProjectsIncome = $.parseJSON(data.d); // parse the data as json
+            ProjectsIncome = MergeInsideArrays(ProjectsIncome);
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to get projects income: " + e.responseText);
+        } // end of error
+    });               // end of ajax call
 }

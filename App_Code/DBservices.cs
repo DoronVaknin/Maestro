@@ -531,6 +531,35 @@ public class DBservices
         }
     }
 
+    public int UpdateUndecidedCustomerDetails(Project p, int ProjectStatusID,int CustomerID, string CustomerMobilePhone)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spUpdateUndecidedCustomerDetails]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", p.pID);
+                sqlComm.Parameters.AddWithValue("@ProjectName", p.Name);
+                sqlComm.Parameters.AddWithValue("@Comments", p.Comments);
+                sqlComm.Parameters.AddWithValue("@BackToCustomerDate", p.InstallationDate);
+                sqlComm.Parameters.AddWithValue("@ProjectStatusID", ProjectStatusID);
+                sqlComm.Parameters.AddWithValue("@CustomerID", CustomerID);
+                sqlComm.Parameters.AddWithValue("@CustomerMobilePhone", CustomerMobilePhone);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
     //Mobile Application Methods
 
     public DataTable GetProjects()
@@ -1063,9 +1092,56 @@ public class DBservices
             }
         }
     }
+
+    public DataTable GetProjectsIncome()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectsIncome]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetUndecidedCustomers()
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetUndecidedCustomers]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
 }
-
-
-
-
-

@@ -19,10 +19,6 @@ public partial class Default : System.Web.UI.Page
             }
             LoadSuppliers();
         }
-        //else
-        //{
-        //    string controlName = this.Request.Params.Get("__EVENTTARGET");
-        //}
 
         Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "ResetCreateOrderForm();", true);
         DisableOrderDetailsFields();

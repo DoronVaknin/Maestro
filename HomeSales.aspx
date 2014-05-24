@@ -84,7 +84,7 @@
             SelectCommand="spGetUndecidedCustomers" SelectCommandType="StoredProcedure">
         </asp:SqlDataSource>
         <asp:GridView ID="PriceOfferGV" CssClass="DataTables" runat="server" AutoGenerateColumns="False"
-            DataSourceID="PriceOfferDS" AllowPaging="True" PageSize="3">
+            DataSourceID="PriceOfferDS" AllowPaging="True" PageSize="3" OnSelectedIndexChanged="PriceOfferGV_SelectedIndexChanged">
             <Columns>
                 <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
                 <asp:BoundField DataField="pName" HeaderText="שם פרויקט" SortExpression="pName" />
@@ -92,9 +92,107 @@
                 <asp:BoundField DataField="Comments" HeaderText="הערות" SortExpression="Comments" />
                 <asp:BoundField DataField="InstallationDate" HeaderText="תאריך חזרה ללקוח" SortExpression="InstallationDate"
                     DataFormatString="{0:dd/MM/yyyy}" />
+                <asp:BoundField DataField="cID" HeaderText="ת.ז" SortExpression="cID" Visible="false" />
+                <asp:BoundField DataField="pID" HeaderText="מס' פרויקט" SortExpression="pID" Visible="false" />
             </Columns>
         </asp:GridView>
         <div id="PieChart" style="height: 250px;">
+        </div>
+        <div class="modal fade" id="ModalEditUndecidedCustomer" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" dir="rtl"
+                            id="CloseBTN">
+                            &times;</button>
+                        <div class="cntr">
+                            <h4 id="ModalHeader" runat="server" class="modal-title">
+                                פרטי הלקוח</h4>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <asp:ScriptManager ID="ScriptManager1" runat="server">
+                        </asp:ScriptManager>
+                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="SaveUndecidedCustomerDetailsHiddenBTN" EventName="Click" />
+                            </Triggers>
+                            <ContentTemplate>
+                                <table id="EditUndecidedCustomerTBL" class="table">
+                                    <tr>
+                                        <td>
+                                            <div class="input-group">
+                                                <input id="ProjectName" type="text" class="form-control" runat="server">
+                                                <span class="input-group-addon">שם הפרויקט *</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input id="CustomerMobilePhone" type="text" class="form-control" runat="server" maxlength="10">
+                                                <span class="input-group-addon">טלפון נייד *</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="TextAreaHolder">
+                                                <asp:TextBox ID="ProjectComments" runat="server" CssClass="form-control" TextMode="multiline"
+                                                    placeholder="הערות"></asp:TextBox>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input id="CustomerBackDate" type="text" class="form-control datepicker" runat="server"
+                                                    maxlength="10">
+                                                <span class="input-group-addon">תאריך חזרה ללקוח</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
+                                                SelectCommand="spGetProjectStatusList" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+                                            <div class="cntr">
+                                                סטטוס הפרויקט: &nbsp;
+                                                <asp:DropDownList ID="ProjectStatus" runat="server" DataSourceID="SqlDataSource1"
+                                                    CssClass="btn btn-default" DataTextField="psName" DataValueField="psID">
+                                                </asp:DropDownList>
+                                            </div>
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="cntr">
+                            <button id="EditUndecidedCustomerDetailsBTN" runat="server" type="button" class="btn btn-default"
+                                onclick="EnableUndecidedCustomerDetails()">
+                                ערוך&nbsp;&nbsp;<span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button id="SaveUndecidedCustomerDetailsBTN" runat="server" type="button" class="btn btn-default HiddenButtons"
+                                onclick="ValidateUndecidedCustomerDetails()">
+                                שמור&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                            <button id="CancelUndecidedCustomerDetailsBTN" runat="server" type="button" class="btn btn-default HiddenButtons"
+                                onclick="RestoreUndecidedCustomerDetails()">
+                                בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                            <br />
+                            <br />
+                            <span id="CustomerDetailsErrorLabel" class="ErrorLabel"></span>
+                            <asp:Button ID="SaveUndecidedCustomerDetailsHiddenBTN" runat="server" Text="שמור"
+                                CssClass="btn btn-default HiddenButtons" OnClick="SaveUndecidedCustomerDetailsBTN_Click"
+                                Font-Bold="true" />
+                        </div>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
         </div>
     </div>
 </asp:Content>

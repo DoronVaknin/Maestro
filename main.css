@@ -239,7 +239,11 @@ html[xmlns] #nav
     width: 50px;
 }
 
-#NewCustomerTBL td, #NewProjectTBL td, #NewSupplierTBL td, #CustomerDetailsTBL td, #ProjectDetailsTBL td, #NewSCExistingProjectTBL td, #NewServiceCallExternalTBL td, #ServiceCallTBL td, #EditProjectOrderTBL td, #EditSupplierOrderTBL td, #EditSupplierTBL td, #EditHatchTBL td
+#NewCustomerTBL td, #NewProjectTBL td, #NewSupplierTBL td,
+#CustomerDetailsTBL td, #ProjectDetailsTBL td, #NewSCExistingProjectTBL td,
+#NewServiceCallExternalTBL td, #ServiceCallTBL td, #EditProjectOrderTBL td,
+#EditSupplierOrderTBL td, #EditSupplierTBL td, #EditHatchTBL td,
+#EditUndecidedCustomerTBL td
 {
     border-top: none;
 }
@@ -488,7 +492,7 @@ div.cntr input[type=button], div.cntr button
     width: 25%;
     float: right;
     margin-right: 23%;
-    margin-top: 30px;
+    margin-top: 10px;
 }
 
 /* Suppliers table */

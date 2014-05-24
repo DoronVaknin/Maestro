@@ -434,4 +434,32 @@ public class MaestroWS : System.Web.Services.WebService
         string jsonString = js.Serialize(RowAffected);
         return jsonString;
     }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetProjectsIncome()
+    {
+        Project p = new Project();
+        DataTable dt = p.GetProjectsIncome();
+
+        ArrayList[] myAL = new ArrayList[dt.Rows.Count];
+
+        for (int i = 0; i < myAL.Length; i++)
+            myAL[i] = new ArrayList();
+
+        for (int i = 0; i < dt.Rows.Count; i++) 
+        {
+            p = new Project();
+            p.Name = dt.Rows[i].ItemArray[0].ToString();
+            p.Cost = Convert.ToDouble(dt.Rows[i].ItemArray[1]);
+
+            myAL[i].Add(p);
+        }
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(myAL);
+        return jsonString;
+    }
 }

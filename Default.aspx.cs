@@ -20,10 +20,27 @@ public partial class Login : System.Web.UI.Page
         if (Membership.ValidateUser(username, password))
         {
             FormsAuthentication.SetAuthCookie(username, false);
-            Response.Redirect("~/Home.aspx");
+            RedirectToHomePage(username);
         }
         else
             ErrorLBL.InnerText = "שם משתמש או סיסמא לא נכונים";
+    }
+
+    public void RedirectToHomePage(string UserName)
+    {
+        bool Admin = UserName.Equals("Admin", StringComparison.InvariantCultureIgnoreCase);
+        bool InstallationsManager = UserName.Equals("ShimonY", StringComparison.InvariantCultureIgnoreCase);
+        bool SalesManager = UserName.Equals("MaliY", StringComparison.InvariantCultureIgnoreCase);
+        bool TechnicalManager = UserName.Equals("BettiY", StringComparison.InvariantCultureIgnoreCase);
+
+        if (Admin || InstallationsManager)
+            Response.Redirect("~/HomeInstallations.aspx");
+        else if (SalesManager)
+            Response.Redirect("~/HomeSales.aspx");
+        else if (TechnicalManager)
+            Response.Redirect("~/HomeTechnical.aspx");
+        else
+            Response.Redirect("~/HomeInstallations.aspx");
     }
 }
 

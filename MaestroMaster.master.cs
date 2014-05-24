@@ -11,6 +11,7 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        UserNameHolder.Value = Page.User.Identity.Name; //Used to wire Home & Logo to the right homepage
         switch (Page.User.Identity.Name)
         {
             case "Admin": Welcome.InnerText = "שלום, אדמין"; break;
