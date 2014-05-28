@@ -20,7 +20,7 @@ $(document).ready(function () {
 
 $(document).on("change", ".HatchStatusDDL", function () {
     var sHatchStatus = $(this).find(":selected").text();
-    bShowFailureDDL = sHatchStatus == "תקלה";
+    var bShowFailureDDL = sHatchStatus == "תקלה";
     $.mobile.activePage.find(".FailureTypeParagraph").toggle(bShowFailureDDL);
 });
 
@@ -56,7 +56,7 @@ function RestorePage(pID) {
     $("#" + PageID + " .HatchStatusDDL option[value='" + CurrentPageData[1] + "']").attr("selected", "selected");
     $.mobile.activePage.find(".HatchStatusParagraph span.ui-btn-text .HatchStatusDDL").text(sText);
 
-    var sText = $("#" + PageID + " .FailureTypeDDL option[value='" + CurrentPageData[2] + "']").text();
+    sText = $("#" + PageID + " .FailureTypeDDL option[value='" + CurrentPageData[2] + "']").text();
     $("#" + PageID + " .FailureTypeDDL option[value='" + CurrentPageData[2] + "']").attr("selected", "selected");
     $.mobile.activePage.find(".FailureTypeParagraph span.ui-btn-text .FailureTypeDDL").text(sText);
 
@@ -280,23 +280,23 @@ function BuildHatchesPagePerProject() {
 }
 
 function PrepareHatchDetails(hID, pID) {
-    var sHatchID = hID;
     var iHatchStatusID = $("#Hatch" + hID + " .HatchStatusDDL option:selected").val();
+    var sHatchStatus = $("#Hatch" + hID + " .HatchStatusDDL option:selected").text();
     var iFailureTypeID = $("#Hatch" + hID + " .FailureTypeDDL option:selected").val();
-    var sHatchStatus = $("#Hatch" + hID + " .FailureTypeDDL option:selected").text();
+    var sFailureType = $("#Hatch" + hID + " .FailureTypeDDL option:selected").text();
     var bReportFailureType = sHatchStatus == "תקלה";
     var sCurrentDate = GetCurrentDate();
     var sComments = $.trim($("#Hatch" + hID + " .HatchCommentsTB").val());
     GetUsernameID(); // Need to identify worker and send his ID to DB
     var HatchDetails = {
-        HatchID: sHatchID,
+        HatchID: hID,
         HatchStatusID: iHatchStatusID,
         FailureTypeID: (bReportFailureType ? iFailureTypeID : 0),
         EmployeeID: sEmployeeID,
         Date: sCurrentDate,
         Comments: (!IsEmpty(sComments) ? sComments : "")
     };
-    UpdateHatchDetails(HatchDetails);
+    UpdateHatchDetails(HatchDetails, pID, sFailureType, bReportFailureType);
 }
 
 function GetUsernameID() {
@@ -319,7 +319,30 @@ function GetUsernameID() {
     });
 }
 
-function UpdateHatchDetails(oHatchDetails) {
+function UpdateHatchDetails(oHatchDetails, pID, sFailureType, bStatusFailure) {
+    function InsertHatchFailureNotification() {
+        var Notification = {};
+        Notification["Message"] = "לפתח מס' " + oHatchDetails.HatchID + " בפרויקט " + Hatches[pID][0].Name + " דווחה תקלה בייצור, התקלה היא " + sFailureType + ": " + oHatchDetails.Comments;
+        Notification["MessageDate"] = oHatchDetails.Date;
+        Notification["eID"] = "302042267";
+
+        dataString = JSON.stringify(Notification);
+        $.ajax({ // ajax call starts
+            url: 'MaestroWS.asmx/InsertHatchFailureNotification',   // JQuery call to the server side method
+            data: dataString,    // the parameters sent to the server
+            type: 'POST',        // can be post or get
+            dataType: 'json',    // Choosing a JSON datatype
+            contentType: 'application/json; charset = utf-8', // of the data received
+            async: false,
+            success: function (data) // Variable data contains the data we get from serverside
+            {
+            }, // end of success
+            error: function (e) {
+                alert("failed to insert failure notification :( " + e.responseText);
+            } // end of error
+        });
+    }
+
     dataString = JSON.stringify(oHatchDetails);
     $.ajax({ // ajax call starts
         url: 'MaestroWS.asmx/UpdateHatchDetails',   // JQuery call to the server side method
@@ -327,16 +350,18 @@ function UpdateHatchDetails(oHatchDetails) {
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
         contentType: 'application/json; charset = utf-8', // of the data received
+        async: false,
         success: function (data) // Variable data contains the data we get from serverside
         {
             CurrentPageData = [];
             alert("הדיווח נשלח בהצלחה");
             Goto("HatchesOfProject" + pID);
+            if (bStatusFailure) InsertHatchFailureNotification();
         }, // end of success
         error: function (e) {
             alert("failed to send a report :( " + e.responseText);
         } // end of error
-    });             // end of ajax call
+    });               // end of ajax call
 }
 
 function BuildHatchDetailsPage(oHatch) {

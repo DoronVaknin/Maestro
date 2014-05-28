@@ -29,6 +29,7 @@ $(document).ready(function () {
             DisableCustomerDetailsFields();
             DisableProjectDetailsFields();
             FixTextAreaIssue("ProjectDetailsTBL");
+            RenameInstallationDateField();
             $("#ProjectDetailsStatusIcon").popover({ html: true, content: GetProgressBarContent() });
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_ProjectInfoAddress");
             ActivatePlusMinus();
@@ -68,24 +69,24 @@ $(document).ready(function () {
         case "HomeSales":
             ResizeHomeContainer();
             ResizePriceOfferTable();
-            ActivateNewsBox();
             GetProjectsIncome();
             SetupPieChart();
+            ActivateNewsBox();
             break;
 
         case "HomeInstallations":
             ResizeHomeContainer();
-            ActivateNewsBox();
             InitializeGoogleMap();
             GetProjects();
             GetOpenedServiceCalls();
             PopulateGoogleMap();
+            ActivateNewsBox();
             break;
 
         case "HomeTechnical":
             ResizeHomeContainer();
-            ActivateNewsBox();
             GetNotifications(302042267);
+            ActivateNewsBox();
             break;
 
         default: break;
@@ -131,10 +132,10 @@ function SetupPieChart() {
     }
     var aData = [];
     var aColors = [];
-    for (var i in ProjectsIncome) {
+    for (var j in ProjectsIncome) {
         var Project = {};
-        Project.label = ProjectsIncome[i].Name;
-        Project.value = (100 * ProjectsIncome[i].Cost / dTotalIncome).toFixed(2);
+        Project.label = ProjectsIncome[j].Name;
+        Project.value = (100 * ProjectsIncome[j].Cost / dTotalIncome).toFixed(2);
         aData.push(Project);
         var sColor = GetRandomColor();
         aColors.push(sColor);
@@ -395,6 +396,12 @@ function FixTextAreaIssue(sTableID) {
     var sValue = $("#" + sTableID + " textarea").val();
     if (sValue == "&nbsp;")
         $("#" + sTableID + " textarea").val("");
+}
+
+function RenameInstallationDateField() {
+    var psID = $("#ContentPlaceHolder3_ProjectInfoStatus").val();
+    if (psID == "1")
+        $("#ContentPlaceHolder3_ProjectInfoInstallationDate").next().text("תאריך חזרה ללקוח");
 }
 
 function ClickLoginBTN() {
@@ -1254,8 +1261,6 @@ function GetNotifications(iEmployeeID) {
             Notifications = $.parseJSON(data.d); // parse the data as json
             Notifications = MergeInsideArrays(Notifications);
             BuildNewsBox();
-            //            for (var i in Notifications)
-            //                Projects[p[i].pID] = p[i];
         }, // end of success
         error: function (e) { // this function will be called upon failure
             alert("failed to get project details: " + e.responseText);
@@ -1270,7 +1275,7 @@ function BuildNewsBox() {
         sHTML += '<table cellpadding="4">';
         sHTML += '<tr>';
         sHTML += '<td>';
-        sHTML += '<img src="images/1.png" width="60" class="img-circle" />';
+        //        sHTML += '<img src="images/1.png" width="60" class="img-circle" />';
         sHTML += '</td>';
         sHTML += ConvertToDate(Notifications[i].MessageDate) + ": " + Notifications[i].Message;
         sHTML += '<td>';

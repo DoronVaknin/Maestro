@@ -447,7 +447,7 @@ public class MaestroWS : System.Web.Services.WebService
         for (int i = 0; i < myAL.Length; i++)
             myAL[i] = new ArrayList();
 
-        for (int i = 0; i < dt.Rows.Count; i++) 
+        for (int i = 0; i < dt.Rows.Count; i++)
         {
             p = new Project();
             p.Name = dt.Rows[i].ItemArray[0].ToString();
@@ -490,4 +490,20 @@ public class MaestroWS : System.Web.Services.WebService
         string jsonString = js.Serialize(myAL);
         return jsonString;
     }
+
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string InsertHatchFailureNotification(string Message, string MessageDate, string eID)
+    {
+        Notification n = new Notification(Message, Convert.ToDateTime(MessageDate), Convert.ToInt32(eID));
+        int RowAffected = n.InsertHatchFailureNotification();
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
+        return jsonString;
+    }
+
 }

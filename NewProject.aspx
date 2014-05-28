@@ -50,7 +50,7 @@
                 <td>
                     <div class="input-group">
                         <input id="ProjectInstallationDate" type="text" class="form-control datepicker" runat="server">
-                        <span class="input-group-addon">תאריך התקנה</span>
+                        <span class="input-group-addon">תאריך חזרה ללקוח</span>
                     </div>
                 </td>
             </tr>
@@ -62,7 +62,11 @@
                 </td>
                 <td>
                     <div class="TextAreaHolder">
-                        <asp:FileUpload ID="ProjectFiles" runat="server" /></div>
+                        <asp:FileUpload ID="ProjectFiles" runat="server" />
+                        <br />
+                        <asp:CheckBox ID="ProjectOfferConfirmed" runat="server" />
+                        הצעה אושרה
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -116,11 +120,11 @@
         </table>
     </div>
     <div class="cntr">
-        <div id="dragandrophandler">
+<%--        <div id="dragandrophandler">
             גרור קבצים לכאן</div>
         <br />
         <div id="status1">
-        </div>
+        </div>--%>
         <br />
         <button type="button" class="btn btn-default" onclick="ValidateNewProject()">
             צור פרויקט&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>

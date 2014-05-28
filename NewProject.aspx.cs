@@ -28,6 +28,12 @@ public partial class Default : System.Web.UI.Page
             filename = Path.GetFileName(ProjectFiles.FileName);
             ProjectFiles.SaveAs(Server.MapPath("~/files/") + filename);
         }
+        int psID;
+        if (ProjectOfferConfirmed.Checked)
+            psID = 2; // הזמנת עבודה
+        else
+            psID = 1; // הצעת מחיר
+
         Project p = new Project(DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInstallationDate.Value, "MM/dd/yyyy", null), ProjectName.Value, ProjectComments.Value, ProjectCost.Value, ProjectHatches.Value, ProjectArchitectName.Value, ProjectArchitectMobile.Value, ProjectContractorName.Value, ProjectContractorMobile.Value, ProjectSupervisorName.Value, ProjectSupervisorMobile.Value);
         //שמירת מספר תעודת זהות של הלקוח  במשתנה
         //int CustomerID;
@@ -36,7 +42,7 @@ public partial class Default : System.Web.UI.Page
             Customer c = new Customer();
             c = (Customer)Session["Customer"];
             int CustomerID = c.cID;
-            p.InsertNewProject(p, CustomerID);
+            p.InsertNewProject(p, CustomerID, psID);
         }
         Response.Redirect("~/Projects.aspx");
     }

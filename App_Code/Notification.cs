@@ -14,11 +14,19 @@ public class Notification
 
     }
 
-	public Notification(string _Message, DateTime _MessageDate, int _eID)
+    public Notification(string _Message, DateTime _MessageDate, int _eID1)
+    {
+        Message = _Message;
+        MessageDate = _MessageDate;
+        eID1 = _eID1;
+    }
+
+    public Notification(string _Message, DateTime _MessageDate, int _eID1, int _eID2)
 	{
        Message = _Message;
        MessageDate = _MessageDate;
-       eID = _eID;
+       eID1 = _eID1;
+       eID2 = _eID2;
 	}
 
     int nid;
@@ -42,17 +50,24 @@ public class Notification
         set { messageDate = value; }
     }
 
-    int eid;
-    public int eID
+    int eid1;
+    public int eID1
     {
-        get { return eid; }
-        set { eid = value; }
+        get { return eid1; }
+        set { eid1 = value; }
     }
 
-    public int InsertNewNotification()
+    int eid2;
+    public int eID2
+    {
+        get { return eid2; }
+        set { eid2 = value; }
+    }
+
+    public int InsertHatchFailureNotification()
     {
         DBservices dbs = new DBservices();
-        int RowAffected = dbs.InsertNewNotification(this);
+        int RowAffected = dbs.InsertHatchFailureNotification(this);
         return RowAffected;
     }
 

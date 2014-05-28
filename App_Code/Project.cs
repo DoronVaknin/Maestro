@@ -151,10 +151,10 @@ public class Project
         set { hatchesImageURL = value; }
     }
 
-    public void InsertNewProject(Project p, int CustomerID)
+    public void InsertNewProject(Project p, int CustomerID, int psID)
     {
         DBservices db = new DBservices();
-        int ProjectID = db.InsertProjectInfo(this, CustomerID);
+        int ProjectID = db.InsertNewProject(this, CustomerID, psID);
         db.CreateHatches(this, ProjectID);
     }
 

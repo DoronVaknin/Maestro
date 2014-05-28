@@ -58,10 +58,10 @@ public class DBservices
         }
     }
 
-    public int InsertProjectInfo(Project p, int pID)
+    public int InsertNewProject(Project p, int cID, int psID)
     {
         con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[spInsertProjectInfo]", con))
+        using (SqlCommand sqlComm = new SqlCommand("[spInsertNewProject]", con))
         {
             if (con.State != ConnectionState.Open)
                 con.Open();
@@ -69,7 +69,8 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@pID", pID);
+                sqlComm.Parameters.AddWithValue("@cID", cID);
+                sqlComm.Parameters.AddWithValue("@psID", psID);
                 sqlComm.Parameters.AddWithValue("@pName", p.Name);
                 sqlComm.Parameters.AddWithValue("@Cost", p.Cost);
                 sqlComm.Parameters.AddWithValue("@DateOpened", p.DateOpened);
@@ -93,10 +94,10 @@ public class DBservices
         }
     }
 
-    public int InsertNewNotification(Notification n)
+    public int InsertHatchFailureNotification(Notification n)
     {
         con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[spInsertNewNotification]", con))
+        using (SqlCommand sqlComm = new SqlCommand("[spInsertHatchFailureNotification]", con))
         {
             if (con.State != ConnectionState.Open)
                 con.Open();
@@ -106,7 +107,8 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@Message", n.Message);
                 sqlComm.Parameters.AddWithValue("@MessageDate", n.MessageDate);
-                sqlComm.Parameters.AddWithValue("@EmployeeID", n.eID);
+                sqlComm.Parameters.AddWithValue("@EmployeeID1", n.eID1);
+                sqlComm.Parameters.AddWithValue("@EmployeeID2", n.eID2);
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;
@@ -1170,7 +1172,7 @@ public class DBservices
         }
     }
 
-    public DataTable GetNotifications(int eID)
+    public DataTable GetNotifications(int eID1)
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
@@ -1184,7 +1186,7 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@EmployeeID", eID);
+                sqlComm.Parameters.AddWithValue("@EmployeeID", eID1);
                 da.SelectCommand = sqlComm;
                 da.Fill(dt);
                 return dt;

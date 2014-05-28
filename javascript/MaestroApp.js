@@ -15,11 +15,9 @@ $(document).ready(function () {
     $("#ProblemDescriptionTA").val(""); //fix extra space issue
 
     //Google map for service calls and projects
-    InitializeGoogleMap();
-    $("#MapBTN").click(function () {
-        Goto("ServiceCallsMap");
-        //        ResizeMapCanvas();
-    });
+    //    $("#MapBTN").click(function () {
+    //        //        ResizeMapCanvas();
+    //    });
 });
 
 $(window).resize(ResizeMapCanvas);
@@ -34,6 +32,13 @@ $(document).on("click", ".HatchBTN", function () {
     var sHref = $(this).attr("href");
     var sHatchID = sHref.substring(6, sHref.length + 1);
     BuildHatchPage(sHatchID);
+});
+
+$(document).on("click", "#MapBTN", function () {
+    Goto("ServiceCallsMap");
+    ResizeMapCanvas();
+    setTimeout(InitializeGoogleMap, 500);
+    setTimeout(PopulateGoogleMap,800);
 });
 
 function Login() {
@@ -372,7 +377,6 @@ function GetOpenedServiceCalls() {
             for (var scID in ServiceCallsList)
                 BuildServiceCallPage(ServiceCallsList[scID]);
             BuildServiceCallProjectsList();
-            PopulateGoogleMap();
         }, // end of success
         error: function (e) {
             alert("failed to load Service calls" + e.responseText);
@@ -640,8 +644,8 @@ function ShowServiceCallPin(oPosition, sID) {
     var sContent = '<div id="content">' +
                 '<h3 class="firstHeading">' + ServiceCallsList[sID][1].Fname + " " + ServiceCallsList[sID][1].Lname + '</h3>' +
                 '<div class="bodyContent">' +
-                '<p><b>כתובת: </b>' + ServiceCallsList[sID][1].Address + '</p>' +
                 '<p><b>טלפון נייד: </b>' + ServiceCallsList[sID][1].Mobile + '</p>' +
+                '<p><b>כתובת: </b>' + ServiceCallsList[sID][1].Address + '</p>' +
                 '<p><b>תיאור התקלה: </b>' + ServiceCallsList[sID][0].Description + '</p>' +
     //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
                 '</div>' +
@@ -655,7 +659,7 @@ function ShowServiceCallPin(oPosition, sID) {
         InfoWindow.open(Map, Marker);
     });
 
-    google.maps.event.trigger(Map, "resize");
+//    google.maps.event.trigger(Map, "resize");
 }
 
 function ShowProjectPin(oPosition, pID) {
@@ -712,6 +716,7 @@ function UploadPicture() {
         type: 'POST',        // can be post or get
         dataType: 'json',    // Choosing a JSON datatype
         contentType: 'application/json; charset = utf-8', // of the data received
+        async: false,
         success: function (data) // Variable data contains the data we get from serverside
         {
             HideLoading();
@@ -726,10 +731,12 @@ function UploadPicture() {
 //PhoneGap functions
 
 function TakePicturePrepare(hID) {
-    Picture.HatchID = hID;
-    Picture.PictureDesc = $.trim($("#Hatch" + hID + "PicDesc").val());
+    Picture["HatchID"] = hID;
+    Picture["PictureDesc"] = $.trim($("#Hatch" + hID + "PicDesc").val());
     $("#Hatch" + hID + "PicDesc").val("");
     $("#Hatch" + hID + "CancelButton").click();
+//    Picture["DateTaken"] = GetCurrentDate();
+//    Picture["ImageURL"] = "http://proj.ruppin.ac.il/igroup9/prod/images/hatches/HatchTest.jpg";
     TakePicture();
 }
 
@@ -758,8 +765,8 @@ function uploadPhoto(imageURI) {
     params.value2 = "param";
     options.params = params; // add parameters to the FileUploadOptions object
 
-    Picture.DateTaken = GetCurrentDate();
-    Picture.ImageURL = "http://proj.ruppin.ac.il/igroup9/prod/images/hatches/" + options.fileName + ".jpg";
+    Picture["DateTaken"] = GetCurrentDate();
+    Picture["ImageURL"] = "http://proj.ruppin.ac.il/igroup9/prod/images/hatches/" + options.fileName + ".jpg";
     //    alert("URL: " + Picture.ImageURL);
     var ft = new FileTransfer();
     ft.upload(imageURI, encodeURI("http://proj.ruppin.ac.il/igroup9/prod/images/hatches/ReturnValue.ashx"), win, fail, options); // Upload

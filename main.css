@@ -219,9 +219,8 @@ html[xmlns] #nav
 .input-group
 {
     direction: ltr;
-    width: 320px;
-    margin-right: auto;
-    margin-left: auto;
+    width: 340px;
+    margin: 0 auto;
 }
 
 #ProjectOrdersTBL .input-group
@@ -231,7 +230,7 @@ html[xmlns] #nav
 
 .input-group-addon
 {
-    width: 100px;
+    width: 126px;
 }
 
 #ProjectOrdersTBL .input-group-addon
@@ -275,7 +274,7 @@ html[xmlns] #nav
 {
     margin-left: auto;
     margin-right: auto;
-    width: 320px;
+    width: 340px;
 }
 
 div.cntr input[type=button], div.cntr button
@@ -285,7 +284,7 @@ div.cntr input[type=button], div.cntr button
 
 #NewProjectTBL textarea, #ProjectDetailsTBL textarea, #NewSCExistingProjectTBL textarea, #NewServiceCallExternalTBL textarea
 {
-    max-width: 320px;
+    max-width: 340px;
     height: 100px;
     max-height: 100px;
 }

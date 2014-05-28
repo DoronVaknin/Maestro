@@ -40,7 +40,7 @@ public partial class Default : System.Web.UI.Page
             int hsID = Convert.ToInt32(HatchStatus.SelectedValue);
             string Comments = HatchComments.Text;
             DateTime StatusLastModified = DateTime.Now;
-            string Username = GetUsername();
+            string Username = Page.User.Identity.Name;
             int eID = h.GetUsernameID(Username);
             int htID = Convert.ToInt32(HatchType.SelectedValue);
             int ftID = 0;
@@ -48,13 +48,13 @@ public partial class Default : System.Web.UI.Page
                 ftID = Convert.ToInt32(HatchFailureType.SelectedValue);
             h = new Hatch(hID, hsID, ftID, eID, StatusLastModified, Comments, htID);
             int RowAffected = h.UpdateHatchDetails();
-            if (RowAffected > 0 && hsID == 2) //Notification to Technical Manager
-            {
-                string ProjectName = Session["ProjectNameForProjectHatches"].ToString();
-                string Message = String.Format("דווחה תקלה עבור פתח מס' {0} בפרויקט {1}", hID, ProjectName);
-                Notification n = new Notification(Message, DateTime.Now.Date, 302042267);
-                RowAffected = n.InsertNewNotification();
-            }
+            //if (RowAffected > 0 && hsID == 2) //Notification to Technical Manager
+            //{
+            //    string ProjectName = Session["ProjectNameForProjectHatches"].ToString();
+            //    string Message = String.Format("דווחה תקלה עבור פתח מס' {0} בפרויקט {1} ", hID, ProjectName);
+            //    Notification n = new Notification(Message, DateTime.Now.Date, 302042267);
+            //    RowAffected = n.InsertNewNotification();
+            //}
         }
     }
 
@@ -89,19 +89,19 @@ public partial class Default : System.Web.UI.Page
             HatchComments.Text = "";
     }
 
-    public string GetUsername()
-    {
-        string EmployeeName = "";
-        switch (Page.User.Identity.Name)
-        {
-            case "Admin": EmployeeName = "אדמין"; break;
-            case "ShimonY": EmployeeName = "שמעון ימין"; break;
-            case "MaliY": EmployeeName = "מלי ימין"; break;
-            case "BettiY": EmployeeName = "בטי ימין"; break;
-            default: break;
-        }
-        return EmployeeName;
-    }
+    //public string GetUserFullName()
+    //{
+    //    string EmployeeName = "";
+    //    switch (Page.User.Identity.Name)
+    //    {
+    //        case "Admin": EmployeeName = "אדמין"; break;
+    //        case "ShimonY": EmployeeName = "שמעון ימין"; break;
+    //        case "MaliY": EmployeeName = "מלי ימין"; break;
+    //        case "BettiY": EmployeeName = "בטי ימין"; break;
+    //        default: break;
+    //    }
+    //    return EmployeeName;
+    //}
 
     protected void OnDataBound(object sender, EventArgs e)
     {
