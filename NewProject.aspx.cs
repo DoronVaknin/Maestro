@@ -35,15 +35,22 @@ public partial class Default : System.Web.UI.Page
             psID = 1; // הצעת מחיר
 
         Project p = new Project(DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInstallationDate.Value, "MM/dd/yyyy", null), ProjectName.Value, ProjectComments.Value, ProjectCost.Value, ProjectHatches.Value, ProjectArchitectName.Value, ProjectArchitectMobile.Value, ProjectContractorName.Value, ProjectContractorMobile.Value, ProjectSupervisorName.Value, ProjectSupervisorMobile.Value);
-        //שמירת מספר תעודת זהות של הלקוח  במשתנה
-        //int CustomerID;
         if (Session["Customer"] != null)
         {
             Customer c = new Customer();
             c = (Customer)Session["Customer"];
             int CustomerID = c.cID;
             p.InsertNewProject(p, CustomerID, psID);
+            if (psID == 2)
+                InsertNewProjectNotification(ProjectName.Value);
+            Response.Redirect("~/Projects.aspx");
         }
-        Response.Redirect("~/Projects.aspx");
+    }
+
+    public void InsertNewProjectNotification(string ProjectName)
+    {
+        string Message = String.Format("נפתח פרויקט חדש {0}, נא להיערך לקראת משקוף עיוור.", ProjectName);
+        Notification n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
+        n.InsertNewNotification();
     }
 }

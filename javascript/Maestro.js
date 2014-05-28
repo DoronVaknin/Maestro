@@ -80,6 +80,7 @@ $(document).ready(function () {
             GetProjects();
             GetOpenedServiceCalls();
             PopulateGoogleMap();
+            GetNotifications(38124123);
             ActivateNewsBox();
             break;
 

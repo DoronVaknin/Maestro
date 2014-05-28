@@ -153,9 +153,9 @@ public class Project
 
     public void InsertNewProject(Project p, int CustomerID, int psID)
     {
-        DBservices db = new DBservices();
-        int ProjectID = db.InsertNewProject(this, CustomerID, psID);
-        db.CreateHatches(this, ProjectID);
+        DBservices dbs = new DBservices();
+        int ProjectID = dbs.InsertNewProject(this, CustomerID, psID);
+        dbs.CreateHatches(this, ProjectID);
     }
 
     public DataTable GetCustomerInformation(int ProjectID)

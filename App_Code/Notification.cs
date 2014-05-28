@@ -64,10 +64,10 @@ public class Notification
         set { eid2 = value; }
     }
 
-    public int InsertHatchFailureNotification()
+    public int InsertNewNotification()
     {
         DBservices dbs = new DBservices();
-        int RowAffected = dbs.InsertHatchFailureNotification(this);
+        int RowAffected = dbs.InsertNewNotification(this);
         return RowAffected;
     }
 

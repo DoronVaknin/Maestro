@@ -14,6 +14,8 @@ using System.Web.UI.WebControls;
 
 public partial class Default : System.Web.UI.Page
 {
+    static int ProjectLastStatusID;
+
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Session["ProjectID"] != null)
@@ -24,7 +26,10 @@ public partial class Default : System.Web.UI.Page
             DataTable DetailsTable = p.GetAllDetails(ProjectID);
 
             if (!Page.IsPostBack)
+            {
                 SetPageDetails(DetailsTable);
+                ProjectLastStatusID = Convert.ToInt32(DetailsTable.Rows[0].ItemArray[9]);
+            }
             else
                 DisableAllFields();
         }
@@ -105,6 +110,13 @@ public partial class Default : System.Web.UI.Page
             int pID = Convert.ToInt32(Session["ProjectID"]);
             Project p = new Project();
             p.UpdateProjectDetails(pID, Convert.ToDouble(ProjectInfoCost.Text), ProjectInfoName.Text, ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text, DateTime.ParseExact(ProjectInfoExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInfoInstallationDate.Value, "MM/dd/yyyy", null), Convert.ToInt32(ProjectInfoStatus.SelectedValue));
+            if (ProjectLastStatusID == 1 && ProjectInfoStatus.SelectedValue == "2")
+                InsertNewProjectNotification(ProjectInfoName.Text);
+            else if (ProjectInfoStatus.SelectedValue == "8")
+            {
+                //InsertInstallationStatusNotification(true);
+                //InsertInstallationStatusNotification(false);
+            }
             SaveProjectDetailsBTN.Style.Add("display", "none");
             EditProjectDetailsBTN.Style.Add("display", "inline-block");
         }
@@ -127,6 +139,30 @@ public partial class Default : System.Web.UI.Page
             Session["ProjectNameForServiceCall"] = ProjectInfoName.Text;
             Response.Redirect("NewServiceCall.aspx?Source=ExistingProject");
         }
+    }
+
+    public void InsertNewProjectNotification(string ProjectName)
+    {
+        string Message = String.Format("נפתח פרויקט חדש {0}, נא להיערך לקראת משקוף עיוור.", ProjectName);
+        Notification n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
+        n.InsertNewNotification();
+    }
+
+    public void InsertInstallationStatusNotification(bool ProjectInTime)
+    {
+        Notification n = new Notification();
+        if (ProjectInTime)
+        {
+            string Message = "הפרויקט מתבצע כמתוכנן, הפתחים מוכנים להתקנה בבית הלקוח.";
+            n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
+        }
+        else
+        {
+            string Message = String.Format("הפתחים הבאים טרם מוכנים להתקנה בבית הלקוח עבור פרויקט {1}:{2}", ProjectInfoName.Text, "<br>");
+            //need to build a loop through all hatches
+            n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
+        }
+        n.InsertNewNotification();
     }
 }
 

@@ -84,8 +84,8 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@SuperName", p.SupervisorName);
                 sqlComm.Parameters.AddWithValue("@SuperPhone", p.SupervisorPhone);
                 sqlComm.CommandTimeout = 600;
-                int value = (int)sqlComm.ExecuteScalar();
-                return value;
+                int ProjectID = (int)sqlComm.ExecuteScalar();
+                return ProjectID;
             }
             catch (Exception ex)
             {
@@ -94,10 +94,10 @@ public class DBservices
         }
     }
 
-    public int InsertHatchFailureNotification(Notification n)
+    public int InsertNewNotification(Notification n)
     {
         con = connect("igroup9_prodConnectionString");
-        using (SqlCommand sqlComm = new SqlCommand("[spInsertHatchFailureNotification]", con))
+        using (SqlCommand sqlComm = new SqlCommand("[spInsertNewNotification]", con))
         {
             if (con.State != ConnectionState.Open)
                 con.Open();
@@ -1186,7 +1186,7 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@EmployeeID", eID1);
+                sqlComm.Parameters.AddWithValue("@EmployeeID1", eID1);
                 da.SelectCommand = sqlComm;
                 da.Fill(dt);
                 return dt;

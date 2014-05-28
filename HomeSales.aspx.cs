@@ -52,5 +52,14 @@ public partial class _Default : System.Web.UI.Page
         int ProjectStatusID = Convert.ToInt32(ProjectStatus.SelectedValue);
         string MobilePhone = CustomerMobilePhone.Value;
         p.UpdateUndecidedCustomerDetails(p, ProjectStatusID, CustomerID, MobilePhone);
+        if (ProjectStatusID == 2)
+            InsertNewProjectNotification(p.Name);
+    }
+
+    public void InsertNewProjectNotification(string ProjectName)
+    {
+        string Message = String.Format("נפתח פרויקט חדש {0}, נא להיערך לקראת משקוף עיוור.", ProjectName);
+        Notification n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
+        n.InsertNewNotification();
     }
 }

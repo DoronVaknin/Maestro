@@ -328,7 +328,7 @@ function UpdateHatchDetails(oHatchDetails, pID, sFailureType, bStatusFailure) {
 
         dataString = JSON.stringify(Notification);
         $.ajax({ // ajax call starts
-            url: 'MaestroWS.asmx/InsertHatchFailureNotification',   // JQuery call to the server side method
+            url: 'MaestroWS.asmx/InsertNewNotification',   // JQuery call to the server side method
             data: dataString,    // the parameters sent to the server
             type: 'POST',        // can be post or get
             dataType: 'json',    // Choosing a JSON datatype
@@ -361,7 +361,7 @@ function UpdateHatchDetails(oHatchDetails, pID, sFailureType, bStatusFailure) {
         error: function (e) {
             alert("failed to send a report :( " + e.responseText);
         } // end of error
-    });               // end of ajax call
+    });                // end of ajax call
 }
 
 function BuildHatchDetailsPage(oHatch) {

@@ -494,10 +494,10 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string InsertHatchFailureNotification(string Message, string MessageDate, string eID)
+    public string InsertNewNotification(string Message, string MessageDate, string eID)
     {
         Notification n = new Notification(Message, Convert.ToDateTime(MessageDate), Convert.ToInt32(eID));
-        int RowAffected = n.InsertHatchFailureNotification();
+        int RowAffected = n.InsertNewNotification();
 
         // create a json serializer object
         JavaScriptSerializer js = new JavaScriptSerializer();
