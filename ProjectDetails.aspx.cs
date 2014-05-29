@@ -14,7 +14,7 @@ using System.Web.UI.WebControls;
 
 public partial class Default : System.Web.UI.Page
 {
-    static int ProjectLastStatusID;
+    static DataTable dt;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -26,10 +26,7 @@ public partial class Default : System.Web.UI.Page
             DataTable DetailsTable = p.GetAllDetails(ProjectID);
 
             if (!Page.IsPostBack)
-            {
                 SetPageDetails(DetailsTable);
-                ProjectLastStatusID = Convert.ToInt32(DetailsTable.Rows[0].ItemArray[9]);
-            }
             else
                 DisableAllFields();
         }
@@ -110,13 +107,42 @@ public partial class Default : System.Web.UI.Page
             int pID = Convert.ToInt32(Session["ProjectID"]);
             Project p = new Project();
             p.UpdateProjectDetails(pID, Convert.ToDouble(ProjectInfoCost.Text), ProjectInfoName.Text, ProjectInfoComments.Text, ProjectInfoArchitectName.Text, ProjectInfoArchitectMobile.Text, ProjectInfoContractorName.Text, ProjectInfoContractorMobile.Text, ProjectInfoSupervisorName.Text, ProjectInfoSupervisorMobile.Text, DateTime.ParseExact(ProjectInfoExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInfoInstallationDate.Value, "MM/dd/yyyy", null), Convert.ToInt32(ProjectInfoStatus.SelectedValue));
-            if (ProjectLastStatusID == 1 && ProjectInfoStatus.SelectedValue == "2")
-                InsertNewProjectNotification(ProjectInfoName.Text);
-            else if (ProjectInfoStatus.SelectedValue == "8")
+
+
+            //Notifications management
+            switch (ProjectInfoStatus.SelectedValue)
             {
-                //InsertInstallationStatusNotification(true);
-                //InsertInstallationStatusNotification(false);
+                case "2": //הזמנת עבודה
+                    InsertNewProjectNotification(ProjectInfoName.Text);
+                    break;
+
+                case "4": //סגירת פרטים
+                    DateTime NotificationDate = DateTime.Now.AddDays(46);
+                    InsertDetailsClosureNotification(ProjectInfoName.Text, NotificationDate);
+                    break;
+
+                case "7": //ייצור
+                    p.SetStatusProduction(pID);
+                    break;
+
+                case "8": //התקנה
+                    bool ProjectInTime = AreHatchesReadyForInstallation(pID) ? true : false;
+                    InsertInstallationStatusNotification(ProjectInTime, ProjectInfoName.Text);
+                    break;
+
+                case "9": //סיום פרויקט
+                    DateTime ExpirationDate = DateTime.Now.AddYears(2);
+                    p.SetExpirationDate(pID, ExpirationDate);
+                    break;
+
+
+                default:
+                    break;
             }
+
+
+
+
             SaveProjectDetailsBTN.Style.Add("display", "none");
             EditProjectDetailsBTN.Style.Add("display", "inline-block");
         }
@@ -141,6 +167,18 @@ public partial class Default : System.Web.UI.Page
         }
     }
 
+    public bool AreHatchesReadyForInstallation(int pID)
+    {
+        Project p = new Project();
+        dt = p.GetProjectHatches(pID);
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            if (dt.Rows[i].ItemArray[2].ToString() != "הועמס")
+                return false;
+        }
+        return true;
+    }
+
     public void InsertNewProjectNotification(string ProjectName)
     {
         string Message = String.Format("נפתח פרויקט חדש {0}, נא להיערך לקראת משקוף עיוור.", ProjectName);
@@ -148,22 +186,48 @@ public partial class Default : System.Web.UI.Page
         n.InsertNewNotification();
     }
 
-    public void InsertInstallationStatusNotification(bool ProjectInTime)
+    public void InsertInstallationStatusNotification(bool ProjectInTime, string ProjectName)
     {
         Notification n = new Notification();
         if (ProjectInTime)
         {
-            string Message = "הפרויקט מתבצע כמתוכנן, הפתחים מוכנים להתקנה בבית הלקוח.";
+            string Message = "הפרויקט " + ProjectName + " מתבצע כמתוכנן, הפתחים מוכנים להתקנה בבית הלקוח.";
             n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
         }
         else
         {
-            string Message = String.Format("הפתחים הבאים טרם מוכנים להתקנה בבית הלקוח עבור פרויקט {1}:{2}", ProjectInfoName.Text, "<br>");
+            string Message = String.Format("הפתחים הבאים טרם מוכנים להתקנה בבית הלקוח עבור הפרויקט {0}:{1}", ProjectInfoName.Text, "<br>");
             //need to build a loop through all hatches
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if (dt.Rows[i].ItemArray[2].ToString() != "הועמס")
+                {
+                    int hID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+                    string HatchStatus = dt.Rows[i].ItemArray[2].ToString();
+                    string Comments = dt.Rows[i].ItemArray[6].ToString();
+                    string FailureType = "";
+
+                    if (HatchStatus == "תקלה")
+                        FailureType = dt.Rows[i].ItemArray[5].ToString();
+                    if (FailureType != "")
+                        Message += String.Format("{0} בסטטוס {1}, {2}, {3}{4}", hID, HatchStatus, FailureType, Comments, "<br>");
+                    else
+                        Message += String.Format("{0} בסטטוס {1}, {2}, {3}", hID, HatchStatus, Comments, "<br>");
+                }
+            }
             n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
         }
         n.InsertNewNotification();
     }
+
+    public void InsertDetailsClosureNotification(string ProjectName, DateTime NotificationDate)
+    {
+        //string Message = String.Format("בעוד שבועיים יחלפו 60 יום ממועד הפגישה לסגירת פרטים והפתחים הנל לא מוכנים להתקנה בבית הלקוח עבור פרויקט {0}:{1}", ProjectName, "<br>", hID, HatchStatus,FailureType, Comments);
+
+        //Notification n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
+    }
+
 }
 
 

@@ -213,32 +213,40 @@ public class Project
     public DataTable GetProjects()
     {
         DataTable dt = new DataTable();
-        DBservices db = new DBservices();
-        dt = db.GetProjects();
+        DBservices dbs = new DBservices();
+        dt = dbs.GetProjects();
         return dt;
     }
 
     public DataTable GetProjectDetails()
     {
         DataTable dt = new DataTable();
-        DBservices db = new DBservices();
-        dt = db.GetProjectDetails();
+        DBservices dbs = new DBservices();
+        dt = dbs.GetProjectDetails();
         return dt;
     }
 
     public DataTable GetHatches()
     {
         DataTable dt = new DataTable();
-        DBservices db = new DBservices();
-        dt = db.GetHatches();
+        DBservices dbs = new DBservices();
+        dt = dbs.GetHatches();
         return dt;
     }
 
     public DataTable GetHatchesForProdApp()
     {
         DataTable dt = new DataTable();
-        DBservices db = new DBservices();
-        dt = db.GetHatchesForProdApp();
+        DBservices dbs = new DBservices();
+        dt = dbs.GetHatchesForProdApp();
+        return dt;
+    }
+
+    public DataTable GetProjectHatches(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        DBservices dbs = new DBservices();
+        dt = dbs.GetProjectHatches(ProjectID);
         return dt;
     }
 
@@ -288,4 +296,19 @@ public class Project
         int RowAffected = dbs.UpdateUndecidedCustomerDetails(p, ProjectStatusID, CustomerID, CustomerMobilePhone);
         return RowAffected;
     }
+
+    public int SetStatusProduction(int ProjectID)
+    {
+        DBservices dbs = new DBservices();
+        int RowAffected = dbs.SetStatusProduction(ProjectID);
+        return RowAffected;
+    }
+
+    public int SetExpirationDate(int ProjectID, DateTime ExpirationDate)
+    {
+        DBservices dbs = new DBservices();
+        int RowAffected = dbs.SetExpirationDate(ProjectID, ExpirationDate);
+        return RowAffected;
+    }
+
 }

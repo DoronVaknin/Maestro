@@ -109,6 +109,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@MessageDate", n.MessageDate);
                 sqlComm.Parameters.AddWithValue("@EmployeeID1", n.eID1);
                 sqlComm.Parameters.AddWithValue("@EmployeeID2", n.eID2);
+                sqlComm.Parameters.AddWithValue("@IsDetailsClosure", n.IsDetailsClosure);
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;
@@ -968,10 +969,7 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@HatchID", h.HatchID);
                 sqlComm.Parameters.AddWithValue("@HatchStatusID", h.HatchStatusID);
-                if (h.HatchTypeID != null)
-                    sqlComm.Parameters.AddWithValue("@HatchTypeID", h.HatchStatusID);
-                else
-                    sqlComm.Parameters.AddWithValue("@HatchTypeID", null);
+                sqlComm.Parameters.AddWithValue("@HatchTypeID", h.HatchTypeID);
                 if (h.FtID == 0)
                     sqlComm.Parameters.AddWithValue("@FailureTypeID", null);
                 else
@@ -1192,6 +1190,80 @@ public class DBservices
                 return dt;
             }
 
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetProjectHatches(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectHatches]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public int SetStatusProduction(int ProjectID)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spSetStatusProduction]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public int SetExpirationDate(int ProjectID, DateTime ExpirationDate)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spSetExpirationDate]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
+                sqlComm.Parameters.AddWithValue("@ExpirationDate", ExpirationDate);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
             catch (Exception ex)
             {
                 throw (ex);

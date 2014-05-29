@@ -29,10 +29,9 @@ $(document).ready(function () {
             DisableCustomerDetailsFields();
             DisableProjectDetailsFields();
             FixTextAreaIssue("ProjectDetailsTBL");
-            RenameInstallationDateField();
+            ModifyInstallationDateField();
             $("#ProjectDetailsStatusIcon").popover({ html: true, content: GetProgressBarContent() });
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_ProjectInfoAddress");
-            ActivatePlusMinus();
             break;
 
         case "ProjectOrders":
@@ -399,10 +398,12 @@ function FixTextAreaIssue(sTableID) {
         $("#" + sTableID + " textarea").val("");
 }
 
-function RenameInstallationDateField() {
+function ModifyInstallationDateField() {
     var psID = $("#ContentPlaceHolder3_ProjectInfoStatus").val();
     if (psID == "1")
         $("#ContentPlaceHolder3_ProjectInfoInstallationDate").next().text("תאריך חזרה ללקוח");
+    else if (parseInt(psID) < 6) // between 2 to 5 - installation field in not relevant
+        $("#ContentPlaceHolder3_ProjectInfoInstallationDate").parent().hide();
 }
 
 function ClickLoginBTN() {

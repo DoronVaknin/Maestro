@@ -48,6 +48,7 @@ public partial class Default : System.Web.UI.Page
                 ftID = Convert.ToInt32(HatchFailureType.SelectedValue);
             h = new Hatch(hID, hsID, ftID, eID, StatusLastModified, Comments, htID);
             int RowAffected = h.UpdateHatchDetails();
+
             //if (RowAffected > 0 && hsID == 2) //Notification to Technical Manager
             //{
             //    string ProjectName = Session["ProjectNameForProjectHatches"].ToString();

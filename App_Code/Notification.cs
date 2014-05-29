@@ -29,6 +29,15 @@ public class Notification
        eID2 = _eID2;
 	}
 
+    public Notification(string _Message, DateTime _MessageDate, int _eID1, int _eID2, bool _IsDetailsClosure)
+    {
+        Message = _Message;
+        MessageDate = _MessageDate;
+        eID1 = _eID1;
+        eID2 = _eID2;
+        IsDetailsClosure = _IsDetailsClosure;
+    }
+
     int nid;
     public int nID
     {
@@ -62,6 +71,13 @@ public class Notification
     {
         get { return eid2; }
         set { eid2 = value; }
+    }
+
+    bool isDetailsClosure;
+    public bool IsDetailsClosure
+    {
+        get { return isDetailsClosure; }
+        set { isDetailsClosure = value; }
     }
 
     public int InsertNewNotification()
