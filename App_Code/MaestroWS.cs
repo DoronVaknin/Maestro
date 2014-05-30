@@ -303,9 +303,9 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string UpdateHatchDetails(int HatchID, int HatchStatusID, int FailureTypeID, int EmployeeID, string Date, string Comments)
+    public string UpdateHatchDetails(int HatchID, int HatchTypeID, int HatchStatusID, int FailureTypeID, int EmployeeID, string Date, string Comments)
     {
-        Hatch h = new Hatch(HatchID, HatchStatusID, FailureTypeID, EmployeeID, Convert.ToDateTime(Date), Comments);
+        Hatch h = new Hatch(HatchID, HatchStatusID, FailureTypeID, EmployeeID, Convert.ToDateTime(Date), Comments, HatchTypeID);
         int RowAffected = h.UpdateHatchDetails();
 
         // create a json serializer object

@@ -280,6 +280,10 @@ function BuildHatchesPagePerProject() {
 }
 
 function PrepareHatchDetails(hID, pID) {
+    var HatchTypeElement = $("#Hatch" + hID + " p")[0];
+    var sHatchType = $(HatchTypeElement).text();
+    sHatchType = sHatchType.substring(10, str.length);
+    var iHatchTypeID = sHatchType == "חלון" ? 1 : 2;
     var iHatchStatusID = $("#Hatch" + hID + " .HatchStatusDDL option:selected").val();
     var sHatchStatus = $("#Hatch" + hID + " .HatchStatusDDL option:selected").text();
     var iFailureTypeID = $("#Hatch" + hID + " .FailureTypeDDL option:selected").val();
@@ -290,13 +294,14 @@ function PrepareHatchDetails(hID, pID) {
     GetUsernameID(); // Need to identify worker and send his ID to DB
     var HatchDetails = {
         HatchID: hID,
+        HatchTypeID: iHatchTypeID,
         HatchStatusID: iHatchStatusID,
         FailureTypeID: (bReportFailureType ? iFailureTypeID : 0),
         EmployeeID: sEmployeeID,
         Date: sCurrentDate,
         Comments: (!IsEmpty(sComments) ? sComments : "")
     };
-    UpdateHatchDetails(HatchDetails, pID, sFailureType, bReportFailureType);
+    UpdateHatchDetails(HatchDetails, pID, sHatchType, sHatchStatus, sFailureType, bReportFailureType);
 }
 
 function GetUsernameID() {
@@ -319,7 +324,7 @@ function GetUsernameID() {
     });
 }
 
-function UpdateHatchDetails(oHatchDetails, pID, sFailureType, bStatusFailure) {
+function UpdateHatchDetails(oHatchDetails, pID, sHatchType, sHatchStatus, sFailureType, bStatusFailure) {
     function InsertHatchFailureNotification() {
         var Notification = {};
         Notification["Message"] = "לפתח מס' " + oHatchDetails.HatchID + " בפרויקט " + Hatches[pID][0].Name + " דווחה תקלה בייצור, התקלה היא " + sFailureType + ": " + oHatchDetails.Comments;
@@ -355,13 +360,16 @@ function UpdateHatchDetails(oHatchDetails, pID, sFailureType, bStatusFailure) {
         {
             CurrentPageData = [];
             alert("הדיווח נשלח בהצלחה");
+            debugger;
+            var sNewCaption = sHatchType + " - " + sHatchStatus;
+            $('#HatchesList a.HatchBTN[href="#Hatch' + oHatchDetails.HatchID + '"] p').text(sNewCaption);
             Goto("HatchesOfProject" + pID);
             if (bStatusFailure) InsertHatchFailureNotification();
         }, // end of success
         error: function (e) {
             alert("failed to send a report :( " + e.responseText);
         } // end of error
-    });                // end of ajax call
+    });                  // end of ajax call
 }
 
 function BuildHatchDetailsPage(oHatch) {

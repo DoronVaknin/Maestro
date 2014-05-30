@@ -57,6 +57,11 @@ div.ui-navbar ul li .ui-icon-camera-white
     margin: 0 auto;
 }
 
+#MapLegend img
+{
+    height: 200px;
+}
+
 #ServiceCallsMap .ui-content
 {
     padding: 0;

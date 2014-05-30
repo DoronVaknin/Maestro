@@ -17,8 +17,9 @@
     <script src="phonegap.js" type="text/javascript"></script>
 </head>
 <body>
+    <!--
     <div data-role="page" id="LoginPage">
-        <!-- Start of first page -->
+        <!-- Start of first page 
         <div data-role="content">
             <div data-role="fieldcontain" class="ui-hide-label">
                 <img id="MaestroLogoIMG" src="images/MaestroLogo.png" /><br />
@@ -35,8 +36,8 @@
             <br />
             <input type="button" id="LoginBTN" value="התחבר" />
         </div>
-        <!-- /content -->
-    </div>
+        <!-- /content
+    </div> -->
     <!-- /page -->
     <div data-role="page" id="MainMenuPage">
         <!-- Start of first page -->
@@ -148,8 +149,15 @@
             <h1>
                 מפה משולבת
             </h1>
-            <a href="#MainMenuPage" data-icon="back" data-iconpos="notext" style="border: none;">
-            </a>
+            <a href="#MainMenuPage" data-icon="home" data-iconpos="notext" style="border: none;">
+            </a><a href="#MapLegend" data-rel="popup" data-icon="info" data-iconpos="notext"
+                style="border: none;"></a>
+            <div id="MapLegend" data-role="popup" class="photopopup">
+                <a href="#ServiceCallsMap" data-role="button" data-icon="delete" data-iconpos="notext"
+                    class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style="border: none;">
+                </a>
+                <img src="images/MapInfo.jpg" alt="" />
+            </div>
         </div>
         <!-- /header -->
         <div data-role="content">

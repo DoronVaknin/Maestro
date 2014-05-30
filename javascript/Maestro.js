@@ -175,7 +175,7 @@ function ResizeNewsBox() {
 
 //Undecided customers gridview
 function ResizePriceOfferTable() {
-    $("#ContentPlaceHolder3_PriceOfferGV").parent().width("67%");
+    $("#PriceOfferContainer").width("70%");
 }
 
 //Suppliers ranks

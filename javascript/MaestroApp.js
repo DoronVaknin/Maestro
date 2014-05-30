@@ -8,10 +8,16 @@ var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, 
 var Picture = {};
 
 $(document).ready(function () {
-    $("#LoginBTN").click(Login);
+    //    $("#LoginBTN").click(Login);
+
+    GetProjects(); //  read all the projects
+    GetHatches();
+    GetOpenedServiceCalls();
+    GetProjectsNamesList();
 
     //some css settings
-    $("#LoginBTN").parent().css({ "width": "36%", "margin": "auto" });
+    //    $("#LoginBTN").parent().css({ "width": "36%", "margin": "auto" });
+
     $("#ProblemDescriptionTA").val(""); //fix extra space issue
 
     //Google map for service calls and projects
@@ -38,7 +44,7 @@ $(document).on("click", "#MapBTN", function () {
     Goto("ServiceCallsMap");
     ResizeMapCanvas();
     setTimeout(InitializeGoogleMap, 500);
-    setTimeout(PopulateGoogleMap,800);
+    setTimeout(PopulateGoogleMap, 800);
 });
 
 function Login() {
@@ -131,11 +137,14 @@ function BuildProjectPage(oProject) {
     var str = "";
     // build a page
     str += "<div data-role = 'page' id = 'Project" + oProject.pID + "'>";
+
     // build the header
+    str += "<div data-role = 'header' data-position='fixed' data-theme='a'>";
+    str += "<h1>" + oProject.Name + "</h1>";
+    str += "<a href='#ProjectsPage' data-icon='back' data-iconpos = 'notext' style = 'border:none;'></a>";
+    str += "</div>"; //close the header
 
-    str += BuildProjectHeader(oProject.Name);
-
-    // add the content div
+    // build the content div
     str += "<div data-role = 'content'>";
     str += "<h2>פרטי הלקוח</h2>";
     str += "<p><b>שם הלקוח: </b>" + oProject.Fname + " " + oProject.Lname + "</p>";
@@ -152,7 +161,7 @@ function BuildProjectPage(oProject) {
     str += "<h2>אנשי קשר</h2>";
     if (!IsEmpty(oProject.ContractorName)) str += "<p><b>קבלן: </b>" + oProject.ContractorName + "  " + oProject.ContractorPhone + "</p>";
     if (!IsEmpty(oProject.ArchitectName)) str += "<p><b>אדריכל: </b>" + oProject.ArchitectName + "  " + oProject.ArchitectPhone + "</p>";
-    if (!IsEmpty(oProject.SupervisorName)) str += "<p><b>מפקח: </b>" + oProject.SupervisorName + "  " + oProject.SupervisorPhone + "</p><br/>";
+    if (!IsEmpty(oProject.SupervisorName)) str += "<p><b>מפקח: </b>" + oProject.SupervisorName + "  " + oProject.SupervisorPhone + "</p><br>";
 
     str += "<a class = 'HatchesBTN' href='#HatchesOfProject" + oProject.pID + "' data-role='button'>צפה בפתחים</a>";
 
@@ -164,27 +173,6 @@ function BuildProjectPage(oProject) {
     newPage.appendTo($.mobile.pageContainer);
     //hatches button design
     $(".HatchesBTN").css({ "width": "55%", "margin": "auto" });
-}
-
-//----------------------------------------------------------------------------
-// build a common header for project page
-//----------------------------------------------------------------------------
-function BuildProjectHeader(sHeaderText) {
-    var str = "";
-    str += "<div data-role = 'header' data-position='fixed' data-theme='a'>";
-    str += "<h1>" + sHeaderText + "</h1>";
-    str += "<a href='#ProjectsPage' data-icon='back' data-iconpos = 'notext' style = 'border:none;'></a>";
-    str += "</div>"; //close the header
-    //    str += "<div data-role='footer' data-position='fixed' data-theme='a'>";
-    //    str += "<div data-role='navbar' >";
-    //    str += "<ul>"
-    //    str += "<li><a data-ajax = 'false' href='#" + "students" + p.groupCode + "' class = 'ui-icon-group'>Students</a></li>";
-    //    str += "<li><a data-ajax = 'false'  href='#" + "Screenshots" + p.groupCode + " 'class = 'ui-icon-screenshot'>Screenshots</a></li>";
-    //    str += "<li><a data-ajax = 'false'  href='#" + "Videos" + p.groupCode + "' class = 'ui-icon-video'>Videos</a></li>";
-    //    str += "</ul>";
-    //    str += "</div>";
-    //    str += "</div>";
-    return str;
 }
 
 //----------------------------------------------------------------------------
@@ -220,14 +208,14 @@ function GetHatches() {
 // build Hatches list items
 //------------------------------------------------------
 function BuildHatchesList(pID) {
-    var str = "";
+    var sHTML = "";
     for (var j in Hatches[pID]) {
-        str += "<li><a class = 'HatchBTN' data-ajax = 'false' href = '#Hatch" + Hatches[pID][j].HatchID + "'>";
-        str += "<h1>פתח מס' " + Hatches[pID][j].HatchID + "</h1>";
-        str += "<p>" + Hatches[pID][j].HatchStatus + "</p>";
-        str += "</a></li>";
+        sHTML += "<li><a class = 'HatchBTN' data-ajax = 'false' href = '#Hatch" + Hatches[pID][j].HatchID + "'>";
+        sHTML += "<h1>פתח מס' " + Hatches[pID][j].HatchID + "</h1>";
+        sHTML += "<p>" + Hatches[pID][j].HatchStatus + "</p>";
+        sHTML += "</a></li>";
     }
-    return str;
+    return sHTML;
 }
 
 //------------------------------------------------------
@@ -242,11 +230,11 @@ function BuildHatchesListPerProject() {
         str += '<a href="#Project' + pID + '" data-icon="back" data-iconpos="notext" style="border: none;"></a>';
         str += '<a href="#HatchesImage' + pID + '" data-rel="popup" data-icon="info" data-iconpos="notext" style="border: none;"></a></div>'; //end of header
         str += '<div data-role="content">';
-        str += '<ul id="HatchesList" data-role="listview" data-theme="c" data-inset="true" data-filter="true" data-filter-placeholder = "חפש פתח...">';
+        str += '<ul id="HatchesListProject' + pID + '" data-role="listview" data-theme="c" data-inset="true" data-filter="true" data-filter-placeholder="חפש פתח...">';
         str += BuildHatchesList(pID);
         str += "</ul>"; // end of ul
 
-        str += '<br/><div id="HatchesImage' + pID + '" data-role="popup" class = "photopopup">';
+        str += '<br><div id="HatchesImage' + pID + '" data-role="popup" class = "photopopup">';
         str += '<a href="#HatchesOfProject' + pID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
         str += '<img src = "' + Projects[pID].HatchesImageURL + '" /></div>';
 
@@ -310,9 +298,9 @@ function BuildHatchDetailsPage(oHatch) {
     str += "<p><b>סטטוס: </b>" + oHatch.HatchStatus + "</p>";
     str += "<p><b>סוג הפתח: </b>" + oHatch.HatchType + "</p>";
 
-    //    str += '<br/><a href = "#myPopup" data-role = "button" data-rel="popup">Popup Image</a>';
+    //    str += '<br><a href = "#myPopup" data-role = "button" data-rel="popup">Popup Image</a>';
 
-    //    str += '<br/><div id="myPopup" data-role="popup" class = "photopopup">';
+    //    str += '<br><div id="myPopup" data-role="popup" class = "photopopup">';
     //    str += '<a href="#Hatch' + iHatchID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
     //    str += '<img src = "' + Projects[iProjID][1].HatchesImageURL + '" /></div>';
     str += BuildHatchDialog(oHatch.HatchID);
@@ -342,7 +330,7 @@ function BuildHatchDialog(hID) {
     str += "<h1>תמונה חדשה</h1>";
     str += '</div>';
     str += '<div data-role="main" class="ui-content">';
-    str += "<p><b>תיאור התמונה: </b>" + BuildPictureDescTextBox(hID) + "</p><br/>";
+    str += "<p><b>תיאור התמונה: </b>" + BuildPictureDescTextBox(hID) + "</p><br>";
     str += '<a data-role="button" data-inline="true" data-theme="a" onclick="TakePicturePrepare(' + hID + ')">צלם תמונה</a>';
     str += '<a id = "Hatch' + hID + 'CancelButton" data-role="button" onclick = "CloseHatchDialog(' + hID + ')" data-inline="true">בטל</a>';
     str += '</div>';
@@ -416,7 +404,7 @@ function BuildServiceCallPage(oServiceCall) {
     str += "<h2>פרטי הקריאה</h2>";
     if (oServiceCall[0].Urgent) str += "<p><b>*קריאה דחופה*</b></p>";
     str += "<p><b>תיאור התקלה: </b>" + oServiceCall[0].Description + "</p>";
-    str += "<p><b>תאריך פתיחה: </b>" + ConvertToDate(oServiceCall[0].DateOpened) + "</p><br/>";
+    str += "<p><b>תאריך פתיחה: </b>" + ConvertToDate(oServiceCall[0].DateOpened) + "</p><br>";
     //    if (!IsEmpty(oServiceCall[0].DateClosed)) str += "<p><b>תאריך סגירה: </b>" + ConvertToDate(oServiceCall[0].DateClosed) + "</p>";
     str += "<a data-role='button' data-rel='popup' class = 'half' href='#ServiceCall" + oServiceCall[0].ScID + "Dialog' data-position-to='window'>סגור קריאת שירות</a>";
     str += BuildServiceCallDialog(oServiceCall[0].ScID);
@@ -659,7 +647,7 @@ function ShowServiceCallPin(oPosition, sID) {
         InfoWindow.open(Map, Marker);
     });
 
-//    google.maps.event.trigger(Map, "resize");
+    //    google.maps.event.trigger(Map, "resize");
 }
 
 function ShowProjectPin(oPosition, pID) {
@@ -735,8 +723,8 @@ function TakePicturePrepare(hID) {
     Picture["PictureDesc"] = $.trim($("#Hatch" + hID + "PicDesc").val());
     $("#Hatch" + hID + "PicDesc").val("");
     $("#Hatch" + hID + "CancelButton").click();
-//    Picture["DateTaken"] = GetCurrentDate();
-//    Picture["ImageURL"] = "http://proj.ruppin.ac.il/igroup9/prod/images/hatches/HatchTest.jpg";
+    //    Picture["DateTaken"] = GetCurrentDate();
+    //    Picture["ImageURL"] = "http://proj.ruppin.ac.il/igroup9/prod/images/hatches/HatchTest.jpg";
     TakePicture();
 }
 

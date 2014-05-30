@@ -5,7 +5,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
     <div id="HomeContainer">
-        <div id="map-canvas">
+        <div id="MapContainer">
+            <h2>
+                מפת פרויקטים וקריאות שירות
+            </h2>
+            <br />
+            <div id="map-canvas">
+            </div>
         </div>
         <div id="NewsBox" class="panel panel-default">
             <div class="panel-heading">

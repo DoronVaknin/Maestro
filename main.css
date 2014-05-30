@@ -238,11 +238,7 @@ html[xmlns] #nav
     width: 50px;
 }
 
-#NewCustomerTBL td, #NewProjectTBL td, #NewSupplierTBL td,
-#CustomerDetailsTBL td, #ProjectDetailsTBL td, #NewSCExistingProjectTBL td,
-#NewServiceCallExternalTBL td, #ServiceCallTBL td, #EditProjectOrderTBL td,
-#EditSupplierOrderTBL td, #EditSupplierTBL td, #EditHatchTBL td,
-#EditUndecidedCustomerTBL td
+#NewCustomerTBL td, #NewProjectTBL td, #NewSupplierTBL td, #CustomerDetailsTBL td, #ProjectDetailsTBL td, #NewSCExistingProjectTBL td, #NewServiceCallExternalTBL td, #ServiceCallTBL td, #EditProjectOrderTBL td, #EditSupplierOrderTBL td, #EditSupplierTBL td, #EditHatchTBL td, #EditUndecidedCustomerTBL td
 {
     border-top: none;
 }
@@ -445,17 +441,29 @@ div.cntr input[type=button], div.cntr button
 }
 
 /*Google Map*/
+#MapContainer
+{
+    height: 90%;
+    width: 65%;
+    float: right;
+    margin: 0 auto;
+}
+
+#MapContainer h2
+{
+    margin-top: 0;    
+}
+
+
 #map-canvas
 {
-    width: 30%;
+    width: 100%;
     height: 100%;
-    margin: 20px auto;
     border: solid 2px;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
     border-radius: 15px;
     box-shadow: 2px 2px 2px;
-    float: right;
 }
 
 #NewsBox
@@ -486,13 +494,20 @@ div.cntr input[type=button], div.cntr button
 }
 
 /* Pie Chart */
-#PieChart
+#PieChartContainer
 {
-    width: 25%;
-    float: right;
-    margin-right: 23%;
-    margin-top: 10px;
+    float: left;
+    position: absolute;
+    left: 0;
+    top: 130px;
+    width: 320px;
 }
+
+h2
+{
+    text-align: center;    
+}
+
 
 /* Suppliers table */
 #ContentPlaceHolder3_WorstSuppliersGV td:nth-child(3), #ContentPlaceHolder3_BestSuppliersGV td:nth-child(3)

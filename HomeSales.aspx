@@ -5,7 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
     <div id="HomeContainer">
-        <div id="NewsBox" class="panel panel-default">
+        <%--<div id="NewsBox" class="panel panel-default">
             <div class="panel-heading">
                 <span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;<b>חדשות</b></div>
             <div class="panel-body">
@@ -75,24 +75,35 @@
             </div>
             <div class="panel-footer">
             </div>
-        </div>
+        </div>--%>
         <asp:SqlDataSource ID="PriceOfferDS" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
             SelectCommand="spGetUndecidedCustomers" SelectCommandType="StoredProcedure">
         </asp:SqlDataSource>
-        <asp:GridView ID="PriceOfferGV" CssClass="DataTables" runat="server" AutoGenerateColumns="False"
-            DataSourceID="PriceOfferDS" AllowPaging="True" PageSize="3" OnSelectedIndexChanged="PriceOfferGV_SelectedIndexChanged">
-            <Columns>
-                <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
-                <asp:BoundField DataField="pName" HeaderText="שם פרויקט" SortExpression="pName" />
-                <asp:BoundField DataField="Mobile" HeaderText="טלפון נייד" SortExpression="Mobile" />
-                <asp:BoundField DataField="Comments" HeaderText="הערות" SortExpression="Comments" />
-                <asp:BoundField DataField="InstallationDate" HeaderText="תאריך חזרה ללקוח" SortExpression="InstallationDate"
-                    DataFormatString="{0:dd/MM/yyyy}" />
-                <asp:BoundField DataField="cID" HeaderText="ת.ז" SortExpression="cID" Visible="false" />
-                <asp:BoundField DataField="pID" HeaderText="מס' פרויקט" SortExpression="pID" Visible="false" />
-            </Columns>
-        </asp:GridView>
-        <div id="PieChart" style="height: 250px;">
+        <div id="PriceOfferContainer">
+            <h2>
+                לקוחות בהצעת מחיר
+            </h2>
+            <br />
+            <asp:GridView ID="PriceOfferGV" CssClass="DataTables" runat="server" AutoGenerateColumns="False"
+                DataSourceID="PriceOfferDS" AllowPaging="True" PageSize="7" OnSelectedIndexChanged="PriceOfferGV_SelectedIndexChanged">
+                <Columns>
+                    <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
+                    <asp:BoundField DataField="pName" HeaderText="שם פרויקט" SortExpression="pName" />
+                    <asp:BoundField DataField="Mobile" HeaderText="טלפון נייד" SortExpression="Mobile" />
+                    <asp:BoundField DataField="Comments" HeaderText="הערות" SortExpression="Comments" />
+                    <asp:BoundField DataField="InstallationDate" HeaderText="תאריך חזרה ללקוח" SortExpression="InstallationDate"
+                        DataFormatString="{0:dd/MM/yyyy}" />
+                    <asp:BoundField DataField="cID" HeaderText="ת.ז" SortExpression="cID" Visible="false" />
+                    <asp:BoundField DataField="pID" HeaderText="מס' פרויקט" SortExpression="pID" Visible="false" />
+                </Columns>
+            </asp:GridView>
+        </div>
+        <div id="PieChartContainer">
+            <h2>
+                הכנסות מפרויקטים
+            </h2>
+            <div id="PieChart" style="height: 250px;">
+            </div>
         </div>
         <div class="modal fade" id="ModalEditUndecidedCustomer" tabindex="-1" role="dialog"
             aria-labelledby="myModalLabel" aria-hidden="true">
