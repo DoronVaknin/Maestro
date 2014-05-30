@@ -25,7 +25,8 @@ $(document).ready(function () {
     ActivateServiceCallExistingProjectModal();
     var sPageName = GetPageName();
     switch (sPageName) {
-        case "ProjectDetails":
+
+        case "ProjectDetails".toLowerCase():
             DisableCustomerDetailsFields();
             DisableProjectDetailsFields();
             FixTextAreaIssue("ProjectDetailsTBL");
@@ -34,38 +35,38 @@ $(document).ready(function () {
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_ProjectInfoAddress");
             break;
 
-        case "ProjectOrders":
+        case "ProjectOrders".toLowerCase():
             ActivatePlusMinus();
             break;
 
-        case "NewProject.aspx?Source=NewCustomer":
+        case "NewProject.aspx?Source=NewCustomer".toLowerCase():
             ActivateModal("ModalCustomerCreated");
             ActivateDragAndDrop();
             break;
 
-        case "NewProject.aspx?Source=ProjectsPerCustomer":
+        case "NewProject.aspx?Source=ProjectsPerCustomer".toLowerCase():
             ActivateDragAndDrop();
             break;
 
-        case "NewCustomer":
+        case "NewCustomer".toLowerCase():
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
             break;
 
-        case "NewCustomer.aspx?Source=CreateProject":
+        case "NewCustomer.aspx?Source=CreateProject".toLowerCase():
             $("#CustomerForServiceCallBTN").addClass("HiddenButtons");
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
             break;
 
-        case "NewCustomer.aspx?Source=CreateServiceCall":
+        case "NewCustomer.aspx?Source=CreateServiceCall".toLowerCase():
             $("#CustomerForProjectBTN").addClass("HiddenButtons");
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
             break;
 
-        case "NewSupplier":
+        case "NewSupplier".toLowerCase():
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_SupplierAddress");
             break;
 
-        case "HomeSales":
+        case "HomeSales".toLowerCase():
             ResizeHomeContainer();
             ResizePriceOfferTable();
             GetProjectsIncome();
@@ -73,7 +74,7 @@ $(document).ready(function () {
             ActivateNewsBox();
             break;
 
-        case "HomeInstallations":
+        case "HomeInstallations".toLowerCase():
             ResizeHomeContainer();
             InitializeGoogleMap();
             GetProjects();
@@ -83,7 +84,7 @@ $(document).ready(function () {
             ActivateNewsBox();
             break;
 
-        case "HomeTechnical":
+        case "HomeTechnical".toLowerCase():
             ResizeHomeContainer();
             GetNotifications(302042267);
             ActivateNewsBox();
@@ -212,37 +213,37 @@ function BuildEarlyProgressBar(dPercent, iIndex) {
 function ActivateTabsMarking() {
     var sPageName = GetPageName();
     switch (sPageName) {
-        case "HomeSales":
-        case "HomeTechnical":
-        case "HomeInstallations":
+        case "HomeSales".toLowerCase():
+        case "HomeTechnical".toLowerCase():
+        case "HomeInstallations".toLowerCase():
             $("#Home").addClass("current");
             break;
 
-        case "NewCustomer":
-        case "Customers":
+        case "NewCustomer".toLowerCase():
+        case "Customers".toLowerCase():
             $("#Customers").addClass("current");
             break;
 
-        case "NewCustomer.aspx?Source=CreateProject":
-        case "NewProject.aspx?Source=NewCustomer":
-        case "Projects":
-        case "ProjectsArchive":
+        case "NewCustomer.aspx?Source=CreateProject".toLowerCase():
+        case "NewProject.aspx?Source=NewCustomer".toLowerCase():
+        case "Projects".toLowerCase():
+        case "ProjectsArchive".toLowerCase():
             $("#Projects").addClass("current");
             break;
 
-        case "ProjectOrders":
-        case "SupplierOrders":
-        case "NewSupplier":
-        case "Suppliers":
-        case "ProjectHatches":
+        case "ProjectOrders".toLowerCase():
+        case "SupplierOrders".toLowerCase():
+        case "NewSupplier".toLowerCase():
+        case "Suppliers".toLowerCase():
+        case "ProjectHatches".toLowerCase():
             $("#Technical").addClass("current");
             break;
 
-        case "NewServiceCall":
-        case "NewCustomer.aspx?Source=CreateServiceCall":
-        case "NewServiceCall.aspx?Source=ExistingProject":
-        case "ServiceCalls":
-        case "ServiceCallsArchive":
+        case "NewServiceCall".toLowerCase():
+        case "NewCustomer.aspx?Source=CreateServiceCall".toLowerCase():
+        case "NewServiceCall.aspx?Source=ExistingProject".toLowerCase():
+        case "ServiceCalls".toLowerCase():
+        case "ServiceCallsArchive".toLowerCase():
             $("#ServiceCalls").addClass("current");
             break;
 
@@ -834,7 +835,7 @@ function GetPageName() {
     var sPageName = sFullPath.substr(iIndex + 1);
     if (!Contains(sPageName, "?")) {
         var iLength = sPageName.length;
-        sPageName = sPageName.substring(0, iLength - 5);
+        sPageName = sPageName.substring(0, iLength - 5).toLowerCase();
     }
     return sPageName;
 }

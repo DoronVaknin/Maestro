@@ -17,9 +17,11 @@
                 Type="Int32" />
         </SelectParameters>
     </asp:SqlDataSource>
-    <asp:GridView ID="ProjectHatchesGV" CssClass="DataTables" runat="server" AllowPaging="True"
+    <asp:GridView ID="ProjectHatchesGV" CssClass="DataTables" runat="server"
         AllowSorting="True" DataSourceID="SqlDataSource1" AutoGenerateColumns="False"
-        DataKeyNames="hID" OnSelectedIndexChanged="ProjectHatchesGV_SelectedIndexChanged" OnDataBound = "OnDataBound">
+        DataKeyNames="hID" 
+        OnSelectedIndexChanged="ProjectHatchesGV_SelectedIndexChanged" 
+        OnDataBound = "OnDataBound">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="true" />
             <asp:CommandField DeleteText="מחק" ShowDeleteButton="true" />

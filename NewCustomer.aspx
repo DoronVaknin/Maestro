@@ -57,7 +57,8 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input id="CustomerAddress" runat="server" type="text" class="form-control Address" placeholder = "">
+                        <input id="CustomerAddress" runat="server" type="text" class="form-control Address"
+                            placeholder="">
                         <span class="input-group-addon">כתובת *</span>
                     </div>
                 </td>
@@ -83,22 +84,22 @@
                 </td>
             </tr>
         </table>
+    </div>
+    <br />
+    <div class="cntr">
+        <button id="CustomerForProjectBTN" class="btn btn-default" type="button" onclick="ValidateNewCustomer(this)">
+            המשך ליצירת פרויקט&nbsp;&nbsp;<span class="glyphicon glyphicon-circle-arrow-left"></span>
+        </button>
+        <button id="CustomerForServiceCallBTN" class="btn btn-default" type="button" onclick="ValidateNewCustomer(this)">
+            המשך ליצירת קריאת שירות&nbsp;&nbsp;<span class="glyphicon glyphicon-circle-arrow-left"></span>
+        </button>
+        <asp:Button ID="CreateCustomerForProject" runat="server" Text="המשך לפרויקט" CssClass="btn btn-default HiddenButtons"
+            OnClick="CreateCustomerForProject_Click" />
+        <asp:Button ID="CreateCustomerForServiceCall" runat="server" Text="המשך לקריאת שירות"
+            CssClass="btn btn-default HiddenButtons" OnClick="CreateCustomerForServiceCall_Click" />
         <br />
-        <div class="cntr">
-            <button id="CustomerForProjectBTN" class="btn btn-default" type="button" onclick="ValidateNewCustomer(this)">
-                המשך ליצירת פרויקט&nbsp;&nbsp;<span class="glyphicon glyphicon-circle-arrow-left"></span>
-            </button>
-            <button id="CustomerForServiceCallBTN" class="btn btn-default" type="button" onclick="ValidateNewCustomer(this)">
-                המשך ליצירת קריאת שירות&nbsp;&nbsp;<span class="glyphicon glyphicon-circle-arrow-left"></span>
-            </button>
-            <asp:Button ID="CreateCustomerForProject" runat="server" Text="המשך לפרויקט" CssClass="btn btn-default HiddenButtons"
-                OnClick="CreateCustomerForProject_Click" />
-            <asp:Button ID="CreateCustomerForServiceCall" runat="server" Text="המשך לקריאת שירות"
-                CssClass="btn btn-default HiddenButtons" OnClick="CreateCustomerForServiceCall_Click" />
-            <br />
-            <br />
-            <span class="ErrorLabel"></span>
-        </div>
+        <br />
+        <span class="ErrorLabel"></span>
     </div>
     <div class="modal fade" id="ModalCustomerError" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">

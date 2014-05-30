@@ -12,9 +12,9 @@
     <br />
     <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
         SelectCommand="spGetAllSuppliers" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-    <asp:GridView ID="SuppliersGV" CssClass="DataTables" runat="server" AllowPaging="True"
-        AllowSorting="True" DataSourceID="SqlDataSource2" AutoGenerateColumns="False"
-        DataKeyNames="SupplierID" OnSelectedIndexChanged="SuppliersGV_SelectedIndexChanged" OnDataBound = "OnDataBound">
+    <asp:GridView ID="SuppliersGV" CssClass="DataTables" runat="server" AllowSorting="True"
+        DataSourceID="SqlDataSource2" AutoGenerateColumns="False" DataKeyNames="SupplierID"
+        OnSelectedIndexChanged="SuppliersGV_SelectedIndexChanged" OnDataBound="OnDataBound">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="true" />
             <asp:CommandField DeleteText="מחק" ShowDeleteButton="true" />

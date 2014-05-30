@@ -11,8 +11,8 @@
     <br />
     <asp:SqlDataSource ID="ProjectsArchiveDS" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
         SelectCommand="spGetProjectsArchive" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-    <asp:GridView ID="ProjectsArchiveGV" CssClass="DataTables" runat="server" AllowPaging="True"
-        AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="pID" DataSourceID="ProjectsArchiveDS"
+    <asp:GridView ID="ProjectsArchiveGV" CssClass="DataTables" runat="server" AllowSorting="True"
+        AutoGenerateColumns="False" DataKeyNames="pID" DataSourceID="ProjectsArchiveDS"
         OnSelectedIndexChanged="ProjectsArchiveGV_SelectedIndexChanged" OnDataBound="OnDataBound">
         <Columns>
             <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
@@ -24,7 +24,8 @@
             <asp:BoundField DataField="psName" HeaderText="סטטוס" SortExpression="psName" />
             <asp:BoundField DataField="Comments" HeaderText="הערות" SortExpression="Comments" />
             <asp:BoundField DataField="Cost" HeaderText="עלות" SortExpression="Cost" />
-            <asp:BoundField DataField="NumOfHatches" HeaderText="מס' פתחים" ReadOnly="True" SortExpression="NumOfHatches" Visible = "false" />
+            <asp:BoundField DataField="NumOfHatches" HeaderText="מס' פתחים" ReadOnly="True" SortExpression="NumOfHatches"
+                Visible="false" />
         </Columns>
     </asp:GridView>
 </asp:Content>

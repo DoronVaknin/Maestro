@@ -12,16 +12,19 @@
     <asp:SqlDataSource ID="ServiceCallsArchiveDS" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
         SelectCommand="spGetServiceCallsArchive" SelectCommandType="StoredProcedure">
     </asp:SqlDataSource>
-    <asp:GridView ID="ServiceCallsArchiveGV" CssClass="DataTables" runat="server" AllowPaging="True"
-        AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="scID" DataSourceID="ServiceCallsArchiveDS" OnDataBound = "OnDataBound">
+    <asp:GridView ID="ServiceCallsArchiveGV" CssClass="DataTables" runat="server" AllowSorting="True"
+        AutoGenerateColumns="False" DataKeyNames="scID" DataSourceID="ServiceCallsArchiveDS"
+        OnDataBound="OnDataBound">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
             <asp:BoundField DataField="scID" HeaderText="מס' קריאה" InsertVisible="False" ReadOnly="True"
                 SortExpression="scID" />
             <asp:BoundField DataField="fName" HeaderText="שם פרטי" SortExpression="fName" />
             <asp:BoundField DataField="lName" HeaderText="שם משפחה" SortExpression="lName" />
-            <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened" DataFormatString="{0:dd/MM/yyyy}" />
-            <asp:BoundField DataField="DateClosed" HeaderText="תאריך סגירה" SortExpression="DateClosed" DataFormatString="{0:dd/MM/yyyy}" />
+            <asp:BoundField DataField="DateOpened" HeaderText="תאריך פתיחה" SortExpression="DateOpened"
+                DataFormatString="{0:dd/MM/yyyy}" />
+            <asp:BoundField DataField="DateClosed" HeaderText="תאריך סגירה" SortExpression="DateClosed"
+                DataFormatString="{0:dd/MM/yyyy}" />
             <asp:BoundField DataField="ProblemDesc" HeaderText="התקלה" SortExpression="ProblemDesc" />
             <asp:CheckBoxField DataField="Urgent" HeaderText="דחוף" SortExpression="Urgent" />
         </Columns>

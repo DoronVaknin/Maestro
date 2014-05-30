@@ -17,8 +17,8 @@
             <asp:SessionParameter Name="ProjectID" SessionField="ProjectIDForProjectOrders" Type="Int32" />
         </SelectParameters>
     </asp:SqlDataSource>
-    <asp:GridView runat="server" CssClass="DataTables" ID="ProjectOrdersGV" AllowPaging="True"
-        AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="oID" DataSourceID="SqlDataSource1"
+    <asp:GridView runat="server" CssClass="DataTables" ID="ProjectOrdersGV" AllowSorting="True"
+        AutoGenerateColumns="False" DataKeyNames="oID" DataSourceID="SqlDataSource1"
         OnSelectedIndexChanged="ProjectOrdersGV_SelectedIndexChanged" OnDataBound="OnDataBound">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="True" />

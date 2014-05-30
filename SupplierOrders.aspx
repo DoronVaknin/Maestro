@@ -17,9 +17,9 @@
                 Type="Int32" />
         </SelectParameters>
     </asp:SqlDataSource>
-    <asp:GridView ID="SupplierOrdersGV" runat="server" AllowPaging="True" AllowSorting="True"
-        CssClass="DataTables" AutoGenerateColumns="False" DataKeyNames="oID" DataSourceID="SqlDataSource2"
-        OnSelectedIndexChanged="SupplierOrdersGV_SelectedIndexChanged" OnDataBound = "OnDataBound">
+    <asp:GridView ID="SupplierOrdersGV" runat="server" AllowSorting="True" CssClass="DataTables"
+        AutoGenerateColumns="False" DataKeyNames="oID" DataSourceID="SqlDataSource2"
+        OnSelectedIndexChanged="SupplierOrdersGV_SelectedIndexChanged" OnDataBound="OnDataBound">
         <Columns>
             <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
             <asp:BoundField DataField="oID" HeaderText="מס' הזמנה" InsertVisible="False" ReadOnly="True"
