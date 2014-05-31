@@ -11,6 +11,13 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        //bool isAuthenticted = HttpContext.Current.User.Identity.IsAuthenticated;
+        //bool isWorker = HttpContext.Current.User.IsInRole("Worker");
+        //if (!isAuthenticted) // Used to block attempts to get in to the system without authentication
+        //    Response.Redirect("Default.aspx?Reason=UserNotAuthenticated");
+        //else if (isWorker) // Used to block worker attempts from login to the system
+        //    Response.Redirect("Default.aspx?Reason=UserNotAllowed");
+
         UserNameHolder.Value = Page.User.Identity.Name; //Used to wire Home & Logo to the right homepage
         switch (Page.User.Identity.Name)
         {

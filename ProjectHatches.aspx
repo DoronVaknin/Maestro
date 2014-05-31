@@ -21,7 +21,7 @@
         AllowSorting="True" DataSourceID="SqlDataSource1" AutoGenerateColumns="False"
         DataKeyNames="hID" 
         OnSelectedIndexChanged="ProjectHatchesGV_SelectedIndexChanged" 
-        OnDataBound = "OnDataBound">
+        OnDataBound = "SetupQuickSearch">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="true" />
             <asp:CommandField DeleteText="מחק" ShowDeleteButton="true" />

@@ -13,7 +13,7 @@
         SelectCommand="spGetProjectsArchive" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
     <asp:GridView ID="ProjectsArchiveGV" CssClass="DataTables" runat="server" AllowSorting="True"
         AutoGenerateColumns="False" DataKeyNames="pID" DataSourceID="ProjectsArchiveDS"
-        OnSelectedIndexChanged="ProjectsArchiveGV_SelectedIndexChanged" OnDataBound="OnDataBound">
+        OnSelectedIndexChanged="ProjectsArchiveGV_SelectedIndexChanged" OnDataBound="SetupQuickSearch">
         <Columns>
             <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
             <asp:BoundField DataField="pID" HeaderText="מס' פרויקט" InsertVisible="False" ReadOnly="True"

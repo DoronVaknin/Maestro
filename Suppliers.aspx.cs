@@ -11,7 +11,7 @@ public partial class Default2 : System.Web.UI.Page
     {
         DisableSupplierDetailsFields();
         if (Page.IsPostBack)
-            OnDataBound(null, null);
+            SetupQuickSearch(null, null);
     }
 
     public void DisableSupplierDetailsFields()
@@ -26,22 +26,22 @@ public partial class Default2 : System.Web.UI.Page
 
     protected void SaveSupplierDetailsBTN_Click(object sender, EventArgs e)
     {
-        int SupplierID = Convert.ToInt32(SuppliersGV.SelectedRow.Cells[2].Text);
+        int SupplierID = Convert.ToInt32(SuppliersGV.SelectedRow.Cells[1].Text);
         Supplier s = new Supplier(SupplierID, SupplierName.Value, SupplierAddress.Value, SupplierPhone.Value, SupplierCellPhone.Value, SupplierFax.Value, SupplierEmail.Value);
         int RowAffected = s.UpdateSupplierDetails();
     }
     protected void SuppliersGV_SelectedIndexChanged(object sender, EventArgs e)
     {
         Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "ActivateModal('EditSupplierModal');", true);
-        SupplierName.Value = SuppliersGV.SelectedRow.Cells[3].Text;
-        SupplierAddress.Value = SuppliersGV.SelectedRow.Cells[4].Text;
-        SupplierPhone.Value = SuppliersGV.SelectedRow.Cells[5].Text;
-        SupplierCellPhone.Value = SuppliersGV.SelectedRow.Cells[6].Text;
-        SupplierFax.Value = SuppliersGV.SelectedRow.Cells[7].Text;
-        SupplierEmail.Value = SuppliersGV.SelectedRow.Cells[8].Text;
+        SupplierName.Value = SuppliersGV.SelectedRow.Cells[2].Text;
+        SupplierAddress.Value = SuppliersGV.SelectedRow.Cells[3].Text;
+        SupplierPhone.Value = SuppliersGV.SelectedRow.Cells[4].Text;
+        SupplierCellPhone.Value = SuppliersGV.SelectedRow.Cells[5].Text;
+        SupplierFax.Value = SuppliersGV.SelectedRow.Cells[6].Text;
+        SupplierEmail.Value = SuppliersGV.SelectedRow.Cells[7].Text;
     }
 
-    protected void OnDataBound(object sender, EventArgs e)
+    protected void SetupQuickSearch(object sender, EventArgs e)
     {
         if (SuppliersGV.Rows.Count > 0)
         {

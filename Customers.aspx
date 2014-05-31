@@ -13,7 +13,7 @@
         SelectCommand="SELECT * FROM [Customer]"></asp:SqlDataSource>
     <asp:GridView ID="CustomersGV" runat="server" AllowSorting="True" AutoGenerateColumns="False"
         CssClass="DataTables" DataKeyNames="cID" DataSourceID="SqlDataSource1" OnSelectedIndexChanged="Customers_SelectedIndexChanged"
-        OnDataBound="OnDataBound">
+        OnDataBound="SetupQuickSearch">
         <Columns>
             <asp:CommandField SelectText="<b>בחר</b>" ShowSelectButton="True" />
             <asp:BoundField DataField="cID" HeaderText="תעודת זהות" ReadOnly="True" SortExpression="cID" />

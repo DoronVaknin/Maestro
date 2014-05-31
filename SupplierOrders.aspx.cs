@@ -19,7 +19,7 @@ public partial class Default2 : System.Web.UI.Page
         }
         DisableOrderDetailsFields();
         if (Page.IsPostBack)
-            OnDataBound(null, null);
+            SetupQuickSearch(null, null);
         foreach (GridViewRow GVR in SupplierOrdersGV.Rows)
         {
             if (GVR.Cells[7].Text == "מתעכב")
@@ -73,7 +73,7 @@ public partial class Default2 : System.Web.UI.Page
         SupplierOrderStatus.Attributes.Add("disabled", "disabled");
     }
 
-    protected void OnDataBound(object sender, EventArgs e)
+    protected void SetupQuickSearch(object sender, EventArgs e)
     {
         if (SupplierOrdersGV.Rows.Count > 0)
         {

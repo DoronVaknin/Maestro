@@ -14,10 +14,9 @@
         SelectCommand="spGetAllSuppliers" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
     <asp:GridView ID="SuppliersGV" CssClass="DataTables" runat="server" AllowSorting="True"
         DataSourceID="SqlDataSource2" AutoGenerateColumns="False" DataKeyNames="SupplierID"
-        OnSelectedIndexChanged="SuppliersGV_SelectedIndexChanged" OnDataBound="OnDataBound">
+        OnSelectedIndexChanged="SuppliersGV_SelectedIndexChanged" OnDataBound="SetupQuickSearch">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="true" />
-            <asp:CommandField DeleteText="מחק" ShowDeleteButton="true" />
             <asp:BoundField DataField="SupplierID" HeaderText="מס' ספק" InsertVisible="False"
                 ReadOnly="True" SortExpression="SupplierID" />
             <asp:BoundField DataField="sName" HeaderText="שם הספק" SortExpression="sName" />

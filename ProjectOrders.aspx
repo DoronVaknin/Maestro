@@ -19,7 +19,7 @@
     </asp:SqlDataSource>
     <asp:GridView runat="server" CssClass="DataTables" ID="ProjectOrdersGV" AllowSorting="True"
         AutoGenerateColumns="False" DataKeyNames="oID" DataSourceID="SqlDataSource1"
-        OnSelectedIndexChanged="ProjectOrdersGV_SelectedIndexChanged" OnDataBound="OnDataBound">
+        OnSelectedIndexChanged="ProjectOrdersGV_SelectedIndexChanged" OnDataBound="SetupQuickSearch">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
             <asp:CommandField DeleteText="מחק" ShowDeleteButton="true" />

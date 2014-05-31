@@ -39,6 +39,10 @@ $(document).ready(function () {
             ActivatePlusMinus();
             break;
 
+        case "ProjectHatches".toLowerCase():
+            ToggleFailureTypeDDL();
+            break;
+
         case "NewProject.aspx?Source=NewCustomer".toLowerCase():
             ActivateModal("ModalCustomerCreated");
             ActivateDragAndDrop();
@@ -64,6 +68,10 @@ $(document).ready(function () {
 
         case "NewSupplier".toLowerCase():
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_SupplierAddress");
+            break;
+
+        case "Suppliers".toLowerCase():
+            FixInputIssue("EditSupplierTBL");
             break;
 
         case "HomeSales".toLowerCase():
@@ -397,6 +405,24 @@ function FixTextAreaIssue(sTableID) {
     var sValue = $("#" + sTableID + " textarea").val();
     if (sValue == "&nbsp;")
         $("#" + sTableID + " textarea").val("");
+}
+
+function FixInputIssue(sTableID) {
+    var TextBoxLength = $("#" + sTableID + " input").length;
+    for (var i = 0; i < TextBoxLength; i++) {
+        var TextBox = $("#" + sTableID + " input")[i];
+        var sValue = $(TextBox).val();
+        if (sValue == "&nbsp;")
+            $(TextBox).val("");
+    }
+}
+
+$(document).on("change","#ContentPlaceHolder3_HatchStatus", ToggleFailureTypeDDL);
+
+function ToggleFailureTypeDDL() {
+    var sStatusID = $("#ContentPlaceHolder3_HatchStatus").val();
+    var bShowFailureType = sStatusID == "2";
+    $("#ContentPlaceHolder3_HatchFailureType").parent().toggle(bShowFailureType);
 }
 
 function ModifyInstallationDateField() {

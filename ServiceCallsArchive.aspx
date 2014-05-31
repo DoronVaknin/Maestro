@@ -14,7 +14,7 @@
     </asp:SqlDataSource>
     <asp:GridView ID="ServiceCallsArchiveGV" CssClass="DataTables" runat="server" AllowSorting="True"
         AutoGenerateColumns="False" DataKeyNames="scID" DataSourceID="ServiceCallsArchiveDS"
-        OnDataBound="OnDataBound">
+        OnDataBound="SetupQuickSearch">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="True" />
             <asp:BoundField DataField="scID" HeaderText="מס' קריאה" InsertVisible="False" ReadOnly="True"

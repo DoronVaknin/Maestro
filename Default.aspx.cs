@@ -10,7 +10,10 @@ public partial class Login : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (Request.Url.Query == "?Reason=UserNotAuthenticated")
+            ErrorLBL.InnerText = "יש להתחבר לפני כניסה למערכת";
+        else if (Request.Url.Query == "?Reason=UserNotAllowed")
+            ErrorLBL.InnerText = "אינך מורשה להיכנס למערכת";
     }
 
     protected void LoginBTN_Click(object sender, EventArgs e)

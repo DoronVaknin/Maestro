@@ -12,7 +12,7 @@ public partial class Default2 : System.Web.UI.Page
 
     }
 
-    protected void OnDataBound(object sender, EventArgs e)
+    protected void SetupQuickSearch(object sender, EventArgs e)
     {
         if (ServiceCallsArchiveGV.Rows.Count > 0)
         {

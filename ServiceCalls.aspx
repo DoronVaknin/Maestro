@@ -14,7 +14,7 @@
     </asp:SqlDataSource>
     <asp:GridView runat="server" ID="ServiceCallsGV" AutoGenerateColumns="False" DataKeyNames="scID"
         DataSourceID="ServiceCallsDataSource" CssClass="DataTables" AllowSorting="True"
-        OnSelectedIndexChanged="ServiceCallsGridView_SelectedIndexChanged" OnDataBound="OnDataBound">
+        OnSelectedIndexChanged="ServiceCallsGridView_SelectedIndexChanged" OnDataBound="SetupQuickSearch">
         <Columns>
             <asp:CommandField ShowSelectButton="true" SelectText="בחר" />
             <asp:BoundField DataField="scID" HeaderText="מס' קריאה" InsertVisible="False" ReadOnly="True"

@@ -57,12 +57,12 @@ public partial class Default : System.Web.UI.Page
         ServiceCallID.Attributes.Add("disabled", "disabled");
     }
 
-    protected void ServiceCallBTN_Click(object sender, EventArgs e)
-    {
-        GridViewRow row = ServiceCallsGV.SelectedRow;
-        ServiceCall sc = new ServiceCall();
-        sc.CloseServiceCall(Convert.ToInt32(row.Cells[1].Text));
-    }
+    //protected void ServiceCallBTN_Click(object sender, EventArgs e)
+    //{
+    //    GridViewRow row = ServiceCallsGV.SelectedRow;
+    //    ServiceCall sc = new ServiceCall();
+    //    int RowAffected = sc.CloseServiceCall(Convert.ToInt32(row.Cells[1].Text));
+    //}
 
     protected void SaveServiceCallDetailsBTN_Click(object sender, EventArgs e)
     {
@@ -81,10 +81,12 @@ public partial class Default : System.Web.UI.Page
     {
         int scID = Convert.ToInt32(ServiceCallsGV.SelectedRow.Cells[1].Text);
         ServiceCall sc = new ServiceCall();
-        sc.CloseServiceCall(scID);
+        int RowAffected = sc.CloseServiceCall(scID);
+        if (RowAffected > 0)
+            ServiceCallsGV.DataBind();
     }
 
-    protected void OnDataBound(object sender, EventArgs e)
+    protected void SetupQuickSearch(object sender, EventArgs e)
     {
         if (ServiceCallsGV.Rows.Count > 0)
         {

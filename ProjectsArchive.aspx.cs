@@ -20,7 +20,7 @@ public partial class Default2 : System.Web.UI.Page
         Response.Redirect("ProjectDetails.aspx");
     }
 
-    protected void OnDataBound(object sender, EventArgs e)
+    protected void SetupQuickSearch(object sender, EventArgs e)
     {
         if (ProjectsArchiveGV.Rows.Count > 0)
         {

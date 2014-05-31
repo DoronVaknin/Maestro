@@ -15,8 +15,9 @@ public partial class Default : System.Web.UI.Page
             PageHeader.InnerHtml = "פתחים עבור הפרויקט " + sProjectName;
         }
         DisableAllFields();
+        Page.ClientScript.RegisterStartupScript(this.GetType(), "ToggleFailureTypeDDL", "ToggleFailureTypeDDL();", true);
         if (Page.IsPostBack)
-            OnDataBound(null, null);
+            SetupQuickSearch(null, null);
     }
 
     public void DisableAllFields()
@@ -44,18 +45,18 @@ public partial class Default : System.Web.UI.Page
             int eID = h.GetUsernameID(Username);
             int htID = Convert.ToInt32(HatchType.SelectedValue);
             int ftID = 0;
-            if (HatchFailureType.Visible)
+            if (hsID == 2)
                 ftID = Convert.ToInt32(HatchFailureType.SelectedValue);
             h = new Hatch(hID, hsID, ftID, eID, StatusLastModified, Comments, htID);
             int RowAffected = h.UpdateHatchDetails();
 
-            //if (RowAffected > 0 && hsID == 2) //Notification to Technical Manager
-            //{
-            //    string ProjectName = Session["ProjectNameForProjectHatches"].ToString();
-            //    string Message = String.Format("דווחה תקלה עבור פתח מס' {0} בפרויקט {1} ", hID, ProjectName);
-            //    Notification n = new Notification(Message, DateTime.Now.Date, 302042267);
-            //    RowAffected = n.InsertNewNotification();
-            //}
+            if (RowAffected > 0 && hsID == 2) //Notification to Technical Manager
+            {
+                string ProjectName = Session["ProjectNameForProjectHatches"].ToString();
+                string Message = String.Format("דווחה תקלה עבור פתח מס' {0} בפרויקט {1} ", hID, ProjectName);
+                Notification n = new Notification(Message, DateTime.Now.Date, 302042267);
+                RowAffected = n.InsertNewNotification();
+            }
         }
     }
 
@@ -73,12 +74,13 @@ public partial class Default : System.Web.UI.Page
         HatchStatus.SelectedValue = li2.Value;
 
         string FailureType = ProjectHatchesGV.SelectedRow.Cells[7].Text;
-        if (Status != "תקלה")
-            HatchFailureType.Visible = false;
+        Page.ClientScript.RegisterStartupScript(this.GetType(), "ToggleFailureTypeDDL", "ToggleFailureTypeDDL();", true);
+        if (FailureType == "&nbsp;")
+            HatchFailureType.SelectedValue = "1";
+        else if (FailureType.Contains("&quot;"))
+            FailureType = FailureType.Replace("&quot;", "\"");
         else
         {
-            if (FailureType.Contains("&quot;"))
-                FailureType = FailureType.Replace("&quot;", "\"");
             ListItem li3 = HatchFailureType.Items.FindByText(FailureType);
             HatchFailureType.SelectedValue = li3.Value;
         }
@@ -104,7 +106,7 @@ public partial class Default : System.Web.UI.Page
     //    return EmployeeName;
     //}
 
-    protected void OnDataBound(object sender, EventArgs e)
+    protected void SetupQuickSearch(object sender, EventArgs e)
     {
         if (ProjectHatchesGV.Rows.Count > 0)
         {

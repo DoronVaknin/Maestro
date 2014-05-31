@@ -23,7 +23,7 @@ public partial class Default : System.Web.UI.Page
         Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "ResetCreateOrderForm();", true);
         DisableOrderDetailsFields();
         if (Page.IsPostBack)
-            OnDataBound(null, null);
+            SetupQuickSearch(null, null);
     }
 
     protected void LoadSuppliers()
@@ -94,7 +94,7 @@ public partial class Default : System.Web.UI.Page
         ProjectOrderStatus.Attributes.Add("disabled", "disabled");
     }
 
-    protected void OnDataBound(object sender, EventArgs e)
+    protected void SetupQuickSearch(object sender, EventArgs e)
     {
         if (ProjectOrdersGV.Rows.Count > 0)
         {

@@ -12,7 +12,7 @@
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
         SelectCommand="spShowAllProjects" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
     <asp:GridView ID="ProjectsGV" runat="server" AllowSorting="True" CssClass="DataTables"
-        DataSourceID="SqlDataSource1" AutoGenerateColumns="False" OnDataBound="OnDataBound"
+        DataSourceID="SqlDataSource1" AutoGenerateColumns="False" OnDataBound="SetupQuickSearch"
         OnSelectedIndexChanged="ProjectsTBL_SelectedIndexChanged">
         <Columns>
             <asp:CommandField ShowSelectButton="True" SelectText="בחר" />
