@@ -8,7 +8,7 @@ using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Data;
 using System.Web.Security;
-
+using System.Net.Mail;
 
 /// <summary>
 /// Summary description for MaestroWS
@@ -480,6 +480,8 @@ public class MaestroWS : System.Web.Services.WebService
             n = new Notification();
             n.Message = dt.Rows[i].ItemArray[0].ToString();
             n.MessageDate = Convert.ToDateTime(dt.Rows[i].ItemArray[1]).Date;
+            n.nType = dt.Rows[i].ItemArray[2].ToString();
+            n.Email = dt.Rows[i].ItemArray[3].ToString();
 
             myAL[i].Add(n);
         }
@@ -506,4 +508,27 @@ public class MaestroWS : System.Web.Services.WebService
         return jsonString;
     }
 
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void SendEmail(string TargetEmailAddress, string Subject, string sHTMLBody)
+    {
+        try
+        {
+            MailMessage mailMessage = new MailMessage();
+            mailMessage.From = new MailAddress("doron9787@gmail.com","מאסטרו אלומיניום");
+            mailMessage.To.Add(TargetEmailAddress);
+            mailMessage.Subject = Subject;
+            mailMessage.IsBodyHtml = true;
+            mailMessage.Body = sHTMLBody;
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.Credentials = new System.Net.NetworkCredential("doron9787@gmail.com", "971987dvpma");
+            smtpClient.EnableSsl = true;
+            smtpClient.Send(mailMessage);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            Console.ReadLine();
+        }
+    }
 }

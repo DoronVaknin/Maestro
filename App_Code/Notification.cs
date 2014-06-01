@@ -29,13 +29,14 @@ public class Notification
        eID2 = _eID2;
 	}
 
-    public Notification(string _Message, DateTime _MessageDate, int _eID1, int _eID2, bool _IsDetailsClosure)
+    public Notification(string _Message, DateTime _MessageDate, int _eID1, int _eID2, string _Type, string _Email)
     {
         Message = _Message;
         MessageDate = _MessageDate;
         eID1 = _eID1;
         eID2 = _eID2;
-        IsDetailsClosure = _IsDetailsClosure;
+        nType = _Type;
+        email = _Email;
     }
 
     int nid;
@@ -73,11 +74,18 @@ public class Notification
         set { eid2 = value; }
     }
 
-    bool isDetailsClosure;
-    public bool IsDetailsClosure
+    string ntype;
+    public string nType
     {
-        get { return isDetailsClosure; }
-        set { isDetailsClosure = value; }
+        get { return ntype; }
+        set { ntype = value; }
+    }
+
+    string email;
+    public string Email
+    {
+        get { return email; }
+        set { email = value; }
     }
 
     public int InsertNewNotification()

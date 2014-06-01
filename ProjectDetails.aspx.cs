@@ -116,6 +116,10 @@ public partial class Default : System.Web.UI.Page
                     InsertNewProjectNotification(ProjectInfoName.Text);
                     break;
 
+                case "3": // משקוף עיוור
+                    InsertBlindFrameNotification(ProjectInfoFirstName.Text, ProjectInfoLastName.Text, ProjectInfoEmail.Text);
+                    break;
+
                 case "4": //סגירת פרטים
                     DateTime NotificationDate = DateTime.Now.AddDays(46);
                     InsertDetailsClosureNotification(ProjectInfoName.Text, NotificationDate);
@@ -196,7 +200,7 @@ public partial class Default : System.Web.UI.Page
         }
         else
         {
-            string Message = String.Format("הפתחים הבאים טרם מוכנים להתקנה בבית הלקוח עבור הפרויקט {0}:{1}", ProjectInfoName.Text, "<br>");
+            string sMessage = String.Format("הפתחים הבאים טרם מוכנים להתקנה בבית הלקוח עבור הפרויקט {0}:{1}", ProjectInfoName.Text, "<br>");
             //need to build a loop through all hatches
 
             for (int i = 0; i < dt.Rows.Count; i++)
@@ -211,21 +215,27 @@ public partial class Default : System.Web.UI.Page
                     if (HatchStatus == "תקלה")
                         FailureType = dt.Rows[i].ItemArray[5].ToString();
                     if (FailureType != "")
-                        Message += String.Format("{0} בסטטוס {1}, {2}, {3}{4}", hID, HatchStatus, FailureType, Comments, "<br>");
+                        sMessage += String.Format("{0} בסטטוס {1}, {2}, {3}{4}", hID, HatchStatus, FailureType, Comments, "<br>");
                     else
-                        Message += String.Format("{0} בסטטוס {1}, {2}, {3}", hID, HatchStatus, Comments, "<br>");
+                        sMessage += String.Format("{0} בסטטוס {1}, {2}, {3}", hID, HatchStatus, Comments, "<br>");
                 }
             }
-            n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
+            n = new Notification(sMessage, DateTime.Now.Date, 302042267, 38124123);
         }
         n.InsertNewNotification();
     }
 
     public void InsertDetailsClosureNotification(string ProjectName, DateTime NotificationDate)
     {
-        //string Message = String.Format("בעוד שבועיים יחלפו 60 יום ממועד הפגישה לסגירת פרטים והפתחים הנל לא מוכנים להתקנה בבית הלקוח עבור פרויקט {0}:{1}", ProjectName, "<br>", hID, HatchStatus,FailureType, Comments);
+        //string sMessage = String.Format("בעוד שבועיים יחלפו 60 יום ממועד הפגישה לסגירת פרטים והפתחים הנל לא מוכנים להתקנה בבית הלקוח עבור פרויקט {0}:{1}", ProjectName, "<br>", hID, HatchStatus, FailureType, Comments);
+        //Notification n = new Notification(sMessage, DateTime.Now.Date, 302042267, 38124123, "סגירת פרטים");
+    }
 
-        //Notification n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
+    public void InsertBlindFrameNotification(string FirstName, string LastName, string CustomerEmailAddress)
+    {
+        string sMessage = String.Format("{0} {1} שלום,<br>נא הבא לידיעתך כי עלינו לתאם פגישה לטובת סגירת פרטי הפרויקט.<br>אנא צור קשר טלפוני במס' 04-6221774 לתיאום הפגישה.<br>בתודה,<br>מאסטרו אלומיניום.", FirstName, LastName);
+        Notification n = new Notification(sMessage, DateTime.Now.Date.AddDays(45), 302042267, 38124123, "משקוף עיוור", CustomerEmailAddress);
+        n.InsertNewNotification();
     }
 
 }

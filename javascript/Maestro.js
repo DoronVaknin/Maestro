@@ -417,7 +417,7 @@ function FixInputIssue(sTableID) {
     }
 }
 
-$(document).on("change","#ContentPlaceHolder3_HatchStatus", ToggleFailureTypeDDL);
+$(document).on("change", "#ContentPlaceHolder3_HatchStatus", ToggleFailureTypeDDL);
 
 function ToggleFailureTypeDDL() {
     var sStatusID = $("#ContentPlaceHolder3_HatchStatus").val();
@@ -921,6 +921,25 @@ function ConvertToDate(sDate) {
     return sFixedDate;
 }
 
+function myTrimLeft(S, c) {
+    var s = S;
+    while (s.charAt(0) == c) s = s.substring(1);
+    return s;
+}
+
+function myTrimRight(S, c) {
+    var s = S;
+    while (s.charAt(s.length - 1) == c) s = s.substring(0, s.length - 1);
+    return s;
+}
+
+function myTrim(S, c) {
+    var s = S;
+    s = myTrimLeft(s, c);
+    s = myTrimRight(s, c);
+    return s;
+}
+
 //Cities AutoCompletion
 //$.ajax({
 //    url: "xmlFiles/IsraelCities.xml",
@@ -1290,28 +1309,65 @@ function GetNotifications(iEmployeeID) {
             Notifications = $.parseJSON(data.d); // parse the data as json
             Notifications = MergeInsideArrays(Notifications);
             BuildNewsBox();
+            HandleSpecialNotifications();
         }, // end of success
         error: function (e) { // this function will be called upon failure
             alert("failed to get project details: " + e.responseText);
         } // end of error
-    });                // end of ajax call
+    });                 // end of ajax call
 }
 
 function BuildNewsBox() {
     var sHTML = "";
     for (var i in Notifications) {
-        sHTML += '<li class="news-item">';
-        sHTML += '<table cellpadding="4">';
-        sHTML += '<tr>';
-        sHTML += '<td>';
-        //        sHTML += '<img src="images/1.png" width="60" class="img-circle" />';
-        sHTML += '</td>';
-        sHTML += ConvertToDate(Notifications[i].MessageDate) + ": " + Notifications[i].Message;
-        sHTML += '<td>';
-        sHTML += '</td>';
-        sHTML += '</tr>';
-        sHTML += '</table>';
-        sHTML += '</li>';
+        if (IsEmpty(Notifications[i].nType)) { // regular notification
+            sHTML += '<li class="news-item">';
+            sHTML += '<table cellpadding="4">';
+            sHTML += '<tr>';
+            sHTML += '<td>';
+            //        sHTML += '<img src="images/1.png" width="60" class="img-circle" />';
+            sHTML += '</td>';
+            sHTML += ConvertToDate(Notifications[i].MessageDate) + ": " + Notifications[i].Message;
+            sHTML += '<td>';
+            sHTML += '</td>';
+            sHTML += '</tr>';
+            sHTML += '</table>';
+            sHTML += '</li>';
+        }
     }
     $("#NewsBox ul.News").html(sHTML);
+}
+
+function HandleSpecialNotifications() {
+    for (var i in Notifications) {
+        if (Notifications[i].nType == "משקוף עיוור") { // Blind frame notification
+            var Today = new Date();
+            var sNotificationDate = Notifications[i].MessageDate;
+            sNotificationDate = sNotificationDate.substring(6, sNotificationDate.length - 2);
+            var MaxDate = new Date(parseInt(sNotificationDate));
+            return;
+            if (Today >= MaxDate) // 45 days in miliseconds
+                SendEmail(Notifications[i].Email, Notifications[i].Message); // send an email in case at least 45 days passed
+        }
+    }
+}
+
+function SendEmail(sEmailAddress, sMessage) {
+    dataString = { TargetEmailAddress: sEmailAddress, Subject: "תיאום פגישה לסגירת פרטים", sHTMLBody: sMessage };
+    dataString = JSON.stringify(dataString);
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/GetProjects',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to get project details: " + e.responseText);
+        } // end of error
+    });             // end of ajax call
 }

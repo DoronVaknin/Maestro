@@ -109,7 +109,8 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@MessageDate", n.MessageDate);
                 sqlComm.Parameters.AddWithValue("@EmployeeID1", n.eID1);
                 sqlComm.Parameters.AddWithValue("@EmployeeID2", n.eID2);
-                sqlComm.Parameters.AddWithValue("@IsDetailsClosure", n.IsDetailsClosure);
+                sqlComm.Parameters.AddWithValue("@Type", n.nType);
+                sqlComm.Parameters.AddWithValue("@Email", n.Email);
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;
