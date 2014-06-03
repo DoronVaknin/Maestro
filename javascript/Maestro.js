@@ -14,6 +14,7 @@ var ProjectsIncome = {};
 
 //Used for Notifications
 var Notifications = {};
+var SpecialNotifications = {};
 
 $(document).ready(function () {
     WireHomeButtons();
@@ -79,7 +80,7 @@ $(document).ready(function () {
             ResizePriceOfferTable();
             GetProjectsIncome();
             SetupPieChart();
-            ActivateNewsBox();
+//            ActivateNewsBox();
             break;
 
         case "HomeInstallations".toLowerCase():
@@ -89,13 +90,13 @@ $(document).ready(function () {
             GetOpenedServiceCalls();
             PopulateGoogleMap();
             GetNotifications(38124123);
-            ActivateNewsBox();
+            GetSpecialNotifications(38124123);
             break;
 
         case "HomeTechnical".toLowerCase():
             ResizeHomeContainer();
             GetNotifications(302042267);
-            ActivateNewsBox();
+            GetSpecialNotifications(302042267);
             break;
 
         default: break;
@@ -875,6 +876,12 @@ function Contains(S, c) {
     return S.indexOf(c) > -1;
 }
 
+function ReplaceGlobally(s, s1, s2) {
+    if (!IsEmpty(s))
+        s = s.replace(new RegExp(s1, 'g'), s2);
+    return s;
+}
+
 function IsEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
@@ -1309,54 +1316,43 @@ function GetNotifications(iEmployeeID) {
             Notifications = $.parseJSON(data.d); // parse the data as json
             Notifications = MergeInsideArrays(Notifications);
             BuildNewsBox();
-            HandleSpecialNotifications();
         }, // end of success
         error: function (e) { // this function will be called upon failure
-            alert("failed to get project details: " + e.responseText);
+            alert("failed to get notification: " + e.responseText);
         } // end of error
     });                 // end of ajax call
 }
 
 function BuildNewsBox() {
     var sHTML = "";
-    for (var i in Notifications) {
-        if (IsEmpty(Notifications[i].nType)) { // regular notification
+    if (Notifications.length == 0) {
+        sHTML = "אין הודעות חדשות";
+        $("#NewsBox ul.News").html(sHTML);
+    }
+    else {
+        for (var i in Notifications) {
             sHTML += '<li class="news-item">';
             sHTML += '<table cellpadding="4">';
             sHTML += '<tr>';
             sHTML += '<td>';
             //        sHTML += '<img src="images/1.png" width="60" class="img-circle" />';
             sHTML += '</td>';
-            sHTML += ConvertToDate(Notifications[i].MessageDate) + ": " + Notifications[i].Message;
+            sHTML += ConvertToDate(Notifications[i].nDate) + ": " + Notifications[i].nNotification;
             sHTML += '<td>';
             sHTML += '</td>';
             sHTML += '</tr>';
             sHTML += '</table>';
             sHTML += '</li>';
         }
-    }
-    $("#NewsBox ul.News").html(sHTML);
-}
-
-function HandleSpecialNotifications() {
-    for (var i in Notifications) {
-        if (Notifications[i].nType == "משקוף עיוור") { // Blind frame notification
-            var Today = new Date();
-            var sNotificationDate = Notifications[i].MessageDate;
-            sNotificationDate = sNotificationDate.substring(6, sNotificationDate.length - 2);
-            var MaxDate = new Date(parseInt(sNotificationDate));
-            return;
-            if (Today >= MaxDate) // 45 days in miliseconds
-                SendEmail(Notifications[i].Email, Notifications[i].Message); // send an email in case at least 45 days passed
-        }
+        $("#NewsBox ul.News").html(sHTML);
+        ActivateNewsBox();
     }
 }
 
-function SendEmail(sEmailAddress, sMessage) {
-    dataString = { TargetEmailAddress: sEmailAddress, Subject: "תיאום פגישה לסגירת פרטים", sHTMLBody: sMessage };
-    dataString = JSON.stringify(dataString);
+function GetSpecialNotifications(iEmployeeID) {
+    dataString = JSON.stringify({ eID: iEmployeeID });
     $.ajax({ // ajax call start
-        url: 'MaestroWS.asmx/GetProjects',
+        url: 'MaestroWS.asmx/GetSpecialNotifications',
         data: dataString, // Send value of the project id
         dataType: 'json', // Choosing a JSON datatype for the data sent
         type: 'POST',
@@ -1364,10 +1360,72 @@ function SendEmail(sEmailAddress, sMessage) {
         contentType: 'application/json; charset = utf-8', // for the data received
         success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
         {
-            
+            SpecialNotifications = $.parseJSON(data.d); // parse the data as json
+            SpecialNotifications = MergeInsideArrays(SpecialNotifications);
+            HandleSpecialNotifications();
         }, // end of success
         error: function (e) { // this function will be called upon failure
-            alert("failed to get project details: " + e.responseText);
+            alert("failed to get special notifications: " + e.responseText);
         } // end of error
-    });             // end of ajax call
+    });                 // end of ajax call
+}
+
+function HandleSpecialNotifications() {
+    for (var i in SpecialNotifications) {
+        if (SpecialNotifications[i].nType == "משקוף עיוור") { // Blind frame notification
+            var Today = new Date();
+            var sNotificationDate = SpecialNotifications[i].nDate;
+            sNotificationDate = sNotificationDate.substring(6, sNotificationDate.length - 2);
+            var MaxDate = new Date(parseInt(sNotificationDate));
+
+            if (Today >= MaxDate) { // 45 days in miliseconds
+                // web service doesn't accept '<' & '>' signs - will be encoded later in web service
+                SpecialNotifications[i].EmailMessage = ReplaceGlobally(SpecialNotifications[i].EmailMessage, "<", "~");
+                SpecialNotifications[i].EmailMessage = ReplaceGlobally(SpecialNotifications[i].EmailMessage, ">", "|");
+                SendEmail(SpecialNotifications[i].nID, SpecialNotifications[i].EmailAddress, SpecialNotifications[i].EmailSubject, SpecialNotifications[i].EmailMessage); // send an email in case at least 45 days passed
+            }
+        }
+        else if (SpecialNotifications[i].nType == "סגירת פרטים") {
+
+        }
+    }
+}
+
+function SendEmail(nID, sEmailAddress, sSubject, sMessage) {
+    dataString = { TargetEmailAddress: sEmailAddress, Subject: sSubject, sHTMLBody: sMessage };
+    dataString = JSON.stringify(dataString);
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/SendEmail',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            DeleteSpecialNotification(nID);
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to send email: " + e.responseText);
+        } // end of error
+    });              // end of ajax call
+}
+
+function DeleteSpecialNotification(nID) {
+    dataString = { NotificationID: nID };
+    dataString = JSON.stringify(dataString);
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/DeleteSpecialNotification',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to delete special notification: " + e.responseText);
+        } // end of error
+    });              // end of ajax call
 }

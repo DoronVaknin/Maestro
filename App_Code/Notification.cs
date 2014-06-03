@@ -14,29 +14,14 @@ public class Notification
 
     }
 
-    public Notification(string _Message, DateTime _MessageDate, int _eID1)
+    public Notification(string _Notification, DateTime _nDate, int _eID1, int _eID2)
     {
-        Message = _Message;
-        MessageDate = _MessageDate;
+        if (_Notification != "")
+            nNotification = _Notification;
+        nDate = _nDate;
         eID1 = _eID1;
-    }
-
-    public Notification(string _Message, DateTime _MessageDate, int _eID1, int _eID2)
-	{
-       Message = _Message;
-       MessageDate = _MessageDate;
-       eID1 = _eID1;
-       eID2 = _eID2;
-	}
-
-    public Notification(string _Message, DateTime _MessageDate, int _eID1, int _eID2, string _Type, string _Email)
-    {
-        Message = _Message;
-        MessageDate = _MessageDate;
-        eID1 = _eID1;
-        eID2 = _eID2;
-        nType = _Type;
-        email = _Email;
+        if (_eID2 != 0)
+            eID2 = _eID2;
     }
 
     int nid;
@@ -46,18 +31,18 @@ public class Notification
         set { nid = value; }
     }
 
-    string message;
-    public string Message
+    string notification;
+    public string nNotification
     {
-        get { return message; }
-        set { message = value; }
+        get { return notification; }
+        set { notification = value; }
     }
 
-    DateTime messageDate;
-    public DateTime MessageDate
+    DateTime ndate;
+    public DateTime nDate
     {
-        get { return messageDate; }
-        set { messageDate = value; }
+        get { return ndate; }
+        set { ndate = value; }
     }
 
     int eid1;
@@ -72,20 +57,6 @@ public class Notification
     {
         get { return eid2; }
         set { eid2 = value; }
-    }
-
-    string ntype;
-    public string nType
-    {
-        get { return ntype; }
-        set { ntype = value; }
-    }
-
-    string email;
-    public string Email
-    {
-        get { return email; }
-        set { email = value; }
     }
 
     public int InsertNewNotification()

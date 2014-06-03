@@ -105,12 +105,40 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@Message", n.Message);
-                sqlComm.Parameters.AddWithValue("@MessageDate", n.MessageDate);
+                sqlComm.Parameters.AddWithValue("@Notification", n.nNotification);
+                sqlComm.Parameters.AddWithValue("@nDate", n.nDate);
                 sqlComm.Parameters.AddWithValue("@EmployeeID1", n.eID1);
                 sqlComm.Parameters.AddWithValue("@EmployeeID2", n.eID2);
-                sqlComm.Parameters.AddWithValue("@Type", n.nType);
-                sqlComm.Parameters.AddWithValue("@Email", n.Email);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public int InsertNewSpecialNotification(SpecialNotification sn)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spInsertNewSpecialNotification]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@Notification", sn.nNotification);
+                sqlComm.Parameters.AddWithValue("@Date", sn.nDate);
+                sqlComm.Parameters.AddWithValue("@Type", sn.nType);
+                sqlComm.Parameters.AddWithValue("@EmailSubject", sn.EmailSubject);
+                sqlComm.Parameters.AddWithValue("@EmailMessage", sn.EmailMessage);
+                sqlComm.Parameters.AddWithValue("@EmailAddress", sn.EmailAddress);
+                sqlComm.Parameters.AddWithValue("@EmployeeID1",sn.eID1);
+                sqlComm.Parameters.AddWithValue("@EmployeeID2", sn.eID2);
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;
@@ -1171,7 +1199,7 @@ public class DBservices
         }
     }
 
-    public DataTable GetNotifications(int eID1)
+    public DataTable GetNotifications(int eID)
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
@@ -1185,7 +1213,34 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@EmployeeID1", eID1);
+                sqlComm.Parameters.AddWithValue("@EmployeeID", eID);
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public DataTable GetSpecialNotifications(int eID)
+    {
+        DataTable dt = new DataTable();
+        SqlDataAdapter da = new SqlDataAdapter();
+
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetSpecialNotifications]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@EmployeeID", eID);
                 da.SelectCommand = sqlComm;
                 da.Fill(dt);
                 return dt;
@@ -1261,6 +1316,29 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
                 sqlComm.Parameters.AddWithValue("@ExpirationDate", ExpirationDate);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public int DeleteSpecialNotification(int nID)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spDeleteSpecialNotification]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@NotificationID", nID);
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;

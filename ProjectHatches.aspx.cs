@@ -54,7 +54,7 @@ public partial class Default : System.Web.UI.Page
             {
                 string ProjectName = Session["ProjectNameForProjectHatches"].ToString();
                 string Message = String.Format("דווחה תקלה עבור פתח מס' {0} בפרויקט {1} ", hID, ProjectName);
-                Notification n = new Notification(Message, DateTime.Now.Date, 302042267);
+                Notification n = new Notification(Message, DateTime.Now.Date, 302042267, 0);
                 RowAffected = n.InsertNewNotification();
             }
         }

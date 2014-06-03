@@ -121,8 +121,7 @@ public partial class Default : System.Web.UI.Page
                     break;
 
                 case "4": //סגירת פרטים
-                    DateTime NotificationDate = DateTime.Now.AddDays(46);
-                    InsertDetailsClosureNotification(ProjectInfoName.Text, NotificationDate);
+                    InsertDetailsClosureNotification(ProjectInfoName.Text);
                     break;
 
                 case "7": //ייצור
@@ -225,17 +224,20 @@ public partial class Default : System.Web.UI.Page
         n.InsertNewNotification();
     }
 
-    public void InsertDetailsClosureNotification(string ProjectName, DateTime NotificationDate)
+    public void InsertDetailsClosureNotification(string ProjectName)
     {
+        //DateTime NotificationDate = DateTime.Now.AddDays(46);
         //string sMessage = String.Format("בעוד שבועיים יחלפו 60 יום ממועד הפגישה לסגירת פרטים והפתחים הנל לא מוכנים להתקנה בבית הלקוח עבור פרויקט {0}:{1}", ProjectName, "<br>", hID, HatchStatus, FailureType, Comments);
         //Notification n = new Notification(sMessage, DateTime.Now.Date, 302042267, 38124123, "סגירת פרטים");
     }
 
     public void InsertBlindFrameNotification(string FirstName, string LastName, string CustomerEmailAddress)
     {
-        string sMessage = String.Format("{0} {1} שלום,<br>נא הבא לידיעתך כי עלינו לתאם פגישה לטובת סגירת פרטי הפרויקט.<br>אנא צור קשר טלפוני במס' 04-6221774 לתיאום הפגישה.<br>בתודה,<br>מאסטרו אלומיניום.", FirstName, LastName);
-        Notification n = new Notification(sMessage, DateTime.Now.Date.AddDays(45), 302042267, 38124123, "משקוף עיוור", CustomerEmailAddress);
-        n.InsertNewNotification();
+        string EmailMessage = String.Format("<div dir='rtl'>{0} {1} שלום,<br>נא הבא לידיעתך כי עלינו לתאם פגישה לטובת סגירת פרטי הפרויקט.<br>אנא צור קשר טלפוני במס' 04-6221774 לתיאום הפגישה.<br>בתודה,<br>מאסטרו אלומיניום.</div>", FirstName, LastName);
+        string EmailSubject = "תיאום פגישה לסגירת פרטים";
+
+        SpecialNotification sn = new SpecialNotification("", DateTime.Now.Date.AddDays(45), 302042267, 38124123, "משקוף עיוור", EmailSubject, EmailMessage, CustomerEmailAddress);
+        sn.InsertNewSpecialNotification();
     }
 
 }

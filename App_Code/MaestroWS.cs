@@ -478,10 +478,8 @@ public class MaestroWS : System.Web.Services.WebService
         for (int i = 0; i < dt.Rows.Count; i++)
         {
             n = new Notification();
-            n.Message = dt.Rows[i].ItemArray[0].ToString();
-            n.MessageDate = Convert.ToDateTime(dt.Rows[i].ItemArray[1]).Date;
-            n.nType = dt.Rows[i].ItemArray[2].ToString();
-            n.Email = dt.Rows[i].ItemArray[3].ToString();
+            n.nNotification = dt.Rows[i].ItemArray[0].ToString();
+            n.nDate = Convert.ToDateTime(dt.Rows[i].ItemArray[1]).Date;
 
             myAL[i].Add(n);
         }
@@ -493,12 +491,11 @@ public class MaestroWS : System.Web.Services.WebService
         return jsonString;
     }
 
-
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public string InsertNewNotification(string Message, string MessageDate, string eID)
     {
-        Notification n = new Notification(Message, Convert.ToDateTime(MessageDate), Convert.ToInt32(eID));
+        Notification n = new Notification(Message, Convert.ToDateTime(MessageDate), Convert.ToInt32(eID), 0);
         int RowAffected = n.InsertNewNotification();
 
         // create a json serializer object
@@ -510,18 +507,56 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetSpecialNotifications(int eID)
+    {
+        SpecialNotification sn = new SpecialNotification();
+        DataTable dt = sn.GetSpecialNotifications(eID);
+
+        ArrayList[] myAL = new ArrayList[dt.Rows.Count];
+
+        for (int i = 0; i < myAL.Length; i++)
+            myAL[i] = new ArrayList();
+
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            sn = new SpecialNotification();
+
+            sn.nID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+            sn.nNotification = dt.Rows[i].ItemArray[1].ToString();
+            sn.nDate = Convert.ToDateTime(dt.Rows[i].ItemArray[2]);
+            sn.nType = dt.Rows[i].ItemArray[3].ToString();
+            sn.EmailSubject = dt.Rows[i].ItemArray[4].ToString();
+            sn.EmailMessage = dt.Rows[i].ItemArray[5].ToString();
+            sn.EmailAddress = dt.Rows[i].ItemArray[6].ToString();
+
+            myAL[i].Add(sn);
+        }
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(myAL);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public void SendEmail(string TargetEmailAddress, string Subject, string sHTMLBody)
     {
         try
         {
+            // encode back to original char
+            sHTMLBody = sHTMLBody.Replace("~", "<"); 
+            sHTMLBody = sHTMLBody.Replace("|", ">");
+
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("doron9787@gmail.com","מאסטרו אלומיניום");
+            mailMessage.From = new MailAddress("doron9787@gmail.com", "מאסטרו אלומיניום");
             mailMessage.To.Add(TargetEmailAddress);
             mailMessage.Subject = Subject;
             mailMessage.IsBodyHtml = true;
             mailMessage.Body = sHTMLBody;
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-            smtpClient.Credentials = new System.Net.NetworkCredential("doron9787@gmail.com", "971987dvpma");
+            smtpClient.Credentials = new System.Net.NetworkCredential("doron9787@gmail.com", "YourPassword");
             smtpClient.EnableSsl = true;
             smtpClient.Send(mailMessage);
         }
@@ -530,5 +565,19 @@ public class MaestroWS : System.Web.Services.WebService
             Console.WriteLine(ex.Message);
             Console.ReadLine();
         }
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string DeleteSpecialNotification(int NotificationID)
+    {
+        SpecialNotification sn = new SpecialNotification();
+        int RowAffected = sn.DeleteSpecialNotification(NotificationID);
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
+        return jsonString;
     }
 }
