@@ -22,6 +22,22 @@ public class Project
         //
     }
 
+    public Project(DateTime _OpenedDate, DateTime _ExpirationDate, string _Name, string _Comments, string _Cost, string _Hatches, string _ArchitectName, string _ArchitectPhone, string _ContractorName, string _ContractorPhone, string _SupervisorName, string _SupervisorPhone)
+    {
+        Name = _Name;
+        DateOpened = _OpenedDate;
+        ExpirationDate = _ExpirationDate;
+        Comments = _Comments;
+        Cost = Convert.ToDouble(_Cost);
+        NumOfHatches = Convert.ToInt32(_Hatches);
+        ArchitectName = _ArchitectName;
+        ArchitectPhone = _ArchitectPhone;
+        ContractorName = _ContractorName;
+        ContractorPhone = _ContractorPhone;
+        SupervisorName = _SupervisorName;
+        SupervisorPhone = _SupervisorPhone;
+    }
+
     public Project(DateTime _OpenedDate, DateTime _ExpirationDate, DateTime _InstallationDate, string _Name, string _Comments, string _Cost, string _Hatches, string _ArchitectName, string _ArchitectPhone, string _ContractorName, string _ContractorPhone, string _SupervisorName, string _SupervisorPhone)
     {
         Name = _Name;

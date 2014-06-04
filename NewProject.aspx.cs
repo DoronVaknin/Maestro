@@ -16,6 +16,8 @@ public partial class Default : System.Web.UI.Page
             c = (Customer)Session["Customer"];
             ProjectName.Value = c.Fname + " " + c.Lname;
         }
+        if (Request.Url.Query == "?Source=NewCustomer")
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "ModalCustomerCreated", "ActivateModal('ModalCustomerCreated');", true);
         ProjectDateOpened.Value = (DateTime.Today).ToString("MM/dd/yyyy");
         ProjectExpirationDate.Value = (DateTime.Now.AddYears(7)).ToString("MM/dd/yyyy");
     }
@@ -33,13 +35,24 @@ public partial class Default : System.Web.UI.Page
             psID = 2; // הזמנת עבודה
         else
             psID = 1; // הצעת מחיר
+        Project p = new Project();
+        if (ProjectInstallationDate.Value != "")
+            p = new Project(DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInstallationDate.Value, "MM/dd/yyyy", null), ProjectName.Value, ProjectComments.Value, ProjectCost.Value, ProjectHatches.Value, ProjectArchitectName.Value, ProjectArchitectMobile.Value, ProjectContractorName.Value, ProjectContractorMobile.Value, ProjectSupervisorName.Value, ProjectSupervisorMobile.Value);
+        else
+            p = new Project(DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null), ProjectName.Value, ProjectComments.Value, ProjectCost.Value, ProjectHatches.Value, ProjectArchitectName.Value, ProjectArchitectMobile.Value, ProjectContractorName.Value, ProjectContractorMobile.Value, ProjectSupervisorName.Value, ProjectSupervisorMobile.Value);
 
-        Project p = new Project(DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInstallationDate.Value, "MM/dd/yyyy", null), ProjectName.Value, ProjectComments.Value, ProjectCost.Value, ProjectHatches.Value, ProjectArchitectName.Value, ProjectArchitectMobile.Value, ProjectContractorName.Value, ProjectContractorMobile.Value, ProjectSupervisorName.Value, ProjectSupervisorMobile.Value);
-        if (Session["Customer"] != null)
+        if ((Request.Url.Query == "?Source=NewCustomer" && Session["Customer"] != null) || (Request.Url.Query == "?Source=ProjectsPerCustomer" && Session["CustomerID"] != null))
         {
-            Customer c = new Customer();
-            c = (Customer)Session["Customer"];
-            int CustomerID = c.cID;
+            int CustomerID = 0;
+            if (Session["Customer"] != null)
+            {
+                Customer c = new Customer();
+                c = (Customer)Session["Customer"];
+                CustomerID = c.cID;
+            }
+            else if (Session["CustomerID"] != null)
+                CustomerID = Convert.ToInt32(Session["CustomerID"]);
+
             p.InsertNewProject(p, CustomerID, psID);
             if (psID == 2)
                 InsertNewProjectNotification(ProjectName.Value);

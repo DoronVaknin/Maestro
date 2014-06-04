@@ -1,7 +1,5 @@
 ﻿/// <reference path="jquery-1.11.0.js" />
 
-var sUserName = $("#UserNameHolder").val();
-
 //Used for Forms backup
 var aCustomerDetails = [];
 var aProjectDetails = [];
@@ -47,15 +45,6 @@ $(document).ready(function () {
 
         case "ProjectHatches".toLowerCase():
             ToggleFailureTypeDDL();
-            break;
-
-        case "NewProject.aspx?Source=NewCustomer".toLowerCase():
-            ActivateModal("ModalCustomerCreated");
-            ActivateDragAndDrop();
-            break;
-
-        case "NewProject.aspx?Source=ProjectsPerCustomer".toLowerCase():
-            ActivateDragAndDrop();
             break;
 
         case "NewCustomer".toLowerCase():
@@ -114,7 +103,7 @@ $(window).resize(function () {
 });
 
 function WireHomeButtons() {
-//    var sUserName = $("#UserNameHolder").val();
+    var sUserName = $("#UserNameHolder").val();
 
     var bAdmin = sUserName.toUpperCase() === "Admin".toUpperCase();
     var bInstallationsManager = sUserName.toUpperCase() === "ShimonY".toUpperCase();
@@ -1381,6 +1370,7 @@ function GetSpecialNotifications(iEmployeeID) {
 }
 
 function HandleSpecialNotifications() {
+    var sUserName = $("#UserNameHolder").val();
     for (var i in SpecialNotifications) {
         if (SpecialNotifications[i].nType == "משקוף עיוור") { // Blind frame notification
             var Today = new Date();

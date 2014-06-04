@@ -10,10 +10,10 @@ var Picture = {};
 $(document).ready(function () {
     //    $("#LoginBTN").click(Login);
 
+    GetProjectsNamesList();
     GetProjects(); //  read all the projects
     GetHatches();
     GetOpenedServiceCalls();
-    GetProjectsNamesList();
 
     //some css settings
     //    $("#LoginBTN").parent().css({ "width": "36%", "margin": "auto" });
@@ -47,43 +47,43 @@ $(document).on("click", "#MapBTN", function () {
     setTimeout(PopulateGoogleMap, 800);
 });
 
-function Login() {
-    var sUsername = $.trim($("#UserName").val());
-    var sPassword = $.trim($("#Password").val());
-    if (IsEmpty(sUsername) || IsEmpty(sPassword)) {
-        alert("אנא הזן שם משתמש וסיסמה לפני התחברות");
-        return;
-    }
-    ShowLoading("מתחבר");
-    dataString = "{ Username: '" + sUsername + "', Password: '" + sPassword + "' }";
-    $.ajax({ // ajax call starts
-        url: 'MaestroWS.asmx/Login',   // JQuery call to the server side method
-        data: dataString,    // the parameters sent to the server
-        type: 'POST',        // can be post or get
-        dataType: 'json',    // Choosing a JSON datatype
-        contentType: 'application/json; charset = utf-8', // of the data received
-        success: function (data) // Variable data contains the data we get from serverside
-        {
-            if (data.d == "true") {
-                $("#UserName, #Password").val("");
-                HideLoading();
-                window.location = "#MainMenuPage";
-                GetProjects(); //  read all the projects
-                GetHatches();
-                GetOpenedServiceCalls();
-                GetProjectsNamesList();
-            }
-            else {
-                HideLoading();
-                alert("שם משתמש או סיסמה לא נכונים");
-            }
-        }, // end of success
-        error: function (e) {
-            HideLoading();
-            alert("failed to login: " + e.responseText);
-        } // end of error
-    });                    // end of ajax call
-}
+//function Login() {
+//    var sUsername = $.trim($("#UserName").val());
+//    var sPassword = $.trim($("#Password").val());
+//    if (IsEmpty(sUsername) || IsEmpty(sPassword)) {
+//        alert("אנא הזן שם משתמש וסיסמה לפני התחברות");
+//        return;
+//    }
+//    ShowLoading("מתחבר");
+//    dataString = "{ Username: '" + sUsername + "', Password: '" + sPassword + "' }";
+//    $.ajax({ // ajax call starts
+//        url: 'MaestroWS.asmx/Login',   // JQuery call to the server side method
+//        data: dataString,    // the parameters sent to the server
+//        type: 'POST',        // can be post or get
+//        dataType: 'json',    // Choosing a JSON datatype
+//        contentType: 'application/json; charset = utf-8', // of the data received
+//        success: function (data) // Variable data contains the data we get from serverside
+//        {
+//            if (data.d == "true") {
+//                $("#UserName, #Password").val("");
+//                HideLoading();
+//                window.location = "#MainMenuPage";
+//                GetProjects(); //  read all the projects
+//                GetHatches();
+//                GetOpenedServiceCalls();
+//                GetProjectsNamesList();
+//            }
+//            else {
+//                HideLoading();
+//                alert("שם משתמש או סיסמה לא נכונים");
+//            }
+//        }, // end of success
+//        error: function (e) {
+//            HideLoading();
+//            alert("failed to login: " + e.responseText);
+//        } // end of error
+//    });                    // end of ajax call
+//}
 
 //----------------------------------------------------------------------------
 // build the Projects page
