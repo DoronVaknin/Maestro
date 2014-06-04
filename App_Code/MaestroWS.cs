@@ -546,7 +546,7 @@ public class MaestroWS : System.Web.Services.WebService
         try
         {
             // encode back to original char
-            sHTMLBody = sHTMLBody.Replace("~", "<"); 
+            sHTMLBody = sHTMLBody.Replace("~", "<");
             sHTMLBody = sHTMLBody.Replace("|", ">");
 
             MailMessage mailMessage = new MailMessage();
@@ -578,6 +578,55 @@ public class MaestroWS : System.Web.Services.WebService
         JavaScriptSerializer js = new JavaScriptSerializer();
         // serialize to string
         string jsonString = js.Serialize(RowAffected);
+        return jsonString;
+    }
+
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetProjectStatus(int ProjectID)
+    {
+        Project p = new Project();
+        DataTable dt = p.GetProjectStatus(ProjectID);
+
+        string ProjectStatus = dt.Rows[0].ItemArray[0].ToString();
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(ProjectStatus);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetProjectHatches(int ProjectID)
+    {
+        Project p = new Project();
+        DataTable dt = p.GetProjectHatches(ProjectID);
+
+        ArrayList[] myAL = new ArrayList[dt.Rows.Count];
+
+        for (int i = 0; i < myAL.Length; i++)
+            myAL[i] = new ArrayList();
+
+        Hatch h = new Hatch();
+        for (int i = 0; i < myAL.Length; i++)
+        {
+            h = new Hatch();
+
+            h.HatchID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
+            h.HatchStatus = dt.Rows[i].ItemArray[2].ToString();
+            h.FtName = dt.Rows[i].ItemArray[5].ToString();
+            h.Comments = dt.Rows[i].ItemArray[6].ToString();
+
+            myAL[i].Add(h);
+        }
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(myAL);
         return jsonString;
     }
 }

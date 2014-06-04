@@ -121,7 +121,7 @@ public partial class Default : System.Web.UI.Page
                     break;
 
                 case "4": //סגירת פרטים
-                    InsertDetailsClosureNotification(ProjectInfoName.Text);
+                    InsertDetailsClosureNotification(pID);
                     break;
 
                 case "7": //ייצור
@@ -224,16 +224,17 @@ public partial class Default : System.Web.UI.Page
         n.InsertNewNotification();
     }
 
-    public void InsertDetailsClosureNotification(string ProjectName)
+    public void InsertDetailsClosureNotification(int ProjectID)
     {
-        //DateTime NotificationDate = DateTime.Now.AddDays(46);
+        DateTime NotificationDate = DateTime.Now.Date.AddDays(46);
         //string sMessage = String.Format("בעוד שבועיים יחלפו 60 יום ממועד הפגישה לסגירת פרטים והפתחים הנל לא מוכנים להתקנה בבית הלקוח עבור פרויקט {0}:{1}", ProjectName, "<br>", hID, HatchStatus, FailureType, Comments);
-        //Notification n = new Notification(sMessage, DateTime.Now.Date, 302042267, 38124123, "סגירת פרטים");
+        SpecialNotification sn = new SpecialNotification(ProjectID.ToString(), NotificationDate, 302042267, 38124123, "סגירת פרטים");
+        sn.InsertNewSpecialNotification();
     }
 
     public void InsertBlindFrameNotification(string FirstName, string LastName, string CustomerEmailAddress)
     {
-        string EmailMessage = String.Format("<div dir='rtl'>{0} {1} שלום,<br>נא הבא לידיעתך כי עלינו לתאם פגישה לטובת סגירת פרטי הפרויקט.<br>אנא צור קשר טלפוני במס' 04-6221774 לתיאום הפגישה.<br>בתודה,<br>מאסטרו אלומיניום.</div>", FirstName, LastName);
+        string EmailMessage = String.Format("<div dir='rtl'>{0} {1} שלום,<br><br>נא הבא לידיעתך כי עלינו לתאם פגישה לטובת סגירת פרטי הפרויקט.<br>אנא צור קשר טלפוני במס' 04-6221774 לתיאום הפגישה.<br><br>בתודה,<br>מאסטרו אלומיניום.</div>", FirstName, LastName);
         string EmailSubject = "תיאום פגישה לסגירת פרטים";
 
         SpecialNotification sn = new SpecialNotification("", DateTime.Now.Date.AddDays(45), 302042267, 38124123, "משקוף עיוור", EmailSubject, EmailMessage, CustomerEmailAddress);

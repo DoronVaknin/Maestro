@@ -1,5 +1,7 @@
 ﻿/// <reference path="jquery-1.11.0.js" />
 
+var sUserName = $("#UserNameHolder").val();
+
 //Used for Forms backup
 var aCustomerDetails = [];
 var aProjectDetails = [];
@@ -15,6 +17,9 @@ var ProjectsIncome = {};
 //Used for Notifications
 var Notifications = {};
 var SpecialNotifications = {};
+var ProjectNames = {};
+var ProjectHatches = {};
+var ProjectStatus = "";
 
 $(document).ready(function () {
     WireHomeButtons();
@@ -80,7 +85,7 @@ $(document).ready(function () {
             ResizePriceOfferTable();
             GetProjectsIncome();
             SetupPieChart();
-//            ActivateNewsBox();
+            GetSpecialNotifications(302042267);
             break;
 
         case "HomeInstallations".toLowerCase():
@@ -109,7 +114,7 @@ $(window).resize(function () {
 });
 
 function WireHomeButtons() {
-    var sUserName = $("#UserNameHolder").val();
+//    var sUserName = $("#UserNameHolder").val();
 
     var bAdmin = sUserName.toUpperCase() === "Admin".toUpperCase();
     var bInstallationsManager = sUserName.toUpperCase() === "ShimonY".toUpperCase();
@@ -166,7 +171,7 @@ function ActivateNewsBox() {
         autoplay: true,
         direction: 'up', // up or down
         animationSpeed: 'normal',
-        newsTickerInterval: 4000, //4 secs
+        newsTickerInterval: 5000, //4 secs
         pauseOnHover: true,
         onStop: null,
         onPause: null,
@@ -882,6 +887,12 @@ function ReplaceGlobally(s, s1, s2) {
     return s;
 }
 
+function ExtractTimeStampFromString(sTimeStamp) {
+    sTimeStamp = sTimeStamp.substring(6, sTimeStamp.length - 2);
+    var dDate = new Date(parseInt(sTimeStamp));
+    return dDate;
+}
+
 function IsEmail(email) {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     return regex.test(email);
@@ -1315,7 +1326,6 @@ function GetNotifications(iEmployeeID) {
         {
             Notifications = $.parseJSON(data.d); // parse the data as json
             Notifications = MergeInsideArrays(Notifications);
-            BuildNewsBox();
         }, // end of success
         error: function (e) { // this function will be called upon failure
             alert("failed to get notification: " + e.responseText);
@@ -1323,21 +1333,21 @@ function GetNotifications(iEmployeeID) {
     });                 // end of ajax call
 }
 
-function BuildNewsBox() {
+function BuildNewsBox(oNotifications) {
     var sHTML = "";
-    if (Notifications.length == 0) {
+    if (oNotifications.length == 0) {
         sHTML = "אין הודעות חדשות";
         $("#NewsBox ul.News").html(sHTML);
     }
     else {
-        for (var i in Notifications) {
+        for (var i in oNotifications) {
             sHTML += '<li class="news-item">';
             sHTML += '<table cellpadding="4">';
             sHTML += '<tr>';
             sHTML += '<td>';
             //        sHTML += '<img src="images/1.png" width="60" class="img-circle" />';
             sHTML += '</td>';
-            sHTML += ConvertToDate(Notifications[i].nDate) + ": " + Notifications[i].nNotification;
+            sHTML += ConvertToDate(oNotifications[i].nDate) + ": " + oNotifications[i].nNotification;
             sHTML += '<td>';
             sHTML += '</td>';
             sHTML += '</tr>';
@@ -1374,21 +1384,107 @@ function HandleSpecialNotifications() {
     for (var i in SpecialNotifications) {
         if (SpecialNotifications[i].nType == "משקוף עיוור") { // Blind frame notification
             var Today = new Date();
-            var sNotificationDate = SpecialNotifications[i].nDate;
-            sNotificationDate = sNotificationDate.substring(6, sNotificationDate.length - 2);
-            var MaxDate = new Date(parseInt(sNotificationDate));
+            var dMaxDate = ExtractTimeStampFromString(SpecialNotifications[i].nDate);
 
-            if (Today >= MaxDate) { // 45 days in miliseconds
+            if (Today >= dMaxDate) {
                 // web service doesn't accept '<' & '>' signs - will be encoded later in web service
                 SpecialNotifications[i].EmailMessage = ReplaceGlobally(SpecialNotifications[i].EmailMessage, "<", "~");
                 SpecialNotifications[i].EmailMessage = ReplaceGlobally(SpecialNotifications[i].EmailMessage, ">", "|");
                 SendEmail(SpecialNotifications[i].nID, SpecialNotifications[i].EmailAddress, SpecialNotifications[i].EmailSubject, SpecialNotifications[i].EmailMessage); // send an email in case at least 45 days passed
             }
         }
-        else if (SpecialNotifications[i].nType == "סגירת פרטים") {
+        else if (SpecialNotifications[i].nType == "סגירת פרטים" && sUserName != "MaliY") {
+            var Today = new Date();
+            var dMaxDate = ExtractTimeStampFromString(SpecialNotifications[i].nDate);
+            var sProjectID = SpecialNotifications[i].nNotification;
+            GetProjectStatus(sProjectID);
+            var sProjectStatus = ProjectStatus;
+            GetProjectsNames();
+            var sProjectName = ProjectNames[sProjectID];
+            GetProjectHatches(sProjectID);
+            if (Today >= dMaxDate && sProjectStatus != "התקנה") {
+                var sHatchesList = "";
+                for (var HatchID in ProjectHatches) {
+                    if (ProjectHatches[HatchID].HatchStatus != "הועמס") {
+                        sHatchesList += HatchID + " בסטטוס " + ProjectHatches[HatchID].HatchStatus + ", " + ProjectHatches[HatchID].FtName + ", " + ProjectHatches[HatchID].Comments;
+                        sHatchesList = $.trim(sHatchesList);
+                        sHatchesList = myTrim(sHatchesList, ",");
+                        sHatchesList += "<br>";
+                    }
+                }
+                var sNotification = !IsEmpty(sHatchesList) ?
+                "בעוד שבועיים, עבור פרויקט " + sProjectName + " יחלפו 60 יום ממועד הפגישה לסגירת פרטים והפתחים " +
+                'הנ"ל לא מוכנים להתקנה בבית הלקוח עבור פרויקט ' + sProjectName + ':<br>' + sHatchesList :
+                 "הפרויקט " + sProjectName + " מתבצע כמתוכנן. הפתחים מוכנים להתקנה בבית הלקוח.";
 
+                SpecialNotifications[i].nNotification = sNotification;
+                Notifications.push(SpecialNotifications[i]);
+            }
         }
     }
+    if (sUserName != "MaliY") BuildNewsBox(Notifications);
+}
+
+function GetProjectStatus(sProjectID) {
+    dataString = { ProjectID: sProjectID };
+    dataString = JSON.stringify(dataString);
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/GetProjectStatus',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            ProjectStatus = myTrim(data.d, '"');
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to get project status: " + e.responseText);
+        } // end of error
+    });                  // end of ajax call
+}
+
+function GetProjectsNames() {
+    dataString = "";
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/GetProjectsNames',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            ProjectNames = $.parseJSON(data.d);
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to get projects names: " + e.responseText);
+        } // end of error
+    });                 // end of ajax call
+}
+
+function GetProjectHatches(sProjectID) {
+    dataString = { ProjectID: sProjectID };
+    dataString = JSON.stringify(dataString);
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/GetProjectHatches',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            h = $.parseJSON(data.d);
+            h = MergeInsideArrays(h);
+            for (var i in h)
+                ProjectHatches[h[i].HatchID] = h[i];
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to get project status: " + e.responseText);
+        } // end of error
+    });                       // end of ajax call
 }
 
 function SendEmail(nID, sEmailAddress, sSubject, sMessage) {

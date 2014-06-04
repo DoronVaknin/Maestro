@@ -263,6 +263,32 @@ public class DBservices
         }
     }
 
+    public DataTable GetProjectStatus(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        con = connect("igroup9_prodConnectionString");
+        SqlDataAdapter da = new SqlDataAdapter();
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectStatus]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
+                sqlComm.CommandTimeout = 600;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
     public int StatusNumber(string StatusName)
     {
         con = connect("igroup9_prodConnectionString");

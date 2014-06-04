@@ -274,6 +274,14 @@ public class Project
         return dt;
     }
 
+    public DataTable GetProjectStatus(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetProjectStatus(ProjectID);
+        return dt;
+    }
+
     public DataTable GetProjectsIncome()
     {
         DataTable dt = new DataTable();
