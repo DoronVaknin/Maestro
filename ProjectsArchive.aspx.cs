@@ -15,8 +15,8 @@ public partial class Default2 : System.Web.UI.Page
     protected void ProjectsArchiveGV_SelectedIndexChanged(object sender, EventArgs e)
     {
         int SelectedIndex = ProjectsArchiveGV.SelectedIndex;
-        GridViewRow row = ProjectsArchiveGV.Rows[SelectedIndex];
-        Session["selectedrow"] = row;
+        int ProjectID = Convert.ToInt32(ProjectsArchiveGV.Rows[SelectedIndex].Cells[1].Text);
+        Session["ProjectID"] = ProjectID;
         Response.Redirect("ProjectDetails.aspx");
     }
 

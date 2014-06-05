@@ -28,9 +28,10 @@ $(document).ready(function () {
     ActivateQuickSearch();
     ActivateServiceCallExistingProjectModal();
     var sPageName = GetPageName();
+
     switch (sPageName) {
 
-        case "ProjectDetails".toLowerCase():
+        case "ProjectDetails.aspx".toLowerCase():
             DisableCustomerDetailsFields();
             DisableProjectDetailsFields();
             FixTextAreaIssue("ProjectDetailsTBL");
@@ -39,15 +40,15 @@ $(document).ready(function () {
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_ProjectInfoAddress");
             break;
 
-        case "ProjectOrders".toLowerCase():
+        case "ProjectOrders.aspx".toLowerCase():
             ActivatePlusMinus();
             break;
 
-        case "ProjectHatches".toLowerCase():
+        case "ProjectHatches.aspx".toLowerCase():
             ToggleFailureTypeDDL();
             break;
 
-        case "NewCustomer".toLowerCase():
+        case "NewCustomer.aspx".toLowerCase():
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
             break;
 
@@ -61,15 +62,15 @@ $(document).ready(function () {
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_CustomerAddress");
             break;
 
-        case "NewSupplier".toLowerCase():
+        case "NewSupplier.aspx".toLowerCase():
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_SupplierAddress");
             break;
 
-        case "Suppliers".toLowerCase():
+        case "Suppliers.aspx".toLowerCase():
             FixInputIssue("EditSupplierTBL");
             break;
 
-        case "HomeSales".toLowerCase():
+        case "HomeSales.aspx".toLowerCase():
             ResizeHomeContainer();
             ResizePriceOfferTable();
             GetProjectsIncome();
@@ -77,7 +78,7 @@ $(document).ready(function () {
             GetSpecialNotifications(302042267);
             break;
 
-        case "HomeInstallations".toLowerCase():
+        case "HomeInstallations.aspx".toLowerCase():
             ResizeHomeContainer();
             InitializeGoogleMap();
             GetProjects();
@@ -87,7 +88,7 @@ $(document).ready(function () {
             GetSpecialNotifications(38124123);
             break;
 
-        case "HomeTechnical".toLowerCase():
+        case "HomeTechnical.aspx".toLowerCase():
             ResizeHomeContainer();
             GetNotifications(302042267);
             GetSpecialNotifications(302042267);
@@ -216,37 +217,37 @@ function BuildEarlyProgressBar(dPercent, iIndex) {
 function ActivateTabsMarking() {
     var sPageName = GetPageName();
     switch (sPageName) {
-        case "HomeSales".toLowerCase():
-        case "HomeTechnical".toLowerCase():
-        case "HomeInstallations".toLowerCase():
+        case "HomeSales.aspx".toLowerCase():
+        case "HomeTechnical.aspx".toLowerCase():
+        case "HomeInstallations.aspx".toLowerCase():
             $("#Home").addClass("current");
             break;
 
-        case "NewCustomer".toLowerCase():
-        case "Customers".toLowerCase():
+        case "NewCustomer.aspx".toLowerCase():
+        case "Customers.aspx".toLowerCase():
             $("#Customers").addClass("current");
             break;
 
         case "NewCustomer.aspx?Source=CreateProject".toLowerCase():
         case "NewProject.aspx?Source=NewCustomer".toLowerCase():
-        case "Projects".toLowerCase():
-        case "ProjectsArchive".toLowerCase():
+        case "Projects.aspx".toLowerCase():
+        case "ProjectsArchive.aspx".toLowerCase():
             $("#Projects").addClass("current");
             break;
 
-        case "ProjectOrders".toLowerCase():
-        case "SupplierOrders".toLowerCase():
-        case "NewSupplier".toLowerCase():
-        case "Suppliers".toLowerCase():
-        case "ProjectHatches".toLowerCase():
+        case "ProjectOrders.aspx".toLowerCase():
+        case "SupplierOrders.aspx".toLowerCase():
+        case "NewSupplier.aspx".toLowerCase():
+        case "Suppliers.aspx".toLowerCase():
+        case "ProjectHatches.aspx".toLowerCase():
             $("#Technical").addClass("current");
             break;
 
-        case "NewServiceCall".toLowerCase():
+        case "NewServiceCall.aspx".toLowerCase():
         case "NewCustomer.aspx?Source=CreateServiceCall".toLowerCase():
         case "NewServiceCall.aspx?Source=ExistingProject".toLowerCase():
-        case "ServiceCalls".toLowerCase():
-        case "ServiceCallsArchive".toLowerCase():
+        case "ServiceCalls.aspx".toLowerCase():
+        case "ServiceCallsArchive.aspx".toLowerCase():
             $("#ServiceCalls").addClass("current");
             break;
 
@@ -846,18 +847,10 @@ function BackupHatchDetails() {
     aHatchDetails.push($("#ContentPlaceHolder3_HatchComments").val());
 }
 
-//function IsPage(sPageName, sSource) {
-//    return GetPageName() + location.search == sPageName + ".aspx" + (!IsEmpty(sSource) ? "?Source=" + sSource : "");
-//}
-
 function GetPageName() {
     var sFullPath = window.location.href;
     var iIndex = sFullPath.lastIndexOf("/");
-    var sPageName = sFullPath.substr(iIndex + 1);
-    if (!Contains(sPageName, "?")) {
-        var iLength = sPageName.length;
-        sPageName = sPageName.substring(0, iLength - 5).toLowerCase();
-    }
+    var sPageName = sFullPath.substr(iIndex + 1).toLowerCase();
     return sPageName;
 }
 
@@ -1101,9 +1094,7 @@ function ActivateDragAndDrop() {
 function ActivateGoogleAutoCompletion(sID) {
     // Create the autocomplete object, restricting the search
     // to geographical location types.
-    autocomplete = new google.maps.places.Autocomplete(
-	(document.getElementById(sID)),
-	  { types: ['geocode'] });
+    autocomplete = new google.maps.places.Autocomplete((document.getElementById(sID)), { types: ['geocode'] });
 }
 
 /** Google Maps **/
@@ -1146,6 +1137,7 @@ function ShowServiceCallPin(oPosition, sID) {
 				'<p><b>כתובת: </b>' + ServiceCallsList[sID][1].Address + '</p>' +
 				'<p><b>טלפון נייד: </b>' + ServiceCallsList[sID][1].Mobile + '</p>' +
 				'<p><b>תיאור התקלה: </b>' + ServiceCallsList[sID][0].Description + '</p>' +
+				(ServiceCallsList[sID][0].Urgent ? "<p><b>*קריאה דחופה*</b></p>" : "") +
     //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
 				'</div>' +
 				'</div>';

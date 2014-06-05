@@ -19,8 +19,9 @@ public class Order
     {
         ProjectID = _ProjectId;
         DateOpened = DateTime.Now;
-        EstimatedDateOfArrival = _EstimatedDateOfArrival;
-        OrderStatus = 1;
+        if (_EstimatedDateOfArrival != DateTime.MinValue)
+            EstimatedDateOfArrival = _EstimatedDateOfArrival;
+        OrderStatus = 1; //הוזמן
         SupplierID = _SupplierID;
         RawMaterialID = _RawMaterialID;
         Quantity = _Quantity;

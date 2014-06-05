@@ -52,8 +52,10 @@ public partial class Default : System.Web.UI.Page
         if (Count > 0 && Session["ProjectIDForProjectOrders"] != null)
         {
             string ProjectID = Session["ProjectIDForProjectOrders"].ToString();
-            DBservices db = new DBservices();
-            Order o = new Order(Convert.ToInt32(ProjectID), Convert.ToInt32(SupplierID), RawMeterialID, Count, DateTime.ParseExact(EstArrDate, "MM/dd/yyyy", null));
+            DateTime InstallationDate;
+            InstallationDate = EstArrDate == "" ?
+                               InstallationDate = DateTime.MinValue : Convert.ToDateTime(EstArrDate);
+            Order o = new Order(Convert.ToInt32(ProjectID), Convert.ToInt32(SupplierID), RawMeterialID, Count, InstallationDate);
             o.CreateNewOrder(o);
         }
     }

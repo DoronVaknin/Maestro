@@ -75,7 +75,8 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@Cost", p.Cost);
                 sqlComm.Parameters.AddWithValue("@DateOpened", p.DateOpened);
                 sqlComm.Parameters.AddWithValue("@ExpirationDate", p.ExpirationDate);
-                sqlComm.Parameters.AddWithValue("@InstallationDate", p.InstallationDate);
+                if (p.InstallationDate.Year > DateTime.MinValue.Year)
+                    sqlComm.Parameters.AddWithValue("@InstallationDate", p.InstallationDate);
                 sqlComm.Parameters.AddWithValue("@Comments", p.Comments);
                 sqlComm.Parameters.AddWithValue("@ContName", p.ContractorName);
                 sqlComm.Parameters.AddWithValue("@ContPhone", p.ContractorPhone);
@@ -137,7 +138,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@EmailSubject", sn.EmailSubject);
                 sqlComm.Parameters.AddWithValue("@EmailMessage", sn.EmailMessage);
                 sqlComm.Parameters.AddWithValue("@EmailAddress", sn.EmailAddress);
-                sqlComm.Parameters.AddWithValue("@EmployeeID1",sn.eID1);
+                sqlComm.Parameters.AddWithValue("@EmployeeID1", sn.eID1);
                 sqlComm.Parameters.AddWithValue("@EmployeeID2", sn.eID2);
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
@@ -460,7 +461,8 @@ public class DBservices
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@DateOpened", o.DateOpened);
-                sqlComm.Parameters.AddWithValue("@EstimateDateOfArrival", o.EstimatedDateOfArrival);
+                if (o.EstimatedDateOfArrival.Year > DateTime.MinValue.Year)
+                    sqlComm.Parameters.AddWithValue("@EstimateDateOfArrival", o.EstimatedDateOfArrival);
                 sqlComm.Parameters.AddWithValue("@Quantity", o.Quantity);
                 sqlComm.Parameters.AddWithValue("@osID", o.OrderStatus);
                 sqlComm.Parameters.AddWithValue("@pID", o.ProjectID);

@@ -36,10 +36,10 @@ public partial class Default : System.Web.UI.Page
         else
             psID = 1; // הצעת מחיר
         Project p = new Project();
-        if (ProjectInstallationDate.Value != "")
-            p = new Project(DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectInstallationDate.Value, "MM/dd/yyyy", null), ProjectName.Value, ProjectComments.Value, ProjectCost.Value, ProjectHatches.Value, ProjectArchitectName.Value, ProjectArchitectMobile.Value, ProjectContractorName.Value, ProjectContractorMobile.Value, ProjectSupervisorName.Value, ProjectSupervisorMobile.Value);
-        else
-            p = new Project(DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null), ProjectName.Value, ProjectComments.Value, ProjectCost.Value, ProjectHatches.Value, ProjectArchitectName.Value, ProjectArchitectMobile.Value, ProjectContractorName.Value, ProjectContractorMobile.Value, ProjectSupervisorName.Value, ProjectSupervisorMobile.Value);
+        DateTime InstallationDate;
+        InstallationDate = ProjectInstallationDate.Value == "" ?
+                           InstallationDate = DateTime.MinValue : Convert.ToDateTime(ProjectInstallationDate.Value);
+        p = new Project(DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null), InstallationDate, ProjectName.Value, ProjectComments.Value, ProjectCost.Value, ProjectHatches.Value, ProjectArchitectName.Value, ProjectArchitectMobile.Value, ProjectContractorName.Value, ProjectContractorMobile.Value, ProjectSupervisorName.Value, ProjectSupervisorMobile.Value);
 
         if ((Request.Url.Query == "?Source=NewCustomer" && Session["Customer"] != null) || (Request.Url.Query == "?Source=ProjectsPerCustomer" && Session["CustomerID"] != null))
         {
@@ -53,7 +53,7 @@ public partial class Default : System.Web.UI.Page
             else if (Session["CustomerID"] != null)
                 CustomerID = Convert.ToInt32(Session["CustomerID"]);
 
-            p.InsertNewProject(p, CustomerID, psID);
+            p.InsertNewProject(CustomerID, psID);
             if (psID == 2)
                 InsertNewProjectNotification(ProjectName.Value);
             Response.Redirect("~/Projects.aspx");

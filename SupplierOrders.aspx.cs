@@ -54,7 +54,6 @@ public partial class Default2 : System.Web.UI.Page
             //SupplierOrdersGV.SelectedRow.Cells[4].Text = SupplierOrderEstimatedDOA.Text;
             //SupplierOrdersGV.SelectedRow.Cells[5].Text = SupplierOrderQuantity.Text;
             //SupplierOrdersGV.SelectedRow.Cells[7].Text = SupplierOrderStatus.SelectedItem.Text;
-
             string EstimatedDateOfArrival = SupplierOrderEstimatedDOA.Text;
             string OrderQuantity = SupplierOrderQuantity.Text;
             string Status = SupplierOrderStatus.SelectedItem.Text;
