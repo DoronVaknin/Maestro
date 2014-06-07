@@ -14,49 +14,51 @@
     <link href="themes/Maestro.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <div data-role="page" id="LoginPage">
-        <!-- Start of first page -->
-        <!--<div data-role="header" data-theme="a">
+    <div id="Container">
+        <div data-role="page" id="LoginPage">
+            <!-- Start of first page -->
+            <!--<div data-role="header" data-theme="a">
             <h1>
                 מאסטרו אלומיניום
             </h1>
         </div>-->
-        <!-- /header -->
-        <div data-role="content">
-            <div data-role="fieldcontain" class="ui-hide-label">
-                <img id="MaestroLogoIMG" src="images/MaestroLogo.png" /><br />
+            <!-- /header -->
+            <div data-role="content">
+                <div data-role="fieldcontain" class="ui-hide-label">
+                    <img id="MaestroLogoIMG" src="images/MaestroLogo.png" /><br />
+                    <br />
+                    <label for="UserName">
+                        שם משתמש:</label>
+                    <input type="text" name="UserName" id="UserName" value="" placeholder="שם משתמש" />
+                </div>
+                <div data-role="fieldcontain" class="ui-hide-label">
+                    <label for="Password">
+                        סיסמה:</label>
+                    <input type="password" name="Password" id="Password" value="" placeholder="סיסמה" />
+                </div>
                 <br />
-                <label for="UserName">
-                    שם משתמש:</label>
-                <input type="text" name="UserName" id="UserName" value="" placeholder="שם משתמש" />
+                <input type="button" id="LoginBTN" value="התחבר" />
             </div>
-            <div data-role="fieldcontain" class="ui-hide-label">
-                <label for="Password">
-                    סיסמה:</label>
-                <input type="password" name="Password" id="Password" value="" placeholder="סיסמה" />
+            <!-- /content -->
+        </div>
+        <!-- /page -->
+        <div data-role="page" id="ProjectsPage">
+            <div data-role="header" data-theme="a" data-position='fixed'>
+                <h1>
+                    פרויקטים
+                </h1>
+                <a data-iconpos="notext" onclick="Logout()" class="ui-icon-power-white" style="border: solid 2px white">
+                </a>
             </div>
-            <br />
-            <input type="button" id="LoginBTN" value="התחבר" />
+            <!-- /header -->
+            <div data-role="content">
+                <ul id="ProjectsList" data-role="listview" data-theme="c" data-inset="true" data-filter="true"
+                    data-filter-placeholder="חפש פרויקט...">
+                </ul>
+            </div>
+            <!-- /content -->
         </div>
-        <!-- /content -->
+        <!-- /page -->
     </div>
-    <!-- /page -->
-    <div data-role="page" id="ProjectsPage">
-        <div data-role="header" data-theme="a" data-position='fixed'>
-            <h1>
-                פרויקטים
-            </h1>
-            <a data-iconpos="notext" onclick="Logout()" class = "ui-icon-power-white" style="border:solid 2px white">
-            </a>
-        </div>
-        <!-- /header -->
-        <div data-role="content">
-            <ul id="ProjectsList" data-role="listview" data-theme="c" data-inset="true" data-filter="true"
-                data-filter-placeholder="חפש פרויקט...">
-            </ul>
-        </div>
-        <!-- /content -->
-    </div>
-    <!-- /page -->
 </body>
 </html>

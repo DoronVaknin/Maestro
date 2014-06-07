@@ -18,6 +18,13 @@ $(document).ready(function () {
     $("#LoginBTN").parent().css({ "width": "36%", "margin": "auto" });
 });
 
+$(document).on("mobileinit", function () {
+    // Setting #Container div as a jQuery Mobile pageContainer
+    $.mobile.pageContainer = $('#Container');
+    // Setting default page transition to slide
+    $.mobile.defaultPageTransition = 'slide';
+});
+
 $(document).on("change", ".HatchStatusDDL", function () {
     var sHatchStatus = $(this).find(":selected").text();
     var bShowFailureDDL = sHatchStatus == "תקלה";

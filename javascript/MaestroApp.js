@@ -26,6 +26,13 @@ $(document).ready(function () {
     //    });
 });
 
+$(document).on("mobileinit", function () {
+    // Setting #Container div as a jQuery Mobile pageContainer
+    $.mobile.pageContainer = $('#Container');
+    // Setting default page transition to slide
+    $.mobile.defaultPageTransition = 'slide';
+});
+
 $(window).resize(ResizeMapCanvas);
 
 function ResizeMapCanvas() {
@@ -41,8 +48,8 @@ $(document).on("click", ".HatchBTN", function () {
 });
 
 $(document).on("click", "#MapBTN", function () {
-    Goto("ServiceCallsMap");
-    ResizeMapCanvas();
+    Goto("HybridMap");
+    setTimeout(ResizeMapCanvas, 200);
     setTimeout(InitializeGoogleMap, 500);
     setTimeout(PopulateGoogleMap, 800);
 });
@@ -695,9 +702,7 @@ function GetCoordinatesByAddress(sAddress) {
 }
 
 function UploadPicture() {
-    //    dataString = "{ HatchID: '" + Picture.HatchID + "', PictureDesc: '" + Picture.PictureDesc + "', DateTaken: '" + Picture.DateTaken + "', ImageURL: '" + Picture.ImageURL + "' }";
     dataString = JSON.stringify(Picture);
-    //    alert(dataString);
     $.ajax({ // ajax call starts
         url: 'MaestroWS.asmx/UploadPicture',   // JQuery call to the server side method
         data: dataString,    // the parameters sent to the server
@@ -723,8 +728,6 @@ function TakePicturePrepare(hID) {
     Picture["PictureDesc"] = $.trim($("#Hatch" + hID + "PicDesc").val());
     $("#Hatch" + hID + "PicDesc").val("");
     $("#Hatch" + hID + "CancelButton").click();
-    //    Picture["DateTaken"] = GetCurrentDate();
-    //    Picture["ImageURL"] = "http://proj.ruppin.ac.il/igroup9/prod/images/hatches/HatchTest.jpg";
     TakePicture();
 }
 
@@ -744,9 +747,7 @@ function uploadPhoto(imageURI) {
     var options = new FileUploadOptions(); // PhoneGap object to allow server upload
     options.fileKey = "file";
     var iPicIndex = GetObjectSize(PicsAndPins[Picture.hID]) + 1;
-    //    alert("iPicIndex: " + iPicIndex);
     options.fileName = $.mobile.activePage.attr("id") + "_" + iPicIndex; // file name
-    //    alert("filename: " + options.fileName);
     options.mimeType = "image/jpeg"; // file type
     var params = {}; // Optional parameters
     params.value1 = "test";
@@ -755,7 +756,6 @@ function uploadPhoto(imageURI) {
 
     Picture["DateTaken"] = GetCurrentDate();
     Picture["ImageURL"] = "http://proj.ruppin.ac.il/igroup9/prod/images/hatches/" + options.fileName + ".jpg";
-    //    alert("URL: " + Picture.ImageURL);
     var ft = new FileTransfer();
     ft.upload(imageURI, encodeURI("http://proj.ruppin.ac.il/igroup9/prod/images/hatches/ReturnValue.ashx"), win, fail, options); // Upload
 } // Upload Photo
