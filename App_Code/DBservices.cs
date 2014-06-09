@@ -1070,7 +1070,7 @@ public class DBservices
         }
     }
 
-    public int UpdateOrderDetails(int oID, int Quantity, int OrderStatus, DateTime EstimatedDOA)
+    public int UpdateOrderDetails(int oID, int Quantity, int OrderStatusID, DateTime EstimatedDOA)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateOrderDetails]", con))
@@ -1083,8 +1083,10 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@OrderID", oID);
                 sqlComm.Parameters.AddWithValue("@Quantity", Quantity);
-                sqlComm.Parameters.AddWithValue("@OrderStatus", OrderStatus);
+                sqlComm.Parameters.AddWithValue("@OrderStatus", OrderStatusID);
                 sqlComm.Parameters.AddWithValue("@EstimatedDateOfArrival", EstimatedDOA);
+                if (OrderStatusID == 3)
+                sqlComm.Parameters.AddWithValue("@DateOfArrival", DateTime.Today.Date);
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;

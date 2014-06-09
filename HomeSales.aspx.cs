@@ -35,7 +35,7 @@ public partial class _Default : System.Web.UI.Page
         ProjectName.Value = PriceOfferGV.SelectedRow.Cells[1].Text;
         CustomerMobilePhone.Value = PriceOfferGV.SelectedRow.Cells[2].Text;
         ProjectComments.Text = PriceOfferGV.SelectedRow.Cells[3].Text;
-        CustomerBackDate.Value = (Convert.ToDateTime(PriceOfferGV.SelectedRow.Cells[4].Text)).ToString("MM/dd/yyyy");
+        CustomerBackDate.Value = DateTime.ParseExact(PriceOfferGV.SelectedRow.Cells[4].Text, "dd/MM/yyyy", null).ToString("MM/dd/yyyy");
 
         Page.ClientScript.RegisterStartupScript(this.GetType(), "FixTextAreaIssue", "FixTextAreaIssue('EditUndecidedCustomerTBL');", true);
     }

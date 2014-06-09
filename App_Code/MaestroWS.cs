@@ -495,7 +495,7 @@ public class MaestroWS : System.Web.Services.WebService
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public string InsertNewNotification(string Message, string MessageDate, string eID)
     {
-        Notification n = new Notification(Message, Convert.ToDateTime(MessageDate), Convert.ToInt32(eID), 0);
+        Notification n = new Notification(Message, DateTime.ParseExact(MessageDate, "dd/MM/yyyy", null), Convert.ToInt32(eID), 0);
         int RowAffected = n.InsertNewNotification();
 
         // create a json serializer object

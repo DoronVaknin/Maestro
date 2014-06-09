@@ -334,9 +334,9 @@ function GetUsernameID() {
 function UpdateHatchDetails(oHatchDetails, pID, sHatchType, sHatchStatus, sFailureType, bStatusFailure) {
     function InsertHatchFailureNotification() {
         var Notification = {};
-        Notification["nNotification"] = "לפתח מס' " + oHatchDetails.HatchID + " בפרויקט " + Hatches[pID][0].Name + " דווחה תקלה בייצור, התקלה היא " + sFailureType + ": " + oHatchDetails.Comments;
-        Notification["nDate"] = oHatchDetails.Date;
-        Notification["eID1"] = "302042267";
+        Notification["Message"] = "לפתח מס' " + oHatchDetails.HatchID + " בפרויקט " + Hatches[pID][0].Name + " דווחה תקלה בייצור, התקלה היא " + sFailureType + ": " + oHatchDetails.Comments;
+        Notification["MessageDate"] = oHatchDetails.Date;
+        Notification["eID"] = "302042267";
 
         dataString = JSON.stringify(Notification);
         $.ajax({ // ajax call starts

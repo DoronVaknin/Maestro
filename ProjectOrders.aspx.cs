@@ -66,7 +66,7 @@ public partial class Default : System.Web.UI.Page
         ProjectOrderID.Text = ProjectOrdersGV.SelectedRow.Cells[2].Text;
         ProjectOrderDateOpened.Text = ProjectOrdersGV.SelectedRow.Cells[3].Text;
         ProjectOrderItemName.Text = ProjectOrdersGV.SelectedRow.Cells[4].Text;
-        ProjectOrderEstimatedDOA.Text = (Convert.ToDateTime(ProjectOrdersGV.SelectedRow.Cells[5].Text)).ToString("MM/dd/yyyy");
+        ProjectOrderEstimatedDOA.Text = DateTime.ParseExact(ProjectOrdersGV.SelectedRow.Cells[5].Text, "dd/MM/yyyy", null).ToString("MM/dd/yyyy");
         ProjectOrderQuantity.Text = ProjectOrdersGV.SelectedRow.Cells[6].Text;
         ProjectOrderSupplier.Text = ProjectOrdersGV.SelectedRow.Cells[7].Text;
         ListItem li = ProjectOrderStatus.Items.FindByText(ProjectOrdersGV.SelectedRow.Cells[8].Text);
