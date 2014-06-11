@@ -1078,9 +1078,21 @@ var oPosition = {};
 function InitializeGoogleMap() {
     var mapOptions = {
         center: new google.maps.LatLng(32.321458, 34.853196),
-        zoom: 10
+        zoom: 10,
+//        mapTypeId: google.maps.MapTypeId.HYBRID
     };
     Map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+    // Create the legend and display on the map
+    var legend = document.createElement('div');
+    legend.id = 'legend';
+    var content = [];
+//    content.push('<h3>מקרא</h3>');
+    content.push('<p><div class="color red"></div>קריאת שירות</p>');
+    content.push('<p><div class="color blue"></div>פרויקט</p>');
+    legend.innerHTML = content.join('');
+    legend.index = 1;
+    Map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend);
 }
 
 function PopulateGoogleMap() {

@@ -451,7 +451,7 @@ div.cntr input[type=button], div.cntr button
 
 #MapContainer h2
 {
-    margin-top: 0;    
+    margin-top: 0;
 }
 
 
@@ -466,6 +466,41 @@ div.cntr input[type=button], div.cntr button
     box-shadow: 2px 2px 2px;
 }
 
+#legend
+{
+    background: #FFF;
+    padding: 0 10px;
+    margin: 5px;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px gray;
+    border: 1px solid gray;
+    line-height: 15px;
+}
+
+.color
+{
+    border: 1px solid;
+    height: 12px;
+    width: 12px;
+    margin-right: 3px;
+    float: left;
+    margin-top: 3px;
+}
+
+.red
+{
+    background: #C00;
+    margin-top: 10px;
+}
+
+.blue
+{
+    background: #06C;
+}
+
+/* NewsBox */
 #NewsBox
 {
     float: left;
@@ -505,7 +540,7 @@ div.cntr input[type=button], div.cntr button
 
 h2
 {
-    text-align: center;    
+    text-align: center;
 }
 
 
