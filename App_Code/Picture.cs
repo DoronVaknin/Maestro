@@ -64,4 +64,11 @@ public class Picture
         int RowAffected = dbs.UploadPicture(this);
         return RowAffected;
     }
+
+    public int GetTableCurrentIdentity(string TableName)
+    {
+        DBservices dbs = new DBservices();
+        int Identity = dbs.GetTableCurrentIdentity(TableName);
+        return Identity;
+    }
 }

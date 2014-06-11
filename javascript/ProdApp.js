@@ -224,7 +224,6 @@ function BuildHatchesList(ProjID) {
 function BuildHatchesListPerProject() {
     str = "";
     for (var pID in Hatches) {
-        //Projects[pID][1].HatchesImageURL
         str += '<div data-role="page" id="HatchesOfProject' + pID + '">';
         str += '<div data-role="header" data-theme="a"><h1>' + Hatches[pID][0].Name + '</h1>';
         str += '<a href="#ProjectsPage" data-icon="back" data-iconpos="notext" style="border: none;"></a>';
@@ -254,7 +253,6 @@ function BuildHatchesPagePerProject() {
         for (var Hatch in Hatches[pID]) {
             str += '<div data-role="page" id="Hatch' + Hatches[pID][Hatch].HatchID + '">';
             str += "<div data-role='header' data-theme='a'><h1>פתח מס' " + Hatches[pID][Hatch].HatchID + '</h1>';
-            //            str += '<a class = "HatchDetailsBackBTN" href="#HatchesOfProject' + pID + '" data-icon="back" data-iconpos="notext" style="border: none;"></a></div>';
             str += '<a onclick = "RestorePage(' + pID + ')" data-icon="back" data-iconpos="notext" style="border: none;"></a></div>';
             str += '<div data-role="content">';
 
@@ -398,12 +396,6 @@ function BuildHatchDetailsPage(oHatch) {
     str += "<p><b>סטטוס: </b>" + Hatches[iProjID][iHatchID].HatchStatus + "</p>";
     str += "<p><b>סוג הפתח: </b>" + Hatches[iProjID][iHatchID].HatchType + "</p>";
 
-    //    str += '</br><a href = "#myPopup" data-role = "button" data-rel="popup">Popup Image</a>';
-
-    //    str += '</br><div id="myPopup" data-role="popup" class = "photopopup">';
-    //    str += '<a href="#Hatch' + iHatchID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
-    //    str += '<img src = "' + Projects[iProjID][1].HatchesImageURL + '" /></div>';
-
     str += "</div>" // close the content
 
     str += "<div data-role='footer' data-position='fixed' data-theme='a'>";
@@ -460,11 +452,9 @@ function MakeAssociativeArray(Arr, bReturnObj, iInternalKeyIndex) {
     bReturnObj ? UnifiedArr = {} : UnifiedArr = [];
     for (var i = 0; i < Arr.length; i++) {
         var TempArr = {};
-        //        var counter = 0;
         for (var j = 0; j < Arr[i].length; j++) {
             for (var field in Arr[i][j]) {
                 TempArr[field] = eval("Arr[i][j]." + field);
-                //                counter++;
             }
         }
         UnifiedArr[Arr[i][iInternalKeyIndex].HatchID] = TempArr;

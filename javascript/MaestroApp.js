@@ -6,24 +6,15 @@ var Hatches = {};
 var PicsAndPins = {};  //Pictures & Pins
 var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, ServiceCallsList[scID][1] - Customer details, ServiceCallsList[scID][2] - Project details
 var Picture = {};
+var iPictureCurrentID;
 
 $(document).ready(function () {
-    //    $("#LoginBTN").click(Login);
-
     GetProjectsNamesList();
     GetProjects(); //  read all the projects
     GetHatches();
     GetOpenedServiceCalls();
 
-    //some css settings
-    //    $("#LoginBTN").parent().css({ "width": "36%", "margin": "auto" });
-
     $("#ProblemDescriptionTA").val(""); //fix extra space issue
-
-    //Google map for service calls and projects
-    //    $("#MapBTN").click(function () {
-    //        //        ResizeMapCanvas();
-    //    });
 });
 
 $(document).on("mobileinit", function () {
@@ -42,9 +33,12 @@ function ResizeMapCanvas() {
 }
 
 $(document).on("click", ".HatchBTN", function () {
-    var sHref = $(this).attr("href");
-    var sHatchID = sHref.substring(6, sHref.length + 1);
-    BuildHatchPage(sHatchID);
+    var sHatchID = $(this).attr("href");
+    sHatchID = sHatchID.substring(6, sHatchID.length + 1);
+    var sProjectID = $.mobile.activePage.attr("id");
+    sProjectID = sProjectID.substring(16, sProjectID.length + 1);
+    if ($('#Hatch' + sHatchID).length == 0)
+        BuildHatchPage(sHatchID, sProjectID);
 });
 
 $(document).on("click", "#MapBTN", function () {
@@ -54,43 +48,21 @@ $(document).on("click", "#MapBTN", function () {
     setTimeout(PopulateGoogleMap, 800);
 });
 
-//function Login() {
-//    var sUsername = $.trim($("#UserName").val());
-//    var sPassword = $.trim($("#Password").val());
-//    if (IsEmpty(sUsername) || IsEmpty(sPassword)) {
-//        alert("אנא הזן שם משתמש וסיסמה לפני התחברות");
-//        return;
-//    }
-//    ShowLoading("מתחבר");
-//    dataString = "{ Username: '" + sUsername + "', Password: '" + sPassword + "' }";
-//    $.ajax({ // ajax call starts
-//        url: 'MaestroWS.asmx/Login',   // JQuery call to the server side method
-//        data: dataString,    // the parameters sent to the server
-//        type: 'POST',        // can be post or get
-//        dataType: 'json',    // Choosing a JSON datatype
-//        contentType: 'application/json; charset = utf-8', // of the data received
-//        success: function (data) // Variable data contains the data we get from serverside
-//        {
-//            if (data.d == "true") {
-//                $("#UserName, #Password").val("");
-//                HideLoading();
-//                window.location = "#MainMenuPage";
-//                GetProjects(); //  read all the projects
-//                GetHatches();
-//                GetOpenedServiceCalls();
-//                GetProjectsNamesList();
-//            }
-//            else {
-//                HideLoading();
-//                alert("שם משתמש או סיסמה לא נכונים");
-//            }
-//        }, // end of success
-//        error: function (e) {
-//            HideLoading();
-//            alert("failed to login: " + e.responseText);
-//        } // end of error
-//    });                    // end of ajax call
-//}
+$(document).on("click", ".ImagesContainer img", function () {
+    var $Image = $(this).clone();
+    var sImageURL = $Image.attr("src");
+    var iIndex = sImageURL.lastIndexOf("/");
+    sImageURL = sImageURL.substr(iIndex + 1);
+    iIndex = sImageURL.indexOf("_");
+    var sPicID = sImageURL.substring(iIndex + 1, sImageURL.length - 4); //extract picture id only without the extension
+
+    $Image.attr("id", "Picture" + sPicID);
+    var sHatchID = $.mobile.activePage.attr("id");
+    $("#PictureEdit a[data-icon='back']").attr("href", "#" + sHatchID);
+    $Image.attr("onclick", "imgOnclick(event, this)");
+    $("#ImageHolder").html($Image);
+    Goto("PictureEdit");
+});
 
 //----------------------------------------------------------------------------
 // build the Projects page
@@ -200,15 +172,15 @@ function GetHatches() {
             h = MergeInsideArrays(h);
             for (var i in h) {
                 if (typeof Hatches[h[i].pID] != "object")
-                    Hatches[h[i].pID] = [];
-                Hatches[h[i].pID].push(h[i]);
+                    Hatches[h[i].pID] = {};
+                Hatches[h[i].pID][h[i].HatchID] = h[i];
             }
             BuildHatchesListPerProject();
         }, // end of success
         error: function (e) { // this function will be called upon failure
             alert("failed to get project's hatches: " + e.responseText);
         } // end of error
-    });                    // end of ajax call
+    });                      // end of ajax call
 }
 
 //------------------------------------------------------
@@ -216,10 +188,10 @@ function GetHatches() {
 //------------------------------------------------------
 function BuildHatchesList(pID) {
     var sHTML = "";
-    for (var j in Hatches[pID]) {
-        sHTML += "<li><a class = 'HatchBTN' data-ajax = 'false' href = '#Hatch" + Hatches[pID][j].HatchID + "'>";
-        sHTML += "<h1>פתח מס' " + Hatches[pID][j].HatchID + "</h1>";
-        sHTML += "<p>" + Hatches[pID][j].HatchStatus + "</p>";
+    for (var hID in Hatches[pID]) {
+        sHTML += "<li><a class = 'HatchBTN' data-ajax = 'false' href = '#Hatch" + Hatches[pID][hID].HatchID + "'>";
+        sHTML += "<h1>פתח מס' " + Hatches[pID][hID].HatchID + "</h1>";
+        sHTML += "<p>" + Hatches[pID][hID].HatchStatus + "</p>";
         sHTML += "</a></li>";
     }
     return sHTML;
@@ -255,10 +227,10 @@ function BuildHatchesListPerProject() {
 //----------------------------------------------------------------------------
 // build the Hatch details page
 //----------------------------------------------------------------------------
-function BuildHatchPage(HatchID) {
+function BuildHatchPage(sHatchID, sProjectID) {
     $.ajax({ // ajax call start
         url: 'MaestroWS.asmx/GetPicsAndPins',
-        data: "{ HatchID : " + HatchID + "}", // Send value of the project id
+        data: "{ HatchID : " + sHatchID + "}", // Send value of the project id
         dataType: 'json', // Choosing a JSON datatype for the data sent
         type: 'POST',
         async: false, // this is a synchronous call
@@ -281,10 +253,9 @@ function BuildHatchPage(HatchID) {
             alert("failed to get Pictures and Pins: " + e.responseText);
         } // end of error
     });                    // end of ajax call
-    for (var pID in Projects)
-        for (var hID in Hatches[pID])
-            BuildHatchDetailsPage(Hatches[pID][hID]); // build a page for each hatch
-    //    $('.HatchNavbar').navbar('refresh');
+
+    BuildHatchDetailsPage(Hatches[sProjectID][sHatchID]);
+    BuildHatchPicturesPage(sProjectID, sHatchID);
 }
 
 function BuildHatchDetailsPage(oHatch) {
@@ -305,11 +276,6 @@ function BuildHatchDetailsPage(oHatch) {
     str += "<p><b>סטטוס: </b>" + oHatch.HatchStatus + "</p>";
     str += "<p><b>סוג הפתח: </b>" + oHatch.HatchType + "</p>";
 
-    //    str += '<br><a href = "#myPopup" data-role = "button" data-rel="popup">Popup Image</a>';
-
-    //    str += '<br><div id="myPopup" data-role="popup" class = "photopopup">';
-    //    str += '<a href="#Hatch' + iHatchID + '" data-role = "button" data-icon="delete" data-iconpos = "notext" class="ui-corner-all ui-shadow ui-btn-a ui-btn-right" style = "border:none;" ></a>';
-    //    str += '<img src = "' + Projects[iProjID][1].HatchesImageURL + '" /></div>';
     str += BuildHatchDialog(oHatch.HatchID);
 
     str += "</div>" // close the content
@@ -324,6 +290,40 @@ function BuildHatchDetailsPage(oHatch) {
     str += "</div>"; // close the footer
 
     str += "</div>";  // close the page
+
+    //append it to the page container
+    var newPage = $(str);
+    newPage.appendTo($.mobile.pageContainer);
+}
+
+//----------------------------------------------------------------------------
+// build images page per hatch
+//----------------------------------------------------------------------------
+function BuildHatchPicturesPage(pID, hID) {
+    var str = "";
+
+    // build a page
+    str += "<div data-role = 'page' id = 'PicturesOfHatch" + Hatches[pID][hID].HatchID + "'>";
+
+    // build the header
+    str += "<div data-role = 'header' data-position='fixed' data-theme='a'>";
+    str += "<h1> תמונות - פתח " + Hatches[pID][hID].HatchID + "</h1>";
+    str += "<a href='#Hatch" + Hatches[pID][hID].HatchID + "' data-icon='back' data-iconpos = 'notext' style = 'border:none;'></a>";
+    str += "</div>"; //close the header
+
+    // build the content div
+    str += "<div data-role = 'content'>";
+    str += "<div class='ImagesContainer'>";
+
+    for (var picID in PicsAndPins[hID])
+        str += "<img id = 'Picture" + PicsAndPins[hID][picID].PictureID + "' src='" + PicsAndPins[hID][picID].ImageURL + "' />";
+
+    str += "</div>";
+
+    str += "</div>";  // close the content
+    str += "</div>";  // close the page
+    //        }
+    //    }
 
     //append it to the page container
     var newPage = $(str);
@@ -594,17 +594,29 @@ function GetCurrentDate() {
     return today;
 }
 
-function GetObjectSize(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
+function GetTableCurrentIdentity(sTableName) {
+    var oTableName = { TableName: sTableName };
+    dataString = JSON.stringify(oTableName);
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/GetTableCurrentIdentity',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        async: false,
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            iPictureCurrentID = $.parseJSON(data.d);
+        }, // end of success
+        error: function (e) {
+            alert("failed to get table identity: " + e.responseText);
+        } // end of error
+    });
+    return iPictureCurrentID;
 }
 
 /** Google Maps **/
 var Map;
-//var InfoWindow;
 var oPosition = {};
 
 function InitializeGoogleMap() {
@@ -642,7 +654,6 @@ function ShowServiceCallPin(oPosition, sID) {
                 '<p><b>טלפון נייד: </b>' + ServiceCallsList[sID][1].Mobile + '</p>' +
                 '<p><b>כתובת: </b>' + ServiceCallsList[sID][1].Address + '</p>' +
                 '<p><b>תיאור התקלה: </b>' + ServiceCallsList[sID][0].Description + '</p>' +
-    //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
                 '</div>' +
                 '</div>';
 
@@ -672,7 +683,6 @@ function ShowProjectPin(oPosition, pID) {
                 '<div class="bodyContent">' +
                 '<p><b>טלפון נייד: </b>' + Projects[pID].Mobile + '</p>' +
                 '<p><b>כתובת: </b>' + Projects[pID].Address + '</p>' +
-    //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
                 '</div>' +
                 '</div>';
 
@@ -718,10 +728,10 @@ function UploadPicture() {
         error: function (e) {
             alert("failed to upload picture: " + e.responseText);
         } // end of error
-    });                       // end of ajax call
+    });                      // end of ajax call
 }
 
-//PhoneGap functions
+/* PhoneGap functions */
 
 function TakePicturePrepare(hID) {
     Picture["HatchID"] = hID;
@@ -734,9 +744,9 @@ function TakePicturePrepare(hID) {
 function TakePicture() {
     navigator.camera.getPicture(
     uploadPhoto,
-    function (message) { alert('get picture failed' + message); },
+    function (message) { alert('failed to get picture' + message); },
     {
-        quality: 50,
+        quality: 75,
         destinationType: navigator.camera.DestinationType.FILE_URI,
         sourceType: navigator.camera.PictureSourceType.CAMERA
     });  // PhoneGap method for retrieving an image from the phone's camera
@@ -746,7 +756,7 @@ function uploadPhoto(imageURI) {
     ShowLoading("מעלה תמונה"); // Start the spinning "working" animation
     var options = new FileUploadOptions(); // PhoneGap object to allow server upload
     options.fileKey = "file";
-    var iPicIndex = GetObjectSize(PicsAndPins[Picture.hID]) + 1;
+    var iPicIndex = GetTableCurrentIdentity("Picture") + 1;
     options.fileName = $.mobile.activePage.attr("id") + "_" + iPicIndex; // file name
     options.mimeType = "image/jpeg"; // file type
     var params = {}; // Optional parameters

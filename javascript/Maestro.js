@@ -190,7 +190,6 @@ function BuildLateProgressBar(dPercent, iIndex) {
     var sHTML = "";
     sHTML += '<div class="progress">';
     sHTML += '<div class="progress-bar progress-bar-' + GetRelevantDesc() + '" role="progressbar" aria-valuenow="' + dPercent + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + dPercent + '%">';
-    //    sHTML += '<span class="sr-only">' + dPercent + '% Complete</span>';
     sHTML += dPercent > 15 ? dPercent + "%" : "";
     sHTML += '</div>';
     var Cells = $("#ContentPlaceHolder3_WorstSuppliersGV td:nth-child(3)");
@@ -745,11 +744,9 @@ function MarkInvalid(id, cb, bSelector, sMessage) {
     var sFunctionCalledName = arguments.callee.caller.name;
     if (bSelector) {
         $(id).toggleClass("Invalid", bInvalid);
-        //$(id).prev().find(".InvalidText").toggle(bInvalid);
     } else {
         $(id).toggleClass("Invalid", bInvalid);
         if (bInvalid && sMessage != "") {
-            //$(id).parent().prev().find(".InvalidText").toggle(bInvalid);
             switch (sFunctionCalledName) {
                 case "ValidateNewCustomer":
                 case "ValidateNewProject":
@@ -940,30 +937,6 @@ function myTrim(S, c) {
     return s;
 }
 
-//Cities AutoCompletion
-//$.ajax({
-//    url: "xmlFiles/IsraelCities.xml",
-//    type: "GET",
-//    dataType: "xml",
-//    success: function (xmlResponse) {
-//        var data = $("City", xmlResponse).map(function () {
-//            return {
-//                value: $(this).attr("Heb")
-//            };
-//        }).get();
-//        $(".City").autocomplete({
-//            source: function (req, response) {
-//                var re = $.ui.autocomplete.escapeRegex(req.term);
-//                var matcher = new RegExp("^" + re, "i");
-//                response($.grep(data, function (item) {
-//                    return matcher.test(item.value);
-//                }));
-//            },
-//            minLength: 1
-//        });
-//    }
-//});
-
 //DRAG & DROP
 function sendFileToServer(formData, status) {
     var uploadURL = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) + "files/ReturnValue.ashx";   //Upload URL
@@ -1138,7 +1111,6 @@ function ShowServiceCallPin(oPosition, sID) {
 				'<p><b>טלפון נייד: </b>' + ServiceCallsList[sID][1].Mobile + '</p>' +
 				'<p><b>תיאור התקלה: </b>' + ServiceCallsList[sID][0].Description + '</p>' +
 				(ServiceCallsList[sID][0].Urgent ? "<p><b>*קריאה דחופה*</b></p>" : "") +
-    //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
 				'</div>' +
 				'</div>';
 
@@ -1168,7 +1140,6 @@ function ShowProjectPin(oPosition, pID) {
 				'<div class="bodyContent">' +
 				'<p><b>טלפון נייד: </b>' + Projects[pID].Mobile + '</p>' +
 				'<p><b>כתובת: </b>' + Projects[pID].Address + '</p>' +
-    //                "<img src='" + poiPoint.ImageUrl + "' style = 'height:50px;' />" +
 				'</div>' +
 				'</div>';
 
@@ -1326,7 +1297,6 @@ function BuildNewsBox(oNotifications) {
             sHTML += '<table cellpadding="4">';
             sHTML += '<tr>';
             sHTML += '<td>';
-            //        sHTML += '<img src="images/1.png" width="60" class="img-circle" />';
             sHTML += '</td>';
             sHTML += ConvertToDate(oNotifications[i].nDate) + ": " + oNotifications[i].nNotification;
             sHTML += '<td>';
@@ -1358,7 +1328,7 @@ function GetSpecialNotifications(iEmployeeID) {
         error: function (e) { // this function will be called upon failure
             alert("failed to get special notifications: " + e.responseText);
         } // end of error
-    });                 // end of ajax call
+    });  // end of ajax call
 }
 
 function HandleSpecialNotifications() {

@@ -629,4 +629,32 @@ public class MaestroWS : System.Web.Services.WebService
         string jsonString = js.Serialize(myAL);
         return jsonString;
     }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string InsertNewPin(double x, double y, string message, string audioPath, string videoPath, int PictureID)
+    {
+        Pin p = new Pin(x, y, message, audioPath, videoPath, PictureID);
+        int RowAffected = p.InsertNewPin();
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string GetTableCurrentIdentity(string TableName)
+    {
+        Picture p = new Picture();
+        int Identity = p.GetTableCurrentIdentity(TableName);
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(Identity);
+        return jsonString;
+    }
 }

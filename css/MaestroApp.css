@@ -58,13 +58,14 @@ div.ui-navbar ul li .ui-icon-camera-white
     border-style: hidden;
 }
 
-#map-canvas {
+#map-canvas
+{
     padding: 0;
-    position : absolute !important; 
-    top : 40px !important;  
-    right : 0; 
-    bottom : 0 !important;  
-    left : 0 !important;     
+    position: absolute !important;
+    top: 40px !important;
+    right: 0;
+    bottom: 0 !important;
+    left: 0 !important;
 }
 
 #HybridMap ui-content
@@ -81,4 +82,39 @@ div.ui-navbar ul li .ui-icon-camera-white
 .CloseServiceCallsPopup
 {
     width: 270px;
+}
+
+.ImagesContainer
+{
+    margin: 0 auto;
+    width: 116%;
+}
+
+.ImagesContainer img
+{
+    margin: 5px;
+    width: 28%;
+    border: 1px solid gray;
+    box-shadow: 1px 1px 1px gray;
+}
+
+#ImageContainer
+{
+    text-align: center;
+}
+
+#ImageContainer img
+{
+    width: 100%;
+}
+
+#PictureEdit .ui-content
+{
+    padding: 0;
+}
+
+#PictureEdit .ui-content a
+{
+    width: 50%;
+    margin: 0 auto;
 }

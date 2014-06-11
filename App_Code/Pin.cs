@@ -8,12 +8,22 @@ using System.Web;
 /// </summary>
 public class Pin
 {
-	public Pin()
-	{
-		//
-		// TODO: Add constructor logic here
-		//
-	}
+    public Pin()
+    {
+        //
+        // TODO: Add constructor logic here
+        //
+    }
+
+    public Pin(double _CoordinateX, double _CoordinateY, string _Comment, string _AudioURL, string _VideoURL, int _PictureID)
+    {
+        CoordinateX = _CoordinateX;
+        CoordinateY = _CoordinateY;
+        Comment = _Comment;
+        AudioURL = _AudioURL;
+        VideoURL = _VideoURL;
+        PictureID = _PictureID;
+    }
 
     int pinID;
     public int PinID
@@ -55,5 +65,19 @@ public class Pin
     {
         get { return videoURL; }
         set { videoURL = value; }
+    }
+
+    int pictureID;
+    public int PictureID
+    {
+        get { return pictureID; }
+        set { pictureID = value; }
+    }
+
+    public int InsertNewPin()
+    {
+        DBservices dbs = new DBservices();
+        int RowAffected = dbs.InsertNewPin(this);
+        return RowAffected;
     }
 }

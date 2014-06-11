@@ -85,7 +85,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@SuperName", p.SupervisorName);
                 sqlComm.Parameters.AddWithValue("@SuperPhone", p.SupervisorPhone);
                 sqlComm.CommandTimeout = 600;
-                int ProjectID = (int)sqlComm.ExecuteScalar();
+                int ProjectID = Convert.ToInt32(sqlComm.ExecuteScalar());
                 return ProjectID;
             }
             catch (Exception ex)
@@ -187,7 +187,7 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.Parameters.AddWithValue("@CustomerID", cID);
                 sqlComm.CommandTimeout = 600;
-                int value = (int)sqlComm.ExecuteScalar();
+                int value = Convert.ToInt32(sqlComm.ExecuteScalar());
                 return value;
             }
             catch (Exception ex)
@@ -304,7 +304,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@StatusName", StatusName);
 
                 sqlComm.CommandTimeout = 600;
-                int value = (int)sqlComm.ExecuteScalar();
+                int value = Convert.ToInt32(sqlComm.ExecuteScalar());
                 return value;
             }
             catch (Exception ex)
@@ -416,7 +416,7 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.CommandTimeout = 600;
                 sqlComm.Parameters.AddWithValue("@SupplierName", SupplierName);
-                int SupplierID = (int)sqlComm.ExecuteScalar();
+                int SupplierID = Convert.ToInt32(sqlComm.ExecuteScalar());
                 return SupplierID;
             }
             catch (Exception ex)
@@ -439,7 +439,7 @@ public class DBservices
                 sqlComm.CommandType = CommandType.StoredProcedure;
                 sqlComm.CommandTimeout = 600;
                 sqlComm.Parameters.AddWithValue("@RawMaterialName", RawMaterialName);
-                int ID = (int)sqlComm.ExecuteScalar();
+                int ID = Convert.ToInt32(sqlComm.ExecuteScalar());
                 return ID;
             }
             catch (Exception ex)
@@ -1086,7 +1086,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@OrderStatus", OrderStatusID);
                 sqlComm.Parameters.AddWithValue("@EstimatedDateOfArrival", EstimatedDOA);
                 if (OrderStatusID == 3)
-                sqlComm.Parameters.AddWithValue("@DateOfArrival", DateTime.Today.Date);
+                    sqlComm.Parameters.AddWithValue("@DateOfArrival", DateTime.Today.Date);
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;
@@ -1372,6 +1372,57 @@ public class DBservices
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public int InsertNewPin(Pin p)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spInsertNewPin]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@CoordinateX", p.CoordinateX);
+                sqlComm.Parameters.AddWithValue("@CoordinateY", p.CoordinateY);
+                sqlComm.Parameters.AddWithValue("@Comment", p.Comment);
+                sqlComm.Parameters.AddWithValue("@AudioURL", p.AudioURL);
+                sqlComm.Parameters.AddWithValue("@VideoURL", p.VideoURL);
+                sqlComm.Parameters.AddWithValue("@PictureID", p.PictureID);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public int GetTableCurrentIdentity(string TableName)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spGetTableCurrentIdentity]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@TableName", TableName);
+                sqlComm.CommandTimeout = 600;
+                int Identity = Convert.ToInt32(sqlComm.ExecuteScalar());
+                return Identity;
             }
             catch (Exception ex)
             {
