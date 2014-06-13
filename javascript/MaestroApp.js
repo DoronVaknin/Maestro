@@ -6,7 +6,7 @@ var Hatches = {};
 var PicsAndPins = {};  //Pictures & Pins
 var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, ServiceCallsList[scID][1] - Customer details, ServiceCallsList[scID][2] - Project details
 var Picture = {};
-var iPictureCurrentID;
+var iCurrentTableID;
 
 $(document).ready(function () {
     GetProjectsNamesList();
@@ -37,7 +37,8 @@ $(document).on("click", ".HatchBTN", function () {
     sHatchID = sHatchID.substring(6, sHatchID.length + 1);
     var sProjectID = $.mobile.activePage.attr("id");
     sProjectID = sProjectID.substring(16, sProjectID.length + 1);
-    if ($('#Hatch' + sHatchID).length == 0)
+    var iLength = $('#Hatch' + sHatchID).length;
+    if (iLength == 0) // Build Hatch page only once
         BuildHatchPage(sHatchID, sProjectID);
 });
 
@@ -54,13 +55,14 @@ $(document).on("click", ".ImagesContainer img", function () {
     var iIndex = sImageURL.lastIndexOf("/");
     sImageURL = sImageURL.substr(iIndex + 1);
     iIndex = sImageURL.indexOf("_");
-    var sPicID = sImageURL.substring(iIndex + 1, sImageURL.length - 4); //extract picture id only without the extension
-
+    var sPicID = sImageURL.substring(iIndex + 1, sImageURL.length - 4); // extract picture id only without the extension
     $Image.attr("id", "Picture" + sPicID);
-    var sHatchID = $.mobile.activePage.attr("id");
-    $("#PictureEdit a[data-icon='back']").attr("href", "#" + sHatchID);
+    var sFullPathHatchID = $.mobile.activePage.attr("id");
+    $("#PictureEdit a[data-icon='back']").attr("href", "#" + sFullPathHatchID); // #PicturesOfHatch_
     $Image.attr("onclick", "imgOnclick(event, this)");
     $("#ImageHolder").html($Image);
+    var sHatchID = sFullPathHatchID.substr(sFullPathHatchID.length - 1);
+    LoadPins(sHatchID, sPicID);
     Goto("PictureEdit");
 });
 
@@ -241,18 +243,19 @@ function BuildHatchPage(sHatchID, sProjectID) {
             if (!IsEmpty(pnp)) {
                 pnp = MergeInsideArrays(pnp);
                 var hID = pnp[0].HatchID;
-                //                    if (typeof PicsAndPins[hID] != "object")
                 PicsAndPins[hID] = {};
                 for (var i in pnp) {
                     var picID = pnp[i].PictureID;
-                    PicsAndPins[hID][picID] = pnp[i];
+                    if (typeof PicsAndPins[hID][picID] != "object")
+                        PicsAndPins[hID][picID] = [];
+                    PicsAndPins[hID][picID].push(pnp[i]);
                 }
             }
         }, // end of success
         error: function (e) { // this function will be called upon failure
             alert("failed to get Pictures and Pins: " + e.responseText);
         } // end of error
-    });                    // end of ajax call
+    });                        // end of ajax call
 
     BuildHatchDetailsPage(Hatches[sProjectID][sHatchID]);
     BuildHatchPicturesPage(sProjectID, sHatchID);
@@ -314,9 +317,9 @@ function BuildHatchPicturesPage(pID, hID) {
     // build the content div
     str += "<div data-role = 'content'>";
     str += "<div class='ImagesContainer'>";
-
+    
     for (var picID in PicsAndPins[hID])
-        str += "<img id = 'Picture" + PicsAndPins[hID][picID].PictureID + "' src='" + PicsAndPins[hID][picID].ImageURL + "' />";
+        str += "<img id = 'Picture" + PicsAndPins[hID][picID][0].PictureID + "' src='" + PicsAndPins[hID][picID][0].ImageURL + "' />";
 
     str += "</div>";
 
@@ -540,7 +543,7 @@ function CreateServiceCall(oServiceCallDetails) {
 
 //Misc
 function IsEmpty(o) {
-    return (o == "" || o == null);
+    return (o === "" || o === null);
 }
 
 function MergeInsideArrays(Arr) {
@@ -606,13 +609,13 @@ function GetTableCurrentIdentity(sTableName) {
         async: false,
         success: function (data) // Variable data contains the data we get from serverside
         {
-            iPictureCurrentID = $.parseJSON(data.d);
+            iCurrentTableID = $.parseJSON(data.d);
         }, // end of success
         error: function (e) {
             alert("failed to get table identity: " + e.responseText);
         } // end of error
     });
-    return iPictureCurrentID;
+    return iCurrentTableID;
 }
 
 /** Google Maps **/

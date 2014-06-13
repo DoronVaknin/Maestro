@@ -171,17 +171,20 @@ public class MaestroWS : System.Web.Services.WebService
             Pin pin = new Pin();
 
             pic.HatchID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
-            pic.PictureID = Convert.ToInt32(dt.Rows[i].ItemArray[1]);
             pic.PictureDescription = dt.Rows[i].ItemArray[2].ToString();
             pic.DateTaken = Convert.ToDateTime(dt.Rows[i].ItemArray[3]);
             pic.ImageURL = dt.Rows[i].ItemArray[4].ToString();
 
-            pin.PinID = Convert.ToInt32(dt.Rows[i].ItemArray[5]);
-            pin.CoordinateX = Convert.ToDouble(dt.Rows[i].ItemArray[6]);
-            pin.CoordinateY = Convert.ToDouble(dt.Rows[i].ItemArray[7]);
-            pin.Comment = dt.Rows[i].ItemArray[8].ToString();
-            pin.AudioURL = dt.Rows[i].ItemArray[9].ToString();
-            pin.VideoURL = dt.Rows[i].ItemArray[10].ToString();
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[5])) // show pictures without pins
+            {
+                pin.PinID = Convert.ToInt32(dt.Rows[i].ItemArray[5]);
+                pin.PictureID = Convert.ToInt32(dt.Rows[i].ItemArray[1]);
+                pin.CoordinateX = Convert.ToDouble(dt.Rows[i].ItemArray[6]);
+                pin.CoordinateY = Convert.ToDouble(dt.Rows[i].ItemArray[7]);
+                pin.Comment = dt.Rows[i].ItemArray[8].ToString();
+                pin.AudioURL = dt.Rows[i].ItemArray[9].ToString();
+                pin.VideoURL = dt.Rows[i].ItemArray[10].ToString();
+            }
 
             myAL[i].Add(pic);
             myAL[i].Add(pin);

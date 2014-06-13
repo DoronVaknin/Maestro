@@ -1,5 +1,7 @@
-﻿var pinID = 0;
-var CurrentPinID;
+﻿/// <reference path="jquery-1.11.0.js" />
+
+var pinID = 0;
+var CurrentPinID = 0;
 var aPins = [];
 
 function pinObject(x, y, message, audioPath, videoPath, PictureID) {
@@ -13,16 +15,27 @@ function pinObject(x, y, message, audioPath, videoPath, PictureID) {
     return obj;
 }
 
-function pinHtmlString(id) {
+function LoadPins(sHatchID, sPicID) {
+    var hID = sHatchID;
+    var picID = sPicID;
+    for (var i in PicsAndPins[hID][picID]) {
+        var x = PicsAndPins[hID][picID][i].CoordinateX;
+        var y = PicsAndPins[hID][picID][i].CoordinateY;
+        var Image = $("#ImageHolder img");
+        CreatePin(x, y, Image, PicsAndPins[hID][picID][i]);
+    }
+}
+
+function BuildPin(sID) {
     sHTML = "";
-    sHTML += '<div id="pinWraper' + id + '"';
+    sHTML += '<div id="pinWraper' + sID + '"';
     sHTML += ' style="top:0; left:0; position:absolute;"><input type="image" src="images/pin.png" width="18" height="18" id="pinId'
-			+ id + '"';
-    sHTML += ' onclick="openPinDialog(' + id + ')"/></div>';
+			+ sID + '"';
+    sHTML += ' onclick="openPinDialog(' + sID + ')"/></div>';
     return sHTML;
 }
 
-function pinDialogHtml() {
+function BuildPinDialog() {
     sHTML = "";
     sHTML += "<div data-role='page' id='PinDialogMainPage'>";
     sHTML += "<div data-role='header'><h1>הוסף מזכר</h1></div>";
@@ -60,8 +73,8 @@ function recordMessage() {
 
     // Upload files to server
     function uploadFile(mediaFile) {
-        path = mediaFile.fullPath,
-            name = mediaFile.name;
+        path = mediaFile.fullPath;
+        name = mediaFile.name;
     }
 }
 
@@ -70,9 +83,8 @@ function recordVideo() {
 
     function captureSuccess(mediaFiles) {
         var i, len;
-        for (i = 0, len = mediaFiles.length; i < len; i++) {
+        for (i = 0, len = mediaFiles.length; i < len; i++)
             uploadFile(mediaFiles[i]);
-        }
     }
 
     function captureError(error) {
@@ -86,9 +98,9 @@ function recordVideo() {
     }
 }
 
-function openPinDialog(id) {
-    CurrentPinID = id;
-    $("#Container").append(pinDialogHtml());
+function openPinDialog(pinID) {
+    CurrentPinID = pinID;
+    $("#Container").append(BuildPinDialog());
     $.mobile.changePage("#PinDialogMainPage", { role: "dialog" });
 }
 
@@ -104,29 +116,40 @@ function pinDelete() {
     $('.ui-dialog').dialog('close');
 }
 
-function imgOnclick(e, img) {
-    var offset = $(img).offset();
+function imgOnclick(e, oImage) {
+    var offset = $(oImage).offset();
     var x = ((e.clientX - offset.left) - 1);
     var y = ((e.clientY - offset.top) - 18);
 
+    CreatePin(x, y, oImage);
+    openPinDialog(pinID - 1);
+}
+
+function CreatePin(x, y, oImage, oPin) {
+    var bIsNewPin = IsEmpty(oPin);
+
     var controlsElm = document.getElementById('controls');
-    controlsElm.insertAdjacentHTML('beforeend', pinHtmlString(pinID));
+    controlsElm.insertAdjacentHTML('beforeend', BuildPin(pinID));
 
     var pinWraper = document.getElementById('pinWraper' + pinID);
     pinWraper.style.left = x + "px";
     pinWraper.style.top = y + "px";
 
-    var sPictureID = $(img).attr("id");
+    var sPictureID = $(oImage).attr("id");
     sPictureID = sPictureID.substr(7);
     var iPictureID = parseInt(sPictureID);
 
-    aPins.push(pinObject(x, y, "", "", "", iPictureID));
-    openPinDialog(pinID);
+    var sComment = bIsNewPin ? "" : oPin.Comment;
+    var sAudioPath = bIsNewPin ? "" : oPin.AudioURL;
+    var sVideoPath = bIsNewPin ? "" : oPin.VideoURL;
 
+    var Pin = pinObject(x, y, sComment, sAudioPath, sVideoPath, iPictureID);
+    aPins.push(Pin);
     pinID++;
 }
 
 function SavePins() {
+    var iSuccess = 0;
     for (var pinID in aPins) {
         if (IsEmptyPin(aPins[pinID])) continue;
         dataString = JSON.stringify(aPins[pinID]);
@@ -140,13 +163,15 @@ function SavePins() {
             success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
             {
                 if (data.d != "0")
-                    alert("עריכת התמונה בוצעה בהצלחה");
+                    iSuccess++;
             }, // end of success
             error: function (e) { // this function will be called upon failure
                 alert("failed to save pins: " + e.responseText);
             } // end of error
-        });              // end of ajax call
+        });               // end of ajax call
     }
+    if (iSuccess > 0)
+        alert("עריכת התמונה בוצעה בהצלחה");
 
     //    var controlsElem = document.getElementById('controls1');
     //    loadPins1(aPins, controlsElem);
@@ -156,42 +181,38 @@ function IsEmptyPin(oPin) {
     return (IsEmpty(oPin.message) && IsEmpty(oPin.audioPath) && IsEmpty(oPin.videoPath));
 }
 
-function IsEmpty(o) {
-    return (o == "" || o == null);
-}
+//function loadPins1(pinObj, controlsElem) {
+//    for (var i = 0; i < pinObj.length; i++) {
+//        if (pinObj[i] != undefined) {
+//            var x = pinObj[i].x;
+//            var y = pinObj[i].y;
 
-function loadPins1(pinObj, controlsElem) {
-    for (var i = 0; i < pinObj.length; i++) {
-        if (pinObj[i] != undefined) {
-            var x = pinObj[i].x;
-            var y = pinObj[i].y;
+//            var boolean = false;
+//            var which;
+//            if (pinObj[i].message != "" && (pinObj[i].audioPath != "" || pinObj[i].videoPath != "")) {
+//                boolean = false;
 
-            var boolean = false;
-            var which;
-            if (pinObj[i].message != "" && (pinObj[i].audioPath != "" || pinObj[i].videoPath != "")) {
-                boolean = false;
+//            } else if (pinObj[i].audioPath != "" && pinObj[i].videoPath != "") {
+//                boolean = false;
+//            } else if (pinObj[i].message != "") {
+//                boolean = true;
+//                which = 0; //message
+//            } else if (pinObj[i].audioPath != "") {
+//                boolean = true;
+//                which = 1; //audio path
+//            } else if (pinObj[i].videoPath != "") {
+//                boolean = true;
+//                which = 2; //video path
+//            }
 
-            } else if (pinObj[i].audioPath != "" && pinObj[i].videoPath != "") {
-                boolean = false;
-            } else if (pinObj[i].message != "") {
-                boolean = true;
-                which = 0; //message
-            } else if (pinObj[i].audioPath != "") {
-                boolean = true;
-                which = 1; //audio path
-            } else if (pinObj[i].videoPath != "") {
-                boolean = true;
-                which = 2; //video path
-            }
+//            controlsElem.insertAdjacentHTML('beforeend', pinHtmlString1(i, boolean, which));
 
-            controlsElem.insertAdjacentHTML('beforeend', pinHtmlString1(i, boolean, which));
-
-            var pinWraper = document.getElementById('pinWraper1' + i);
-            pinWraper.style.left = x + "px";
-            pinWraper.style.top = y + "px";
-        }
-    }
-}
+//            var pinWraper = document.getElementById('pinWraper1' + i);
+//            pinWraper.style.left = x + "px";
+//            pinWraper.style.top = y + "px";
+//        }
+//    }
+//}
 
 //function pinHtmlString1(id, boolean, which) {
 //    sHTML = "";
