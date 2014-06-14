@@ -182,7 +182,7 @@ function GetHatches() {
         error: function (e) { // this function will be called upon failure
             alert("failed to get project's hatches: " + e.responseText);
         } // end of error
-    });                      // end of ajax call
+    });   // end of ajax call
 }
 
 //------------------------------------------------------
@@ -255,7 +255,7 @@ function BuildHatchPage(sHatchID, sProjectID) {
         error: function (e) { // this function will be called upon failure
             alert("failed to get Pictures and Pins: " + e.responseText);
         } // end of error
-    });                        // end of ajax call
+    });  // end of ajax call
 
     BuildHatchDetailsPage(Hatches[sProjectID][sHatchID]);
     BuildHatchPicturesPage(sProjectID, sHatchID);
@@ -317,7 +317,7 @@ function BuildHatchPicturesPage(pID, hID) {
     // build the content div
     str += "<div data-role = 'content'>";
     str += "<div class='ImagesContainer'>";
-    
+
     for (var picID in PicsAndPins[hID])
         str += "<img id = 'Picture" + PicsAndPins[hID][picID][0].PictureID + "' src='" + PicsAndPins[hID][picID][0].ImageURL + "' />";
 
@@ -667,8 +667,6 @@ function ShowServiceCallPin(oPosition, sID) {
     google.maps.event.addListener(Marker, 'click', function () {
         InfoWindow.open(Map, Marker);
     });
-
-    //    google.maps.event.trigger(Map, "resize");
 }
 
 function ShowProjectPin(oPosition, pID) {
@@ -734,8 +732,7 @@ function UploadPicture() {
     });                      // end of ajax call
 }
 
-/* PhoneGap functions */
-
+/** PhoneGap **/
 function TakePicturePrepare(hID) {
     Picture["HatchID"] = hID;
     Picture["PictureDesc"] = $.trim($("#Hatch" + hID + "PicDesc").val());
@@ -794,3 +791,225 @@ function ShowLoading(sText) {
 function HideLoading() {
     $.mobile.loading('hide');
 } // Unload
+
+
+/** Show Me How **/
+var CurrentPinID;
+var iNewPins = 0;
+var aNewPinsIDs = [];
+var aDeletedPinsIDs = [];
+var Pins = {};
+
+function pinObject(pinID, x, y, message, audioPath, videoPath, PictureID) {
+    var oPin = new Object();
+    oPin.pinID = pinID;
+    oPin.x = x;
+    oPin.y = y;
+    oPin.message = message;
+    oPin.audioPath = audioPath;
+    oPin.videoPath = videoPath;
+    oPin.PictureID = PictureID;
+    return oPin;
+}
+
+function LoadPins(sHatchID, sPicID) {
+    var hID = sHatchID;
+    var picID = sPicID;
+    for (var i in PicsAndPins[hID][picID]) {
+        var x = PicsAndPins[hID][picID][i].CoordinateX;
+        var y = PicsAndPins[hID][picID][i].CoordinateY;
+        var Image = $("#ImageHolder img");
+        CreatePin(x, y, Image, PicsAndPins[hID][picID][i]);
+    }
+}
+
+function BuildPin(sID) {
+    sHTML = "";
+    sHTML += '<div id="pinWraper' + sID + '" style="position:absolute;">';
+    sHTML += '<input type="image" src="images/pin.png" id="Pin' + sID + '" onclick="openPinDialog(' + sID + ')"/>';
+    sHTML += '</div>';
+    return sHTML;
+}
+
+function openPinDialog(pinID) {
+    CurrentPinID = pinID;
+    $("#inputMessage").val(Pins[pinID].message);
+    $.mobile.changePage("#PinDialogMainPage", { role: "dialog" });
+}
+
+function pinSaveMessage() {
+    var sMessage = $("#inputMessage").val();
+    Pins[CurrentPinID].message = sMessage;
+    $('.ui-dialog').dialog('close');
+}
+
+function pinDelete() {
+    $("#pinWraper" + CurrentPinID).remove();
+    delete Pins[CurrentPinID];
+    aDeletedPinsIDs.push(CurrentPinID);
+    var bIsNewPin = IsKeyExists(aNewPinsIDs, CurrentPinID);
+    if (bIsNewPin) {
+        iNewPins--;
+        delete aNewPinsIDs[CurrentPinID];
+    }
+    $('.ui-dialog').dialog('close');
+}
+
+function CreateNewPin(e, oImage) { // Creates a new pin on image click
+    var offset = $(oImage).offset();
+    var x = ((e.clientX - offset.left) - 1);
+    var y = ((e.clientY - offset.top) + 20);
+
+    var pinID = CreatePin(x, y, oImage);
+    openPinDialog(pinID);
+}
+
+function CreatePin(x, y, oImage, oPin) {
+    var bIsNewPin = IsEmpty(oPin);
+    var pinID = bIsNewPin ? GetTableCurrentIdentity("Pin") + 1 + iNewPins : oPin.PinID;
+
+    $('#controls').append(BuildPin(pinID));
+    $('#pinWraper' + pinID).css("left", x).css("top", y);
+
+    var sPictureID = $(oImage).attr("id");
+    sPictureID = sPictureID.substr(7);
+    var iPictureID = parseInt(sPictureID);
+
+    var sComment = bIsNewPin ? "" : oPin.Comment;
+    var sAudioPath = bIsNewPin ? "" : oPin.AudioURL;
+    var sVideoPath = bIsNewPin ? "" : oPin.VideoURL;
+
+    var Pin = pinObject(pinID, x, y, sComment, sAudioPath, sVideoPath, iPictureID);
+    Pins[pinID] = Pin;
+    if (bIsNewPin) {
+        iNewPins++;
+        aNewPinsIDs.push(pinID);
+    }
+    return pinID;
+}
+
+function recordMessage() {
+    navigator.device.capture.captureAudio(captureSuccess, captureError, { limit: 1 });
+
+    function captureSuccess(mediaFiles) {
+        var i, len;
+        for (i = 0, len = mediaFiles.length; i < len; i++)
+            uploadFile(mediaFiles[i]);
+    }
+
+    function captureError(error) {
+        var msg = 'אירעה שגיאה בפתיחת הרשמקול: ' + error.code;
+        navigator.notification.alert(msg, null, 'Uh oh!');
+    }
+
+    // Upload files to server
+    function uploadFile(mediaFile) {
+        var ft = new FileTransfer(),
+            path = mediaFile.fullPath,
+            name = mediaFile.name;
+
+        ft.upload(path,
+            "http://proj.ruppin.ac.il/igroup9/prod/files/ReturnValue.ashx",
+            function (result) {
+                alert('ההקלטה הועלתה בהצלחה: ' + result.responseCode);
+//                console.log(result.bytesSent + ' bytes sent');
+            },
+            function (error) {
+                alert('Error uploading file ' + path + ': ' + error.code);
+            },
+            { fileName: name });
+    }
+}
+
+function recordVideo() {
+    navigator.device.capture.captureVideo(captureSuccess, captureError, { limit: 1 });
+
+    function captureSuccess(mediaFiles) {
+        var i, len;
+        for (i = 0, len = mediaFiles.length; i < len; i++)
+            uploadFile(mediaFiles[i]);
+    }
+
+    function captureError(error) {
+        var msg = 'אירעה שגיאה בפתיחת המצלמה: ' + error.code;
+        navigator.notification.alert(msg, null, 'Uh oh!');
+    }
+
+    function uploadFile(mediaFile) {
+        var ft = new FileTransfer(),
+            path = mediaFile.fullPath,
+            name = mediaFile.name;
+
+        ft.upload(path,
+            "http://proj.ruppin.ac.il/igroup9/prod/files/ReturnValue.ashx",
+            function (result) {
+                alert('הסרטון הועלה בהצלחה: ' + result.responseCode);
+//                console.log(result.bytesSent + ' bytes sent');
+            },
+            function (error) {
+                alert('Error uploading file ' + path + ': ' + error.code);
+            },
+            { fileName: name });
+    }
+}
+
+function SavePins() {
+    function UpdateDeletedPins() {
+        var iDeleteSuccess = 0;
+        for (var pinID in aDeletedPinsIDs) {
+            dataString = { pinID: aDeletedPinsIDs[pinID] };
+            dataString = JSON.stringify(dataString);
+            $.ajax({ // ajax call start
+                url: 'MaestroWS.asmx/DeletePin',
+                data: dataString, // Send value of the project id
+                dataType: 'json', // Choosing a JSON datatype for the data sent
+                type: 'POST',
+                async: false, // this is a synchronous call
+                contentType: 'application/json; charset = utf-8', // for the data received
+                success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+                {
+                    if (data.d != "0")
+                        iDeleteSuccess++;
+                }, // end of success
+                error: function (e) { // this function will be called upon failure
+                    alert("failed to delete pins: " + e.responseText);
+                } // end of error
+            });                // end of ajax call
+        }
+        if (iDeleteSuccess > 0)
+            alert("עריכת התמונה בוצעה בהצלחה");
+    }
+    var iSaveSuccess = 0;
+    for (var pinID in Pins) {
+        if (IsEmptyPin(Pins[pinID])) continue;
+        dataString = JSON.stringify(Pins[pinID]);
+        $.ajax({ // ajax call start
+            url: 'MaestroWS.asmx/InsertNewPin',
+            data: dataString, // Send value of the project id
+            dataType: 'json', // Choosing a JSON datatype for the data sent
+            type: 'POST',
+            async: false, // this is a synchronous call
+            contentType: 'application/json; charset = utf-8', // for the data received
+            success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+            {
+                if (data.d != "0")
+                    iSaveSuccess++;
+            }, // end of success
+            error: function (e) { // this function will be called upon failure
+                alert("failed to save pins: " + e.responseText);
+            } // end of error
+        });               // end of ajax call
+    }
+    if (iSaveSuccess > 0)
+        UpdateDeletedPins();
+}
+
+function IsEmptyPin(oPin) {
+    return (IsEmpty(oPin.message) && IsEmpty(oPin.audioPath) && IsEmpty(oPin.videoPath));
+}
+
+function IsKeyExists(o, Key) {
+    for (var k in o)
+        if (k == Key) return true;
+return false;
+}
