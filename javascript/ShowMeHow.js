@@ -1,18 +1,22 @@
 ﻿/// <reference path="jquery-1.11.0.js" />
+/// <reference path="MaestroApp.js" />
 
-var pinID = 0;
-var CurrentPinID = 0;
-var aPins = [];
+var CurrentPinID;
+var iNewPins = 0;
+var aNewPinsIDs = [];
+var iLastPinIdentity = GetTableCurrentIdentity("Pin");
+var Pins = {};
 
-function pinObject(x, y, message, audioPath, videoPath, PictureID) {
-    var obj = new Object();
-    obj.x = x;
-    obj.y = y;
-    obj.message = message;
-    obj.audioPath = audioPath;
-    obj.videoPath = videoPath;
-    obj.PictureID = PictureID;
-    return obj;
+function pinObject(pinID, x, y, message, audioPath, videoPath, PictureID) {
+    var oPin = new Object();
+    oPin.pinID = pinID;
+    oPin.x = x;
+    oPin.y = y;
+    oPin.message = message;
+    oPin.audioPath = audioPath;
+    oPin.videoPath = videoPath;
+    oPin.PictureID = PictureID;
+    return oPin;
 }
 
 function LoadPins(sHatchID, sPicID) {
@@ -28,32 +32,64 @@ function LoadPins(sHatchID, sPicID) {
 
 function BuildPin(sID) {
     sHTML = "";
-    sHTML += '<div id="pinWraper' + sID + '"';
-    sHTML += ' style="top:0; left:0; position:absolute;"><input type="image" src="images/pin.png" width="18" height="18" id="pinId'
-			+ sID + '"';
-    sHTML += ' onclick="openPinDialog(' + sID + ')"/></div>';
+    sHTML += '<div id="pinWraper' + sID + '" style="position:absolute;">';
+    sHTML += '<input type="image" src="images/pin.png" id="Pin' + sID + '" onclick="openPinDialog(' + sID + ')"/>';
+    sHTML += '</div>';
     return sHTML;
 }
 
-function BuildPinDialog() {
-    sHTML = "";
-    sHTML += "<div data-role='page' id='PinDialogMainPage'>";
-    sHTML += "<div data-role='header'><h1>הוסף מזכר</h1></div>";
-    sHTML += "<div data-role='main' class='ui-content'>";
-    sHTML += "<a data-rel='dialog' href='#PinDialogWriteMessage' data-role='button' data-transition='flip'>כתוב הערה</a>";
-    sHTML += "<a onclick='recordMessage()' data-transition='flip' data-role='button'>הקלט הערה</a>";
-    sHTML += "<a data-rel='dialog' onclick='recordVideo()' data-transition='flip' data-role='button'>צלם וידאו</a>";
-    sHTML += "<a data-rel='dialog' onclick='pinDelete()' data-transition='flip' data-role='button'>מחק</a>";
-    sHTML += "</div></div>";
+function openPinDialog(pinID) {
+    CurrentPinID = pinID;
+    $.mobile.changePage("#PinDialogMainPage", { role: "dialog" });
+}
 
-    sHTML += "<div data-role='page' id='PinDialogWriteMessage'>";
-    sHTML += "<div data-role='header'><h1>הוסף מזכר</h1></div>";
-    sHTML += "<div data-role='main' class='ui-content'>";
-    sHTML += "<div style='width: 100%;'><input id='inputMessage' style='width: 100%; display: block; margin-left: auto; margin-right: auto;' type='text' name='message' value=''/></div>";
-    sHTML += "<a onclick='pinSaveMessage()' data-role='button'>שמור</a>";
-    sHTML += "</div></div>";
+function pinSaveMessage() {
+    var sMessage = $("#inputMessage").val();
+    Pins[CurrentPinID].message = sMessage;
+    $('.ui-dialog').dialog('close');
+}
 
-    return sHTML;
+function pinDelete() {
+    $("#pinWraper" + CurrentPinID).remove();
+    delete Pins[CurrentPinID];
+    var bIsNewPin = IsKeyExists(aNewPinsIDs, CurrentPinID);
+    if (bIsNewPin) iNewPins--;
+    $('.ui-dialog').dialog('close');
+}
+
+function CreateNewPin(e, oImage) { // Creates a new pin on image click
+    var offset = $(oImage).offset();
+    var x = ((e.clientX - offset.left) - 1);
+    var y = ((e.clientY - offset.top) + 20);
+
+    var pinID = CreatePin(x, y, oImage);
+    openPinDialog(pinID);
+}
+
+function CreatePin(x, y, oImage, oPin) {
+    var bIsNewPin = IsEmpty(oPin);
+    debugger;
+    var pinID = bIsNewPin ? iLastPinIdentity + 1 + iNewPins : oPin.PinID;
+
+    $('#controls').append(BuildPin(pinID));
+    $('#pinWraper' + pinID).css("left", x).css("top", y);
+
+    var sPictureID = $(oImage).attr("id");
+    sPictureID = sPictureID.substr(7);
+    var iPictureID = parseInt(sPictureID);
+
+    var sComment = bIsNewPin ? "" : oPin.Comment;
+    var sAudioPath = bIsNewPin ? "" : oPin.AudioURL;
+    var sVideoPath = bIsNewPin ? "" : oPin.VideoURL;
+
+    var Pin = pinObject(pinID, x, y, sComment, sAudioPath, sVideoPath, iPictureID);
+    Pins[pinID] = Pin;
+    if (bIsNewPin) {
+        iNewPins++;
+        aNewPinsIDs.push(pinID);
+    }
+
+    return pinID;
 }
 
 function recordMessage() {
@@ -61,13 +97,12 @@ function recordMessage() {
 
     function captureSuccess(mediaFiles) {
         var i, len;
-        for (i = 0, len = mediaFiles.length; i < len; i++) {
+        for (i = 0, len = mediaFiles.length; i < len; i++)
             uploadFile(mediaFiles[i]);
-        }
     }
 
     function captureError(error) {
-        var msg = 'An error occurred during capture: ' + error.code;
+        var msg = 'אירעה שגיאה בהקלטת ההודעה: ' + error.code;
         navigator.notification.alert(msg, null, 'Uh oh!');
     }
 
@@ -98,61 +133,11 @@ function recordVideo() {
     }
 }
 
-function openPinDialog(pinID) {
-    CurrentPinID = pinID;
-    $("#Container").append(BuildPinDialog());
-    $.mobile.changePage("#PinDialogMainPage", { role: "dialog" });
-}
-
-function pinSaveMessage() {
-    var sMessage = $("#inputMessage").val();
-    aPins[CurrentPinID].message = sMessage;
-    $('.ui-dialog').dialog('close');
-}
-
-function pinDelete() {
-    (elem = document.getElementById("pinWraper" + CurrentPinID)).parentNode.removeChild(elem);
-    delete aPins[CurrentPinID];
-    $('.ui-dialog').dialog('close');
-}
-
-function imgOnclick(e, oImage) {
-    var offset = $(oImage).offset();
-    var x = ((e.clientX - offset.left) - 1);
-    var y = ((e.clientY - offset.top) - 18);
-
-    CreatePin(x, y, oImage);
-    openPinDialog(pinID - 1);
-}
-
-function CreatePin(x, y, oImage, oPin) {
-    var bIsNewPin = IsEmpty(oPin);
-
-    var controlsElm = document.getElementById('controls');
-    controlsElm.insertAdjacentHTML('beforeend', BuildPin(pinID));
-
-    var pinWraper = document.getElementById('pinWraper' + pinID);
-    pinWraper.style.left = x + "px";
-    pinWraper.style.top = y + "px";
-
-    var sPictureID = $(oImage).attr("id");
-    sPictureID = sPictureID.substr(7);
-    var iPictureID = parseInt(sPictureID);
-
-    var sComment = bIsNewPin ? "" : oPin.Comment;
-    var sAudioPath = bIsNewPin ? "" : oPin.AudioURL;
-    var sVideoPath = bIsNewPin ? "" : oPin.VideoURL;
-
-    var Pin = pinObject(x, y, sComment, sAudioPath, sVideoPath, iPictureID);
-    aPins.push(Pin);
-    pinID++;
-}
-
 function SavePins() {
     var iSuccess = 0;
-    for (var pinID in aPins) {
-        if (IsEmptyPin(aPins[pinID])) continue;
-        dataString = JSON.stringify(aPins[pinID]);
+    for (var pinID in Pins) {
+        if (IsEmptyPin(Pins[pinID])) continue;
+        dataString = JSON.stringify(Pins[pinID]);
         $.ajax({ // ajax call start
             url: 'MaestroWS.asmx/InsertNewPin',
             data: dataString, // Send value of the project id
@@ -172,13 +157,15 @@ function SavePins() {
     }
     if (iSuccess > 0)
         alert("עריכת התמונה בוצעה בהצלחה");
-
-    //    var controlsElem = document.getElementById('controls1');
-    //    loadPins1(aPins, controlsElem);
 }
 
 function IsEmptyPin(oPin) {
     return (IsEmpty(oPin.message) && IsEmpty(oPin.audioPath) && IsEmpty(oPin.videoPath));
+}
+
+function IsKeyExists(o, Key) {
+    for (var k in o)
+        if (k == Key) return true;
 }
 
 //function loadPins1(pinObj, controlsElem) {
@@ -223,9 +210,9 @@ function IsEmptyPin(oPin) {
 //}
 
 //function openPinDialog1(id, boolean, which) {
-//    var message = aPins[id].message;
-//    var audioPath = aPins[id].audioPath;
-//    var videoPath = aPins[id].videoPath;
+//    var message = Pins[id].message;
+//    var audioPath = Pins[id].audioPath;
+//    var videoPath = Pins[id].videoPath;
 
 //    if (boolean) {
 //        switch (which) {

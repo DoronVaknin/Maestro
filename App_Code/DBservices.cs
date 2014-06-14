@@ -1391,6 +1391,7 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@pinID", p.PinID);
                 sqlComm.Parameters.AddWithValue("@CoordinateX", p.CoordinateX);
                 sqlComm.Parameters.AddWithValue("@CoordinateY", p.CoordinateY);
                 sqlComm.Parameters.AddWithValue("@Comment", p.Comment);

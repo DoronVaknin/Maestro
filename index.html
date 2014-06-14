@@ -190,6 +190,31 @@
             <!-- /content -->
         </div>
         <!-- /page -->
+        <div data-role='page' id='PinDialogMainPage'>
+            <div data-role='header'>
+                <h1>
+                    הוסף מזכר</h1>
+            </div>
+            <div data-role='main' class='ui-content'>
+                <a data-rel='dialog' href='#PinDialogWriteMessage' data-role='button' data-transition='flip'>
+                    כתוב הערה</a> <a onclick='recordMessage()' data-transition='flip' data-role='button'>
+                        הקלט הערה</a> <a data-rel='dialog' onclick='recordVideo()' data-transition='flip'
+                            data-role='button'>צלם וידאו</a> <a data-rel='dialog' onclick='pinDelete()' data-transition='flip'
+                                data-role='button'>מחק</a>
+            </div>
+        </div>
+        <div data-role='page' id='PinDialogWriteMessage'>
+            <div data-role='header'>
+                <h1>
+                    הוסף מזכר</h1>
+            </div>
+            <div data-role='main' class='ui-content'>
+                <div style='width: 100%;'>
+                    <input id='inputMessage' style='width: 100%; display: block; margin-left: auto; margin-right: auto;'
+                        type='text' name='message' value='' /></div>
+                <a onclick='pinSaveMessage()' data-role='button'>שמור</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -59,7 +59,7 @@ $(document).on("click", ".ImagesContainer img", function () {
     $Image.attr("id", "Picture" + sPicID);
     var sFullPathHatchID = $.mobile.activePage.attr("id");
     $("#PictureEdit a[data-icon='back']").attr("href", "#" + sFullPathHatchID); // #PicturesOfHatch_
-    $Image.attr("onclick", "imgOnclick(event, this)");
+    $Image.attr("onclick", "CreateNewPin(event, this)");
     $("#ImageHolder").html($Image);
     var sHatchID = sFullPathHatchID.substr(sFullPathHatchID.length - 1);
     LoadPins(sHatchID, sPicID);
@@ -543,7 +543,7 @@ function CreateServiceCall(oServiceCallDetails) {
 
 //Misc
 function IsEmpty(o) {
-    return (o === "" || o === null);
+    return (o === "" || o === null || o === undefined);
 }
 
 function MergeInsideArrays(Arr) {

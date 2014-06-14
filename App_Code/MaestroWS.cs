@@ -635,9 +635,9 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string InsertNewPin(double x, double y, string message, string audioPath, string videoPath, int PictureID)
+    public string InsertNewPin(int pinID, double x, double y, string message, string audioPath, string videoPath, int PictureID)
     {
-        Pin p = new Pin(x, y, message, audioPath, videoPath, PictureID);
+        Pin p = new Pin(pinID, x, y, message, audioPath, videoPath, PictureID);
         int RowAffected = p.InsertNewPin();
 
         // create a json serializer object

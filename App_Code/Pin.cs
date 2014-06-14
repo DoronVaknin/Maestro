@@ -15,8 +15,9 @@ public class Pin
         //
     }
 
-    public Pin(double _CoordinateX, double _CoordinateY, string _Comment, string _AudioURL, string _VideoURL, int _PictureID)
+    public Pin(int _PinID, double _CoordinateX, double _CoordinateY, string _Comment, string _AudioURL, string _VideoURL, int _PictureID)
     {
+        PinID = _PinID;
         CoordinateX = _CoordinateX;
         CoordinateY = _CoordinateY;
         Comment = _Comment;
