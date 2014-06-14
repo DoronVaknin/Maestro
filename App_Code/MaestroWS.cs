@@ -649,6 +649,20 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string DeletePin(int pinID)
+    {
+        Pin p = new Pin();
+        int RowAffected = p.DeletePin(pinID);
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public string GetTableCurrentIdentity(string TableName)
     {
         Picture p = new Picture();

@@ -81,4 +81,11 @@ public class Pin
         int RowAffected = dbs.InsertNewPin(this);
         return RowAffected;
     }
+
+    public int DeletePin(int pinID)
+    {
+        DBservices dbs = new DBservices();
+        int RowAffected = dbs.DeletePin(pinID);
+        return RowAffected;
+    }
 }

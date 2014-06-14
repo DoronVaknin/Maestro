@@ -4,7 +4,7 @@
 var CurrentPinID;
 var iNewPins = 0;
 var aNewPinsIDs = [];
-var iLastPinIdentity = GetTableCurrentIdentity("Pin");
+var aDeletedPinsIDs = [];
 var Pins = {};
 
 function pinObject(pinID, x, y, message, audioPath, videoPath, PictureID) {
@@ -40,6 +40,7 @@ function BuildPin(sID) {
 
 function openPinDialog(pinID) {
     CurrentPinID = pinID;
+    $("#inputMessage").val(Pins[pinID].message);
     $.mobile.changePage("#PinDialogMainPage", { role: "dialog" });
 }
 
@@ -52,8 +53,12 @@ function pinSaveMessage() {
 function pinDelete() {
     $("#pinWraper" + CurrentPinID).remove();
     delete Pins[CurrentPinID];
+    aDeletedPinsIDs.push(CurrentPinID);
     var bIsNewPin = IsKeyExists(aNewPinsIDs, CurrentPinID);
-    if (bIsNewPin) iNewPins--;
+    if (bIsNewPin) {
+        iNewPins--;
+        delete aNewPinsIDs[CurrentPinID];
+    }
     $('.ui-dialog').dialog('close');
 }
 
@@ -68,8 +73,7 @@ function CreateNewPin(e, oImage) { // Creates a new pin on image click
 
 function CreatePin(x, y, oImage, oPin) {
     var bIsNewPin = IsEmpty(oPin);
-    debugger;
-    var pinID = bIsNewPin ? iLastPinIdentity + 1 + iNewPins : oPin.PinID;
+    var pinID = bIsNewPin ? GetTableCurrentIdentity("Pin") + 1 + iNewPins : oPin.PinID;
 
     $('#controls').append(BuildPin(pinID));
     $('#pinWraper' + pinID).css("left", x).css("top", y);
@@ -134,7 +138,32 @@ function recordVideo() {
 }
 
 function SavePins() {
-    var iSuccess = 0;
+    function UpdateDeletedPins() {
+        var iDeleteSuccess = 0;
+        for (var pinID in aDeletedPinsIDs) {
+            dataString = { pinID: aDeletedPinsIDs[pinID] };
+            dataString = JSON.stringify(dataString);
+            $.ajax({ // ajax call start
+                url: 'MaestroWS.asmx/DeletePin',
+                data: dataString, // Send value of the project id
+                dataType: 'json', // Choosing a JSON datatype for the data sent
+                type: 'POST',
+                async: false, // this is a synchronous call
+                contentType: 'application/json; charset = utf-8', // for the data received
+                success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+                {
+                    if (data.d != "0")
+                        iDeleteSuccess++;
+                }, // end of success
+                error: function (e) { // this function will be called upon failure
+                    alert("failed to delete pins: " + e.responseText);
+                } // end of error
+            });                // end of ajax call
+        }
+        if (iDeleteSuccess > 0)
+            alert("עריכת התמונה בוצעה בהצלחה");
+    }
+    var iSaveSuccess = 0;
     for (var pinID in Pins) {
         if (IsEmptyPin(Pins[pinID])) continue;
         dataString = JSON.stringify(Pins[pinID]);
@@ -148,15 +177,15 @@ function SavePins() {
             success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
             {
                 if (data.d != "0")
-                    iSuccess++;
+                    iSaveSuccess++;
             }, // end of success
             error: function (e) { // this function will be called upon failure
                 alert("failed to save pins: " + e.responseText);
             } // end of error
         });               // end of ajax call
     }
-    if (iSuccess > 0)
-        alert("עריכת התמונה בוצעה בהצלחה");
+    if (iSaveSuccess > 0)
+        UpdateDeletedPins();
 }
 
 function IsEmptyPin(oPin) {
@@ -166,6 +195,7 @@ function IsEmptyPin(oPin) {
 function IsKeyExists(o, Key) {
     for (var k in o)
         if (k == Key) return true;
+    return false;
 }
 
 //function loadPins1(pinObj, controlsElem) {
