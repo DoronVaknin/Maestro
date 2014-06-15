@@ -201,7 +201,7 @@
                         הקלט הערה</a> <a data-rel='dialog' onclick='recordVideo()' data-transition='flip'
                             data-role='button'>צלם וידאו</a> <a data-rel='dialog' onclick='pinDelete()' data-transition='flip'
                                 data-role='button'>מחק</a> <a data-rel='dialog' href="#PinDialogMultimedia" data-transition='flip'
-                                    data-role='button'>צפה בהקלטות</a>
+                                    data-role='button'>האזן/צפה בהקלטות</a>
             </div>
         </div>
         <div data-role='page' id='PinDialogWriteMessage'>
@@ -219,7 +219,7 @@
         <div data-role='page' id='PinDialogMultimedia'>
             <div data-role='header'>
                 <h1>
-                    צפיה בהקלטות</h1>
+                    האזנה/צפיה בהקלטות</h1>
             </div>
             <div data-role='main' class='ui-content'>
                 <div style='width: 100%;'>
@@ -227,11 +227,16 @@
                     <source src="" type="audio/mpeg">
                     Your browser does not support the audio element.
                     </audio>
+                    <label id="AudioLabel">
+                        טרם הוקלט שמע עבור פין זה</label>
                     <br />
-                    <video width="320" height="240" controls style="width: 100%; margin: 0 auto;">
+                    <br />
+                    <video id="VideoPlayer" controls style="width: 100%; margin: 0 auto;">
                     <source src="" type="video/mp4">
                     Your browser does not support the video tag.
                     </video>
+                    <label id="VideoLabel">
+                        טרם הוקלט סרטון עבור פין זה</label>
                 </div>
             </div>
         </div>

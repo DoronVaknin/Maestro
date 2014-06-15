@@ -724,18 +724,20 @@ function UploadPicture() {
         success: function (data) // Variable data contains the data we get from serverside
         {
             HideLoading();
-            data.d > 0 ? alert("התמונה הועלתה בהצלחה") : alert("אירעה שגיאה בשרת, אנא נסה מאוחר יותר");
+            var iRowAffected = $.parseJSON(data.d);
+            iRowAffected > 0 ? alert("התמונה הועלתה בהצלחה") : alert("אירעה שגיאה בשרת, אנא נסה מאוחר יותר");
         }, // end of success
         error: function (e) {
+            HideLoading();
             alert("failed to upload picture: " + e.responseText);
         } // end of error
-    });                      // end of ajax call
+    });                       // end of ajax call
 }
 
 /** PhoneGap **/
 function TakePicturePrepare(hID) {
-    Picture["HatchID"] = hID;
-    Picture["PictureDesc"] = $.trim($("#Hatch" + hID + "PicDesc").val());
+    Picture.HatchID = hID;
+    Picture.PictureDesc = $.trim($("#Hatch" + hID + "PicDesc").val());
     $("#Hatch" + hID + "PicDesc").val("");
     $("#Hatch" + hID + "CancelButton").click();
     TakePicture();
@@ -764,21 +766,20 @@ function uploadPhoto(imageURI) {
     params.value2 = "param";
     options.params = params; // add parameters to the FileUploadOptions object
 
-    Picture["DateTaken"] = GetCurrentDate();
-    Picture["ImageURL"] = "http://proj.ruppin.ac.il/igroup9/prod/images/hatches/" + options.fileName + ".jpg";
+    Picture.DateTaken = GetCurrentDate();
+    Picture.ImageURL = "http://proj.ruppin.ac.il/igroup9/prod/images/hatches/" + options.fileName + ".jpg";
     var ft = new FileTransfer();
-    ft.upload(imageURI, encodeURI("http://proj.ruppin.ac.il/igroup9/prod/images/hatches/ReturnValue.ashx"), win, fail, options); // Upload
+    ft.upload(imageURI, encodeURI("http://proj.ruppin.ac.il/igroup9/prod/images/hatches/SaveImage.ashx"), win, fail, options); // Upload
+
+    function win() {
+        UploadPicture();
+    }
+
+    function fail(error) {
+        HideLoading();
+        alert("An error has occurred: Code = " + error.code);
+    }
 } // Upload Photo
-
-function win() {
-    HideLoading();
-    UploadPicture();
-}
-
-function fail(error) {
-    HideLoading();
-    alert("An error has occurred: Code = " + error.code);
-}
 
 function ShowLoading(sText) {
     $.mobile.loading('show', {
@@ -833,7 +834,22 @@ function BuildPin(sID) {
 
 function openPinDialog(pinID) {
     CurrentPinID = pinID;
-    $("#inputMessage").val(Pins[pinID].message);
+    $("#inputMessage").val(Pins[pinID].message); // Fill note
+
+    var bShowAudioPlayer = !IsEmpty(Pins[pinID].audioPath);
+    if (bShowAudioPlayer)
+        $("#AudioPlayer").attr("src", Pins[pinID].audioPath).show(); // Fill audio recording
+    else
+        $("#AudioPlayer").hide();
+    $("#AudioLabel").toggle(!bShowAudioPlayer);
+
+    var bShowVideoPlayer = !IsEmpty(Pins[pinID].videoPath);
+    if (bShowVideoPlayer)
+        $("#VideoPlayer").attr("src", Pins[pinID].videoPath).show(); // Fill video recording
+    else
+        $("#VideoPlayer").hide();
+    $("#VideoLabel").toggle(!bShowVideoPlayer);
+
     $.mobile.changePage("#PinDialogMainPage", { role: "dialog" });
 }
 
@@ -904,17 +920,20 @@ function recordMessage() {
 
     // Upload files to server
     function uploadFile(mediaFile) {
+        ShowLoading("מעלה שמע");
         var ft = new FileTransfer(),
             path = mediaFile.fullPath,
-            name = mediaFile.name;
+            name = "Pin" + CurrentPinID;
 
         ft.upload(path,
-            "http://proj.ruppin.ac.il/igroup9/prod/files/ReturnValue.ashx",
+            "http://proj.ruppin.ac.il/igroup9/prod/files/Audio/SaveAudio.ashx",
             function (result) {
-                alert('ההקלטה הועלתה בהצלחה: ' + result.responseCode);
-//                console.log(result.bytesSent + ' bytes sent');
+                Pins[CurrentPinID].audioPath = "http://proj.ruppin.ac.il/igroup9/prod/files/Audio/" + name + ".mp3";
+                HideLoading();
+                alert("ההקלטה הועלתה בהצלחה");
             },
             function (error) {
+                HideLoading();
                 alert('Error uploading file ' + path + ': ' + error.code);
             },
             { fileName: name });
@@ -936,17 +955,20 @@ function recordVideo() {
     }
 
     function uploadFile(mediaFile) {
+        ShowLoading("מעלה סרטון");
         var ft = new FileTransfer(),
             path = mediaFile.fullPath,
-            name = mediaFile.name;
+            name = "Pin" + CurrentPinID;
 
         ft.upload(path,
-            "http://proj.ruppin.ac.il/igroup9/prod/files/ReturnValue.ashx",
+            "http://proj.ruppin.ac.il/igroup9/prod/files/Video/SaveVideo.ashx",
             function (result) {
-                alert('הסרטון הועלה בהצלחה: ' + result.responseCode);
-//                console.log(result.bytesSent + ' bytes sent');
+                Pins[CurrentPinID].videoPath = "http://proj.ruppin.ac.il/igroup9/prod/files/Video/" + name + ".mp4";
+                HideLoading();
+                alert("הסרטון הועלה בהצלחה");
             },
             function (error) {
+                HideLoading();
                 alert('Error uploading file ' + path + ': ' + error.code);
             },
             { fileName: name });
@@ -954,7 +976,7 @@ function recordVideo() {
 }
 
 function SavePins() {
-    function UpdateDeletedPins() {
+    function UpdateDeletedPins(iSaveSuccess) {
         var iDeleteSuccess = 0;
         for (var pinID in aDeletedPinsIDs) {
             dataString = { pinID: aDeletedPinsIDs[pinID] };
@@ -976,8 +998,12 @@ function SavePins() {
                 } // end of error
             });                // end of ajax call
         }
-        if (iDeleteSuccess > 0)
+        if (aDeletedPinsIDs.length == 0 && iSaveSuccess > 0 || iDeleteSuccess > 0) {
             alert("עריכת התמונה בוצעה בהצלחה");
+            $("#PictureEdit a[data-icon=back]").click(); // Go to gallery page
+        }
+        else
+            alert("עריכת התמונה נכשלה, אנא נסה מאוחר יותר");
     }
     var iSaveSuccess = 0;
     for (var pinID in Pins) {
@@ -1001,7 +1027,7 @@ function SavePins() {
         });               // end of ajax call
     }
     if (iSaveSuccess > 0)
-        UpdateDeletedPins();
+        UpdateDeletedPins(iSaveSuccess);
 }
 
 function IsEmptyPin(oPin) {
@@ -1011,5 +1037,5 @@ function IsEmptyPin(oPin) {
 function IsKeyExists(o, Key) {
     for (var k in o)
         if (k == Key) return true;
-return false;
+    return false;
 }

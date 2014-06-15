@@ -19,7 +19,7 @@ public class ReturnValue : IHttpHandler
                 continue;
             try
             {
-                savedFileName = context.Server.MapPath(".") + "\\" + hpf.FileName;
+                savedFileName = context.Server.MapPath(".") + "\\" + hpf.FileName + ".mp3";
             }
             catch (Exception ex)
             {
