@@ -746,26 +746,26 @@ function MarkInvalid(id, cb, bSelector, sMessage) {
         $(id).toggleClass("Invalid", bInvalid);
     } else {
         $(id).toggleClass("Invalid", bInvalid);
-        if (bInvalid && sMessage != "") {
-            switch (sFunctionCalledName) {
-                case "ValidateNewCustomer":
-                case "ValidateNewProject":
-                    $(".ErrorLabel").html(sMessage);
-                    break;
+//        if (bInvalid && sMessage != "") {
+//            switch (sFunctionCalledName) {
+//                case "ValidateNewCustomer":
+//                case "ValidateNewProject":
+//                    $(".ErrorLabel").html(sMessage);
+//                    break;
 
-                case "ValidateCustomerDetails":
-                    $("#CustomerDetailsErrorLabel").html(sMessage);
-                    break;
+//                case "ValidateCustomerDetails":
+//                    $("#CustomerDetailsErrorLabel").html(sMessage);
+//                    break;
 
-                case "ValidateProjectDetails":
-                    $("#ProjectDetailsErrorLabel").html(sMessage);
-                    break;
+//                case "ValidateProjectDetails":
+//                    $("#ProjectDetailsErrorLabel").html(sMessage);
+//                    break;
 
-                default:
-                    $(".ErrorLabel").html(sMessage);
-                    break;
-            }
-        }
+//                default:
+//                    $(".ErrorLabel").html(sMessage);
+//                    break;
+//            }
+//        }
     }
     return !bInvalid;
 }

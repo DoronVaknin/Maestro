@@ -29,6 +29,8 @@ public partial class Default : System.Web.UI.Page
                 SetPageDetails(DetailsTable);
             else
                 DisableAllFields();
+
+            //Page.ClientScript.RegisterStartupScript(this.GetType(), "ActivatePopover", "$('#ProjectDetailsStatusIcon').popover({ html: true, content: GetProgressBarContent() });", true);
         }
     }
 
@@ -142,9 +144,6 @@ public partial class Default : System.Web.UI.Page
                 default:
                     break;
             }
-
-
-
 
             SaveProjectDetailsBTN.Style.Add("display", "none");
             EditProjectDetailsBTN.Style.Add("display", "inline-block");
