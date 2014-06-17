@@ -426,9 +426,9 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string UploadPicture(int HatchID, string PictureDesc, string DateTaken, string ImageURL)
+    public string UploadPicture(int HatchID, string PictureDesc, string ImageURL)
     {
-        Picture pic = new Picture(HatchID, PictureDesc, Convert.ToDateTime(DateTaken), ImageURL);
+        Picture pic = new Picture(HatchID, PictureDesc, DateTime.Today.Date, ImageURL);
         int RowAffected = pic.UploadPicture();
 
         // create a json serializer object

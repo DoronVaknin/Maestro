@@ -185,7 +185,7 @@
                     </div>
                 </div>
                 <br />
-                <a onclick="SavePins()" data-role="button">שמור</a>
+                <a onclick="SavePins()" data-role="button">שמור שינויים</a>
             </div>
             <!-- /content -->
         </div>
@@ -198,10 +198,10 @@
             <div data-role='main' class='ui-content'>
                 <a data-rel='dialog' href='#PinDialogWriteMessage' data-role='button' data-transition='flip'>
                     כתוב הערה</a> <a onclick='recordMessage()' data-transition='flip' data-role='button'>
-                        הקלט הערה</a> <a data-rel='dialog' onclick='recordVideo()' data-transition='flip'
-                            data-role='button'>צלם וידאו</a> <a data-rel='dialog' onclick='pinDelete()' data-transition='flip'
-                                data-role='button'>מחק</a> <a data-rel='dialog' href="#PinDialogMultimedia" data-transition='flip'
-                                    data-role='button'>האזן/צפה בהקלטות</a>
+                        הקלט הערה</a> <!--<a data-rel='dialog' onclick='recordVideo()' data-transition='flip'
+                            data-role='button'>צלם וידאו</a>--> <a data-rel='dialog' onclick='pinDelete()' data-transition='flip'
+                                data-role='button'>מחק פין</a> <a data-rel='dialog' href="#PinDialogMultimedia" data-transition='flip'
+                                    data-role='button'>צפה במזכרים</a>
             </div>
         </div>
         <div data-role='page' id='PinDialogWriteMessage'>
@@ -211,18 +211,22 @@
             </div>
             <div data-role='main' class='ui-content'>
                 <div style='width: 100%;'>
-                    <input id='inputMessage' style='width: 100%; display: block; margin: 0 auto;' type='text'
+                    <input id='PinCommentTB' style='width: 100%; display: block; margin: 0 auto;' type='text'
                         name='message' value='' /></div>
-                <a onclick='pinSaveMessage()' data-role='button'>שמור</a>
+                <a onclick='pinSaveComment()' data-role='button'>שמור הערה</a>
             </div>
         </div>
         <div data-role='page' id='PinDialogMultimedia'>
             <div data-role='header'>
                 <h1>
-                    האזנה/צפיה בהקלטות</h1>
+                    צפייה במזכרים</h1>
             </div>
             <div data-role='main' class='ui-content'>
                 <div style='width: 100%;'>
+                    <label id="PinComment">
+                    </label>
+                    <br />
+                    <br />
                     <audio id="AudioPlayer" controls style="width: 100%; margin: 0 auto;">
                     <source src="" type="audio/mpeg">
                     Your browser does not support the audio element.
@@ -231,12 +235,15 @@
                         טרם הוקלט שמע עבור פין זה</label>
                     <br />
                     <br />
-                    <video id="VideoPlayer" controls style="width: 100%; margin: 0 auto;">
+<!--                    <video id="VideoPlayer" controls style="width: 100%; margin: 0 auto;">
                     <source src="" type="video/mp4">
                     Your browser does not support the video tag.
                     </video>
                     <label id="VideoLabel">
                         טרם הוקלט סרטון עבור פין זה</label>
+                    <br />
+                    <br />-->
+                    <a id="EditPinBTN" href="#PinDialogMainPage" data-role="button">ערוך פין</a>
                 </div>
             </div>
         </div>
