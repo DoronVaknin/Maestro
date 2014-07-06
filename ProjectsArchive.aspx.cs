@@ -17,7 +17,7 @@ public partial class Default2 : System.Web.UI.Page
         int SelectedIndex = ProjectsArchiveGV.SelectedIndex;
         int ProjectID = Convert.ToInt32(ProjectsArchiveGV.Rows[SelectedIndex].Cells[1].Text);
         Session["ProjectID"] = ProjectID;
-        Response.Redirect("ProjectDetails.aspx");
+        Response.Redirect("~/ProjectDetails.aspx");
     }
 
     protected void SetupQuickSearch(object sender, EventArgs e)

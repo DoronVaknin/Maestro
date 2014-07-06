@@ -12,9 +12,18 @@ public partial class Default : System.Web.UI.Page
     {
         if (Session["Customer"] != null)
         {
-            Customer c = new Customer();
-            c = (Customer)Session["Customer"];
-            ProjectName.Value = c.Fname + " " + c.Lname;
+            Type SessionType = Session["Customer"].GetType();
+            if (SessionType == typeof(Customer))
+            {
+                Customer c = new Customer();
+                c = (Customer)Session["Customer"];
+                ProjectName.Value = c.Fname + " " + c.Lname;
+            }
+            else if (SessionType == typeof(String))
+            {
+                string FullName = Session["Customer"].ToString();
+                ProjectName.Value = FullName;
+            }
         }
         if (Request.Url.Query == "?Source=NewCustomer")
             Page.ClientScript.RegisterStartupScript(this.GetType(), "ModalCustomerCreated", "ActivateModal('ModalCustomerCreated');", true);
@@ -38,7 +47,7 @@ public partial class Default : System.Web.UI.Page
         Project p = new Project();
         DateTime InstallationDate;
         InstallationDate = ProjectInstallationDate.Value == "" ?
-                           InstallationDate = DateTime.MinValue : Convert.ToDateTime(ProjectInstallationDate.Value);
+                           InstallationDate = DateTime.MinValue : DateTime.ParseExact(ProjectInstallationDate.Value, "MM/dd/yyyy", null);
         p = new Project(DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null), InstallationDate, ProjectName.Value, ProjectComments.Value, ProjectCost.Value, ProjectHatches.Value, ProjectArchitectName.Value, ProjectArchitectMobile.Value, ProjectContractorName.Value, ProjectContractorMobile.Value, ProjectSupervisorName.Value, ProjectSupervisorMobile.Value);
 
         if ((Request.Url.Query == "?Source=NewCustomer" && Session["Customer"] != null) || (Request.Url.Query == "?Source=ProjectsPerCustomer" && Session["CustomerID"] != null))

@@ -22,7 +22,7 @@ public partial class Default : System.Web.UI.Page
         int SelectedIndex = ProjectsGV.SelectedIndex;
         int ProjectID = Convert.ToInt32(ProjectsGV.Rows[SelectedIndex].Cells[1].Text);
         Session["ProjectID"] = ProjectID;
-        Response.Redirect("ProjectDetails.aspx");
+        Response.Redirect("~/ProjectDetails.aspx");
     }
 
     protected void SetupQuickSearch(object sender, EventArgs e)

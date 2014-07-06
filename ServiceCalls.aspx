@@ -96,7 +96,7 @@
                                 <tr>
                                     <td>
                                         <div class="input-group">
-                                            <asp:TextBox ID="ServiceCallAddress" runat="server" CssClass="form-control" MaxLength="30"></asp:TextBox>
+                                            <asp:TextBox ID="ServiceCallAddress" runat="server" CssClass="form-control"></asp:TextBox>
                                             <span class="input-group-addon">כתובת</span>
                                         </div>
                                     </td>

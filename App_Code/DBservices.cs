@@ -855,7 +855,7 @@ public class DBservices
         }
     }
 
-    public DataTable GetServiceCallPopupMissingDetails(int ServicCallID)
+    public DataTable GetServiceCallPopupMissingDetails(int ServiceCallID)
     {
         DataTable dt = new DataTable();
         con = connect("igroup9_prodConnectionString");
@@ -867,7 +867,7 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@ServiceCallID", ServicCallID);
+                sqlComm.Parameters.AddWithValue("@ServiceCallID", ServiceCallID);
                 SqlDataAdapter da = new SqlDataAdapter();
                 da.SelectCommand = sqlComm;
                 da.Fill(dt);

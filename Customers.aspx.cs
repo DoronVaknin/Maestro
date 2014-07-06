@@ -17,7 +17,7 @@ public partial class Default : System.Web.UI.Page
         GridViewRow row = CustomersGV.Rows[SelectedIndex];
         Session["CustomerRow"] = row;
         Session["CustomerID"] = row.Cells[1].Text;
-        Response.Redirect("ProjectsPerCustomer.aspx");
+        Response.Redirect("~/ProjectsPerCustomer.aspx");
     }
 
     protected void SetupQuickSearch(object sender, EventArgs e)

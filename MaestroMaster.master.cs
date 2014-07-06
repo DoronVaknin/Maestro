@@ -14,9 +14,9 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
         //bool isAuthenticted = HttpContext.Current.User.Identity.IsAuthenticated;
         //bool isWorker = HttpContext.Current.User.IsInRole("Worker");
         //if (!isAuthenticted) // Used to block attempts to get in to the system without authentication
-        //    Response.Redirect("Default.aspx?Reason=UserNotAuthenticated");
+        //    Response.Redirect("~/Default.aspx?Reason=UserNotAuthenticated");
         //else if (isWorker) // Used to block worker attempts from login to the system
-        //    Response.Redirect("Default.aspx?Reason=UserNotAllowed");
+        //    Response.Redirect("~/Default.aspx?Reason=UserNotAllowed");
 
         UserNameHolder.Value = Page.User.Identity.Name; //Used to wire Home & Logo to the right homepage
         switch (Page.User.Identity.Name)
@@ -33,35 +33,35 @@ public partial class MaestroMaster : System.Web.UI.MasterPage
     protected void LogoutBTN_Click(object sender, EventArgs e)
     {
         FormsAuthentication.SignOut();
-        Response.Redirect("Default.aspx");
+        Response.Redirect("~/Default.aspx");
     }
 
     protected void ChooseProjectForServiceCallBTN_Click(object sender, EventArgs e)
     {
         Session["ProjectIDForServiceCall"] = ProjectNamesDDL.SelectedValue;
         Session["ProjectNameForServiceCall"] = ProjectNamesDDL.SelectedItem;
-        Response.Redirect("NewServiceCall.aspx?Source=ExistingProject");
+        Response.Redirect("~/NewServiceCall.aspx?Source=ExistingProject");
     }
 
     protected void ChooseProjectForProjectOrdersBTN_Click(object sender, EventArgs e)
     {
         Session["ProjectIDForProjectOrders"] = ProjectNamesDDL.SelectedValue;
         Session["ProjectNameForProjectOrders"] = ProjectNamesDDL.SelectedItem;
-        Response.Redirect("ProjectOrders.aspx");
+        Response.Redirect("~/ProjectOrders.aspx");
     }
 
     protected void ChooseProjectForProjectHatchesBTN_Click(object sender, EventArgs e)
     {
         Session["ProjectIDForProjectHatches"] = ProjectNamesDDL.SelectedValue;
         Session["ProjectNameForProjectHatches"] = ProjectNamesDDL.SelectedItem;
-        Response.Redirect("ProjectHatches.aspx");
+        Response.Redirect("~/ProjectHatches.aspx");
     }
 
     protected void ChooseSupplierForSupplierOrdersBTN_Click(object sender, EventArgs e)
     {
         Session["SupplierIDForSupplierOrders"] = SupplierNamesDDL.SelectedValue;
         Session["SupplierNameForSupplierOrders"] = SupplierNamesDDL.SelectedItem;
-        Response.Redirect("SupplierOrders.aspx");
+        Response.Redirect("~/SupplierOrders.aspx");
     }
 
 }

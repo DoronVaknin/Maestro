@@ -21,23 +21,26 @@ public partial class Default : System.Web.UI.Page
     protected void ServiceCallsGridView_SelectedIndexChanged(object sender, EventArgs e)
     {
         DataTable dt = new DataTable();
-        Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalServiceCalls", "ActivateModal('ModalServiceCalls');", true);
-        //GridViewRow row = ServiceCallsGridView.SelectedRow;
+
         int scID = Convert.ToInt32(ServiceCallsGV.SelectedRow.Cells[1].Text);
         ServiceCall sc = new ServiceCall();
         dt = sc.GetServiceCallPopupMissingDetails(scID);
 
         //Set the Popup details
-        ServiceCallID.Text = scID.ToString();
-        ServiceCallDateOpened.Text = ((DateTime)dt.Rows[0].ItemArray[1]).ToString("MM/dd/yyyy");
-        ServiceCallExpirationDate.Text = ((DateTime)dt.Rows[0].ItemArray[2]).ToString("MM/dd/yyyy");
-        ServiceCallProblemDesc.Text = dt.Rows[0].ItemArray[3].ToString();
-        ServiceCallUrgent.Checked = Convert.ToBoolean(dt.Rows[0].ItemArray[4]);
-        ServiceCallFirstName.Text = dt.Rows[0].ItemArray[5].ToString();
-        ServiceCallLastName.Text = dt.Rows[0].ItemArray[6].ToString();
-        ServiceCallPhone.Text = dt.Rows[0].ItemArray[7].ToString();
-        ServiceCallMobile.Text = dt.Rows[0].ItemArray[8].ToString();
-        ServiceCallAddress.Text = dt.Rows[0].ItemArray[9].ToString();
+        if (dt.Rows.Count > 0)
+        {
+            ServiceCallID.Text = scID.ToString();
+            ServiceCallDateOpened.Text = ((DateTime)dt.Rows[0].ItemArray[1]).ToString("MM/dd/yyyy");
+            ServiceCallExpirationDate.Text = ((DateTime)dt.Rows[0].ItemArray[2]).ToString("MM/dd/yyyy");
+            ServiceCallProblemDesc.Text = dt.Rows[0].ItemArray[3].ToString();
+            ServiceCallUrgent.Checked = Convert.ToBoolean(dt.Rows[0].ItemArray[4]);
+            ServiceCallFirstName.Text = dt.Rows[0].ItemArray[5].ToString();
+            ServiceCallLastName.Text = dt.Rows[0].ItemArray[6].ToString();
+            ServiceCallPhone.Text = dt.Rows[0].ItemArray[7].ToString();
+            ServiceCallMobile.Text = dt.Rows[0].ItemArray[8].ToString();
+            ServiceCallAddress.Text = dt.Rows[0].ItemArray[9].ToString();
+            Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalServiceCalls", "ActivateModal('ModalServiceCalls');", true);
+        }
     }
 
     public void DisableAllFields()

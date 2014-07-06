@@ -47,7 +47,7 @@ public partial class Default : System.Web.UI.Page
                 sc.InsertServiceCallExistingProject(sc, cID, pID);
             }
         }
-        Response.Redirect("ServiceCalls.aspx");
+        Response.Redirect("~/ServiceCalls.aspx");
     }
 }
 

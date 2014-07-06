@@ -261,6 +261,10 @@ function ActivateToolbarButton(sID, sPage, sSource) {
     });
 }
 
+function AddProject() {
+    $("#ContentPlaceHolder3_AddProjectBTN").click();
+}
+
 //Datepicker activation
 function ActivateDatepicker() {
     $(".datepicker").datepicker();
@@ -638,7 +642,7 @@ function ValidateSupplierDetails(button) {
     bIsValid &= MarkInvalid("#ContentPlaceHolder3_SupplierEmail", function (s) { return s.length > 0 && !IsEmail(s); }, false, "יש להזין כתובת מייל חוקית");
     if (bIsValid) {
         $(".ErrorLabel").html("");
-        if (button.id == "ContentPlaceHolder3_CreateSupplierBTN")
+        if (button.id == "CreateSupplierBTN")
             $("#ContentPlaceHolder3_CreateSupplierHiddenBTN").click();
         else {
             $("#SupplierDetailsErrorLabel").html("");

@@ -17,7 +17,7 @@ public partial class Default2 : System.Web.UI.Page
         Supplier s = new Supplier(SupplierName.Value, SupplierAddress.Value, SupplierPhone.Value, SupplierCellPhone.Value, SupplierFax.Value, SupplierEmail.Value);
         int RowAffected = s.InsertNewSupplier();
         if (RowAffected > 0)
-            Response.Redirect("Suppliers.aspx");
+            Response.Redirect("~/Suppliers.aspx");
         else
             Response.Write("לא ניתן לשמור את הספק");
     }

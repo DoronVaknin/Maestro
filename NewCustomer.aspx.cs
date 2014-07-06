@@ -20,7 +20,7 @@ public partial class Default : System.Web.UI.Page
     {
         Exception ex = Server.GetLastError();
         Server.ClearError();
-        Response.Redirect("Error.aspx");
+        Response.Redirect("~/Error.aspx");
     }
     protected void CreateCustomerForProject_Click(object sender, EventArgs e)
     {
@@ -28,7 +28,7 @@ public partial class Default : System.Web.UI.Page
         Session["Customer"] = c;
         int RowsAffected = c.InsertNewCustomer();
         if (RowsAffected > 0)
-            Response.Redirect("NewProject.aspx?Source=NewCustomer");
+            Response.Redirect("~/NewProject.aspx?Source=NewCustomer");
         else
             Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "ActivateModal('ModalCustomerError');", true);
     }
@@ -39,7 +39,7 @@ public partial class Default : System.Web.UI.Page
         Session["Customer"] = c;
         int RowsAffected = c.InsertNewCustomer();
         if (RowsAffected > 0)
-            Response.Redirect("NewServiceCall.aspx?Source=NewCustomer");
+            Response.Redirect("~/NewServiceCall.aspx?Source=NewCustomer");
         else
             Page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "ActivateModal('ModalCustomerError');", true);
     }

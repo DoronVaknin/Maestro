@@ -64,7 +64,7 @@
                     <tr>
                         <td>
                             <div class="input-group">
-                                <asp:TextBox ID="ProjectInfoAddress" runat="server" CssClass="form-control" MaxLength="30"
+                                <asp:TextBox ID="ProjectInfoAddress" runat="server" CssClass="form-control"
                                     placeholder=""></asp:TextBox>
                                 <span class="input-group-addon">כתובת *</span>
                             </div>

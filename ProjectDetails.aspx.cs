@@ -91,7 +91,8 @@ public partial class Default : System.Web.UI.Page
         ProjectInfoComments.Text = DetailsTable.Rows[0].ItemArray[20].ToString();
         ProjectInfoDateOpened.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[17]).ToString("MM/dd/yyyy");
         ProjectInfoExpirationDate.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[18]).ToString("MM/dd/yyyy");
-        ProjectInfoInstallationDate.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[19]).ToString("MM/dd/yyyy");
+        if (!DetailsTable.Rows[0].ItemArray[19].Equals(System.DBNull.Value))
+            ProjectInfoInstallationDate.Value = ((DateTime)DetailsTable.Rows[0].ItemArray[19]).ToString("MM/dd/yyyy");
     }
 
     protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)
@@ -156,7 +157,7 @@ public partial class Default : System.Web.UI.Page
         {
             Session["ProjectIDForProjectOrders"] = Session["ProjectID"];
             Session["ProjectNameForProjectOrders"] = ProjectInfoName.Text;
-            Response.Redirect("ProjectOrders.aspx");
+            Response.Redirect("~/ProjectOrders.aspx");
         }
     }
     protected void OpenServiceCallHiddenBTN_Click(object sender, EventArgs e)
@@ -165,7 +166,7 @@ public partial class Default : System.Web.UI.Page
         {
             Session["ProjectIDForServiceCall"] = Session["ProjectID"];
             Session["ProjectNameForServiceCall"] = ProjectInfoName.Text;
-            Response.Redirect("NewServiceCall.aspx?Source=ExistingProject");
+            Response.Redirect("~/NewServiceCall.aspx?Source=ExistingProject");
         }
     }
 

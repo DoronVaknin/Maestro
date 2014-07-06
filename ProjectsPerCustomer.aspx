@@ -34,8 +34,10 @@
     </asp:GridView>
     <br />
     <div class="cntr">
-        <button type="button" class="btn btn-default" onclick="Goto('NewProject','?Source=ProjectsPerCustomer')">
+        <button type="button" class="btn btn-default" onclick="AddProject();">
             הוסף פרויקט&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
         </button>
+        <asp:Button ID="AddProjectBTN" runat="server" Text="הוסף פרויקט" CssClass="btn btn-default HiddenButtons"
+            OnClick="AddProjectBTN_Click" />
     </div>
 </asp:Content>

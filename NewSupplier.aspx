@@ -29,7 +29,7 @@
             <tr>
                 <td>
                     <div class="input-group">
-                        <input id="SupplierAddress" type="text" class="form-control" runat="server" maxlength="30" placeholder = "">
+                        <input id="SupplierAddress" type="text" class="form-control" runat="server" placeholder = "">
                         <span class="input-group-addon">כתובת *</span>
                     </div>
                 </td>
