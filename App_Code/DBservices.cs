@@ -605,6 +605,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@Mobile", s.Mobile);
                 sqlComm.Parameters.AddWithValue("@Fax", s.Fax);
                 sqlComm.Parameters.AddWithValue("@Email", s.Email);
+                sqlComm.Parameters.AddWithValue("@IsActive", s.IsActive);
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;

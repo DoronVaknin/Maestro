@@ -14,7 +14,8 @@
         SelectCommand="spGetAllSuppliers" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
     <asp:GridView ID="SuppliersGV" CssClass="DataTables" runat="server" AllowSorting="True"
         DataSourceID="SqlDataSource2" AutoGenerateColumns="False" DataKeyNames="SupplierID"
-        OnSelectedIndexChanged="SuppliersGV_SelectedIndexChanged" OnDataBound="SetupQuickSearch">
+        OnSelectedIndexChanged="SuppliersGV_SelectedIndexChanged" OnDataBound="SetupQuickSearch"
+        OnRowDataBound="SuppliersGV_RowDataBound">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="true" />
             <asp:BoundField DataField="SupplierID" HeaderText="מס' ספק" InsertVisible="False"
@@ -25,6 +26,7 @@
             <asp:BoundField DataField="Mobile" HeaderText="נייד" SortExpression="Mobile" />
             <asp:BoundField DataField="Fax" HeaderText="פקס" SortExpression="Fax" />
             <asp:BoundField DataField="Email" HeaderText="דוא&quot;ל" SortExpression="Email" />
+            <asp:BoundField DataField="IsActive" HeaderText="פעיל" SortExpression="IsActive" />
         </Columns>
     </asp:GridView>
     <br />
@@ -95,6 +97,16 @@
                                             <input id="SupplierFax" type="text" class="form-control" runat="server" maxlength="10">
                                             <span class="input-group-addon">פקס</span>
                                         </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label>
+                                            <input id="SupplierStatus" runat="server" type="checkbox">
+                                            פעיל
+                                        </label>
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </table>

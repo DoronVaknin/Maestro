@@ -14,7 +14,7 @@ public partial class Default2 : System.Web.UI.Page
 
     protected void CreateSupplierHiddenBTN_Click(object sender, EventArgs e)
     {
-        Supplier s = new Supplier(SupplierName.Value, SupplierAddress.Value, SupplierPhone.Value, SupplierCellPhone.Value, SupplierFax.Value, SupplierEmail.Value);
+        Supplier s = new Supplier(SupplierName.Value, SupplierAddress.Value, SupplierPhone.Value, SupplierCellPhone.Value, SupplierFax.Value, SupplierEmail.Value, true);
         int RowAffected = s.InsertNewSupplier();
         if (RowAffected > 0)
             Response.Redirect("~/Suppliers.aspx");

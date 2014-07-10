@@ -31,8 +31,14 @@ public partial class Default : System.Web.UI.Page
         {
             ServiceCallID.Text = scID.ToString();
             ServiceCallDateOpened.Text = ((DateTime)dt.Rows[0].ItemArray[1]).ToString("MM/dd/yyyy");
-            ServiceCallExpirationDate.Text = ((DateTime)dt.Rows[0].ItemArray[2]).ToString("MM/dd/yyyy");
-            ServiceCallProblemDesc.Text = dt.Rows[0].ItemArray[3].ToString();
+            DateTime ExpirationDate = (DateTime)dt.Rows[0].ItemArray[2];
+            ServiceCallExpirationDate.Text = ExpirationDate.ToString("MM/dd/yyyy");
+            if (DateTime.Now > ExpirationDate) // Warranty expired
+                ServiceCallExpirationDate.Style.Add("border", "2px solid #DB0F0F");
+            else // Product is in warranty
+                ServiceCallExpirationDate.Style.Add("border", "2px solid #00B800");
+
+                ServiceCallProblemDesc.Text = dt.Rows[0].ItemArray[3].ToString();
             ServiceCallUrgent.Checked = Convert.ToBoolean(dt.Rows[0].ItemArray[4]);
             ServiceCallFirstName.Text = dt.Rows[0].ItemArray[5].ToString();
             ServiceCallLastName.Text = dt.Rows[0].ItemArray[6].ToString();

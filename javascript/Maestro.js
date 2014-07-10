@@ -750,6 +750,7 @@ function MarkInvalid(id, cb, bSelector, sMessage) {
         $(id).toggleClass("Invalid", bInvalid);
     } else {
         $(id).toggleClass("Invalid", bInvalid);
+        $(id).focus();
 //        if (bInvalid && sMessage != "") {
 //            switch (sFunctionCalledName) {
 //                case "ValidateNewCustomer":

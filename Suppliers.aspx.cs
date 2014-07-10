@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 
 public partial class Default2 : System.Web.UI.Page
 {
@@ -27,7 +28,7 @@ public partial class Default2 : System.Web.UI.Page
     protected void SaveSupplierDetailsBTN_Click(object sender, EventArgs e)
     {
         int SupplierID = Convert.ToInt32(SuppliersGV.SelectedRow.Cells[1].Text);
-        Supplier s = new Supplier(SupplierID, SupplierName.Value, SupplierAddress.Value, SupplierPhone.Value, SupplierCellPhone.Value, SupplierFax.Value, SupplierEmail.Value);
+        Supplier s = new Supplier(SupplierID, SupplierName.Value, SupplierAddress.Value, SupplierPhone.Value, SupplierCellPhone.Value, SupplierFax.Value, SupplierEmail.Value, SupplierStatus.Checked);
         int RowAffected = s.UpdateSupplierDetails();
     }
     protected void SuppliersGV_SelectedIndexChanged(object sender, EventArgs e)
@@ -39,6 +40,7 @@ public partial class Default2 : System.Web.UI.Page
         SupplierCellPhone.Value = SuppliersGV.SelectedRow.Cells[5].Text;
         SupplierFax.Value = SuppliersGV.SelectedRow.Cells[6].Text;
         SupplierEmail.Value = SuppliersGV.SelectedRow.Cells[7].Text;
+        SupplierStatus.Checked = SuppliersGV.SelectedRow.Cells[8].Text == "כן";
     }
 
     protected void SetupQuickSearch(object sender, EventArgs e)
@@ -54,5 +56,11 @@ public partial class Default2 : System.Web.UI.Page
                 SuppliersGV.HeaderRow.Cells[i].Controls.Add(txtSearch);
             }
         }
+    }
+
+    protected void SuppliersGV_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType == DataControlRowType.DataRow)
+            e.Row.Cells[8].Text = e.Row.Cells[8].Text == "True" ? "כן" : "לא";
     }
 }

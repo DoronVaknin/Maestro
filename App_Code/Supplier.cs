@@ -14,7 +14,7 @@ public class Supplier
 
     }
 
-    public Supplier(string _Name, string _Address, string _Phone, string _Mobile, string _Fax, string _Email)
+    public Supplier(string _Name, string _Address, string _Phone, string _Mobile, string _Fax, string _Email, bool _IsActive)
     {
         Name = _Name;
         Address = _Address;
@@ -22,9 +22,10 @@ public class Supplier
         Mobile = _Mobile;
         Fax = _Fax;
         Email = _Email;
+        IsActive = _IsActive;
     }
 
-    public Supplier(int _SupplierID, string _Name, string _Address, string _Phone, string _Mobile, string _Fax, string _Email)
+    public Supplier(int _SupplierID, string _Name, string _Address, string _Phone, string _Mobile, string _Fax, string _Email, bool _IsActive)
     {
         sID = _SupplierID;
         Name = _Name;
@@ -33,6 +34,7 @@ public class Supplier
         Mobile = _Mobile;
         Fax = _Fax;
         Email = _Email;
+        IsActive = _IsActive;
     }
 
     int sid;
@@ -84,6 +86,13 @@ public class Supplier
         set { email = value; }
     }
 
+    bool isActive;
+    public bool IsActive
+    {
+        get { return isActive; }
+        set { isActive = value; }
+    }
+
     public int InsertNewSupplier()
     {
         DBservices dbs = new DBservices();
@@ -106,7 +115,7 @@ public class Supplier
         return RowAffected;
     }
 
-    public DataTable GetSuppliersRankTable() 
+    public DataTable GetSuppliersRankTable()
     {
         DataTable dt = new DataTable();
         DBservices dbs = new DBservices();

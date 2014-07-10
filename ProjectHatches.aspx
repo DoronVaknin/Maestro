@@ -24,7 +24,6 @@
         OnDataBound = "SetupQuickSearch">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="true" />
-            <asp:CommandField DeleteText="מחק" ShowDeleteButton="true" />
             <asp:BoundField DataField="hID" HeaderText="מס' פתח" InsertVisible="False" ReadOnly="True"
                 SortExpression="hID" />
             <asp:BoundField DataField="htName" HeaderText="סוג הפתח" SortExpression="htName" />
