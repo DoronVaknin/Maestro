@@ -24,8 +24,8 @@ public class Hatch
             ftID = _FailureTypeID;
         EmployeeID = _EmployeeID;
         StatusLastModified = _StatusLastModified;
-        //if (_Comments != "")
         Comments = _Comments;
+        //IsActive = _IsActive;
     }
 
     public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, int _EmployeeID, DateTime _StatusLastModified, string _Comments, int _HatchTypeID)
@@ -37,8 +37,8 @@ public class Hatch
             ftID = _FailureTypeID;
         EmployeeID = _EmployeeID;
         StatusLastModified = _StatusLastModified;
-        //if (_Comments != "")
         Comments = _Comments;
+        //IsActive = _IsActive;
     }
 
     int hatchID;
@@ -132,6 +132,13 @@ public class Hatch
         set { comments = value; }
     }
 
+    bool isActive;
+    public bool IsActive
+    {
+        get { return isActive; }
+        set { isActive = value; }
+    }
+
     public DataTable GetPicsAndPins(int HatchID)
     {
         DataTable dt = new DataTable();
@@ -174,6 +181,13 @@ public class Hatch
         else
             eID = 300843637;
         return eID;
+    }
+
+    public int DisableHatch(int HatchID)
+    {
+        DBservices dbs = new DBservices();
+        int RowAffected = dbs.DisableHatch(HatchID);
+        return RowAffected;
     }
 
 }

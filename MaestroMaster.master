@@ -72,6 +72,7 @@
                             <ul>
                                 <li><a href="NewSupplier.aspx">צור ספק חדש</a></li>
                                 <li><a href="Suppliers.aspx">רשימת ספקים</a></li>
+                                <li><a href="SuppliersArchive.aspx">ארכיון ספקים</a></li>
                             </ul>
                         </li>
                         <li id="ToolbarBtnProjectHatches" class="ChooseProjectToolbarButtons pointer"><a>פתחים

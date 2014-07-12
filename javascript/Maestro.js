@@ -238,6 +238,7 @@ function ActivateTabsMarking() {
         case "SupplierOrders.aspx".toLowerCase():
         case "NewSupplier.aspx".toLowerCase():
         case "Suppliers.aspx".toLowerCase():
+        case "SuppliersArchive.aspx".toLowerCase():
         case "ProjectHatches.aspx".toLowerCase():
             $("#Technical").addClass("current");
             break;
@@ -312,8 +313,32 @@ function ActivateCloseServiceCallDialog() {
     ActivateModal('CloseServiceCallDialogModal');
 }
 
+function ActivateDisableSupplierDialog() {
+    var sSupplierName = $("#ContentPlaceHolder3_SupplierName").val();
+    $("#DisableSupplierDialogModal .modal-body .QuestionContainer").html("האם אתה בטוח שברצונך להשבית את הספק " + sSupplierName + "?");
+    ActivateModal('DisableSupplierDialogModal');
+}
+
+function ActivateDisableHatchDialog() {
+    var sHatchID = $("#ContentPlaceHolder3_HatchID").val();
+    $("#DisableHatchDialogModal .modal-body .QuestionContainer").html("האם אתה בטוח שברצונך להשבית את פתח מס' " + sHatchID + "?");
+    ActivateModal('DisableHatchDialogModal');
+}
+
+function DisableHatch() {
+    $("#ContentPlaceHolder3_DisableHatchHiddenBTN").click();
+}
+
+function EnableSupplier() {
+    $("#ContentPlaceHolder3_EnableSupplierHiddenBTN").click();
+}
+
 function CloseServiceCall() {
     $("#ContentPlaceHolder3_CloseServiceCallHiddenBTN").click();
+}
+
+function DisableSupplier() {
+    $("#ContentPlaceHolder3_DisableSupplierHiddenBTN").click();
 }
 
 function ActivateServiceCallExistingProjectModal() {
@@ -552,6 +577,7 @@ function RestoreSupplierDetails() {
     $("#ContentPlaceHolder3_SupplierPhone").val(aSupplierDetails[3]);
     $("#ContentPlaceHolder3_SupplierCellPhone").val(aSupplierDetails[4]);
     $("#ContentPlaceHolder3_SupplierFax").val(aSupplierDetails[5]);
+    $("#ContentPlaceHolder3_SupplierStatus").prop("checked",(aSupplierDetails[6] == "checked"));
     DisableSupplierDetailsFields();
     SwitchEditSaveButtons(true, "Supplier");
     ClearInvalidFields("#EditSupplierTBL");
@@ -742,6 +768,10 @@ function ValidateHatchDetails() {
     $("#ContentPlaceHolder3_SaveHatchDetailsHiddenBTN").click();
 }
 
+function AddHatch() {
+    $("#ContentPlaceHolder3_CreateHatchForProject").click();
+}
+
 function MarkInvalid(id, cb, bSelector, sMessage) {
     var sValue = $.trim($(id).val());
     var bInvalid = cb(sValue);
@@ -839,6 +869,7 @@ function BackupSupplierDetails() {
     aSupplierDetails.push($("#ContentPlaceHolder3_SupplierPhone").val());
     aSupplierDetails.push($("#ContentPlaceHolder3_SupplierCellPhone").val());
     aSupplierDetails.push($("#ContentPlaceHolder3_SupplierFax").val());
+    aSupplierDetails.push($("#ContentPlaceHolder3_SupplierStatus").attr("checked"));
 }
 
 function BackupHatchDetails() {

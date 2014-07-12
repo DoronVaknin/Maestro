@@ -156,7 +156,13 @@ public class Project
     {
         DBservices dbs = new DBservices();
         int ProjectID = dbs.InsertNewProject(this, CustomerID, psID);
-        dbs.CreateHatches(this, ProjectID);
+        dbs.CreateHatches(this, ProjectID, 0);
+    }
+
+    public void CreateHatches(int ProjectID)
+    {
+        DBservices dbs = new DBservices();
+        dbs.CreateHatches(this, ProjectID, 1);
     }
 
     public DataTable GetCustomerInformation(int ProjectID)

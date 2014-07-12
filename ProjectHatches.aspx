@@ -17,11 +17,9 @@
                 Type="Int32" />
         </SelectParameters>
     </asp:SqlDataSource>
-    <asp:GridView ID="ProjectHatchesGV" CssClass="DataTables" runat="server"
-        AllowSorting="True" DataSourceID="SqlDataSource1" AutoGenerateColumns="False"
-        DataKeyNames="hID" 
-        OnSelectedIndexChanged="ProjectHatchesGV_SelectedIndexChanged" 
-        OnDataBound = "SetupQuickSearch">
+    <asp:GridView ID="ProjectHatchesGV" CssClass="DataTables" runat="server" AllowSorting="True"
+        DataSourceID="SqlDataSource1" AutoGenerateColumns="False" DataKeyNames="hID"
+        OnSelectedIndexChanged="ProjectHatchesGV_SelectedIndexChanged" OnDataBound="SetupQuickSearch">
         <Columns>
             <asp:CommandField SelectText="בחר" ShowSelectButton="true" />
             <asp:BoundField DataField="hID" HeaderText="מס' פתח" InsertVisible="False" ReadOnly="True"
@@ -33,8 +31,18 @@
             <asp:BoundField DataField="eName" HeaderText="העובד המדווח" SortExpression="eName" />
             <asp:BoundField DataField="ftName" HeaderText="סוג התקלה" SortExpression="ftName" />
             <asp:BoundField DataField="Comments" HeaderText="הערות" SortExpression="Comments" />
+            <%--<asp:BoundField DataField="IsActive" HeaderText="פעיל" SortExpression="IsActive" />--%>
         </Columns>
     </asp:GridView>
+    <br />
+    <div class="cntr">
+        <button type="button" class="btn btn-default" onclick="AddHatch()">
+            הוסף פתח&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <asp:Button ID="CreateHatchForProject" runat="server" Text="הוסף פתח" CssClass="btn btn-default HiddenButtons"
+            OnClick="CreateHatchForProject_Click" />
+    </div>
+    <br />
     <div class="modal fade" id="EditHatchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -125,6 +133,16 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <%--                                <tr>
+                                    <td>
+                                        <label>
+                                            <input id="HatchActive" runat="server" type="checkbox">
+                                            פעיל
+                                        </label>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>--%>
                             </table>
                         </ContentTemplate>
                     </asp:UpdatePanel>
@@ -143,11 +161,17 @@
                             onclick="RestoreHatchDetails()">
                             בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
                         </button>
+                        &nbsp;&nbsp;
+                        <button runat="server" type="button" class="btn btn-default" onclick="ActivateDisableHatchDialog()">
+                            השבת פתח&nbsp;&nbsp;<span class="glyphicon glyphicon-folder-close"></span>
+                        </button>
                         <br />
                         <br />
                         <span id="HatchDetailsErrorLabel" class="ErrorLabel"></span>
                         <asp:Button ID="SaveHatchDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default HiddenButtons"
                             OnClick="SaveHatchDetailsBTN_Click" Font-Bold="true" />
+                        <asp:Button ID="DisableHatchHiddenBTN" runat="server" Text="השבת ספק" CssClass="btn btn-default HiddenButtons"
+                            OnClick="DisableHatchHiddenBTN_Click" Font-Bold="true" />
                     </div>
                 </div>
             </div>
@@ -155,4 +179,43 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade" id="DisableHatchDialogModal" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" dir="rtl">
+                        &times;</button>
+                    <div class="cntr">
+                        <h4 class="modal-title">
+                            השבתת פתח</h4>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="QuestionContainer">
+                    </div>
+                    <br />
+                    <div class="cntr">
+                        <button id="DisableHatchBTN" runat="server" type="button" class="btn btn-danger"
+                            onclick="DisableHatch()">
+                            השבת פתח&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                        <button id="CancelDisableHatchBTN" runat="server" data-dismiss="modal" type="button"
+                            class="btn btn-default">
+                            בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
+                </div>
+                <%--                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close</button>
+                    <button type="button" class="btn btn-primary">
+                        Save changes</button>
+                </div>--%>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /Modal -->
 </asp:Content>

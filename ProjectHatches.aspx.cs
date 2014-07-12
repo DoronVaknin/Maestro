@@ -30,6 +30,7 @@ public partial class Default : System.Web.UI.Page
         HatchEmployeeName.Attributes.Add("disabled", "disabled");
         HatchType.Attributes.Add("disabled", "disabled");
         HatchFailureType.Attributes.Add("disabled", "disabled");
+        //HatchActive.Attributes.Add("disabled", "disabled");
     }
 
     protected void SaveHatchDetailsBTN_Click(object sender, EventArgs e)
@@ -37,7 +38,7 @@ public partial class Default : System.Web.UI.Page
         if (Session["ProjectNameForProjectHatches"] != null)
         {
             Hatch h = new Hatch();
-            int hID = Convert.ToInt32(ProjectHatchesGV.SelectedRow.Cells[2].Text);
+            int hID = Convert.ToInt32(ProjectHatchesGV.SelectedRow.Cells[1].Text);
             int hsID = Convert.ToInt32(HatchStatus.SelectedValue);
             string Comments = HatchComments.Text;
             DateTime StatusLastModified = DateTime.Now;
@@ -64,16 +65,16 @@ public partial class Default : System.Web.UI.Page
     {
         Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalServiceCalls", "ActivateModal('EditHatchModal');", true);
         HatchFailureType.Visible = true;
-        HatchID.Text = ProjectHatchesGV.SelectedRow.Cells[2].Text;
+        HatchID.Text = ProjectHatchesGV.SelectedRow.Cells[1].Text;
         if (Session["ProjectNameForProjectHatches"] != null)
             HatchProjectName.Text = Session["ProjectNameForProjectHatches"].ToString();
-        ListItem li1 = HatchType.Items.FindByText(ProjectHatchesGV.SelectedRow.Cells[3].Text);
+        ListItem li1 = HatchType.Items.FindByText(ProjectHatchesGV.SelectedRow.Cells[2].Text);
         HatchType.SelectedValue = li1.Value;
-        string Status = ProjectHatchesGV.SelectedRow.Cells[4].Text;
+        string Status = ProjectHatchesGV.SelectedRow.Cells[3].Text;
         ListItem li2 = HatchStatus.Items.FindByText(Status);
         HatchStatus.SelectedValue = li2.Value;
 
-        string FailureType = ProjectHatchesGV.SelectedRow.Cells[7].Text;
+        string FailureType = ProjectHatchesGV.SelectedRow.Cells[6].Text;
         Page.ClientScript.RegisterStartupScript(this.GetType(), "ToggleFailureTypeDDL", "ToggleFailureTypeDDL();", true);
         if (FailureType == "&nbsp;")
             HatchFailureType.SelectedValue = "1";
@@ -85,25 +86,42 @@ public partial class Default : System.Web.UI.Page
             HatchFailureType.SelectedValue = li3.Value;
         }
 
-        HatchStatusLastModified.Text = ProjectHatchesGV.SelectedRow.Cells[5].Text;
-        HatchEmployeeName.Text = ProjectHatchesGV.SelectedRow.Cells[6].Text;
-        HatchComments.Text = ProjectHatchesGV.SelectedRow.Cells[8].Text;
+        HatchStatusLastModified.Text = ProjectHatchesGV.SelectedRow.Cells[4].Text;
+        HatchEmployeeName.Text = ProjectHatchesGV.SelectedRow.Cells[5].Text;
+        HatchComments.Text = ProjectHatchesGV.SelectedRow.Cells[7].Text;
+        //HatchActive.Checked = true;
+
         if (HatchComments.Text == "&nbsp;")
             HatchComments.Text = "";
+        if (HatchStatusLastModified.Text == "&nbsp;")
+            HatchStatusLastModified.Text = "";
+        if (HatchEmployeeName.Text == "&nbsp;")
+            HatchEmployeeName.Text = "";
     }
 
-    //public string GetUserFullName()
+    protected void CreateHatchForProject_Click(object sender, EventArgs e)
+    {
+        if (Session["ProjectIDForProjectHatches"] != null)
+        {
+            int ProjectID = Convert.ToInt32(Session["ProjectIDForProjectHatches"]);
+            Project p = new Project();
+            p.CreateHatches(ProjectID);
+            ProjectHatchesGV.DataBind();
+        }
+    }
+
+    protected void DisableHatchHiddenBTN_Click(object sender, EventArgs e)
+    {
+        int iHatchID = Convert.ToInt32(ProjectHatchesGV.SelectedRow.Cells[1].Text);
+        Hatch h = new Hatch();
+        h.DisableHatch(iHatchID);
+        ProjectHatchesGV.DataBind();
+    }
+
+    //protected void ProjectHatchesGV_RowDataBound(object sender, GridViewRowEventArgs e)
     //{
-    //    string EmployeeName = "";
-    //    switch (Page.User.Identity.Name)
-    //    {
-    //        case "Admin": EmployeeName = "אדמין"; break;
-    //        case "ShimonY": EmployeeName = "שמעון ימין"; break;
-    //        case "MaliY": EmployeeName = "מלי ימין"; break;
-    //        case "BettiY": EmployeeName = "בטי ימין"; break;
-    //        default: break;
-    //    }
-    //    return EmployeeName;
+    //    if (e.Row.RowType == DataControlRowType.DataRow)
+    //        e.Row.Cells[8].Text = e.Row.Cells[8].Text == "True" ? "כן" : "לא";
     //}
 
     protected void SetupQuickSearch(object sender, EventArgs e)

@@ -1,17 +1,17 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true"
-    CodeFile="Suppliers.aspx.cs" Inherits="Default2" %>
+    CodeFile="SuppliersArchive.aspx.cs" Inherits="Default2" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
     <div class="cntr">
         <h1>
-            ספקים
+            ארכיון ספקים
         </h1>
     </div>
     <br />
     <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
-        SelectCommand="spGetAllSuppliers" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+        SelectCommand="spGetSuppliersArchive" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
     <asp:GridView ID="SuppliersGV" CssClass="DataTables" runat="server" AllowSorting="True"
         DataSourceID="SqlDataSource2" AutoGenerateColumns="False" DataKeyNames="SupplierID"
         OnSelectedIndexChanged="SuppliersGV_SelectedIndexChanged" OnDataBound="SetupQuickSearch">
@@ -28,12 +28,6 @@
             <%--<asp:BoundField DataField="IsActive" HeaderText="פעיל" SortExpression="IsActive" />--%>
         </Columns>
     </asp:GridView>
-    <br />
-    <div class="cntr">
-        <button type="button" value="צור ספק חדש" class="btn btn-default" onclick="Goto('NewSupplier')">
-            צור ספק חדש&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span>
-        </button>
-    </div>
     <div class="modal fade" id="EditSupplierModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -127,58 +121,19 @@
                             בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
                         </button>
                         &nbsp;&nbsp;
-                        <button runat="server" type="button" class="btn btn-default" onclick="ActivateDisableSupplierDialog()">
-                            השבת ספק&nbsp;&nbsp;<span class="glyphicon glyphicon-folder-close"></span>
+                        <button runat="server" type="button" class="btn btn-success" onclick="EnableSupplier()">
+                            הפעל ספק&nbsp;&nbsp;<span class="glyphicon glyphicon-repeat"></span>
                         </button>
                         <br />
                         <br />
                         <span id="SupplierDetailsErrorLabel" class="ErrorLabel"></span>
                         <asp:Button ID="SaveSupplierDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default HiddenButtons"
                             OnClick="SaveSupplierDetailsBTN_Click" Font-Bold="true" />
-                        <asp:Button ID="DisableSupplierHiddenBTN" runat="server" Text="השבת ספק"
-                            CssClass="btn btn-default HiddenButtons" OnClick="DisableSupplierHiddenBTN_Click"
+                        <asp:Button ID="EnableSupplierHiddenBTN" runat="server" Text="הפעל ספק"
+                            CssClass="btn btn-default HiddenButtons" OnClick="EnableSupplierHiddenBTN_Click"
                             Font-Bold="true" />
                     </div>
                 </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /Modal -->
-    <div class="modal fade" id="DisableSupplierDialogModal" tabindex="-1" role="dialog"
-        aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" dir="rtl">
-                        &times;</button>
-                    <div class="cntr">
-                        <h4 class="modal-title">
-                            השבתת ספק</h4>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div class="QuestionContainer">
-                    </div>
-                    <br />
-                    <div class="cntr">
-                        <button id="DisableSupplierBTN" runat="server" type="button" class="btn btn-danger"
-                            onclick="DisableSupplier()">
-                            השבת ספק&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
-                        </button>
-                        <button id="CancelDisableSupplierBTN" runat="server" data-dismiss="modal" type="button"
-                            class="btn btn-default">
-                            בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
-                        </button>
-                    </div>
-                </div>
-                <%--                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        Close</button>
-                    <button type="button" class="btn btn-primary">
-                        Save changes</button>
-                </div>--%>
             </div>
             <!-- /.modal-content -->
         </div>

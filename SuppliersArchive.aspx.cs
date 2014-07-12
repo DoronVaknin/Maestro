@@ -59,11 +59,11 @@ public partial class Default2 : System.Web.UI.Page
         }
     }
 
-    protected void DisableSupplierHiddenBTN_Click(object sender, EventArgs e)
+    protected void EnableSupplierHiddenBTN_Click(object sender, EventArgs e)
     {
         int SupplierID = Convert.ToInt32(SuppliersGV.SelectedRow.Cells[1].Text);
         Supplier s = new Supplier();
-        s.DisableSupplier(SupplierID, false);
+        s.DisableSupplier(SupplierID, true);
         SuppliersGV.DataBind();
     }
 }

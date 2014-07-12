@@ -122,4 +122,11 @@ public class Supplier
         dt = dbs.GetSuppliersRankTable();
         return dt;
     }
+
+    public int DisableSupplier(int SupplierID, bool bActivate)
+    {
+        DBservices db = new DBservices();
+        int RowAffected = db.DisableSupplier(SupplierID, bActivate);
+        return RowAffected;
+    }
 }

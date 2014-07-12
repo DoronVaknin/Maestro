@@ -151,7 +151,7 @@ public class DBservices
         }
     }
 
-    public void CreateHatches(Project p, int pID)
+    public void CreateHatches(Project p, int pID, int NumOfHatches)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spCreateHatches]", con))
@@ -162,7 +162,7 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@NumOfHatches", p.NumOfHatches);
+                sqlComm.Parameters.AddWithValue("@NumOfHatches", (NumOfHatches > 0 ? NumOfHatches : p.NumOfHatches));
                 sqlComm.Parameters.AddWithValue("@ProjectID", pID);
                 sqlComm.CommandTimeout = 600;
                 sqlComm.ExecuteNonQuery();
@@ -605,7 +605,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@Mobile", s.Mobile);
                 sqlComm.Parameters.AddWithValue("@Fax", s.Fax);
                 sqlComm.Parameters.AddWithValue("@Email", s.Email);
-                sqlComm.Parameters.AddWithValue("@IsActive", s.IsActive);
+                //sqlComm.Parameters.AddWithValue("@IsActive", s.IsActive);
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;
@@ -856,6 +856,53 @@ public class DBservices
         }
     }
 
+    public int DisableSupplier(int SupplierID, bool bActivate)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("spDisableSupplier", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@SupplierID", SupplierID);
+                sqlComm.Parameters.AddWithValue("@bActivate", bActivate);
+                int RowAffected = sqlComm.ExecuteNonQuery();
+                return RowAffected;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
+    public int DisableHatch(int HatchID)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("spDisableHatch", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@HatchID", HatchID);
+                int RowAffected = sqlComm.ExecuteNonQuery();
+                return RowAffected;
+            }
+
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
     public DataTable GetServiceCallPopupMissingDetails(int ServiceCallID)
     {
         DataTable dt = new DataTable();
@@ -1035,6 +1082,7 @@ public class DBservices
                 sqlComm.Parameters.AddWithValue("@EmployeeID", h.EmployeeID);
                 sqlComm.Parameters.AddWithValue("@StatusLastModified", h.StatusLastModified);
                 sqlComm.Parameters.AddWithValue("@Comments", h.Comments);
+                //sqlComm.Parameters.AddWithValue("@IsActive", h.IsActive);
                 sqlComm.CommandTimeout = 600;
                 int RowsAffected = sqlComm.ExecuteNonQuery();
                 return RowsAffected;
