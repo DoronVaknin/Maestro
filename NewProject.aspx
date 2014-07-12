@@ -120,12 +120,6 @@
         </table>
     </div>
     <div class="cntr">
-<%--        <div id="dragandrophandler">
-            גרור קבצים לכאן</div>
-        <br />
-        <div id="status1">
-        </div>--%>
-        <br />
         <button type="button" class="btn btn-default" onclick="ValidateNewProject()">
             צור פרויקט&nbsp;&nbsp;<span class="glyphicon glyphicon-ok"></span>
         </button>

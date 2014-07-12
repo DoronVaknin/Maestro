@@ -64,8 +64,7 @@
                     <tr>
                         <td>
                             <div class="input-group">
-                                <asp:TextBox ID="ProjectInfoAddress" runat="server" CssClass="form-control"
-                                    placeholder=""></asp:TextBox>
+                                <asp:TextBox ID="ProjectInfoAddress" runat="server" CssClass="form-control" placeholder=""></asp:TextBox>
                                 <span class="input-group-addon">כתובת *</span>
                             </div>
                         </td>
@@ -259,6 +258,21 @@
         <br />
         <br />
         <span id="ProjectDetailsErrorLabel" class="ErrorLabel"></span>
+        <br />
+        <br />
+    </div>
+    <div class="cntr">
+        <h1>
+            קבצי הפרויקט
+        </h1>
+    </div>
+    <div id="ProjectFiles" runat="server">
+    </div>
+    <br />
+    <div id="DragAndDrop">
+        גרור קבצים לכאן</div>
+    <br />
+    <div id="DragAndDropStatus">
     </div>
     <br />
     <asp:UpdatePanel ID="UpdatePanel3" runat="server">

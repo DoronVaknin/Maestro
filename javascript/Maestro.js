@@ -7,7 +7,9 @@ var aProjectDetails = [];
 //Used for google maps
 var Projects = {};
 var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, ServiceCallsList[scID][1] - Customer details, ServiceCallsList[scID][2] - Project details
-var iTimeoutMin = 90;
+
+//Used for system timeout
+var iTimeoutMin = 90; // After 90 Minutes - call to Logout()
 
 //Used for Pie Chart
 var ProjectsIncome = {};
@@ -27,6 +29,7 @@ $(document).ready(function () {
     ActivateDatepicker();
     ActivateQuickSearch();
     ActivateServiceCallExistingProjectModal();
+    ActivateDragAndDrop();
     var sPageName = GetPageName();
 
     switch (sPageName) {
@@ -973,9 +976,58 @@ function myTrim(S, c) {
     return s;
 }
 
+//function IsUrlExists(sURL)
+//{
+//    var http = new XMLHttpRequest();
+//    http.open('HEAD', sURL, false);
+//    http.send();
+//    return http.status != 404;
+//}
+
 //DRAG & DROP
+function ActivateDragAndDrop() {
+    var obj = $("#DragAndDrop");
+    obj.on('dragenter', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        $(this).css('border', '2px solid #0B85A1');
+    });
+    obj.on('dragover', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    obj.on('drop', function (e) {
+
+        $(this).css('border', '2px dotted #0B85A1');
+        e.preventDefault();
+        var files = e.originalEvent.dataTransfer.files;
+
+        //We need to send dropped files to Server
+        handleFileUpload(files, obj);
+    });
+    $(document).on('dragenter', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+    $(document).on('dragover', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+        obj.css('border', '2px dotted #0B85A1');
+    });
+    $(document).on('drop', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+}
+
 function sendFileToServer(formData, status) {
-    var uploadURL = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) + "files/ReturnValue.ashx";   //Upload URL
+    var ProjectID = $("#ContentPlaceHolder3_ProjectIDHolder").val(); //This field holds Current Project ID
+    if (IsEmpty(ProjectID)) { // Protect from errors because path won't be valid
+        alert("אירעה שגיאה בשרת, אנא נסה מאוחר יותר");
+        return;
+    }
+    var sUploadURL = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) + "files/ProjectsFiles/SaveFile.ashx"; //Upload URL
+    
     var extraData = {}; //Extra Data.
     var jqXHR = $.ajax({
         xhr: function () {
@@ -994,7 +1046,7 @@ function sendFileToServer(formData, status) {
             }
             return xhrobj;
         },
-        url: uploadURL,
+        url: sUploadURL,
         type: "POST",
         contentType: false,
         processData: false,
@@ -1002,7 +1054,8 @@ function sendFileToServer(formData, status) {
         data: formData,
         success: function (data) {
             status.setProgress(100);
-            //$("#status1").append("File upload Done<br>");
+            $("#DragAndDropStatus").html("הקבצים הועלו בהצלחה<br>");
+            InsertNewFile("", data, ProjectID); // data holds the URL of the saved file
         },
         error: function (e) {
             alert("Failed to upload files: " + e.responseText);
@@ -1061,42 +1114,26 @@ function handleFileUpload(files, obj) {
         var status = new createStatusbar(obj); //Using this we can set progress.
         status.setFileNameSize(files[i].name, files[i].size);
         sendFileToServer(fd, status);
-
     }
 }
-function ActivateDragAndDrop() {
-    var obj = $("#dragandrophandler");
-    obj.on('dragenter', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        $(this).css('border', '2px solid #0B85A1');
-    });
-    obj.on('dragover', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    obj.on('drop', function (e) {
 
-        $(this).css('border', '2px dotted #0B85A1');
-        e.preventDefault();
-        var files = e.originalEvent.dataTransfer.files;
-
-        //We need to send dropped files to Server
-        handleFileUpload(files, obj);
-    });
-    $(document).on('dragenter', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    });
-    $(document).on('dragover', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        obj.css('border', '2px dotted #0B85A1');
-    });
-    $(document).on('drop', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-    });
+function InsertNewFile(sDescription, sUrl, pID) {
+    dataString = { Description: sDescription, Url: sUrl, ProjectID: pID };
+    dataString = JSON.stringify(dataString);
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/InsertNewFile',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to insert new file: " + e.responseText);
+        } // end of error
+    });              // end of ajax call
 }
 
 //Google Autocompletion

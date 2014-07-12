@@ -674,4 +674,18 @@ public class MaestroWS : System.Web.Services.WebService
         string jsonString = js.Serialize(Identity);
         return jsonString;
     }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string InsertNewFile(string Description, string Url, int ProjectID)
+    {
+        File f = new File(Description, Url, ProjectID);
+        int RowAffected = f.InsertNewFile();
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
+        return jsonString;
+    }
 }

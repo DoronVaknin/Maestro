@@ -95,6 +95,31 @@ public class DBservices
         }
     }
 
+    public int InsertNewFile(File f)
+    {
+        con = connect("igroup9_prodConnectionString");
+        using (SqlCommand sqlComm = new SqlCommand("[spInsertNewFile]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@Description", f.Description);
+                sqlComm.Parameters.AddWithValue("@URL", f.Url);
+                sqlComm.Parameters.AddWithValue("@pID", f.pID);
+                sqlComm.CommandTimeout = 600;
+                int RowsAffected = sqlComm.ExecuteNonQuery();
+                return RowsAffected;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
     public int InsertNewNotification(Notification n)
     {
         con = connect("igroup9_prodConnectionString");
@@ -1503,4 +1528,31 @@ public class DBservices
             }
         }
     }
+
+    public DataTable GetProjectFiles(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        con = connect("igroup9_prodConnectionString");
+        SqlDataAdapter da = new SqlDataAdapter();
+        using (SqlCommand sqlComm = new SqlCommand("[spGetProjectFiles]", con))
+        {
+            if (con.State != ConnectionState.Open)
+                con.Open();
+
+            try
+            {
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                sqlComm.Parameters.AddWithValue("@ProjectID", ProjectID);
+                sqlComm.CommandTimeout = 600;
+                da.SelectCommand = sqlComm;
+                da.Fill(dt);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+    }
+
 }

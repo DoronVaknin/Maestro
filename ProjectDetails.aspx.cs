@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.IO;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Configuration;
@@ -26,10 +27,14 @@ public partial class Default : System.Web.UI.Page
             DataTable DetailsTable = p.GetAllDetails(ProjectID);
 
             if (!Page.IsPostBack)
+            {
                 SetPageDetails(DetailsTable);
+                GetProjectFiles(ProjectID);
+            }
             else
                 DisableAllFields();
 
+            ProjectIDHolder.Value = Session["ProjectID"].ToString();
             //Page.ClientScript.RegisterStartupScript(this.GetType(), "ActivatePopover", "$('#ProjectDetailsStatusIcon').popover({ html: true, content: GetProgressBarContent() });", true);
         }
     }
@@ -241,6 +246,20 @@ public partial class Default : System.Web.UI.Page
         sn.InsertNewSpecialNotification();
     }
 
+    public void GetProjectFiles(int ProjectID)
+    {
+        File f = new File();
+        DataTable dt = f.GetProjectFiles(ProjectID);
+
+        string sHTML = "";
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+            string sUrl = dt.Rows[i].ItemArray[2].ToString();
+            string sFileName = Path.GetFileNameWithoutExtension(sUrl);
+            sHTML += "<a href='" + sUrl + "' target = '_blank'>" + sFileName + "</a><br>";
+        }
+        ProjectFiles.InnerHtml = sHTML;
+    }
 }
 
 
