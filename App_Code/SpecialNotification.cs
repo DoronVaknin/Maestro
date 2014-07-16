@@ -16,13 +16,13 @@ public class SpecialNotification : Notification
         //
     }
 
-    public SpecialNotification(string _Notification, DateTime _nDate, int _eID1, int _eID2, string _nType)
+    public SpecialNotification(string _Notification, DateTime _nDate, string _eID1, string _eID2, string _nType)
         : base(_Notification, _nDate, _eID1, _eID2)
     {
         nType = _nType;
     }
 
-    public SpecialNotification(string _Notification, DateTime _nDate, int _eID1, int _eID2, string _nType, string _EmailSubject, string _EmailMessage, string _EmailAddress)
+    public SpecialNotification(string _Notification, DateTime _nDate, string _eID1, string _eID2, string _nType, string _EmailSubject, string _EmailMessage, string _EmailAddress)
         : base(_Notification, _nDate, _eID1, _eID2)
     {
         nType = _nType;
@@ -66,7 +66,7 @@ public class SpecialNotification : Notification
         return RowAffected;
     }
 
-    public DataTable GetSpecialNotifications(int eID)
+    public DataTable GetSpecialNotifications(string eID)
     {
         DataTable dt = new DataTable();
         DBservices dbs = new DBservices();

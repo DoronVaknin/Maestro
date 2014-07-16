@@ -44,7 +44,7 @@ public partial class _Default : System.Web.UI.Page
     {
         Project p = new Project();
         int index = PriceOfferGV.SelectedIndex;
-        int CustomerID = Convert.ToInt32(dt.Rows[index].ItemArray[0]);
+        string CustomerID = dt.Rows[index].ItemArray[0].ToString();
         p.pID = Convert.ToInt32(dt.Rows[index].ItemArray[1]);
         p.Name = ProjectName.Value;
         p.Comments = ProjectComments.Text;
@@ -59,7 +59,7 @@ public partial class _Default : System.Web.UI.Page
     public void InsertNewProjectNotification(string ProjectName)
     {
         string Message = String.Format("נפתח פרויקט חדש {0}, נא להיערך לקראת משקוף עיוור.", ProjectName);
-        Notification n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
+        Notification n = new Notification(Message, DateTime.Now.Date, "302042267", "38124123");
         n.InsertNewNotification();
     }
 }

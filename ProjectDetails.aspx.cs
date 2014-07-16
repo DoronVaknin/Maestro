@@ -103,7 +103,7 @@ public partial class Default : System.Web.UI.Page
     protected void SaveCustomerDetailsBTN_Click1(object sender, EventArgs e)
     {
         Customer c = new Customer();
-        c.SaveCustomerNewDetails(ProjectInfoFirstName.Text, ProjectInfoLastName.Text, ProjectInfoPhone.Text, ProjectInfoMobile.Text, ProjectInfoFax.Text, ProjectInfoAddress.Text, ProjectInfoEmail.Text, Convert.ToInt32(ProjectInfoArea.SelectedValue), Convert.ToInt32(ProjectInfoID.Text));
+        c.SaveCustomerNewDetails(ProjectInfoFirstName.Text, ProjectInfoLastName.Text, ProjectInfoPhone.Text, ProjectInfoMobile.Text, ProjectInfoFax.Text, ProjectInfoAddress.Text, ProjectInfoEmail.Text, Convert.ToInt32(ProjectInfoArea.SelectedValue), ProjectInfoID.Text);
         SaveCustomerDetailsBTN.Style.Add("display", "none");
         EditCustomerDetailsBTN.Style.Add("display", "inline-block");
     }
@@ -190,7 +190,7 @@ public partial class Default : System.Web.UI.Page
     public void InsertNewProjectNotification(string ProjectName)
     {
         string Message = String.Format("נפתח פרויקט חדש {0}, נא להיערך לקראת משקוף עיוור.", ProjectName);
-        Notification n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
+        Notification n = new Notification(Message, DateTime.Now.Date, "302042267", "38124123");
         n.InsertNewNotification();
     }
 
@@ -200,7 +200,7 @@ public partial class Default : System.Web.UI.Page
         if (ProjectInTime)
         {
             string Message = "הפרויקט " + ProjectName + " מתבצע כמתוכנן, הפתחים מוכנים להתקנה בבית הלקוח.";
-            n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
+            n = new Notification(Message, DateTime.Now.Date, "302042267", "38124123");
         }
         else
         {
@@ -224,7 +224,7 @@ public partial class Default : System.Web.UI.Page
                         sMessage += String.Format("{0} בסטטוס {1}, {2}, {3}", hID, HatchStatus, Comments, "<br>");
                 }
             }
-            n = new Notification(sMessage, DateTime.Now.Date, 302042267, 38124123);
+            n = new Notification(sMessage, DateTime.Now.Date, "302042267", "38124123");
         }
         n.InsertNewNotification();
     }
@@ -233,7 +233,7 @@ public partial class Default : System.Web.UI.Page
     {
         DateTime NotificationDate = DateTime.Now.Date.AddDays(46);
         //string sMessage = String.Format("בעוד שבועיים יחלפו 60 יום ממועד הפגישה לסגירת פרטים והפתחים הנל לא מוכנים להתקנה בבית הלקוח עבור פרויקט {0}:{1}", ProjectName, "<br>", hID, HatchStatus, FailureType, Comments);
-        SpecialNotification sn = new SpecialNotification(ProjectID.ToString(), NotificationDate, 302042267, 38124123, "סגירת פרטים");
+        SpecialNotification sn = new SpecialNotification(ProjectID.ToString(), NotificationDate, "302042267", "38124123", "סגירת פרטים");
         sn.InsertNewSpecialNotification();
     }
 
@@ -242,7 +242,7 @@ public partial class Default : System.Web.UI.Page
         string EmailMessage = String.Format("<div dir='rtl'>{0} {1} שלום,<br><br>נא הבא לידיעתך כי עלינו לתאם פגישה לטובת סגירת פרטי הפרויקט.<br>אנא צור קשר טלפוני במס' 04-6221774 לתיאום הפגישה.<br><br>בתודה,<br>מאסטרו אלומיניום.</div>", FirstName, LastName);
         string EmailSubject = "תיאום פגישה לסגירת פרטים";
 
-        SpecialNotification sn = new SpecialNotification("", DateTime.Now.Date.AddDays(45), 302042267, 38124123, "משקוף עיוור", EmailSubject, EmailMessage, CustomerEmailAddress);
+        SpecialNotification sn = new SpecialNotification("", DateTime.Now.Date.AddDays(45), "302042267", "38124123", "משקוף עיוור", EmailSubject, EmailMessage, CustomerEmailAddress);
         sn.InsertNewSpecialNotification();
     }
 
@@ -255,7 +255,7 @@ public partial class Default : System.Web.UI.Page
         for (int i = 0; i < dt.Rows.Count; i++)
         {
             string sUrl = dt.Rows[i].ItemArray[2].ToString();
-            string sFileName = Path.GetFileNameWithoutExtension(sUrl);
+            string sFileName = Path.GetFileName(sUrl);
             sHTML += "<a href='" + sUrl + "' target = '_blank'>" + sFileName + "</a><br>";
         }
         ProjectFiles.InnerHtml = sHTML;

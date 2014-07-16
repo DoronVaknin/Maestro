@@ -61,13 +61,13 @@ public class ServiceCall
         set { urgent = value; }
     }
 
-    public void InsertExternalServiceCall(ServiceCall sc, int CustomerID)
+    public void InsertExternalServiceCall(ServiceCall sc, string CustomerID)
     {
         DBservices dbs = new DBservices();
         dbs.InsertExternalServiceCall(sc, CustomerID);
     }
 
-    public int InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
+    public int InsertServiceCallExistingProject(ServiceCall sc, string CustomerID, int ProjectID)
     {
         DBservices dbs = new DBservices();
         int RowAffected = dbs.InsertServiceCallExistingProject(sc, CustomerID, ProjectID);
@@ -81,10 +81,10 @@ public class ServiceCall
         return RowAffected;
     }
 
-    public DataTable GetServiceCallPopupMissingDetails(int ServicCallID)
+    public DataTable GetServiceCallPopupMissingDetails(int ServiceCallID)
     {
         DBservices db = new DBservices();
-        DataTable dt= db.GetServiceCallPopupMissingDetails(ServicCallID);
+        DataTable dt= db.GetServiceCallPopupMissingDetails(ServiceCallID);
         return dt;
     }
 

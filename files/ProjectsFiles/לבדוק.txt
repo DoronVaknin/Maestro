@@ -1,0 +1,5 @@
+http://extendbootstrap.com/
+
+http://www.flotcharts.org/flot/examples/series-pie/
+
+http://bootsnipp.com/snippets/featured/dropdown-menu-ui

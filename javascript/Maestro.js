@@ -1027,7 +1027,8 @@ function sendFileToServer(formData, status) {
         return;
     }
     var sUploadURL = window.location.href.substring(0, window.location.href.lastIndexOf("/") + 1) + "files/ProjectsFiles/SaveFile.ashx"; //Upload URL
-    
+    var sFileName = $(status.filename).text();
+
     var extraData = {}; //Extra Data.
     var jqXHR = $.ajax({
         xhr: function () {
@@ -1055,7 +1056,8 @@ function sendFileToServer(formData, status) {
         success: function (data) {
             status.setProgress(100);
             $("#DragAndDropStatus").html("הקבצים הועלו בהצלחה<br>");
-            InsertNewFile("", data, ProjectID); // data holds the URL of the saved file
+            var sURL = "http://proj.ruppin.ac.il/igroup9/prod/files/ProjectsFiles/" + sFileName;
+            InsertNewFile("", sURL, ProjectID); // data holds the URL of the saved file
         },
         error: function (e) {
             alert("Failed to upload files: " + e.responseText);

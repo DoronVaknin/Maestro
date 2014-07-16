@@ -52,7 +52,7 @@ public partial class Default : System.Web.UI.Page
 
         if ((Request.Url.Query == "?Source=NewCustomer" && Session["Customer"] != null) || (Request.Url.Query == "?Source=ProjectsPerCustomer" && Session["CustomerID"] != null))
         {
-            int CustomerID = 0;
+            string CustomerID = "";
             if (Session["Customer"] != null)
             {
                 Customer c = new Customer();
@@ -60,7 +60,7 @@ public partial class Default : System.Web.UI.Page
                 CustomerID = c.cID;
             }
             else if (Session["CustomerID"] != null)
-                CustomerID = Convert.ToInt32(Session["CustomerID"]);
+                CustomerID = Session["CustomerID"].ToString();
 
             p.InsertNewProject(CustomerID, psID);
             if (psID == 2)
@@ -72,7 +72,7 @@ public partial class Default : System.Web.UI.Page
     public void InsertNewProjectNotification(string ProjectName)
     {
         string Message = String.Format("נפתח פרויקט חדש {0}, נא להיערך לקראת משקוף עיוור.", ProjectName);
-        Notification n = new Notification(Message, DateTime.Now.Date, 302042267, 38124123);
+        Notification n = new Notification(Message, DateTime.Now.Date, "302042267", "38124123");
         n.InsertNewNotification();
     }
 }

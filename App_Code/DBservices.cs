@@ -58,7 +58,7 @@ public class DBservices
         }
     }
 
-    public int InsertNewProject(Project p, int cID, int psID)
+    public int InsertNewProject(Project p, string cID, int psID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spInsertNewProject]", con))
@@ -199,7 +199,7 @@ public class DBservices
         }
     }
 
-    public int GetProjectID(int cID)
+    public int GetProjectID(string cID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetProjectID]", con))
@@ -257,7 +257,7 @@ public class DBservices
         }
     }
 
-    public void UpdateCustomerInformation(Customer c, int cID)
+    public void UpdateCustomerInformation(Customer c, string cID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateCustomerInformation]", con))
@@ -270,7 +270,7 @@ public class DBservices
             try
             {
                 sqlComm.CommandType = CommandType.StoredProcedure;
-                sqlComm.Parameters.AddWithValue("@cID", Convert.ToInt32(cID));
+                sqlComm.Parameters.AddWithValue("@cID", cID);
                 sqlComm.Parameters.AddWithValue("@FirstName", c.Fname);
                 sqlComm.Parameters.AddWithValue("@LastName", c.Lname);
                 sqlComm.Parameters.AddWithValue("@Phone", c.Phone);
@@ -530,7 +530,7 @@ public class DBservices
         }
     }
 
-    public void InsertExternalServiceCall(ServiceCall sc, int CustomerID)
+    public void InsertExternalServiceCall(ServiceCall sc, string CustomerID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spInsertExternalServiceCall]", con))
@@ -556,7 +556,7 @@ public class DBservices
         }
     }
 
-    public int InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
+    public int InsertServiceCallExistingProject(ServiceCall sc, string CustomerID, int ProjectID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spInsertServiceCallExistingProject]", con))
@@ -642,7 +642,7 @@ public class DBservices
         }
     }
 
-    public int UpdateUndecidedCustomerDetails(Project p, int ProjectStatusID, int CustomerID, string CustomerMobilePhone)
+    public int UpdateUndecidedCustomerDetails(Project p, int ProjectStatusID, string CustomerID, string CustomerMobilePhone)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateUndecidedCustomerDetails]", con))
@@ -1303,7 +1303,7 @@ public class DBservices
         }
     }
 
-    public DataTable GetNotifications(int eID)
+    public DataTable GetNotifications(string eID)
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
@@ -1330,7 +1330,7 @@ public class DBservices
         }
     }
 
-    public DataTable GetSpecialNotifications(int eID)
+    public DataTable GetSpecialNotifications(string eID)
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();

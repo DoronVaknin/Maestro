@@ -16,7 +16,7 @@ public class Hatch
         //
     }
 
-    public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, int _EmployeeID, DateTime _StatusLastModified, string _Comments)
+    public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, string _EmployeeID, DateTime _StatusLastModified, string _Comments)
     {
         HatchID = _HatchID;
         HatchStatusID = _HatchStatusID;
@@ -25,10 +25,9 @@ public class Hatch
         EmployeeID = _EmployeeID;
         StatusLastModified = _StatusLastModified;
         Comments = _Comments;
-        //IsActive = _IsActive;
     }
 
-    public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, int _EmployeeID, DateTime _StatusLastModified, string _Comments, int _HatchTypeID)
+    public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, string _EmployeeID, DateTime _StatusLastModified, string _Comments, int _HatchTypeID)
     {
         HatchID = _HatchID;
         HatchStatusID = _HatchStatusID;
@@ -38,7 +37,6 @@ public class Hatch
         EmployeeID = _EmployeeID;
         StatusLastModified = _StatusLastModified;
         Comments = _Comments;
-        //IsActive = _IsActive;
     }
 
     int hatchID;
@@ -90,8 +88,8 @@ public class Hatch
         set { projectID = value; }
     }
 
-    int employeeID;
-    public int EmployeeID
+    string employeeID;
+    public string EmployeeID
     {
         get { return employeeID; }
         set { employeeID = value; }
@@ -170,16 +168,16 @@ public class Hatch
         return RowAffected;
     }
 
-    public int GetUsernameID(string Username)
+    public string GetUsernameID(string Username)
     {
         DataTable dt = new DataTable();
         DBservices db = new DBservices();
         dt = db.GetUsernameID(Username);
-        int eID = 0;
+        string eID = "";
         if (dt.Rows.Count > 0)
-            eID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
+            eID = dt.Rows[0].ItemArray[0].ToString();
         else
-            eID = 300843637;
+            eID = "300843637";
         return eID;
     }
 

@@ -117,8 +117,8 @@ public class Project
         set { supervisorPhone = value; }
     }
 
-    int cid;
-    public int cID
+    string cid;
+    public string cID
     {
         get { return cid; }
         set { cid = value; }
@@ -152,7 +152,7 @@ public class Project
         set { hatchesImageURL = value; }
     }
 
-    public void InsertNewProject(int CustomerID, int psID)
+    public void InsertNewProject(string CustomerID, int psID)
     {
         DBservices dbs = new DBservices();
         int ProjectID = dbs.InsertNewProject(this, CustomerID, psID);
@@ -305,7 +305,7 @@ public class Project
         return dt;
     }
 
-    public int UpdateUndecidedCustomerDetails(Project p, int ProjectStatusID, int CustomerID, string CustomerMobilePhone)
+    public int UpdateUndecidedCustomerDetails(Project p, int ProjectStatusID, string CustomerID, string CustomerMobilePhone)
     {
         DBservices dbs = new DBservices();
         int RowAffected = dbs.UpdateUndecidedCustomerDetails(p, ProjectStatusID, CustomerID, CustomerMobilePhone);
