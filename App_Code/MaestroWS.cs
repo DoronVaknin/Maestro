@@ -688,4 +688,18 @@ public class MaestroWS : System.Web.Services.WebService
         string jsonString = js.Serialize(RowAffected);
         return jsonString;
     }
+
+        [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string DeleteFile(int FileID)
+    {
+        File f = new File();
+        int RowAffected = f.DeleteFile(FileID);
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
+        return jsonString;
+    }
 }

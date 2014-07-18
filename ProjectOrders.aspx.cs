@@ -24,6 +24,11 @@ public partial class Default : System.Web.UI.Page
         DisableOrderDetailsFields();
         if (Page.IsPostBack)
             SetupQuickSearch(null, null);
+        foreach (GridViewRow GVR in ProjectOrdersGV.Rows)
+        {
+            if (GVR.Cells[8].Text == "מתעכב")
+                GVR.Cells[8].Attributes.Add("class", "Late");
+        }
     }
 
     protected void LoadSuppliers()
@@ -54,7 +59,7 @@ public partial class Default : System.Web.UI.Page
             string ProjectID = Session["ProjectIDForProjectOrders"].ToString();
             DateTime InstallationDate;
             InstallationDate = EstArrDate == "" ?
-                               InstallationDate = DateTime.MinValue : Convert.ToDateTime(EstArrDate);
+                               InstallationDate = DateTime.MinValue : DateTime.ParseExact(EstArrDate, "MM/dd/yyyy", null);
             Order o = new Order(Convert.ToInt32(ProjectID), Convert.ToInt32(SupplierID), RawMeterialID, Count, InstallationDate);
             o.CreateNewOrder(o);
         }

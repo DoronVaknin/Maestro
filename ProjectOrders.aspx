@@ -69,7 +69,7 @@
                         </tr>
                         <tr>
                             <td>
-                                תריסים
+                                תריסים (יח')
                             </td>
                             <td>
                                 <div class="input-group">
@@ -88,7 +88,7 @@
                         </tr>
                         <tr>
                             <td>
-                                נאספים
+                                נאספים (יח')
                             </td>
                             <td>
                                 <div class="input-group">
@@ -107,7 +107,7 @@
                         </tr>
                         <tr>
                             <td>
-                                אלומיניום
+                                אלומיניום (ק"ג)
                             </td>
                             <td>
                                 <div class="input-group">
@@ -126,7 +126,7 @@
                         </tr>
                         <tr>
                             <td>
-                                וואלים
+                                וואלים (יח')
                             </td>
                             <td>
                                 <div class="input-group">
@@ -145,7 +145,7 @@
                         </tr>
                         <tr>
                             <td>
-                                יואים
+                                יואים (יח')
                             </td>
                             <td>
                                 <div class="input-group">
@@ -164,7 +164,7 @@
                         </tr>
                         <tr>
                             <td>
-                                פרזול
+                                פרזול (ק"ג)
                             </td>
                             <td>
                                 <div class="input-group">
@@ -183,7 +183,7 @@
                         </tr>
                         <tr>
                             <td>
-                                מנועים
+                                מנועים (יח')
                             </td>
                             <td>
                                 <div class="input-group">
@@ -202,7 +202,7 @@
                         </tr>
                         <tr>
                             <td>
-                                ממ"ד
+                                ממ"ד (מ"ר)
                             </td>
                             <td>
                                 <div class="input-group">
@@ -222,7 +222,7 @@
                         </tr>
                         <tr>
                             <td>
-                                זכוכית
+                                זכוכית (מ"ר)
                             </td>
                             <td>
                                 <div class="input-group">
@@ -241,7 +241,7 @@
                         </tr>
                         <tr>
                             <td>
-                                ארגזים
+                                ארגזים (יח')
                             </td>
                             <td>
                                 <div class="input-group">

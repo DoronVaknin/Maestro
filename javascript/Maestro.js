@@ -29,7 +29,6 @@ $(document).ready(function () {
     ActivateDatepicker();
     ActivateQuickSearch();
     ActivateServiceCallExistingProjectModal();
-    ActivateDragAndDrop();
     var sPageName = GetPageName();
 
     switch (sPageName) {
@@ -41,6 +40,7 @@ $(document).ready(function () {
             ModifyInstallationDateField();
             $("#ProjectDetailsStatusIcon").popover({ html: true, content: GetProgressBarContent() });
             ActivateGoogleAutoCompletion("ContentPlaceHolder3_ProjectInfoAddress");
+            ActivateDragAndDrop();
             break;
 
         case "ProjectOrders.aspx".toLowerCase():
@@ -976,14 +976,6 @@ function myTrim(S, c) {
     return s;
 }
 
-//function IsUrlExists(sURL)
-//{
-//    var http = new XMLHttpRequest();
-//    http.open('HEAD', sURL, false);
-//    http.send();
-//    return http.status != 404;
-//}
-
 //DRAG & DROP
 function ActivateDragAndDrop() {
     var obj = $("#DragAndDrop");
@@ -1017,6 +1009,12 @@ function ActivateDragAndDrop() {
     $(document).on('drop', function (e) {
         e.stopPropagation();
         e.preventDefault();
+    });
+    $(".DeleteFile").click(function(){
+        var sFileID = $(this).parent().attr("id");
+        sFileID = sFileID.substr(4);
+        DeleteFile(sFileID);
+        //DeleteFileFromServer(sFileID);
     });
 }
 
@@ -1059,7 +1057,7 @@ function sendFileToServer(formData, status) {
             sFileName = ReplaceGlobally(sFileName,"''","");
             sFileName = ReplaceGlobally(sFileName," ","_");
             var sURL = 'http://proj.ruppin.ac.il/igroup9/prod/files/ProjectsFiles/' + sFileName;
-            InsertNewFile("", sURL, ProjectID); // data holds the URL of the saved file
+            InsertNewFile("", sURL, ProjectID, sFileName); // data holds the URL of the saved file
         },
         error: function (e) {
             alert("Failed to upload files: " + e.responseText);
@@ -1121,7 +1119,28 @@ function handleFileUpload(files, obj) {
     }
 }
 
-function InsertNewFile(sDescription, sUrl, pID) {
+function GetTableCurrentIdentity(sTableName) {
+    var oTableName = { TableName: sTableName };
+    dataString = JSON.stringify(oTableName);
+    $.ajax({ // ajax call starts
+        url: 'MaestroWS.asmx/GetTableCurrentIdentity',   // JQuery call to the server side method
+        data: dataString,    // the parameters sent to the server
+        type: 'POST',        // can be post or get
+        dataType: 'json',    // Choosing a JSON datatype
+        contentType: 'application/json; charset = utf-8', // of the data received
+        async: false,
+        success: function (data) // Variable data contains the data we get from serverside
+        {
+            iCurrentTableID = $.parseJSON(data.d);
+        }, // end of success
+        error: function (e) {
+            alert("failed to get table identity: " + e.responseText);
+        } // end of error
+    });
+    return iCurrentTableID;
+}
+
+function InsertNewFile(sDescription, sUrl, pID, sFileName) {
     dataString = { Description: sDescription, Url: sUrl, ProjectID: pID };
     dataString = JSON.stringify(dataString);
     $.ajax({ // ajax call start
@@ -1133,12 +1152,62 @@ function InsertNewFile(sDescription, sUrl, pID) {
         contentType: 'application/json; charset = utf-8', // for the data received
         success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
         {
+            if (data.d == "1") {
+            var sHTML = 
+                "<div id='File" + GetTableCurrentIdentity("Files") + "' class='FileBlock'>" +
+                    "<a class='DeleteFile pointer glyphicon glyphicon-remove'></a>&nbsp;&nbsp;" +
+                    "<a href='" + sUrl + "' target = '_blank'>" + sFileName + "</a>" +
+                "</div>";
+                $("#ContentPlaceHolder3_ProjectFiles").append(sHTML);
+            }
         }, // end of success
         error: function (e) { // this function will be called upon failure
             alert("failed to insert new file: " + e.responseText);
         } // end of error
     });              // end of ajax call
 }
+
+function DeleteFile(sFileID) {
+    dataString = { FileID: sFileID };
+    dataString = JSON.stringify(dataString);
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/DeleteFile',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            if (data.d == "1")
+                $("#File" + sFileID).remove();
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to delete file: " + e.responseText);
+        } // end of error
+    });              // end of ajax call
+}
+
+//function DeleteFileFromServer(sFileID) {
+//    dataString = { FileID: sFileID };
+//    dataString = JSON.stringify(dataString);
+//    $.ajax({ // ajax call start
+//        url: 'http://proj.ruppin.ac.il/igroup9/prod/files/ProjectsFiles/DeleteFile.ashx',
+//        data: dataString, // Send value of the project id
+//        dataType: 'json', // Choosing a JSON datatype for the data sent
+//        type: 'POST',
+//        async: false, // this is a synchronous call
+//        contentType: 'application/json; charset = utf-8', // for the data received
+//        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+//        {
+////            if (data.d == "1")
+////                $("#File" + sFileID).remove();
+//        }, // end of success
+//        error: function (e) { // this function will be called upon failure
+//            alert("failed to delete file: " + e.responseText);
+//        } // end of error
+//    });              // end of ajax call
+//}
 
 //Google Autocompletion
 function ActivateGoogleAutoCompletion(sID) {

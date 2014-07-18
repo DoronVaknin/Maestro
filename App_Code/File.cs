@@ -51,6 +51,13 @@ public class File
         return RowAffected;
     }
 
+    public int DeleteFile(int FileID)
+    {
+        DBservices dbs = new DBservices();
+        int RowAffected = dbs.DeleteFile(FileID);
+        return RowAffected;
+    }
+
     public DataTable GetProjectFiles(int ProjectID)
     {
         DBservices dbs = new DBservices();

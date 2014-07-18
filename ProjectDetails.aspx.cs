@@ -254,9 +254,14 @@ public partial class Default : System.Web.UI.Page
         string sHTML = "";
         for (int i = 0; i < dt.Rows.Count; i++)
         {
+            string sFileID = dt.Rows[i].ItemArray[0].ToString();
             string sUrl = dt.Rows[i].ItemArray[2].ToString();
             string sFileName = Path.GetFileName(sUrl);
-            sHTML += "<a href='" + sUrl + "' target = '_blank'>" + sFileName + "</a><br>";
+            sHTML +=
+                "<div id='File" + sFileID + "' class='FileBlock'>" +
+                    "<a class='DeleteFile pointer glyphicon glyphicon-remove'></a>&nbsp;&nbsp;" +
+                    "<a href='" + sUrl + "' target = '_blank'>" + sFileName + "</a>" +
+                "</div>";
         }
         ProjectFiles.InnerHtml = sHTML;
     }

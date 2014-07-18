@@ -67,6 +67,11 @@ public partial class _Default : System.Web.UI.Page
         dt = s.GetSuppliersRankTable();
         int TotalDaysEarly = Math.Abs(Convert.ToInt32(dt.Compute("SUM(DaysLate)", "DaysLate < 0")));
         int RowsNum = dt.Rows.Count;
+        while (System.DBNull.Value.Equals(dt.Rows[0].ItemArray[1]))
+        {
+            dt.Rows[0].Delete(); // Clean before sorting
+            dt.AcceptChanges();
+        }
         for (int i = 0; i < RowsNum; i++)
         {
             if (!System.DBNull.Value.Equals(dt.Rows[dt.Rows.Count - 1].ItemArray[1]))
@@ -78,11 +83,6 @@ public partial class _Default : System.Web.UI.Page
                     dt.AcceptChanges();
                 }
             }
-        }
-        while (System.DBNull.Value.Equals(dt.Rows[0].ItemArray[1]))
-        {
-            dt.Rows[0].Delete();
-            dt.AcceptChanges();
         }
         DataColumn dc = new DataColumn();
         dt.Columns.Add(dc);

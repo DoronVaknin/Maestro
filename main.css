@@ -566,3 +566,9 @@ h2
 {
     margin: 0;
 }
+
+#ContentPlaceHolder3_ProjectFiles .DeleteFile
+{
+    text-decoration: none;
+    vertical-align: middle;
+}

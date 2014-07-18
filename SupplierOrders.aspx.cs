@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Globalization;
 
 public partial class Default2 : System.Web.UI.Page
 {
@@ -23,7 +24,7 @@ public partial class Default2 : System.Web.UI.Page
         foreach (GridViewRow GVR in SupplierOrdersGV.Rows)
         {
             if (GVR.Cells[7].Text == "מתעכב")
-                GVR.Cells[7].Attributes.Add("class","Late");
+                GVR.Cells[7].Attributes.Add("class", "Late");
         }
     }
 
@@ -33,7 +34,9 @@ public partial class Default2 : System.Web.UI.Page
         SupplierOrderID.Text = SupplierOrdersGV.SelectedRow.Cells[1].Text;
         SupplierOrderDateOpened.Text = SupplierOrdersGV.SelectedRow.Cells[2].Text;
         SupplierOrderItemName.Text = SupplierOrdersGV.SelectedRow.Cells[3].Text;
-        SupplierOrderEstimatedDOA.Text = (Convert.ToDateTime(SupplierOrdersGV.SelectedRow.Cells[4].Text)).ToString("MM/dd/yyyy");
+        //CultureInfo provider = new CultureInfo("he-IL");
+        DateTime date = DateTime.Parse(SupplierOrdersGV.SelectedRow.Cells[4].Text, CultureInfo.GetCultureInfo("he-IL"));
+        SupplierOrderEstimatedDOA.Text = date.ToShortDateString();
         SupplierOrderQuantity.Text = SupplierOrdersGV.SelectedRow.Cells[5].Text;
         SupplierOrderProject.Text = SupplierOrdersGV.SelectedRow.Cells[6].Text;
         ListItem li = SupplierOrderStatus.Items.FindByText(SupplierOrdersGV.SelectedRow.Cells[7].Text);
