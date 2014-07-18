@@ -19,7 +19,9 @@ public class ReturnValue : IHttpHandler
                 continue;
             try
             {
-                savedFileName = context.Server.MapPath(".") + "\\" + hpf.FileName;
+                string FileName = hpf.FileName.Replace("''", "");
+                FileName = FileName.Replace(" ", "_");
+                savedFileName = context.Server.MapPath(".") + "\\" + FileName;
             }
             catch (Exception ex)
             {

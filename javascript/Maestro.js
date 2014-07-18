@@ -1056,7 +1056,9 @@ function sendFileToServer(formData, status) {
         success: function (data) {
             status.setProgress(100);
             $("#DragAndDropStatus").html("הקבצים הועלו בהצלחה<br>");
-            var sURL = "http://proj.ruppin.ac.il/igroup9/prod/files/ProjectsFiles/" + sFileName;
+            sFileName = ReplaceGlobally(sFileName,"''","");
+            sFileName = ReplaceGlobally(sFileName," ","_");
+            var sURL = 'http://proj.ruppin.ac.il/igroup9/prod/files/ProjectsFiles/' + sFileName;
             InsertNewFile("", sURL, ProjectID); // data holds the URL of the saved file
         },
         error: function (e) {
