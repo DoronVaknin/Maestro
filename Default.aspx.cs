@@ -14,6 +14,7 @@ public partial class Login : System.Web.UI.Page
             ErrorLBL.InnerText = "יש להתחבר לפני כניסה למערכת";
         else if (Request.Url.Query == "?Reason=UserNotAllowed")
             ErrorLBL.InnerText = "אינך מורשה להיכנס למערכת";
+        UserNameTB.Focus();
     }
 
     protected void LoginBTN_Click(object sender, EventArgs e)
@@ -22,8 +23,14 @@ public partial class Login : System.Web.UI.Page
         string password = PasswordTB.Value;
         if (Membership.ValidateUser(username, password))
         {
+            //bool isWorker = User.IsInRole("Worker");
+            //if (isWorker) // Used to block worker attempts from login to the system
+            //    Response.Redirect("~/Default.aspx?Reason=UserNotAllowed");
+            //else
+            //{
             FormsAuthentication.SetAuthCookie(username, false);
             RedirectToHomePage(username);
+            //}
         }
         else
             ErrorLBL.InnerText = "שם משתמש או סיסמא לא נכונים";

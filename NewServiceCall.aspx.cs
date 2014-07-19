@@ -24,6 +24,7 @@ public partial class Default : System.Web.UI.Page
             PageHeader.InnerHtml = "קריאת שירות עבור הפרויקט " + pName;
         }
         ServiceCallDateOpened.Value = (DateTime.Today).ToString("MM/dd/yyyy");
+        ServiceCallProblemDesc.Focus();
     }
 
     protected void CreateServiceCallExternal_Click(object sender, EventArgs e)

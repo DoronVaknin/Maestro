@@ -29,6 +29,7 @@ public partial class Default : System.Web.UI.Page
             Page.ClientScript.RegisterStartupScript(this.GetType(), "ModalCustomerCreated", "ActivateModal('ModalCustomerCreated');", true);
         ProjectDateOpened.Value = (DateTime.Today).ToString("MM/dd/yyyy");
         ProjectExpirationDate.Value = (DateTime.Now.AddYears(7)).ToString("MM/dd/yyyy");
+        ProjectName.Focus();
     }
 
     protected void CreateProject_Click(object sender, EventArgs e)
