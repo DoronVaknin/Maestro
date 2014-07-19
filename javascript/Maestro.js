@@ -1254,7 +1254,7 @@ function PopulateGoogleMap() {
 
 function ShowServiceCallPin(oPosition, sID) {
     var Position = new google.maps.LatLng(oPosition.lat, oPosition.lng);
-    var Image = "images/icons/red-pin.png";
+    var Image = "images/red-pin.png";
     var Marker = new google.maps.Marker({
         position: Position,
         map: Map,
@@ -1285,7 +1285,7 @@ function ShowServiceCallPin(oPosition, sID) {
 
 function ShowProjectPin(oPosition, pID) {
     var Position = new google.maps.LatLng(oPosition.lat, oPosition.lng);
-    var Image = "images/icons/blue-pin.png";
+    var Image = "images/blue-pin.png";
     var Marker = new google.maps.Marker({
         position: Position,
         map: Map,

@@ -210,11 +210,12 @@ function BuildHatchesList(pID) {
 function BuildHatchesListPerProject() {
     var str = "";
     for (var pID in Projects) {
-        //Projects[Project][1].HatchesImageURL
         str += '<div data-role="page" id="HatchesOfProject' + pID + '">';
         str += '<div data-role="header" data-theme="a"><h1>' + Projects[pID].Fname + ' ' + Projects[pID].Lname + '</h1>';
         str += '<a href="#Project' + pID + '" data-icon="back" data-iconpos="notext" style="border: none;"></a>';
-        str += '<a href="#HatchesImage' + pID + '" data-rel="popup" data-icon="info" data-iconpos="notext" style="border: none;"></a></div>'; //end of header
+        if (!IsEmpty(Projects[pID].HatchesImageURL))
+            str += '<a href="#HatchesImage' + pID + '" data-rel="popup" data-icon="info" data-iconpos="notext" style="border: none;"></a>';
+        str += '</div>'; //end of header
         str += '<div data-role="content">';
         str += '<ul id="HatchesListProject' + pID + '" data-role="listview" data-theme="c" data-inset="true" data-filter="true" data-filter-placeholder="חפש פתח...">';
         str += BuildHatchesList(pID);
@@ -292,7 +293,7 @@ function BuildHatchDetailsPage(oHatch) {
     str += "<ul>";
     str += "<li><a data-role = 'button' data-rel='popup' class = 'ui-icon-camera-white' href='#Hatch" + oHatch.HatchID + "Dialog' data-position-to='window'>צלם תמונה</a></li>";
     str += "<li><a data-ajax = 'false' href='#PicturesOfHatch" + oHatch.HatchID + "' class = 'HatchPicturesBTN' data-icon='grid' data-iconpos='left'>תמונות</a></li>";
-    str += "<li><a data-ajax = 'false' href='#QAForHatch" + oHatch.HatchID + "' data-icon='star'>בקרת איכות</a></li>";
+    //    str += "<li><a data-ajax = 'false' href='#QAForHatch" + oHatch.HatchID + "' data-icon='star'>בקרת איכות</a></li>";
     str += "</ul>";
     str += "</div>"; // close the navbar
     str += "</div>"; // close the footer
@@ -538,7 +539,6 @@ function CreateServiceCall(oServiceCallDetails) {
         {
             if (data.d > 0)
                 alert("קריאת השירות נוצרה בהצלחה");
-            //                CurrentPageData = [];
         }, // end of success
         error: function (e) {
             alert("failed to Create service call :( " + e.responseText);
@@ -648,7 +648,7 @@ function PopulateGoogleMap() {
 
 function ShowServiceCallPin(oPosition, sID) {
     var Position = new google.maps.LatLng(oPosition.lat, oPosition.lng);
-    var Image = "images/icons/red-pin.png";
+    var Image = "images/red-pin.png";
     var Marker = new google.maps.Marker({
         position: Position,
         map: Map,
@@ -676,7 +676,7 @@ function ShowServiceCallPin(oPosition, sID) {
 
 function ShowProjectPin(oPosition, pID) {
     var Position = new google.maps.LatLng(oPosition.lat, oPosition.lng);
-    var Image = "images/icons/blue-pin.png";
+    var Image = "images/blue-pin.png";
     var Marker = new google.maps.Marker({
         position: Position,
         map: Map,
@@ -798,7 +798,7 @@ function HideLoading() {
 } // Unload
 
 
-/** Show Me How **/
+/** Show Me How - Pin's Interface **/
 var CurrentPinID;
 var iNewPins = 0;
 var aNewPinsIDs = [];
