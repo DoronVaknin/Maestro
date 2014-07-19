@@ -16,7 +16,7 @@ public class Hatch
         //
     }
 
-    public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, string _EmployeeID, DateTime _StatusLastModified, string _Comments)
+    public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, int _EmployeeID, DateTime _StatusLastModified, string _Comments)
     {
         HatchID = _HatchID;
         HatchStatusID = _HatchStatusID;
@@ -27,7 +27,7 @@ public class Hatch
         Comments = _Comments;
     }
 
-    public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, string _EmployeeID, DateTime _StatusLastModified, string _Comments, int _HatchTypeID)
+    public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, int _EmployeeID, DateTime _StatusLastModified, string _Comments, int _HatchTypeID)
     {
         HatchID = _HatchID;
         HatchStatusID = _HatchStatusID;
@@ -88,8 +88,8 @@ public class Hatch
         set { projectID = value; }
     }
 
-    string employeeID;
-    public string EmployeeID
+    int employeeID;
+    public int EmployeeID
     {
         get { return employeeID; }
         set { employeeID = value; }
@@ -168,16 +168,16 @@ public class Hatch
         return RowAffected;
     }
 
-    public string GetUsernameID(string Username)
+    public int GetUsernameID(string Username)
     {
         DataTable dt = new DataTable();
         DBservices db = new DBservices();
         dt = db.GetUsernameID(Username);
-        string eID = "";
+        int eID = 0;
         if (dt.Rows.Count > 0)
-            eID = dt.Rows[0].ItemArray[0].ToString();
+            eID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
         else
-            eID = "300843637";
+            eID = 300843637;
         return eID;
     }
 

@@ -295,7 +295,7 @@ public class MaestroWS : System.Web.Services.WebService
     public string GetUsernameID()
     {
         Hatch h = new Hatch();
-        string eID = h.GetUsernameID(User.Identity.Name);
+        int eID = h.GetUsernameID(User.Identity.Name);
 
         // create a json serializer object
         JavaScriptSerializer js = new JavaScriptSerializer();
@@ -306,7 +306,7 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string UpdateHatchDetails(int HatchID, int HatchTypeID, int HatchStatusID, int FailureTypeID, string EmployeeID, string Date, string Comments)
+    public string UpdateHatchDetails(int HatchID, int HatchTypeID, int HatchStatusID, int FailureTypeID, int EmployeeID, string Date, string Comments)
     {
         Hatch h = new Hatch(HatchID, HatchStatusID, FailureTypeID, EmployeeID, Convert.ToDateTime(Date), Comments, HatchTypeID);
         int RowAffected = h.UpdateHatchDetails();
@@ -343,7 +343,7 @@ public class MaestroWS : System.Web.Services.WebService
             if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[4]))
                 sc.DateClosed = Convert.ToDateTime(dt.Rows[i].ItemArray[4]);
 
-            c.cID = dt.Rows[i].ItemArray[7].ToString();
+            c.cID = Convert.ToInt32(dt.Rows[i].ItemArray[7]);
             c.Fname = dt.Rows[i].ItemArray[8].ToString();
             c.Lname = dt.Rows[i].ItemArray[9].ToString();
             c.Address = dt.Rows[i].ItemArray[10].ToString();
@@ -400,7 +400,7 @@ public class MaestroWS : System.Web.Services.WebService
 
         Project p = new Project();
         dt = p.GetCustomerInformation(ProjectID);
-        string cID = dt.Rows[0].ItemArray[0].ToString();
+        int cID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
         int RowAffected = sc.InsertServiceCallExistingProject(sc, cID, ProjectID);
 
         // create a json serializer object
@@ -468,7 +468,7 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string GetNotifications(string eID)
+    public string GetNotifications(int eID)
     {
         Notification n = new Notification();
         DataTable dt = n.GetNotifications(eID);
@@ -496,9 +496,9 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string InsertNewNotification(string Message, string MessageDate, string eID)
+    public string InsertNewNotification(string Message, string MessageDate, int eID)
     {
-        Notification n = new Notification(Message, DateTime.ParseExact(MessageDate, "dd/MM/yyyy", null), eID, "0");
+        Notification n = new Notification(Message, DateTime.ParseExact(MessageDate, "dd/MM/yyyy", null), eID, 0);
         int RowAffected = n.InsertNewNotification();
 
         // create a json serializer object
@@ -510,7 +510,7 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string GetSpecialNotifications(string eID)
+    public string GetSpecialNotifications(int eID)
     {
         SpecialNotification sn = new SpecialNotification();
         DataTable dt = sn.GetSpecialNotifications(eID);
@@ -689,7 +689,7 @@ public class MaestroWS : System.Web.Services.WebService
         return jsonString;
     }
 
-        [WebMethod]
+    [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public string DeleteFile(int FileID)
     {

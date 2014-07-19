@@ -58,7 +58,7 @@ public class DBservices
         }
     }
 
-    public int InsertNewProject(Project p, string cID, int psID)
+    public int InsertNewProject(Project p, int cID, int psID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spInsertNewProject]", con))
@@ -222,7 +222,7 @@ public class DBservices
         }
     }
 
-    public int GetProjectID(string cID)
+    public int GetProjectID(int cID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spGetProjectID]", con))
@@ -280,7 +280,7 @@ public class DBservices
         }
     }
 
-    public void UpdateCustomerInformation(Customer c, string cID)
+    public void UpdateCustomerInformation(Customer c, int cID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateCustomerInformation]", con))
@@ -553,7 +553,7 @@ public class DBservices
         }
     }
 
-    public void InsertExternalServiceCall(ServiceCall sc, string CustomerID)
+    public void InsertExternalServiceCall(ServiceCall sc, int CustomerID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spInsertExternalServiceCall]", con))
@@ -579,7 +579,7 @@ public class DBservices
         }
     }
 
-    public int InsertServiceCallExistingProject(ServiceCall sc, string CustomerID, int ProjectID)
+    public int InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spInsertServiceCallExistingProject]", con))
@@ -665,7 +665,7 @@ public class DBservices
         }
     }
 
-    public int UpdateUndecidedCustomerDetails(Project p, int ProjectStatusID, string CustomerID, string CustomerMobilePhone)
+    public int UpdateUndecidedCustomerDetails(Project p, int ProjectStatusID, int CustomerID, string CustomerMobilePhone)
     {
         con = connect("igroup9_prodConnectionString");
         using (SqlCommand sqlComm = new SqlCommand("[spUpdateUndecidedCustomerDetails]", con))
@@ -1326,7 +1326,7 @@ public class DBservices
         }
     }
 
-    public DataTable GetNotifications(string eID)
+    public DataTable GetNotifications(int eID)
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();
@@ -1353,7 +1353,7 @@ public class DBservices
         }
     }
 
-    public DataTable GetSpecialNotifications(string eID)
+    public DataTable GetSpecialNotifications(int eID)
     {
         DataTable dt = new DataTable();
         SqlDataAdapter da = new SqlDataAdapter();

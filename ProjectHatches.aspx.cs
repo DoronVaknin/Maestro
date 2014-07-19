@@ -43,7 +43,7 @@ public partial class Default : System.Web.UI.Page
             string Comments = HatchComments.Text;
             DateTime StatusLastModified = DateTime.Now;
             string Username = Page.User.Identity.Name;
-            string eID = h.GetUsernameID(Username);
+            int eID = h.GetUsernameID(Username);
             int htID = Convert.ToInt32(HatchType.SelectedValue);
             int ftID = 0;
             if (hsID == 2)
@@ -55,7 +55,7 @@ public partial class Default : System.Web.UI.Page
             {
                 string ProjectName = Session["ProjectNameForProjectHatches"].ToString();
                 string Message = String.Format("דווחה תקלה עבור פתח מס' {0} בפרויקט {1} ", hID, ProjectName);
-                Notification n = new Notification(Message, DateTime.Now.Date, "302042267", "0");
+                Notification n = new Notification(Message, DateTime.Now.Date, 302042267, 0);
                 RowAffected = n.InsertNewNotification();
             }
         }

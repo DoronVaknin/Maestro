@@ -21,7 +21,7 @@ public class Customer
         //
     }
 
-    public Customer(string _cID, string _fName, string _lName, string _Address, string _Phone, string _Mobile, string _Fax, string _Email, int _Region)
+    public Customer(int _cID, string _fName, string _lName, string _Address, string _Phone, string _Mobile, string _Fax, string _Email, int _Region)
     {
         cID = _cID;
         Fname = _fName;
@@ -34,8 +34,8 @@ public class Customer
         Region = _Region;
     }
 
-    string cid;
-    public string cID
+    int cid;
+    public int cID
     {
         get { return cid; }
         set { cid = value; }
@@ -112,7 +112,7 @@ public class Customer
         }
     }
 
-    public void SaveCustomerNewDetails(string ProjectInfoFirstName, string ProjectInfoLastName, string ProjectInfoPhone, string ProjectInfoMobile, string ProjectInfoFax, string ProjectInfoAddress, string ProjectInfoEmail, int ProjectInfoRegion, string ProjectInfoCustomerID)
+    public void SaveCustomerNewDetails(string ProjectInfoFirstName, string ProjectInfoLastName, string ProjectInfoPhone, string ProjectInfoMobile, string ProjectInfoFax, string ProjectInfoAddress, string ProjectInfoEmail, int ProjectInfoRegion, int ProjectInfoCustomerID)
     {
         Fname = ProjectInfoFirstName;
         Lname = ProjectInfoLastName;

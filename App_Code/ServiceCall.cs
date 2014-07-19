@@ -61,13 +61,13 @@ public class ServiceCall
         set { urgent = value; }
     }
 
-    public void InsertExternalServiceCall(ServiceCall sc, string CustomerID)
+    public void InsertExternalServiceCall(ServiceCall sc, int CustomerID)
     {
         DBservices dbs = new DBservices();
         dbs.InsertExternalServiceCall(sc, CustomerID);
     }
 
-    public int InsertServiceCallExistingProject(ServiceCall sc, string CustomerID, int ProjectID)
+    public int InsertServiceCallExistingProject(ServiceCall sc, int CustomerID, int ProjectID)
     {
         DBservices dbs = new DBservices();
         int RowAffected = dbs.InsertServiceCallExistingProject(sc, CustomerID, ProjectID);

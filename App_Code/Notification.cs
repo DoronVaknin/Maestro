@@ -14,13 +14,13 @@ public class Notification
 
     }
 
-    public Notification(string _Notification, DateTime _nDate, string _eID1, string _eID2)
+    public Notification(string _Notification, DateTime _nDate, int _eID1, int _eID2)
     {
         if (_Notification != "")
             nNotification = _Notification;
         nDate = _nDate;
         eID1 = _eID1;
-        if (_eID2 != "0")
+        if (_eID2 != 0)
             eID2 = _eID2;
     }
 
@@ -45,15 +45,15 @@ public class Notification
         set { ndate = value; }
     }
 
-    string eid1;
-    public string eID1
+    int eid1;
+    public int eID1
     {
         get { return eid1; }
         set { eid1 = value; }
     }
 
-    string eid2;
-    public string eID2
+    int eid2;
+    public int eID2
     {
         get { return eid2; }
         set { eid2 = value; }
@@ -66,7 +66,7 @@ public class Notification
         return RowAffected;
     }
 
-    public DataTable GetNotifications(string eID)
+    public DataTable GetNotifications(int eID)
     {
         DataTable dt = new DataTable();
         DBservices dbs = new DBservices();

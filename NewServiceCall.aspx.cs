@@ -44,7 +44,7 @@ public partial class Default : System.Web.UI.Page
                 int pID = Convert.ToInt32(Session["ProjectIDForServiceCall"]);
                 Project p = new Project();
                 DataTable dt = p.GetCustomerInformation(pID);
-                string cID = dt.Rows[0].ItemArray[0].ToString();
+                int cID = Convert.ToInt32(dt.Rows[0].ItemArray[0]);
                 sc.InsertServiceCallExistingProject(sc, cID, pID);
             }
         }
