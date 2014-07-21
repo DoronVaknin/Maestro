@@ -567,7 +567,7 @@ h2
     margin: 0;
 }
 
-#ContentPlaceHolder3_ProjectFiles .DeleteFile
+#ContentPlaceHolder3_ProjectFiles .DeleteFile, #ProjectHatchesFileHolder .DeleteFile
 {
     text-decoration: none;
     vertical-align: middle;

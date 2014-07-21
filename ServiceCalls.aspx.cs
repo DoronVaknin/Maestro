@@ -31,14 +31,18 @@ public partial class Default : System.Web.UI.Page
         {
             ServiceCallID.Text = scID.ToString();
             ServiceCallDateOpened.Text = ((DateTime)dt.Rows[0].ItemArray[1]).ToString("MM/dd/yyyy");
-            DateTime ExpirationDate = (DateTime)dt.Rows[0].ItemArray[2];
+            DateTime ExpirationDate;
+            if (!DBNull.Value.Equals(dt.Rows[0].ItemArray[2]))
+                ExpirationDate = (DateTime)dt.Rows[0].ItemArray[2];
+            else
+                ExpirationDate = ((DateTime)dt.Rows[0].ItemArray[1]).AddYears(7);
             ServiceCallExpirationDate.Text = ExpirationDate.ToString("MM/dd/yyyy");
             if (DateTime.Now > ExpirationDate) // Warranty expired
                 ServiceCallExpirationDate.Style.Add("border", "2px solid #DB0F0F");
             else // Product is in warranty
                 ServiceCallExpirationDate.Style.Add("border", "2px solid #00B800");
 
-                ServiceCallProblemDesc.Text = dt.Rows[0].ItemArray[3].ToString();
+            ServiceCallProblemDesc.Text = dt.Rows[0].ItemArray[3].ToString();
             ServiceCallUrgent.Checked = Convert.ToBoolean(dt.Rows[0].ItemArray[4]);
             ServiceCallFirstName.Text = dt.Rows[0].ItemArray[5].ToString();
             ServiceCallLastName.Text = dt.Rows[0].ItemArray[6].ToString();
@@ -66,13 +70,6 @@ public partial class Default : System.Web.UI.Page
         ServiceCallID.Attributes.Add("disabled", "disabled");
     }
 
-    //protected void ServiceCallBTN_Click(object sender, EventArgs e)
-    //{
-    //    GridViewRow row = ServiceCallsGV.SelectedRow;
-    //    ServiceCall sc = new ServiceCall();
-    //    int RowAffected = sc.CloseServiceCall(Convert.ToInt32(row.Cells[1].Text));
-    //}
-
     protected void SaveServiceCallDetailsBTN_Click(object sender, EventArgs e)
     {
         ServiceCall sc = new ServiceCall();
@@ -80,10 +77,6 @@ public partial class Default : System.Web.UI.Page
         string ProblemDesc = ServiceCallProblemDesc.Text;
         bool Urgent = ServiceCallUrgent.Checked;
         int RowAffected = sc.UpdateServiceCallDetails(scID, ProblemDesc, Urgent);
-        //if (RowAffected > 0)
-        //    Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalServiceCallUpdated", "ActivateModal('ModalServiceCallUpdated','קריאת השירות עודכנה בהצלחה','ModalServiceCalls');", true);
-        //else
-        //    Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalServiceCallUpdated", "ActivateModal('ModalServiceCallUpdated','אירעה שגיאה בשרת, אנא נסה מאוחר יותר','ModalServiceCalls');", true);
     }
 
     protected void CloseServiceCallHiddenBTN_Click(object sender, EventArgs e)

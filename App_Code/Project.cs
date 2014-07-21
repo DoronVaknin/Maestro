@@ -305,6 +305,14 @@ public class Project
         return dt;
     }
 
+    public DataTable GetHatchesImageURL(int ProjectID)
+    {
+        DataTable dt = new DataTable();
+        DBservices db = new DBservices();
+        dt = db.GetHatchesImageURL(ProjectID);
+        return dt;
+    }
+
     public int UpdateUndecidedCustomerDetails(Project p, int ProjectStatusID, int CustomerID, string CustomerMobilePhone)
     {
         DBservices dbs = new DBservices();

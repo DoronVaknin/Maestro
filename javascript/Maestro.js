@@ -545,7 +545,7 @@ function EnableServiceCallDetails() {
 
 function RestoreServiceCallDetails() {
     $("#ContentPlaceHolder3_ServiceCallProblemDesc").val(aServiceCallDetails[0]);
-    var bUrgent = aServiceCallDetails[1] == "on" ? false : true;
+    var bUrgent = aServiceCallDetails[1] == "on" ? true : false;
     $("#ContentPlaceHolder3_ServiceCallUrgent").prop('checked', bUrgent);
     DisableServiceCallDetailsFields();
     SwitchEditSaveButtons(true, "ServiceCall");
@@ -1010,11 +1010,17 @@ function ActivateDragAndDrop() {
         e.stopPropagation();
         e.preventDefault();
     });
-    $(".DeleteFile").click(function(){
+    $("#ContentPlaceHolder3_ProjectFiles .DeleteFile").click(function(){
         var sFileID = $(this).parent().attr("id");
         sFileID = sFileID.substr(4);
         DeleteFile(sFileID);
         //DeleteFileFromServer(sFileID);
+    });
+    $("#ProjectHatchesFileHolder .DeleteFile").click(function(){
+//    var sFileID = $(this).parent().attr("id");
+//    sFileID = sFileID.substr(4);
+//    DeleteFile(sFileID);
+    //DeleteFileFromServer(sFileID);
     });
 }
 
@@ -1253,6 +1259,7 @@ function PopulateGoogleMap() {
 }
 
 function ShowServiceCallPin(oPosition, sID) {
+    if(IsEmpty(oPosition.lat) || IsEmpty(oPosition.lng)) return; // Invalid position due to incorrect address
     var Position = new google.maps.LatLng(oPosition.lat, oPosition.lng);
     var Image = "images/red-pin.png";
     var Marker = new google.maps.Marker({
@@ -1284,6 +1291,7 @@ function ShowServiceCallPin(oPosition, sID) {
 }
 
 function ShowProjectPin(oPosition, pID) {
+    if(IsEmpty(oPosition.lat) || IsEmpty(oPosition.lng)) return; // Invalid position due to incorrect address
     var Position = new google.maps.LatLng(oPosition.lat, oPosition.lng);
     var Image = "images/blue-pin.png";
     var Marker = new google.maps.Marker({
@@ -1365,7 +1373,7 @@ function GetCoordinatesByAddress(sAddress) {
         async: false,
         success: function (data) // Variable data contains the data we get from serverside
         {
-            oPosition = data.results[0].geometry.location;
+           oPosition = !IsEmpty(data.results[0]) ? data.results[0].geometry.location : {};
         }, // end of success
         error: function (e) {
             alert("failed to get coordinates by address" + e.responseText);

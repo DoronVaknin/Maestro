@@ -30,6 +30,7 @@ public partial class Default : System.Web.UI.Page
             {
                 SetPageDetails(DetailsTable);
                 GetProjectFiles(ProjectID);
+                GetProjectHatchesPicture(ProjectID);
             }
             else
                 DisableAllFields();
@@ -264,6 +265,20 @@ public partial class Default : System.Web.UI.Page
                 "</div>";
         }
         ProjectFiles.InnerHtml = sHTML;
+    }
+
+    public void GetProjectHatchesPicture(int ProjectID)
+    {
+        Project p = new Project();
+        DataTable dt = p.GetHatchesImageURL(ProjectID);
+
+        string sURL = dt.Rows[0].ItemArray[0].ToString();
+        string sHTML =
+            "<div id='ProjectHatchesFileHolder' class='FileBlock'>" +
+                "<a class='DeleteFile pointer glyphicon glyphicon-remove'></a>&nbsp;&nbsp;" +
+                "<a href='" + sURL + "' target = '_blank'>תרשים פתחים</a>" +
+            "</div>";
+        ProjectHatchesPictureContainer.InnerHtml = sHTML;
     }
 }
 

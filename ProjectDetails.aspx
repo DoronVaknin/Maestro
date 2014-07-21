@@ -263,6 +263,18 @@
     </div>
     <div class="cntr">
         <h1>
+            תרשים פתחי הפרויקט
+        </h1>
+    </div>
+    <div>
+        <div id="ProjectHatchesPictureContainer" runat="server">
+        </div>
+        <asp:FileUpload ID="ProjectHatchesPicture" runat="server" />
+    </div>
+    <br />
+    <br />
+    <div class="cntr">
+        <h1>
             קבצי הפרויקט
         </h1>
     </div>

@@ -6,6 +6,7 @@ var Hatches = {};
 var PicsAndPins = {};  //Pictures & Pins
 var ServiceCallsList = {};  //ServiceCallsList[scID][0] - Service call details, ServiceCallsList[scID][1] - Customer details, ServiceCallsList[scID][2] - Project details
 var Picture = {};
+var iLastPictureID;
 var iCurrentTableID;
 
 $(document).ready(function () {
@@ -731,12 +732,18 @@ function UploadPicture() {
             HideLoading();
             var iRowAffected = $.parseJSON(data.d);
             alert(iRowAffected > 0 ? "התמונה הועלתה בהצלחה" : "אירעה שגיאה בשרת, אנא נסה מאוחר יותר");
+            AddPictureToGallery();
         }, // end of success
         error: function (e) {
             HideLoading();
             alert("failed to upload picture: " + e.responseText);
         } // end of error
-    });                       // end of ajax call
+    });                        // end of ajax call
+}
+
+function AddPictureToGallery() {
+    var sHTML = "<img id = 'Picture" + iLastPictureID + "' src='" + Picture.ImageURL + "' />";
+    $("#PicturesOfHatch" + Picture.HatchID + " .ImagesContainer").append(sHTML);
 }
 
 /** PhoneGap **/
@@ -744,7 +751,7 @@ function TakePicturePrepare(hID) {
     Picture.HatchID = parseInt(hID);
     Picture.PictureDesc = $.trim($("#Hatch" + hID + "PicDesc").val());
     $("#Hatch" + hID + "PicDesc").val("");
-    $("#Hatch" + hID + "CancelButton").click();
+    $("#Hatch" + hID + "CancelButton").click(); // Close popup
     TakePicture();
 }
 
@@ -763,8 +770,8 @@ function uploadPhoto(imageURI) {
     ShowLoading("מעלה תמונה"); // Start the spinning "working" animation
     var options = new FileUploadOptions(); // PhoneGap object to allow server upload
     options.fileKey = "file";
-    var iPicIndex = GetTableCurrentIdentity("Picture") + 1;
-    options.fileName = $.mobile.activePage.attr("id") + "_" + iPicIndex; // file name
+    iLastPictureID = GetTableCurrentIdentity("Picture") + 1;
+    options.fileName = $.mobile.activePage.attr("id") + "_" + iLastPictureID; // file name
     options.mimeType = "image/jpeg"; // file type
     var params = {}; // Optional parameters
     params.value1 = "test";
@@ -1044,5 +1051,5 @@ function IsEmptyPin(oPin) {
 function IsKeyExists(o, Key) {
     for (var k in o)
         if (k == Key) return true;
-    return false;
+return false;
 }
