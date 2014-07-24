@@ -303,22 +303,23 @@ function UploadHatchesImage(sFullPath) {
 function uploadError(sender,args)
 {
     document.getElementById('ContentPlaceHolder3_lblStatus').innerText = args.get_fileName(), 
-	"<span style='color:red;'>" + args.get_errorMessage() + "</span>";
+	"<span style='color:red;'>" + 
+    "התרחשה שגיאה בשרת, אנא נסה מאוחר יותר" + //args.get_errorMessage() + 
+    "</span>";
 }
 
 function StartUpload(sender, args)
 {
-    document.getElementById('ContentPlaceHolder3_lblStatus').innerText = 'Uploading Started.';
+    document.getElementById('ContentPlaceHolder3_lblStatus').innerText = 'מעלה קובץ...';
 }
 
 function UploadComplete(sender, args) {
     var filename = args.get_fileName();
     var contentType = args.get_contentType();
-    var text = "Size of " + filename + " is " + args.get_length() + " bytes";
-    if (contentType.length > 0) {
-     text += " and content type is '" + contentType + "'.";
-    }
-    document.getElementById('ContentPlaceHolder3_lblStatus').innerText = text;
+//    var text = "Size of " + filename + " is " + args.get_length() + " bytes";
+//    if (contentType.length > 0)
+//     text += " and content type is '" + contentType + "'.";
+    document.getElementById('ContentPlaceHolder3_lblStatus').innerText = "הקובץ הועלה בהצלחה";
     UploadHatchesImage(args._fileName);
 }
 
