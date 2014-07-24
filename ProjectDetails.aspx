@@ -1,11 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MaestroMaster.master" AutoEventWireup="true"
     CodeFile="ProjectDetails.aspx.cs" Inherits="Default" EnableEventValidation="false" %>
 
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
-    <asp:ScriptManager ID="ScriptManager1" runat="server">
-    </asp:ScriptManager>
+<%--    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>--%>
+    <ajaxToolkit:ToolkitScriptManager ID="AjaxScriptManager" runat="server" EnablePartialRendering = "true" />
     <div class="form-background">
         <div class="cntr">
             <h1>
@@ -267,9 +270,34 @@
         </h1>
     </div>
     <div>
+        <%--        <asp:UpdatePanel ID="UpdatePanel4" runat="server">
+            <Triggers>
+                <asp:PostBackTrigger ControlID="ProjectHatchesPictureUploadBTN" />
+                <%--<asp:AsyncPostBackTrigger ControlID="ProjectHatchesPictureUploadBTN" EventName="Click" />--% >
+            </Triggers>
+            <ContentTemplate>--%>
         <div id="ProjectHatchesPictureContainer" runat="server">
         </div>
-        <asp:FileUpload ID="ProjectHatchesPicture" runat="server" />
+        <%--<asp:FileUpload ID="ProjectHatchesPicture" runat="server" />--%>
+        <%--<input id="ProjectHatchesPicture" type="file" />--%>
+        <ajaxToolkit:AsyncFileUpload ID="AsyncFileUpload1" Width="400px" runat="server" OnClientUploadError="uploadError"
+            OnClientUploadStarted="StartUpload" OnClientUploadComplete="UploadComplete" CompleteBackColor="Lime"
+            UploaderStyle="Modern" ErrorBackColor="Red" ThrobberID="Throbber" OnUploadedComplete="AsyncFileUpload1_UploadedComplete"
+            UploadingBackColor="#66CCFF" />
+        <br />
+        <asp:Label ID="Throbber" runat="server" Style="display: none">
+            <img src="Images/indicator.gif" align="absmiddle" alt="loading" />
+        </asp:Label>
+        <asp:Label ID="lblStatus" runat="server" Style="font-family: Arial; font-size: small;"></asp:Label>
+        <div class="cntr">
+            <%--            <button class="btn btn-default" type="button" onclick="UploadHatchesImage()">
+                העלה קובץ&nbsp;&nbsp;<span class="glyphicon glyphicon-upload"></span>
+            </button>--%>
+            <%--            <asp:Button ID="ProjectHatchesPictureUploadBTN" runat="server" Text="העלה קובץ" CssClass="btn btn-default HiddenButtons"
+                OnClick="UploadHatchesImage_Click" />--%>
+        </div>
+    <%--            </ContentTemplate>
+        </asp:UpdatePanel>--%>
     </div>
     <br />
     <br />

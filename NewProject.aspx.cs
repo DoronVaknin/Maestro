@@ -38,7 +38,7 @@ public partial class Default : System.Web.UI.Page
         if (ProjectFiles.HasFile)
         {
             filename = Path.GetFileName(ProjectFiles.FileName);
-            ProjectFiles.SaveAs(Server.MapPath("~/files/") + filename);
+            ProjectFiles.SaveAs(Server.MapPath("~/files/ProjectsFiles/") + filename);
         }
         int psID;
         if (ProjectOfferConfirmed.Checked)

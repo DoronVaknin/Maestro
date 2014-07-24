@@ -273,14 +273,45 @@ public partial class Default : System.Web.UI.Page
         DataTable dt = p.GetHatchesImageURL(ProjectID);
 
         string sURL = dt.Rows[0].ItemArray[0].ToString();
-        string sHTML =
-            "<div id='ProjectHatchesFileHolder' class='FileBlock'>" +
-                "<a class='DeleteFile pointer glyphicon glyphicon-remove'></a>&nbsp;&nbsp;" +
-                "<a href='" + sURL + "' target = '_blank'>תרשים פתחים</a>" +
-            "</div>";
-        ProjectHatchesPictureContainer.InnerHtml = sHTML;
+        if (sURL != "")
+        {
+            string sHTML =
+                "<div id='ProjectHatchesFileHolder' class='FileBlock'>" +
+                    "<a class='DeleteFile pointer glyphicon glyphicon-remove'></a>&nbsp;&nbsp;" +
+                    "<a href='" + sURL + "' target = '_blank'>תרשים פתחים</a>" +
+                "</div>";
+            ProjectHatchesPictureContainer.InnerHtml = sHTML;
+        }
     }
+
+    //public void UploadHatchesImage_Click(object sender, EventArgs e)
+    //{
+    //    Project p = new Project();
+    //    string sURL = "";
+    //    int ProjectID = Convert.ToInt32(ProjectIDHolder.Value);
+    //    if (ProjectHatchesPicture.HasFile)
+    //    {
+    //        sURL = Path.GetFileName(ProjectHatchesPicture.FileName);
+    //        sURL = Server.MapPath(".") + "/files/ProjectsFiles/" + sURL;
+    //        ProjectHatchesPicture.SaveAs(sURL);
+    //        p.UploadHatchesImage(ProjectID, sURL);
+    //    }
+    //    string sHTML =
+    //        "<div id='ProjectHatchesFileHolder' class='FileBlock'>" +
+    //            "<a class='DeleteFile pointer glyphicon glyphicon-remove'></a>&nbsp;&nbsp;" +
+    //            "<a href='" + sURL + "' target = '_blank'>תרשים פתחים</a>" +
+    //        "</div>";
+    //    ProjectHatchesPictureContainer.InnerHtml = "";
+    //}
+
+    protected void AsyncFileUpload1_UploadedComplete(object sender, AjaxControlToolkit.AsyncFileUploadEventArgs e)
+    {
+        System.Threading.Thread.Sleep(5000);
+        if (AsyncFileUpload1.HasFile)
+        {
+            string strPath = MapPath("~/files/ProjectsFiles/") + Path.GetFileName(e.FileName);
+            AsyncFileUpload1.SaveAs(strPath);
+        }
+    }
+
 }
-
-
-

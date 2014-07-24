@@ -269,6 +269,59 @@ function AddProject() {
     $("#ContentPlaceHolder3_AddProjectBTN").click();
 }
 
+function UploadHatchesImage(sFullPath) {
+    var sProjectID = $("#ContentPlaceHolder3_ProjectIDHolder").val();
+    var sFileName = sFullPath.substr(sFullPath.lastIndexOf("\\") + 1);
+    var sURL = 'http://proj.ruppin.ac.il/igroup9/prod/files/ProjectsFiles/' + sFileName;
+    var sHTML = "";
+    dataString = { ProjectID: sProjectID, URL: sURL};
+    dataString = JSON.stringify(dataString);
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/UploadHatchesImage',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            if (data.d == "1") {
+                sHTML =
+                    "<div id='ProjectHatchesFileHolder' class='FileBlock'>" +
+                        "<a class='DeleteFile pointer glyphicon glyphicon-remove'></a>&nbsp;&nbsp;" +
+                        "<a href='" + sURL + "' target = '_blank'>תרשים פתחים</a>" +
+                    "</div>";
+                $("#ContentPlaceHolder3_ProjectHatchesPictureContainer").html(sHTML);
+            }
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to delete file: " + e.responseText);
+        } // end of error
+    });              // end of ajax call
+}
+
+function uploadError(sender,args)
+{
+    document.getElementById('ContentPlaceHolder3_lblStatus').innerText = args.get_fileName(), 
+	"<span style='color:red;'>" + args.get_errorMessage() + "</span>";
+}
+
+function StartUpload(sender, args)
+{
+    document.getElementById('ContentPlaceHolder3_lblStatus').innerText = 'Uploading Started.';
+}
+
+function UploadComplete(sender, args) {
+    var filename = args.get_fileName();
+    var contentType = args.get_contentType();
+    var text = "Size of " + filename + " is " + args.get_length() + " bytes";
+    if (contentType.length > 0) {
+     text += " and content type is '" + contentType + "'.";
+    }
+    document.getElementById('ContentPlaceHolder3_lblStatus').innerText = text;
+    UploadHatchesImage(args._fileName);
+}
+
 //Datepicker activation
 function ActivateDatepicker() {
     $(".datepicker").datepicker();
@@ -1017,10 +1070,7 @@ function ActivateDragAndDrop() {
         //DeleteFileFromServer(sFileID);
     });
     $("#ProjectHatchesFileHolder .DeleteFile").click(function(){
-//    var sFileID = $(this).parent().attr("id");
-//    sFileID = sFileID.substr(4);
-//    DeleteFile(sFileID);
-    //DeleteFileFromServer(sFileID);
+        DeleteHatchesImage();
     });
 }
 
@@ -1214,6 +1264,28 @@ function DeleteFile(sFileID) {
 //        } // end of error
 //    });              // end of ajax call
 //}
+
+function DeleteHatchesImage() {
+var sProjectID = $("#ContentPlaceHolder3_ProjectIDHolder").val();
+    dataString = { ProjectID: sProjectID };
+    dataString = JSON.stringify(dataString);
+    $.ajax({ // ajax call start
+        url: 'MaestroWS.asmx/DeleteHatchesImage',
+        data: dataString, // Send value of the project id
+        dataType: 'json', // Choosing a JSON datatype for the data sent
+        type: 'POST',
+        async: false, // this is a synchronous call
+        contentType: 'application/json; charset = utf-8', // for the data received
+        success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
+        {
+            if (data.d == "1")
+                $("#ProjectHatchesFileHolder").remove();
+        }, // end of success
+        error: function (e) { // this function will be called upon failure
+            alert("failed to delete file: " + e.responseText);
+        } // end of error
+    });              // end of ajax call
+}
 
 //Google Autocompletion
 function ActivateGoogleAutoCompletion(sID) {

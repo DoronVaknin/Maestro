@@ -334,4 +334,18 @@ public class Project
         return RowAffected;
     }
 
+    public int DeleteHatchesImage(int ProjectID)
+    {
+        DBservices dbs = new DBservices();
+        int RowAffected = dbs.DeleteHatchesImage(ProjectID);
+        return RowAffected;
+    }
+
+    public int UploadHatchesImage(int ProjectID, string URL)
+    {
+        DBservices dbs = new DBservices();
+        int RowAffected = dbs.UploadHatchesImage(ProjectID, URL);
+        return RowAffected;
+    }
+
 }

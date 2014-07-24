@@ -702,4 +702,33 @@ public class MaestroWS : System.Web.Services.WebService
         string jsonString = js.Serialize(RowAffected);
         return jsonString;
     }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string DeleteHatchesImage(int ProjectID)
+    {
+        Project p = new Project();
+        int RowAffected = p.DeleteHatchesImage(ProjectID);
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
+        return jsonString;
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public string UploadHatchesImage(int ProjectID, string URL)
+    {
+        Project p = new Project();
+        int RowAffected = p.UploadHatchesImage(ProjectID, URL);
+
+        // create a json serializer object
+        JavaScriptSerializer js = new JavaScriptSerializer();
+        // serialize to string
+        string jsonString = js.Serialize(RowAffected);
+        return jsonString;
+    }
+
 }
