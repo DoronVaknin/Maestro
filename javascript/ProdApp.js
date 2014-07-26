@@ -227,7 +227,8 @@ function BuildHatchesListPerProject() {
         str += '<div data-role="page" id="HatchesOfProject' + pID + '">';
         str += '<div data-role="header" data-theme="a"><h1>' + Hatches[pID][0].Name + '</h1>';
         str += '<a href="#ProjectsPage" data-icon="back" data-iconpos="notext" style="border: none;"></a>';
-        str += '<a href="#HatchesImage' + pID + '" data-rel="popup" data-icon="info" data-iconpos="notext" style="border: none;"></a></div>'; //end of header
+        if (!IsEmpty(Hatches[pID][0].HatchesImageURL)) str += '<a href="#HatchesImage' + pID + '" data-rel="popup" data-icon="info" data-iconpos="notext" style="border: none;"></a>';
+        str += '</div>'; //end of header
         str += '<div data-role="content">';
         str += '<ul id="HatchesList" data-role="listview" data-theme="c" data-inset="true" data-filter="true" data-filter-placeholder = "חפש פתח...">';
         str += BuildHatchesList(pID);
@@ -294,7 +295,7 @@ function PrepareHatchDetails(hID, pID) {
     var iFailureTypeID = $("#Hatch" + hID + " .FailureTypeDDL option:selected").val();
     var sFailureType = $("#Hatch" + hID + " .FailureTypeDDL option:selected").text();
     var bReportFailureType = sHatchStatus == "תקלה";
-    var sCurrentDate = GetCurrentDate();
+    //    var sCurrentDate = GetCurrentDate();
     var sComments = $.trim($("#Hatch" + hID + " .HatchCommentsTB").val());
     GetUsernameID(); // Need to identify worker and send his ID to DB
     var HatchDetails = {
@@ -303,7 +304,7 @@ function PrepareHatchDetails(hID, pID) {
         HatchStatusID: iHatchStatusID,
         FailureTypeID: (bReportFailureType ? iFailureTypeID : 0),
         EmployeeID: sEmployeeID,
-        Date: sCurrentDate,
+        //        Date: sCurrentDate,
         Comments: (!IsEmpty(sComments) ? sComments : "")
     };
     UpdateHatchDetails(HatchDetails, pID, sHatchType, sHatchStatus, sFailureType, bReportFailureType);
@@ -333,7 +334,7 @@ function UpdateHatchDetails(oHatchDetails, pID, sHatchType, sHatchStatus, sFailu
     function InsertHatchFailureNotification() {
         var Notification = {};
         Notification["Message"] = "לפתח מס' " + oHatchDetails.HatchID + " בפרויקט " + Hatches[pID][0].Name + " דווחה תקלה בייצור, התקלה היא " + sFailureType + ": " + oHatchDetails.Comments;
-        Notification["MessageDate"] = oHatchDetails.Date;
+        //        Notification["MessageDate"] = oHatchDetails.Date;
         Notification["eID"] = "302042267";
 
         dataString = JSON.stringify(Notification);

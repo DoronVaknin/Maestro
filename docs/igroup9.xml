@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project>
+  <name>מערכת לניהול תיקי פרויקט</name>
+  <type>מערכות מידע</type>
+  <tags>
+    <tag>מאסטרו אלומיניום</tag>
+    <tag>מערכת מידע</tag>
+    <tag>מערכת לניהול תיקי פרויקט</tag>
+  </tags>
+  <faculty>IE</faculty>
+  <year>2014</year>
+  <customer>
+    <name>מאסטרו אלומיניום</name>
+    <logoUrl>http://proj.ruppin.ac.il/igroup9/prod/docs/Images/MaestroLogo.png</logoUrl>
+    <shortDescription>
+      חברת מאסטרו אלומיניום הוקמה בשנת 2007 על ידי שלושה אחים לבית משפחת ימין. החברה ממוקמת באזור התעשייה הדרומי בחדרה והיא מונה 27 עובדים. בתחילה פעל העסק כמסגרייה קטנה בבעלות אב המשפחה אשר עסק בתיקונים ושיפוצים ועם השנים התרחבה הפעילות וכיום החברה מבצעת פרויקטים אדריכליים רחבי היקף בשילוב עם האדריכלים הגדולים בתחום ובהיקף בינוי שנאמד במיליונים המותאם לכיסם של העשירון העליון בישראל.
+    </shortDescription>
+    <interstedParties>
+      <party>מנהלי החברה</party>
+      <party>עובדי החברה</party>
+      <party>לקוחות החברה</party>
+    </interstedParties>
+    <users>
+      <user>מנהל התקנות</user>
+      <user>מנהלת מכירות</user>
+      <user>מנהלת טכנית</user>
+      <user>עובדי ייצור</user>
+    </users>
+  </customer>
+  <students>
+    <groupCode>igroup9</groupCode>
+    <student>
+      <name>דורון וקנין</name>
+      <imageUrl>http://proj.ruppin.ac.il/igroup9/prod/docs/Images/DoronVaknin.jpg</imageUrl>
+    </student>
+    <student>
+      <name>ליאור זיני</name>
+      <imageUrl>http://proj.ruppin.ac.il/igroup9/prod/docs/Images/LiorZini.jpg</imageUrl>
+    </student>
+    <student>
+      <name>שמוליק חזן</name>
+      <imageUrl>http://proj.ruppin.ac.il/igroup9/prod/docs/Images/ShmulikHazan.jpg</imageUrl>
+    </student>
+  </students>
+  <projectImageUrl>http://proj.ruppin.ac.il/igroup9/prod/docs/Images/MaestroLogo.png</projectImageUrl>
+  <projectLandingPage>http://proj.ruppin.ac.il/igroup9/prod/Default.aspx</projectLandingPage>
+  <mobile>
+    <links>
+      <link target="android">
+        <url>https://www.dropbox.com/s/56o0vk72918jpaz/MaestroApp.apk</url>
+        <QRLink>https://www.dropbox.com/s/l1c4wce69d5h2s0/QR_Code_MaestroApp.png</QRLink>
+      </link>
+      <link target="android">
+        <url>https://www.dropbox.com/s/j3tz03rhr3bez5r/MaestroProdApp.apk</url>
+        <QRLink>https://www.dropbox.com/s/6ktbl74luplskbb/MaestroProdApp.png</QRLink>
+      </link>
+    </links>
+  </mobile>
+  <movie>http://www.youtube.com/watch?v=eoI7SpDxjVk</movie>
+  <!--COMPLETE-->
+  <screenShots>
+    <screenShot>
+      <imageUrl>http://proj.ruppin.ac.il/igroup9/prod/docs/Images/HomeSales.jpg</imageUrl>
+      <description>דף הבית של מנהלת המכירות</description>
+    </screenShot>
+    <screenShot>
+      <imageUrl>http://proj.ruppin.ac.il/igroup9/prod/docs/Images/HomeTechnical.jpg</imageUrl>
+      <description>דף הבית של המנהלת הטכנית</description>
+    </screenShot>
+    <screenShot>
+      <imageUrl>http://proj.ruppin.ac.il/igroup9/prod/docs/Images/HomeInstallations.jpg</imageUrl>
+      <description>דף הבית של מנהל ההתקנות</description>
+    </screenShot>
+    <screenShot>
+      <imageUrl>http://proj.ruppin.ac.il/igroup9/prod/docs/Images/NewCustomer.jpg</imageUrl>
+      <description>טופס יצירת לקוח חדש</description>
+    </screenShot>
+    <screenShot>
+      <imageUrl>http://proj.ruppin.ac.il/igroup9/prod/docs/Images/Customers.jpg</imageUrl>
+      <description>מסך צפייה בלקוחות</description>
+    </screenShot>
+    <screenShot>
+      <imageUrl>http://proj.ruppin.ac.il/igroup9/prod/docs/Images/ProjectDetails.jpg</imageUrl>
+      <description>מסך צפייה בפרטי פרויקט עם אפשרות לעריכה והוספת קבצים</description>
+    </screenShot>
+    <screenShot>
+      <imageUrl>http://proj.ruppin.ac.il/igroup9/prod/docs/Images/ProjectOrders.jpg</imageUrl>
+      <description>מסך ניהול הזמנות מספק עבור פרויקט</description>
+    </screenShot>
+  </screenShots>
+  <advisors>
+    <advisor>מר בועז ניסימוב</advisor>
+    <advisor>מר בני בורנפלד</advisor>
+  </advisors>
+  <shortDescription>
+    מערכת המידע נבנתה עבור מנהלי ועובדי החברה במטרה לשפר את זרימת המידע בין הגורמים השונים בארגון וריכוז המידע בצורה ממוחשבת. במערכת מודול לקוחות, פרויקטים, פתחים עבור פרויקטים, הזמנות עבור פרויקטים, רשימת ספקים וקריאות שירות. כמו כן, ישנן שתי אפליקציות - האחת למנהל ההתקנות אשר נמצא בשטח וזקוק למידע זמין בכל מקום והשניה אפליקציה לעובדי הייצור על מנת לדווח על תקלות במהירות ובכך לייעל את התקשורת בין עובדי החברה ומנהליה. במערכת יש דף בית ייחודי עבור כל מנהל בהתאם לצרכים שלו. בדף הבית של מנהל ההתקנות ישנה מפה המרכזת את כל הפרויקטים הפעילים וקריאות השירות הפתוחות וממשק התראות שמרכז התראות חשובות שצריכות התייחסות ונחשבת כקריטית על מנת לוודא את התקדמות הפרויקטים כשורה. למנהלת הטכנית יש טבלאות המרכזות את דירוג הספקים וזאת בהתאם לאיחורים / הקדמות של ההזמנות וממשק התראות בדומה למנהל ההתקנות. למנהלת המכירות יש גרף המציג את חלוקת ההכנסות מכלל הפרויקטים וטבלת לקוחות בסטטוס הצעת מחיר אשר יש צורך לחזור אליהם בניסיון לסגור יותר עסקאות עבור החברה.
+  </shortDescription>
+  <goals>
+    <goal>
+      <description>שיפור אופן העברת האינפורמציה בין גורמי הארגון</description>
+      <status>
+        המערכת בנויה בארכיטקטורת שרת-לקוח וכוללת מערכת אינטרנטית מבוססת Web ורק המורשים אליה יכולים להיכנס. כמו כן, המערכת כוללת אפליקציית שטח למנהל ההתקנות המאפשרת לו גישה רחבה למידע בשטח. נוסף על כך, לעובדי הייצור קיימת אפליקציה היושבת על טאבלט ממנה יוכלו לדווח על סטטוס הפתחים של הפרויקטים.
+      </status>
+    </goal>
+    <goal>
+      <description>
+        מתן התראות לגבי איחורים ומועדי אספקה
+      </description>
+      <status>
+        האלמנט החכם שנבנה במערכת מתריע למנהל ההתקנות והמנהלת הטכנית על איחורים פוטנציאליים ומועדי אספקה נדרשים לפרויקטים בהתאם לסטטוס בו הם נמצאים והתאריך הנוכחי.
+      </status>
+    </goal>
+    <goal>
+      <description>ניהול מעקב הזמנות מספקים עבור כל פרויקט</description>
+      <status>
+        במערכת מודול ניהול הזמנות המאפשר למנהלת הטכנית צפייה בהזמנות עבור פרויקט / ספק ספציפי, יצירת הזמנות חדשות עבור פרויקט, עריכת הזמנה וביטולה.
+      </status>
+    </goal>
+    <goal>
+      <description>תיעוד ומעקב עבור כל קריאות השירות שהתקבלו</description>
+      <status>
+        במערכת מודול קריאות שירות אשר מרכז את כל קריאות השירות הפתוחות עבור פרויקטים ועבור לקוחות חיצוניים, בו ניתן לצפות בקריאות שירות, לערוך אותן, ולסגור קריאות שירות. כמו כן ניתן לצפות בקריאות השירות הסגורות בארכיון.
+      </status>
+    </goal>
+    <goal>
+      <description>ריכוז ומעקב אחר כל הצעות המחיר שניתנו ולא אושרו</description>
+      <status>
+        במסך הבית של מנהלת המכירות קיימת טבלה המרכזת את הלקוחות הנמצאים בסטטוס הצעת מחיר וצריך לחזור אליהם על מנת לשכנעם לסגור עסקה ובכך להגדיל את מחזור המכירות של החברה.
+      </status>
+    </goal>
+  </goals>
+  <modules>
+    <module>
+      <name>מסך הבית</name>
+      <description>
+        מסך הבית שונה בין המשתמשים השונים, בעזרתו ניתן לדלות מידע ניהולי אשר מסייע למנהלים בשליטה על התקדמות הפרויקטים בשטח.
+      </description>
+      <features>
+        <feature>צפייה בפרויקטים פעילים וקריאות שירות פתוחות על גבי מפה</feature>
+        <feature>קבלת התראות חשובות אודות פרויקטים, הסטטוס שלהם, ופתחיהם</feature>
+        <feature>צפייה בחלוקת ההכנסות של החברה מפרויקטים</feature>
+        <feature>צפייה ועריכה של לקוחות בסטטוס הצעת מחיר</feature>
+        <feature>צפייה בספקים שהזמנותיהם מאחרים/מקדימים ודירוגם</feature>
+      </features>
+    </module>
+    <module>
+      <name>מודול לקוחות ופרויקטים</name>
+      <description>
+        מודול זה מאפשר למשתמשים לצפות בפרטי לקוחות החברה, לפתוח לקוח חדש ולערוך את פרטיהם במערכת.
+      </description>
+      <features>
+        <feature>הקמת לקוח חדש במערכת</feature>
+        <feature>הקמת פרויקט חדש עבור לקוח</feature>
+        <feature>הוספת פרויקט עבור לקוח</feature>
+        <feature>שינוי סטטוס פרויקט</feature>
+        <feature>צפייה בפרטי פרויקט</feature>
+        <feature>עריכת פרטי הפרויקט והלקוח בדף פרטי פרויקט</feature>
+        <feature>חיפוש לקוח עפ"י כל שדה משדות החיפוש</feature>
+        <feature>חיפוש פרויקט עפ"י כל שדה משדות החיפוש</feature>
+        <feature>הוספת קבצים לפרויקט מסוים</feature>
+        <feature>צפיה בקבצים עבור פרויקט מסוים</feature>
+        <feature>מחיקת קבצים מפרויקט מסוים</feature>
+        <feature>צפייה בארכיון פרויקטים</feature>
+      </features>
+    </module>
+    <module>
+      <name>מודול טכני</name>
+      <description>
+        מודול זה משמש בעיקר את המנהלת הטכנית ובו ניתן לצפות בהזמנות עבור פרויקט, הזמנות מספק מסוים, רשימת ספקים וארכיון ספקים, ליצור ספק חדש, ולצפות בפתחים עבור פרויקט מסוים.
+      </description>
+      <features>
+        <feature>צפייה בהזמנות עבור פרויקט</feature>
+        <feature>עריכת פרטי הזמנה קיימת</feature>
+        <feature>יצירת הזמנה חדשה עבור פרויקט</feature>
+        <feature>צפייה בהזמנות מספק מסוים</feature>
+        <feature>מחיקת הזמנה קיימת</feature>
+        <feature>צפייה ברשימת ספקים</feature>
+        <feature>צפייה בארכיון ספקים</feature>
+        <feature>הקמת ספק חדש</feature>
+        <feature>עריכת פרטי ספק</feature>
+        <feature>השבתת ספק</feature>
+        <feature>צפייה בפרטי פתח של פרויקט מסוים</feature>
+        <feature>הוספת פתח לפרויקט מסוים</feature>
+        <feature>השבתת פתח</feature>
+      </features>
+    </module>
+    <module>
+      <name>מודול קריאות שירות</name>
+      <description>
+        במודול זה ניתן לצפות בפרטי קריאות השירות הפתוחות עבור פרויקטים/לקוחות חיצוניים, לפתוח קריאת שירות חדשה ולצפות בארכיון קריאות שירות.
+      </description>
+      <features>
+        <feature>פתיחת קריאת שירות עבור פרויקט קיים</feature>
+        <feature>פתיחת קריאת שירות עבור לקוח חיצוני</feature>
+        <feature>צפייה בפרטי קריאת שירות פתוחה</feature>
+        <feature>עריכת פרטי קריאת שירות פתוחה</feature>
+        <feature>סגירת קריאת שירות</feature>
+        <feature>צפייה בארכיון קריאות שירות</feature>
+      </features>
+    </module>
+  </modules>
+  <technologies>
+    <technology name="ASP.NET"/>
+    <technology name="SQL Server"/>
+    <technology name="HTML 5"/>
+    <technology name="CSS 3.0"/>
+    <technology name="JavaScript"/>
+    <technology name="jQuery"/>
+    <technology name="jQuery Mobile"/>
+    <technology name="AJAX Control Toolkit"/>
+    <technology name="Bootstrap framework"/>
+    <technology name="Google Maps API v3"/>
+    <technology name="PhoneGap"/>
+  </technologies>
+  <challenges>
+    עבודה מאסיבית עם שלושת השכבות, עבודה עם פלאגינים חיצוניים מבוססי jQuery, עבודה עם כמות גדולה של טבלאות ב-DB ואינטגרציה באמצעות אפיון הקשרים ביניהן. עבודה עם Google Maps API.
+  </challenges>
+  <personalNote>
+    הפרויקט ללא ספק נתן לנו ניסיון עשיר בעבודה בצוות, לימד אותנו ביתרונות של חלוקת עבודה בצוות. כמו כן, מכשולי הפרויקט אילצו אותנו להיעזר רבות במנועי חיפוש ופורומים שזוהי פעולה שגרתית שנידרש לבצע בקריירה העתידית שלנו, יחד עם הלמידה והמשמעת העצמית הגבוהה אליה נידרש.
+  </personalNote>
+</project>

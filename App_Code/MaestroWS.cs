@@ -306,9 +306,9 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string UpdateHatchDetails(int HatchID, int HatchTypeID, int HatchStatusID, int FailureTypeID, int EmployeeID, string Date, string Comments)
+    public string UpdateHatchDetails(int HatchID, int HatchTypeID, int HatchStatusID, int FailureTypeID, int EmployeeID, string Comments)
     {
-        Hatch h = new Hatch(HatchID, HatchStatusID, FailureTypeID, EmployeeID, Convert.ToDateTime(Date), Comments, HatchTypeID);
+        Hatch h = new Hatch(HatchID, HatchStatusID, FailureTypeID, EmployeeID, DateTime.Now.Date, Comments, HatchTypeID);
         int RowAffected = h.UpdateHatchDetails();
 
         // create a json serializer object
@@ -496,9 +496,9 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string InsertNewNotification(string Message, string MessageDate, int eID)
+    public string InsertNewNotification(string Message, int eID)
     {
-        Notification n = new Notification(Message, DateTime.ParseExact(MessageDate, "dd/MM/yyyy", null), eID, 0);
+        Notification n = new Notification(Message, DateTime.Now.Date, eID, 0);
         int RowAffected = n.InsertNewNotification();
 
         // create a json serializer object
