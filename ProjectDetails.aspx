@@ -2,13 +2,12 @@
     CodeFile="ProjectDetails.aspx.cs" Inherits="Default" EnableEventValidation="false" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder2" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
-<%--    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    <%--    <asp:ScriptManager ID="ScriptManager1" runat="server">
     </asp:ScriptManager>--%>
-    <ajaxToolkit:ToolkitScriptManager ID="AjaxScriptManager" runat="server" EnablePartialRendering = "true" />
+    <ajaxToolkit:ToolkitScriptManager ID="AjaxScriptManager" runat="server" EnablePartialRendering="true" />
     <div class="form-background">
         <div class="cntr">
             <h1>
@@ -110,13 +109,11 @@
             בטל&nbsp;&nbsp;<span class="glyphicon glyphicon-remove"></span>
         </button>
         <br />
-        <br />
         <span id="CustomerDetailsErrorLabel" class="ErrorLabel"></span>
         <asp:Button ID="SaveCustomerDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default HiddenButtons"
             OnClick="SaveCustomerDetailsBTN_Click1" Font-Bold="true" />
     </div>
     <asp:HiddenField ID="ProjectIDHolder" runat="server" />
-    <br />
     <div class="form-background">
         <div class="cntr">
             <h1>
@@ -259,62 +256,61 @@
         <asp:Button ID="SaveProjectDetailsHiddenBTN" runat="server" Text="שמור" CssClass="btn btn-default HiddenButtons"
             OnClick="SaveProjectDetailsBTN_Click" Font-Bold="true" />
         <br />
-        <br />
         <span id="ProjectDetailsErrorLabel" class="ErrorLabel"></span>
-        <br />
-        <br />
     </div>
-    <div class="cntr">
-        <h1>
-            תרשים פתחי הפרויקט
-        </h1>
-    </div>
-    <div>
-        <%--        <asp:UpdatePanel ID="UpdatePanel4" runat="server">
+    <div class="form-background">
+        <div class="cntr">
+            <h1>
+                תרשים פתחי הפרויקט
+            </h1>
+        </div>
+        <div>
+            <%--        <asp:UpdatePanel ID="UpdatePanel4" runat="server">
             <Triggers>
                 <asp:PostBackTrigger ControlID="ProjectHatchesPictureUploadBTN" />
                 <%--<asp:AsyncPostBackTrigger ControlID="ProjectHatchesPictureUploadBTN" EventName="Click" />--% >
             </Triggers>
             <ContentTemplate>--%>
-        <div id="ProjectHatchesPictureContainer" runat="server">
-        </div>
-        <%--<asp:FileUpload ID="ProjectHatchesPicture" runat="server" />--%>
-        <%--<input id="ProjectHatchesPicture" type="file" />--%>
-        <ajaxToolkit:AsyncFileUpload ID="AsyncFileUpload1" Width="400px" runat="server" OnClientUploadError="uploadError"
-            OnClientUploadStarted="StartUpload" OnClientUploadComplete="UploadComplete" CompleteBackColor="Lime"
-            UploaderStyle="Modern" ErrorBackColor="Red" ThrobberID="Throbber" OnUploadedComplete="AsyncFileUpload1_UploadedComplete"
-            UploadingBackColor="#66CCFF" />
-        <br />
-        <asp:Label ID="Throbber" runat="server" Style="display: none">
-            <img src="Images/indicator.gif" align="absmiddle" alt="loading" />
-        </asp:Label>
-        <asp:Label ID="lblStatus" runat="server" Style="font-family: Arial; font-size: small;"></asp:Label>
-        <div class="cntr">
-            <%--            <button class="btn btn-default" type="button" onclick="UploadHatchesImage()">
+            <div id="ProjectHatchesPictureContainer" runat="server">
+            </div>
+            <br />
+            <%--<asp:FileUpload ID="ProjectHatchesPicture" runat="server" />--%>
+            <%--<input id="ProjectHatchesPicture" type="file" />--%>
+            <ajaxToolkit:AsyncFileUpload ID="AsyncFileUpload1" Width="400px" runat="server" OnClientUploadError="uploadError"
+                OnClientUploadStarted="StartUpload" OnClientUploadComplete="UploadComplete" CompleteBackColor="Lime"
+                UploaderStyle="Modern" ErrorBackColor="Red" ThrobberID="Throbber" OnUploadedComplete="AsyncFileUpload1_UploadedComplete"
+                UploadingBackColor="#66CCFF" />
+            <br />
+            <asp:Label ID="Throbber" runat="server" Style="display: none">
+            <img src="images/loading.gif" align="absmiddle" alt="loading" />
+            </asp:Label>
+            <asp:Label ID="lblStatus" runat="server" Style="font-family: Arial; font-size: small;"></asp:Label>
+            <div class="cntr">
+                <%--            <button class="btn btn-default" type="button" onclick="UploadHatchesImage()">
                 העלה קובץ&nbsp;&nbsp;<span class="glyphicon glyphicon-upload"></span>
             </button>--%>
-            <%--            <asp:Button ID="ProjectHatchesPictureUploadBTN" runat="server" Text="העלה קובץ" CssClass="btn btn-default HiddenButtons"
+                <%--            <asp:Button ID="ProjectHatchesPictureUploadBTN" runat="server" Text="העלה קובץ" CssClass="btn btn-default HiddenButtons"
                 OnClick="UploadHatchesImage_Click" />--%>
-        </div>
-    <%--            </ContentTemplate>
+            </div>
+            <%--            </ContentTemplate>
         </asp:UpdatePanel>--%>
+        </div>
     </div>
-    <br />
-    <br />
-    <div class="cntr">
-        <h1>
-            קבצי הפרויקט
-        </h1>
+    <div class="form-background">
+        <div class="cntr">
+            <h1>
+                קבצי הפרויקט
+            </h1>
+        </div>
+        <div id="ProjectFiles" runat="server">
+        </div>
+        <br />
+        <div id="DragAndDrop">
+            גרור קבצים לכאן</div>
+        <br />
+        <div id="DragAndDropStatus">
+        </div>
     </div>
-    <div id="ProjectFiles" runat="server">
-    </div>
-    <br />
-    <div id="DragAndDrop">
-        גרור קבצים לכאן</div>
-    <br />
-    <div id="DragAndDropStatus">
-    </div>
-    <br />
     <asp:UpdatePanel ID="UpdatePanel3" runat="server">
         <Triggers>
             <asp:AsyncPostBackTrigger ControlID="GotoProjectOrdersHiddenBTN" EventName="Click" />
