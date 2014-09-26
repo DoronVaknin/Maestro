@@ -33,11 +33,19 @@ public partial class _Default : System.Web.UI.Page
         Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalCustomerDetails", "ActivateModal('ModalEditUndecidedCustomer');", true);
 
         ProjectName.Value = PriceOfferGV.SelectedRow.Cells[1].Text;
-        CustomerMobilePhone.Value = PriceOfferGV.SelectedRow.Cells[2].Text;
-        ProjectComments.Text = PriceOfferGV.SelectedRow.Cells[3].Text;
-        CustomerBackDate.Value = DateTime.ParseExact(PriceOfferGV.SelectedRow.Cells[4].Text, "dd/MM/yyyy", null).ToString("MM/dd/yyyy");
+        if (PriceOfferGV.SelectedRow.Cells[2].Text == "&nbsp;")
+            CustomerMobilePhone.Value = "";
+        else
+            CustomerMobilePhone.Value = PriceOfferGV.SelectedRow.Cells[2].Text;
+        if (PriceOfferGV.SelectedRow.Cells[3].Text == "&nbsp;")
+            ProjectComments.Text = "";
+        else
+            ProjectComments.Text = PriceOfferGV.SelectedRow.Cells[3].Text;
 
-        Page.ClientScript.RegisterStartupScript(this.GetType(), "FixTextAreaIssue", "FixTextAreaIssue('EditUndecidedCustomerTBL');", true);
+        if (PriceOfferGV.SelectedRow.Cells[4].Text == "&nbsp;")
+            CustomerBackDate.Value = "";
+        else
+            CustomerBackDate.Value = DateTime.ParseExact(PriceOfferGV.SelectedRow.Cells[4].Text, "dd/MM/yyyy", null).ToString("MM/dd/yyyy");
     }
 
     protected void SaveUndecidedCustomerDetailsBTN_Click(object sender, EventArgs e)

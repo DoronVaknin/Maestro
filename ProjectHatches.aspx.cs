@@ -23,6 +23,7 @@ public partial class Default : System.Web.UI.Page
     public void DisableAllFields()
     {
         HatchID.Attributes.Add("disabled", "disabled");
+        HatchID2.Attributes.Add("disabled", "disabled");
         HatchProjectName.Attributes.Add("disabled", "disabled");
         HatchStatus.Attributes.Add("disabled", "disabled");
         HatchComments.Attributes.Add("disabled", "disabled");
@@ -39,6 +40,7 @@ public partial class Default : System.Web.UI.Page
         {
             Hatch h = new Hatch();
             int hID = Convert.ToInt32(ProjectHatchesGV.SelectedRow.Cells[1].Text);
+            int hID2 = Convert.ToInt32(HatchID2.Text);
             int hsID = Convert.ToInt32(HatchStatus.SelectedValue);
             string Comments = HatchComments.Text;
             DateTime StatusLastModified = DateTime.Now;
@@ -48,7 +50,7 @@ public partial class Default : System.Web.UI.Page
             int ftID = 0;
             if (hsID == 2)
                 ftID = Convert.ToInt32(HatchFailureType.SelectedValue);
-            h = new Hatch(hID, hsID, ftID, eID, StatusLastModified, Comments, htID);
+            h = new Hatch(hID, hID2, hsID, ftID, eID, StatusLastModified, Comments, htID);
             int RowAffected = h.UpdateHatchDetails();
 
             if (RowAffected > 0 && hsID == 2) //Notification to Technical Manager
@@ -66,15 +68,16 @@ public partial class Default : System.Web.UI.Page
         Page.ClientScript.RegisterStartupScript(this.GetType(), "CallModalServiceCalls", "ActivateModal('EditHatchModal');", true);
         HatchFailureType.Visible = true;
         HatchID.Text = ProjectHatchesGV.SelectedRow.Cells[1].Text;
+        HatchID2.Text = ProjectHatchesGV.SelectedRow.Cells[2].Text;
         if (Session["ProjectNameForProjectHatches"] != null)
             HatchProjectName.Text = Session["ProjectNameForProjectHatches"].ToString();
-        ListItem li1 = HatchType.Items.FindByText(ProjectHatchesGV.SelectedRow.Cells[2].Text);
+        ListItem li1 = HatchType.Items.FindByText(ProjectHatchesGV.SelectedRow.Cells[3].Text);
         HatchType.SelectedValue = li1.Value;
-        string Status = ProjectHatchesGV.SelectedRow.Cells[3].Text;
+        string Status = ProjectHatchesGV.SelectedRow.Cells[4].Text;
         ListItem li2 = HatchStatus.Items.FindByText(Status);
         HatchStatus.SelectedValue = li2.Value;
 
-        string FailureType = ProjectHatchesGV.SelectedRow.Cells[6].Text;
+        string FailureType = ProjectHatchesGV.SelectedRow.Cells[7].Text;
         Page.ClientScript.RegisterStartupScript(this.GetType(), "ToggleFailureTypeDDL", "ToggleFailureTypeDDL();", true);
         if (FailureType == "&nbsp;")
             HatchFailureType.SelectedValue = "1";
@@ -86,9 +89,9 @@ public partial class Default : System.Web.UI.Page
             HatchFailureType.SelectedValue = li3.Value;
         }
 
-        HatchStatusLastModified.Text = ProjectHatchesGV.SelectedRow.Cells[4].Text;
-        HatchEmployeeName.Text = ProjectHatchesGV.SelectedRow.Cells[5].Text;
-        HatchComments.Text = ProjectHatchesGV.SelectedRow.Cells[7].Text;
+        HatchStatusLastModified.Text = ProjectHatchesGV.SelectedRow.Cells[5].Text;
+        HatchEmployeeName.Text = ProjectHatchesGV.SelectedRow.Cells[6].Text;
+        HatchComments.Text = ProjectHatchesGV.SelectedRow.Cells[8].Text;
         //HatchActive.Checked = true;
 
         if (HatchComments.Text == "&nbsp;")

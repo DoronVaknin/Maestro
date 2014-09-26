@@ -135,7 +135,8 @@ public class MaestroWS : System.Web.Services.WebService
             h.HatchID = Convert.ToInt32(dt.Rows[i].ItemArray[0]);
             h.HatchType = dt.Rows[i].ItemArray[1].ToString();
             h.HatchStatus = dt.Rows[i].ItemArray[2].ToString();
-            h.StatusLastModified = Convert.ToDateTime(dt.Rows[i].ItemArray[3]);
+            if (!System.DBNull.Value.Equals(dt.Rows[i].ItemArray[3]))
+                h.StatusLastModified = Convert.ToDateTime(dt.Rows[i].ItemArray[3]);
             h.EmployeeName = dt.Rows[i].ItemArray[4].ToString();
             h.FtName = dt.Rows[i].ItemArray[5].ToString();
             h.Comments = dt.Rows[i].ItemArray[6].ToString();
@@ -306,9 +307,9 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public string UpdateHatchDetails(int HatchID, int HatchTypeID, int HatchStatusID, int FailureTypeID, int EmployeeID, string Comments)
+    public string UpdateHatchDetails(int HatchID, int HatchID2, int HatchTypeID, int HatchStatusID, int FailureTypeID, int EmployeeID, string Comments)
     {
-        Hatch h = new Hatch(HatchID, HatchStatusID, FailureTypeID, EmployeeID, DateTime.Now.Date, Comments, HatchTypeID);
+        Hatch h = new Hatch(HatchID, HatchID2, HatchStatusID, FailureTypeID, EmployeeID, DateTime.Now.Date, Comments, HatchTypeID);
         int RowAffected = h.UpdateHatchDetails();
 
         // create a json serializer object
@@ -544,6 +545,7 @@ public class MaestroWS : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    // TargetEmailAddress is always "t@maestro2007.co.il" by betti's decision
     public void SendEmail(string TargetEmailAddress, string Subject, string sHTMLBody)
     {
         try
@@ -553,13 +555,14 @@ public class MaestroWS : System.Web.Services.WebService
             sHTMLBody = sHTMLBody.Replace("|", ">");
 
             MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("doron9787@gmail.com", "מאסטרו אלומיניום");
-            mailMessage.To.Add(TargetEmailAddress);
+            mailMessage.From = new MailAddress("t@maestro2007.co.il", "מאסטרו אלומיניום");
+            //mailMessage.To.Add(TargetEmailAddress);
+            mailMessage.To.Add("t@maestro2007.co.il");
             mailMessage.Subject = Subject;
             mailMessage.IsBodyHtml = true;
             mailMessage.Body = sHTMLBody;
             SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-            smtpClient.Credentials = new System.Net.NetworkCredential("doron9787@gmail.com", "YourPassword");
+            smtpClient.Credentials = new System.Net.NetworkCredential("t@maestro2007.co.il", "YourPassword");
             smtpClient.EnableSsl = true;
             smtpClient.Send(mailMessage);
         }

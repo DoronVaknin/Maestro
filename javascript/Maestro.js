@@ -479,7 +479,7 @@ function DisableSupplierDetailsFields() {
 }
 
 function DisableHatchDetailsFields() {
-    $("#EditHatchTBL select, #EditHatchTBL textarea").attr("disabled", "disabled");
+    $("#EditHatchTBL select, #EditHatchTBL textarea, #ContentPlaceHolder3_HatchID2").attr("disabled", "disabled");
 }
 
 function FixTextAreaIssue(sTableID) {
@@ -641,7 +641,7 @@ function RestoreSupplierDetails() {
 }
 
 function EnableHatchDetails() {
-    $("#EditHatchTBL select, #EditHatchTBL textarea").removeAttr("disabled");
+    $("#EditHatchTBL select, #EditHatchTBL textarea, #ContentPlaceHolder3_HatchID2").removeAttr("disabled");
     SwitchEditSaveButtons(false, "Hatch");
     BackupHatchDetails();
 }

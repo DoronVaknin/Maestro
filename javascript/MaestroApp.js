@@ -247,7 +247,7 @@ function BuildHatchPage(sHatchID, sProjectID) {
         success: function (data) // this method is called upon success. Variable data contains the data we get from serverside
         {
             var pnp = $.parseJSON(data.d); // parse the data as json
-            if (!IsEmpty(pnp)) {
+            if (!IsEmpty(pnp) && pnp.length > 0) {
                 pnp = MergeInsideArrays(pnp);
                 var hID = pnp[0].HatchID;
                 PicsAndPins[hID] = {};
@@ -1051,5 +1051,5 @@ function IsEmptyPin(oPin) {
 function IsKeyExists(o, Key) {
     for (var k in o)
         if (k == Key) return true;
-return false;
+    return false;
 }

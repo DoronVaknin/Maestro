@@ -12,17 +12,16 @@ public partial class Default : System.Web.UI.Page
     {
         if (Session["Customer"] != null)
         {
-            Type SessionType = Session["Customer"].GetType();
-            if (SessionType == typeof(Customer))
+            if (Request.Url.Query == "?Source=ProjectsPerCustomer")
+            {
+                string FullName = Session["Customer"].ToString();
+                ProjectName.Value = FullName;
+            }
+            else
             {
                 Customer c = new Customer();
                 c = (Customer)Session["Customer"];
                 ProjectName.Value = c.Fname + " " + c.Lname;
-            }
-            else if (SessionType == typeof(String))
-            {
-                string FullName = Session["Customer"].ToString();
-                ProjectName.Value = FullName;
             }
         }
         if (Request.Url.Query == "?Source=NewCustomer")
@@ -51,16 +50,17 @@ public partial class Default : System.Web.UI.Page
                            InstallationDate = DateTime.MinValue : DateTime.ParseExact(ProjectInstallationDate.Value, "MM/dd/yyyy", null);
         p = new Project(DateTime.ParseExact(ProjectDateOpened.Value, "MM/dd/yyyy", null), DateTime.ParseExact(ProjectExpirationDate.Value, "MM/dd/yyyy", null), InstallationDate, ProjectName.Value, ProjectComments.Value, ProjectCost.Value, ProjectHatches.Value, ProjectArchitectName.Value, ProjectArchitectMobile.Value, ProjectContractorName.Value, ProjectContractorMobile.Value, ProjectSupervisorName.Value, ProjectSupervisorMobile.Value);
 
-        if ((Request.Url.Query == "?Source=NewCustomer" && Session["Customer"] != null) || (Request.Url.Query == "?Source=ProjectsPerCustomer" && Session["CustomerID"] != null))
+        //if ((Request.Url.Query == "?Source=NewCustomer" && Session["Customer"] != null)) || (Request.Url.Query == "?Source=ProjectsPerCustomer" && Session["CustomerID"] != null))
+        if (Session["Customer"] != null)
         {
             int CustomerID = 0;
-            if (Session["Customer"] != null)
+            if (Request.Url.Query == "?Source=NewCustomer")
             {
                 Customer c = new Customer();
                 c = (Customer)Session["Customer"];
                 CustomerID = c.cID;
             }
-            else if (Session["CustomerID"] != null)
+            else if (Request.Url.Query == "?Source=ProjectsPerCustomer")
                 CustomerID = Convert.ToInt32(Session["CustomerID"]);
 
             p.InsertNewProject(CustomerID, psID);

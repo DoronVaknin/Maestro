@@ -27,9 +27,10 @@ public class Hatch
         Comments = _Comments;
     }
 
-    public Hatch(int _HatchID, int _HatchStatusID, int _FailureTypeID, int _EmployeeID, DateTime _StatusLastModified, string _Comments, int _HatchTypeID)
+    public Hatch(int _HatchID, int _HatchID2, int _HatchStatusID, int _FailureTypeID, int _EmployeeID, DateTime _StatusLastModified, string _Comments, int _HatchTypeID)
     {
         HatchID = _HatchID;
+        HatchID2 = _HatchID2;
         HatchStatusID = _HatchStatusID;
         HatchTypeID = _HatchTypeID;
         if (_FailureTypeID != 0)
@@ -44,6 +45,13 @@ public class Hatch
     {
         get { return hatchID; }
         set { hatchID = value; }
+    }
+
+    int hatchID2;
+    public int HatchID2
+    {
+        get { return hatchID2; }
+        set { hatchID2 = value; }
     }
 
     int hatchStatusID;

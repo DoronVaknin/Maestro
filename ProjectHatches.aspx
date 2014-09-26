@@ -5,8 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder3" runat="Server">
     <div class="cntr">
-        <h1 id="PageHeader" runat="server">
-            רשימת פתחים
+        <h1 id="PageHeader" runat="server">רשימת פתחים
         </h1>
     </div>
     <br />
@@ -24,6 +23,7 @@
             <asp:CommandField SelectText="בחר" ShowSelectButton="true" />
             <asp:BoundField DataField="hID" HeaderText="מס' פתח" InsertVisible="False" ReadOnly="True"
                 SortExpression="hID" />
+            <asp:BoundField DataField="hID2" HeaderText="מס' זיהוי" SortExpression="hID2" />
             <asp:BoundField DataField="htName" HeaderText="סוג הפתח" SortExpression="htName" />
             <asp:BoundField DataField="hsName" HeaderText="סטטוס" SortExpression="hsName" />
             <asp:BoundField DataField="StatusLastModified" HeaderText="תאריך דיווח" SortExpression="StatusLastModified"
@@ -52,8 +52,7 @@
                         id="CloseBTN">
                         &times;</button>
                     <div class="cntr">
-                        <h4 id="ModalHeader" runat="server" class="modal-title">
-                            פרטי הפתח</h4>
+                        <h4 id="ModalHeader" runat="server" class="modal-title">פרטי הפתח</h4>
                     </div>
                 </div>
                 <div class="modal-body">
@@ -74,8 +73,8 @@
                                     </td>
                                     <td>
                                         <div class="input-group">
-                                            <asp:TextBox ID="HatchStatusLastModified" runat="server" CssClass="form-control"></asp:TextBox>
-                                            <span class="input-group-addon">תאריך דיווח</span>
+                                            <asp:TextBox ID="HatchID2" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <span class="input-group-addon">מס' זיהוי פתח</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -123,6 +122,14 @@
                                         </div>
                                     </td>
                                     <td>
+                                        <div class="input-group">
+                                            <asp:TextBox ID="HatchStatusLastModified" runat="server" CssClass="form-control"></asp:TextBox>
+                                            <span class="input-group-addon">תאריך דיווח</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
                                         <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:igroup9_prodConnectionString %>"
                                             SelectCommand="spGetFailureTypeList" SelectCommandType="StoredProcedure"></asp:SqlDataSource>
                                         <div class="cntr">
@@ -132,6 +139,7 @@
                                             </asp:DropDownList>
                                         </div>
                                     </td>
+                                    <td></td>
                                 </tr>
                                 <%--                                <tr>
                                     <td>
@@ -187,8 +195,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" dir="rtl">
                         &times;</button>
                     <div class="cntr">
-                        <h4 class="modal-title">
-                            השבתת פתח</h4>
+                        <h4 class="modal-title">השבתת פתח</h4>
                     </div>
                 </div>
                 <div class="modal-body">
