@@ -1,65 +1,53 @@
-﻿body
-{
+﻿body {
     margin: 0;
 }
 
-#Container
-{
+#Container {
     position: absolute;
     width: 100%;
     height: 100%;
 }
 
-h2, h3
-{
+h2, h3 {
     text-align: center;
 }
 
-#MaestroLogoIMG
-{
+#MaestroLogoIMG {
     width: 100%;
 }
 
 
-div.ui-navbar ul li .ui-icon-camera-white
-{
+div.ui-navbar ul li .ui-icon-camera-white {
     background: url("../themes/images/icons-png/camera-white.png") center 10px no-repeat;
 }
 
-#ProjectsPage a.ui-icon-power-white
-{
+#ProjectsPage a.ui-icon-power-white {
     background: url("../themes/images/icons-png/power-white.png") center 5px no-repeat;
 }
 
-@media only screen and (-webkit-min-device-pixel-ratio: 2)
-{
-    .ui-icon-camera-white
-    {
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    .ui-icon-camera-white {
         background: url("../themes/images/icons-png/camera-white.png") center 0 no-repeat;
         background-size: 18px 18px;
     }
 
-    #ProjectsPage a.ui-icon-power-white
-    {
+    #ProjectsPage a.ui-icon-power-white {
         background: url("../themes/images/icons-png/power-white.png") center 5px no-repeat;
         background-size: 18px 18px;
     }
 }
 
-.half
-{
+.half {
     width: 65%;
     margin-right: auto;
     margin-left: auto;
 }
 
-#NewServiceCall .ui-br
-{
+#NewServiceCall .ui-br {
     border-style: hidden;
 }
 
-#map-canvas
-{
+#map-canvas {
     padding: 0;
     position: absolute !important;
     top: 40px !important;
@@ -68,53 +56,44 @@ div.ui-navbar ul li .ui-icon-camera-white
     left: 0 !important;
 }
 
-#HybridMap ui-content
-{
+#HybridMap ui-content {
     padding: 0;
     margin: 0;
 }
 
-#MapLegend img
-{
+#MapLegend img {
     height: 200px;
 }
 
-.CloseServiceCallsPopup
-{
+.CloseServiceCallsPopup {
     width: 270px;
 }
 
-.ImagesContainer
-{
+.ImagesContainer {
     margin: 0 auto;
     width: 116%;
 }
 
-.ImagesContainer img
-{
-    margin: 5px;
-    width: 40%;
-    border: 1px solid gray;
-    box-shadow: 1px 1px 1px gray;
-}
+    .ImagesContainer img {
+        margin: 5px;
+        width: 40%;
+        border: 1px solid gray;
+        box-shadow: 1px 1px 1px gray;
+    }
 
-#ImageContainer
-{
+#ImageContainer {
     text-align: center;
 }
 
-#ImageContainer img
-{
-    width: 100%;
-}
+    #ImageContainer img {
+        width: 100%;
+    }
 
-#PictureEdit .ui-content
-{
+#PictureEdit .ui-content {
     padding: 0;
 }
 
-#PictureEdit .ui-content a
-{
-    width: 140px;
-    margin: 0 auto;
-}
+    #PictureEdit .ui-content a {
+        width: 140px;
+        margin: 0 auto;
+    }

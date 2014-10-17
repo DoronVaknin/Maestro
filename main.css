@@ -1,5 +1,4 @@
-body
-{
+body {
     font: normal 1.5em/1.5em Arial, Helvetica, sans-serif;
     background: #ddd url(images/bg.jpg) repeat;
     width: 90%;
@@ -10,12 +9,12 @@ body
     color: #666;
     direction: rtl;
 }
-a
-{
+
+a {
     color: #333;
 }
-#nav
-{
+
+#nav {
     margin: 0;
     padding: 7px 6px 0;
     background: #7d7d7d url(images/gradient.png) repeat-x 0 -110px;
@@ -28,178 +27,160 @@ a
     -webkit-box-shadow: 0 1px 3px rgba(0,0,0, .4);
     -moz-box-shadow: 0 1px 3px rgba(0,0,0, .4);
 }
-#nav li
-{
-    margin: 0 5px;
-    padding: 0 0 8px;
-    float: right;
-    position: relative;
-    list-style: none;
-    z-index: 1;
-}
+
+    #nav li {
+        margin: 0 5px;
+        padding: 0 0 8px;
+        float: right;
+        position: relative;
+        list-style: none;
+        z-index: 1;
+    }
 
 
-/* main level link */
-#nav a
-{
-    font-weight: bold;
-    color: #e7e5e5;
-    text-decoration: none;
-    display: block;
-    padding: 8px 20px;
-    margin: 0;
-    -webkit-border-radius: 1.6em;
-    -moz-border-radius: 1.6em;
-    text-shadow: 0 1px 1px rgba(0,0,0, .3);
-}
-#nav a:hover
-{
-    background: #000;
-    color: #fff;
-}
+    /* main level link */
+    #nav a {
+        font-weight: bold;
+        color: #e7e5e5;
+        text-decoration: none;
+        display: block;
+        padding: 8px 20px;
+        margin: 0;
+        -webkit-border-radius: 1.6em;
+        -moz-border-radius: 1.6em;
+        text-shadow: 0 1px 1px rgba(0,0,0, .3);
+    }
 
-/* main level link hover */
-#nav .current a, #nav li:hover > a
-{
-    background: #666 url(images/gradient.png) repeat-x 0 -40px;
-    color: #444;
-    border-top: solid 1px #f8f8f8;
-    -webkit-box-shadow: 0 1px 1px rgba(0,0,0, .2);
-    -moz-box-shadow: 0 1px 1px rgba(0,0,0, .2);
-    box-shadow: 0 1px 1px rgba(0,0,0, .2);
-    text-shadow: 0 1px 0 rgba(255,255,255, 1);
-}
+        #nav a:hover {
+            background: #000;
+            color: #fff;
+        }
 
-/* sub levels link hover */
-#nav ul li:hover a, #nav li:hover li a
-{
-    background: none;
-    border: none;
-    color: #666;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-}
-#nav ul a:hover
-{
-    background: #0078ff url(images/gradient.png) repeat-x 0 -100px !important;
-    color: #fff !important;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    text-shadow: 0 1px 1px rgba(0,0,0, .1);
-}
+    /* main level link hover */
+    #nav .current a, #nav li:hover > a {
+        background: #666 url(images/gradient.png) repeat-x 0 -40px;
+        color: #444;
+        border-top: solid 1px #f8f8f8;
+        -webkit-box-shadow: 0 1px 1px rgba(0,0,0, .2);
+        -moz-box-shadow: 0 1px 1px rgba(0,0,0, .2);
+        box-shadow: 0 1px 1px rgba(0,0,0, .2);
+        text-shadow: 0 1px 0 rgba(255,255,255, 1);
+    }
 
-/* dropdown */
-#nav li:hover > ul
-{
-    display: block;
-}
+    /* sub levels link hover */
+    #nav ul li:hover a, #nav li:hover li a {
+        background: none;
+        border: none;
+        color: #666;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+    }
 
-/* level 2 list */
-#nav ul
-{
-    display: none;
-    margin: 0;
-    padding: 0;
-    width: 185px;
-    position: absolute;
-    top: 35px;
-    right: 0;
-    background: #ddd url(images/gradient.png) repeat-x 0 0;
-    border: solid 1px #b4b4b4;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    -webkit-box-shadow: 0 1px 3px rgba(0,0,0, .3);
-    -moz-box-shadow: 0 1px 3px rgba(0,0,0, .3);
-    box-shadow: 0 1px 3px rgba(0,0,0, .3);
-}
+    #nav ul a:hover {
+        background: #0078ff url(images/gradient.png) repeat-x 0 -100px !important;
+        color: #fff !important;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        text-shadow: 0 1px 1px rgba(0,0,0, .1);
+    }
 
-#nav ul li
-{
-    float: none;
-    margin: 0;
-    padding: 0;
-}
+    /* dropdown */
+    #nav li:hover > ul {
+        display: block;
+    }
 
-#nav ul a
-{
-    font-weight: normal;
-    text-shadow: 0 1px 0 #fff;
-}
+    /* level 2 list */
+    #nav ul {
+        display: none;
+        margin: 0;
+        padding: 0;
+        width: 185px;
+        position: absolute;
+        top: 35px;
+        right: 0;
+        background: #ddd url(images/gradient.png) repeat-x 0 0;
+        border: solid 1px #b4b4b4;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 0 1px 3px rgba(0,0,0, .3);
+        -moz-box-shadow: 0 1px 3px rgba(0,0,0, .3);
+        box-shadow: 0 1px 3px rgba(0,0,0, .3);
+    }
 
-/* level 3+ list */
-#nav ul ul
-{
-    right: 184px;
-    top: -1.5px;
-}
+        #nav ul li {
+            float: none;
+            margin: 0;
+            padding: 0;
+        }
 
-/* rounded corners of first and last link */
-#nav ul li:first-child > a
-{
-    -webkit-border-top-left-radius: 9px;
-    -moz-border-radius-topleft: 9px;
-    -webkit-border-top-right-radius: 9px;
-    -moz-border-radius-topright: 9px;
-}
-#nav ul li:last-child > a
-{
-    -webkit-border-bottom-left-radius: 9px;
-    -moz-border-radius-bottomleft: 9px;
-    -webkit-border-bottom-right-radius: 9px;
-    -moz-border-radius-bottomright: 9px;
-}
+        #nav ul a {
+            font-weight: normal;
+            text-shadow: 0 1px 0 #fff;
+        }
 
-/* clearfix */
-#nav:after
-{
-    content: ".";
-    display: block;
-    clear: both;
-    visibility: hidden;
-    line-height: 0;
-    height: 0;
-}
-#nav
-{
+        /* level 3+ list */
+        #nav ul ul {
+            right: 184px;
+            top: -1.5px;
+        }
+
+        /* rounded corners of first and last link */
+        #nav ul li:first-child > a {
+            -webkit-border-top-left-radius: 9px;
+            -moz-border-radius-topleft: 9px;
+            -webkit-border-top-right-radius: 9px;
+            -moz-border-radius-topright: 9px;
+        }
+
+        #nav ul li:last-child > a {
+            -webkit-border-bottom-left-radius: 9px;
+            -moz-border-radius-bottomleft: 9px;
+            -webkit-border-bottom-right-radius: 9px;
+            -moz-border-radius-bottomright: 9px;
+        }
+
+    /* clearfix */
+    #nav:after {
+        content: ".";
+        display: block;
+        clear: both;
+        visibility: hidden;
+        line-height: 0;
+        height: 0;
+    }
+
+#nav {
     display: inline-block;
 }
-html[xmlns] #nav
-{
+
+html[xmlns] #nav {
     display: block;
     height: 46px;
 }
 
-* html #nav
-{
+* html #nav {
     height: 1%;
 }
 
-#Logo
-{
+#Logo {
     height: 70px;
 }
-#LogoutIcon
-{
-    height: 30px;
-}
-#WelcomeDiv
-{
+
+#WelcomeDiv {
     position: absolute;
     top: 30px;
     left: 20px;
     float: left;
 }
 
-.default
-{
+.default {
     cursor: default;
 }
 
 /* FIELDS */
 
-.form-background
-{
+.form-background {
     /* Size & position */
     width: 75%;
     height: 70%;
@@ -216,70 +197,58 @@ html[xmlns] #nav
     background: linear-gradient(#eeefef, #ffffff 10%);
 }
 
-.input-group
-{
+.input-group {
     direction: ltr;
     width: 340px;
     margin: 0 auto;
 }
 
-#ProjectOrdersTBL .input-group
-{
+#ProjectOrdersTBL .input-group {
     width: 180px;
 }
 
-.input-group-addon
-{
+.input-group-addon {
     width: 126px;
 }
 
-#ProjectOrdersTBL .input-group-addon
-{
+#ProjectOrdersTBL .input-group-addon {
     width: 50px;
 }
 
-#NewCustomerTBL td, #NewProjectTBL td, #NewSupplierTBL td, #CustomerDetailsTBL td, #ProjectDetailsTBL td, #NewSCExistingProjectTBL td, #NewServiceCallExternalTBL td, #ServiceCallTBL td, #EditProjectOrderTBL td, #EditSupplierOrderTBL td, #EditSupplierTBL td, #EditHatchTBL td, #EditUndecidedCustomerTBL td, #CreateHatchTBL td
-{
+#NewCustomerTBL td, #NewProjectTBL td, #NewSupplierTBL td, #CustomerDetailsTBL td, #ProjectDetailsTBL td, #NewSCExistingProjectTBL td, #NewServiceCallExternalTBL td, #ServiceCallTBL td, #EditProjectOrderTBL td, #EditSupplierOrderTBL td, #EditSupplierTBL td, #EditHatchTBL td, #EditUndecidedCustomerTBL td, #CreateHatchTBL td {
     border-top: none;
 }
 
-.form-control
-{
+.form-control {
     direction: rtl;
 }
 
 /* VALIDATORS */
 
-.Invalid
-{
+.Invalid {
     background: #ffdddd;
 }
 
-.ErrorLabel
-{
+.ErrorLabel {
     color: Red;
     font-weight: bold;
 }
 
-.HiddenButtons
-{
+.HiddenButtons {
     display: none;
 }
 
-.TextAreaHolder
-{
+.TextAreaHolder {
     margin-left: auto;
     margin-right: auto;
     width: 340px;
 }
 
-div.cntr input[type=button], div.cntr button
-{
+div.cntr input[type=button], div.cntr button {
     font-weight: bold;
 }
 
-#NewProjectTBL textarea, #ProjectDetailsTBL textarea, #NewSCExistingProjectTBL textarea, #NewServiceCallExternalTBL textarea
-{
+#NewProjectTBL textarea, #ProjectDetailsTBL textarea, #NewSCExistingProjectTBL textarea, #NewServiceCallExternalTBL textarea {
     max-width: 340px;
     height: 100px;
     max-height: 100px;
@@ -288,8 +257,7 @@ div.cntr input[type=button], div.cntr button
 
 /* DRAG & DROP Plugin */
 
-#DragAndDrop
-{
+#DragAndDrop {
     border: 2px dotted #0B85A1;
     width: 400px;
     color: #92AAB0;
@@ -301,8 +269,8 @@ div.cntr input[type=button], div.cntr button
     margin-left: auto;
     margin-right: auto;
 }
-.progressBar
-{
+
+.progressBar {
     width: 200px;
     height: 22px;
     border: 1px solid #ddd;
@@ -313,18 +281,17 @@ div.cntr input[type=button], div.cntr button
     vertical-align: top;
 }
 
-.progressBar div
-{
-    height: 100%;
-    color: #fff;
-    text-align: right;
-    line-height: 22px; /* same as #progressBar height if we want text middle aligned */
-    width: 0;
-    background-color: #0ba1b5;
-    border-radius: 3px;
-}
-.statusbar
-{
+    .progressBar div {
+        height: 100%;
+        color: #fff;
+        text-align: right;
+        line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+        width: 0;
+        background-color: #0ba1b5;
+        border-radius: 3px;
+    }
+
+.statusbar {
     border-top: 1px solid #A9CCD1;
     min-height: 25px;
     width: 700px;
@@ -333,18 +300,18 @@ div.cntr input[type=button], div.cntr button
     margin-left: auto;
     margin-right: auto;
 }
-.statusbar:nth-child(odd)
-{
-    background: #EBEFF0;
-}
-.filename
-{
+
+    .statusbar:nth-child(odd) {
+        background: #EBEFF0;
+    }
+
+.filename {
     display: inline-block;
     vertical-align: top;
     width: 250px;
 }
-.filesize
-{
+
+.filesize {
     display: inline-block;
     vertical-align: top;
     color: #30693D;
@@ -352,8 +319,8 @@ div.cntr input[type=button], div.cntr button
     margin-left: 10px;
     margin-right: 5px;
 }
-.abort
-{
+
+.abort {
     background-color: #A8352F;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;
@@ -368,95 +335,83 @@ div.cntr input[type=button], div.cntr button
     vertical-align: top;
 }
 
-.search_textbox
-{
+.search_textbox {
     width: 100px;
     font-size: inherit;
     margin: 10px auto 0 auto;
 }
 
-.search_textbox:nth-child(1)
-{
-    display: none;
-}
+    .search_textbox:nth-child(1) {
+        display: none;
+    }
 
-.plus, .minus, .pointer
-{
+.plus, .minus, .pointer {
     cursor: pointer;
 }
 
 /* X Button in Bootstrap Popup */
-.close
-{
+.close {
     float: left;
 }
 
 /*Datepicker*/
-.datepicker
-{
+.datepicker {
     z-index: 1050;
 }
 /*Buttons*/
-#CustomerForProjectBTN, #GotoProjectOrdersBTN
-{
+#CustomerForProjectBTN, #GotoProjectOrdersBTN {
     margin-left: 20px;
 }
 
 /*Late Orders in gridview*/
-.Late
-{
+.Late {
     color: red;
     font-weight: bold;
 }
 
 /* News Box */
-.glyphicon
-{
+.glyphicon {
     margin-right: 4px; /*override*/
 }
-.pagination .glyphicon
-{
+
+.pagination .glyphicon {
     margin-right: 0px; /*override*/
 }
-.pagination a
-{
+
+.pagination a {
     color: #555;
 }
-.panel ul
-{
+
+.panel ul {
     padding: 0px;
     margin: 0px;
     list-style: none;
 }
-.news-item
-{
+
+.news-item {
     padding: 4px 4px;
     margin: 0px;
     border-bottom: 1px dotted #555;
 }
 
-#HomeContainer
-{
+#HomeContainer {
     margin-top: 40px;
 }
 
 /*Google Map*/
-#MapContainer
-{
+#MapContainer {
     height: 90%;
     width: 65%;
     float: right;
     margin: 0 auto;
 }
 
-#MapContainer h2
-{
-    margin-top: 0;
-}
+    #MapContainer h2 {
+        margin-top: 0;
+    }
 
 
-#map-canvas
-{
+#map-canvas {
     width: 100%;
     height: 100%;
     border: solid 2px;
@@ -466,8 +421,7 @@ div.cntr input[type=button], div.cntr button
     box-shadow: 2px 2px 2px;
 }
 
-#legend
-{
+#legend {
     background: #FFF;
     padding: 0 10px;
     margin: 5px;
@@ -479,8 +433,7 @@ div.cntr input[type=button], div.cntr button
     line-height: 15px;
 }
 
-.color
-{
+.color {
     border: 1px solid;
     height: 12px;
     width: 12px;
@@ -489,48 +442,40 @@ div.cntr input[type=button], div.cntr button
     margin-top: 3px;
 }
 
-.red
-{
+.red {
     background: #C00;
     margin-top: 10px;
 }
 
-.blue
-{
+.blue {
     background: #06C;
 }
 
 /* NewsBox */
-#NewsBox
-{
+#NewsBox {
     float: left;
     width: 30%;
     height: 100%;
 }
 
-#NewsBox .panel-body
-{
-    height: 97%;
-}
+    #NewsBox .panel-body {
+        height: 97%;
+    }
 
-#NewsBox .panel-body .row
-{
-    height: inherit;
-}
+        #NewsBox .panel-body .row {
+            height: inherit;
+        }
 
-#NewsBox .panel-body .row .col-xs-12
-{
-    height: inherit;
-}
+            #NewsBox .panel-body .row .col-xs-12 {
+                height: inherit;
+            }
 
-#NewsBox .panel-footer
-{
-    margin-top: -45px;
-}
+    #NewsBox .panel-footer {
+        margin-top: -45px;
+    }
 
 /* Pie Chart */
-#PieChartContainer
-{
+#PieChartContainer {
     float: left;
     position: absolute;
     left: 0;
@@ -538,37 +483,31 @@ div.cntr input[type=button], div.cntr button
     width: 320px;
 }
 
-h2
-{
+h2 {
     text-align: center;
 }
 
 
 /* Suppliers table */
-#ContentPlaceHolder3_WorstSuppliersGV td:nth-child(3), #ContentPlaceHolder3_BestSuppliersGV td:nth-child(3)
-{
+#ContentPlaceHolder3_WorstSuppliersGV td:nth-child(3), #ContentPlaceHolder3_BestSuppliersGV td:nth-child(3) {
     width: 400px;
 }
 
-#ContentPlaceHolder3_WorstSuppliersGV
-{
+#ContentPlaceHolder3_WorstSuppliersGV {
     margin-right: 0;
 }
 
-#ContentPlaceHolder3_BestSuppliersGV
-{
+#ContentPlaceHolder3_BestSuppliersGV {
     margin-top: 30px;
     margin-right: 0;
 }
 
 /* Progress bars */
-.progress
-{
+.progress {
     margin: 0;
 }
 
-#ContentPlaceHolder3_ProjectFiles .DeleteFile, #ProjectHatchesFileHolder .DeleteFile
-{
+#ContentPlaceHolder3_ProjectFiles .DeleteFile, #ProjectHatchesFileHolder .DeleteFile {
     text-decoration: none;
     vertical-align: middle;
 }

@@ -19,8 +19,9 @@ public partial class _Default : System.Web.UI.Page
         Supplier s = new Supplier();
         DataTable dt = new DataTable();
         dt = s.GetSuppliersRankTable();
-        int TotalDaysLate = Convert.ToInt32(dt.Compute("SUM(DaysLate)", "DaysLate > 0"));
         int RowsNum = dt.Rows.Count;
+        if (RowsNum == 0) return; // Prevent conversion error
+        int TotalDaysLate = Convert.ToInt32(dt.Compute("SUM(DaysLate)", "DaysLate > 0"));
         for (int i = 0; i < RowsNum; i++)
         {
             int DaysLate = 0;
@@ -65,8 +66,9 @@ public partial class _Default : System.Web.UI.Page
         Supplier s = new Supplier();
         DataTable dt = new DataTable();
         dt = s.GetSuppliersRankTable();
-        int TotalDaysEarly = Math.Abs(Convert.ToInt32(dt.Compute("SUM(DaysLate)", "DaysLate < 0")));
         int RowsNum = dt.Rows.Count;
+        if (RowsNum == 0) return; // Prevent conversion error
+        int TotalDaysEarly = Math.Abs(Convert.ToInt32(dt.Compute("SUM(DaysLate)", "DaysLate < 0")));
         while (System.DBNull.Value.Equals(dt.Rows[0].ItemArray[1]))
         {
             dt.Rows[0].Delete(); // Clean before sorting

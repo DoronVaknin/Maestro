@@ -1,9 +1,7 @@
-﻿body
-{
+﻿body {
 }
 
-#dragandrophandler
-{
+#dragandrophandler {
     border: 2px dotted #0B85A1;
     width: 400px;
     color: #92AAB0;
@@ -13,8 +11,8 @@
     margin-bottom: 10px;
     font-size: 200%;
 }
-.progressBar
-{
+
+.progressBar {
     width: 200px;
     height: 22px;
     border: 1px solid #ddd;
@@ -25,36 +23,35 @@
     vertical-align: top;
 }
 
-.progressBar div
-{
-    height: 100%;
-    color: #fff;
-    text-align: right;
-    line-height: 22px; /* same as #progressBar height if we want text middle aligned */
-    width: 0;
-    background-color: #0ba1b5;
-    border-radius: 3px;
-}
-.statusbar
-{
+    .progressBar div {
+        height: 100%;
+        color: #fff;
+        text-align: right;
+        line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+        width: 0;
+        background-color: #0ba1b5;
+        border-radius: 3px;
+    }
+
+.statusbar {
     border-top: 1px solid #A9CCD1;
     min-height: 25px;
     width: 700px;
     padding: 10px 10px 0px 10px;
     vertical-align: top;
 }
-.statusbar:nth-child(odd)
-{
-    background: #EBEFF0;
-}
-.filename
-{
+
+    .statusbar:nth-child(odd) {
+        background: #EBEFF0;
+    }
+
+.filename {
     display: inline-block;
     vertical-align: top;
     width: 250px;
 }
-.filesize
-{
+
+.filesize {
     display: inline-block;
     vertical-align: top;
     color: #30693D;
@@ -62,8 +59,8 @@
     margin-left: 10px;
     margin-right: 5px;
 }
-.abort
-{
+
+.abort {
     background-color: #A8352F;
     -moz-border-radius: 4px;
     -webkit-border-radius: 4px;

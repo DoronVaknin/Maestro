@@ -3,8 +3,7 @@
 	CSS Tricks also has a nice writeup: http://css-tricks.com/feature-table-design/
 	*/
 
-.DataTables
-{
+.DataTables {
     overflow: hidden;
     border: 1px solid #d3d3d3;
     background: #fefefe;
@@ -15,101 +14,87 @@
     border-radius: 5px;
     -moz-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
     -webkit-box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-    font: 12.5px/15px "Helvetica Neue" ,Arial, Helvetica, sans-serif;
+    font: 12.5px/15px "Helvetica Neue",Arial, Helvetica, sans-serif;
     color: #555;
     margin-bottom: 0px;
 }
 
-.DataTables th, td
-{
-    padding: 18px 20px 18px;
-    text-align: center;
-}
+    .DataTables th, td {
+        padding: 18px 20px 18px;
+        text-align: center;
+    }
 
-.DataTables th
-{
-    padding-top: 22px;
-    text-shadow: 1px 1px 1px #fff;
-    background: #e8eaeb;
-}
+    .DataTables th {
+        padding-top: 22px;
+        text-shadow: 1px 1px 1px #fff;
+        background: #e8eaeb;
+    }
 
-.DataTables td
-{
-    border-top: 1px solid #e0e0e0;
-    border-right: 1px solid #e0e0e0;
-}
+    .DataTables td {
+        border-top: 1px solid #e0e0e0;
+        border-right: 1px solid #e0e0e0;
+    }
 
-.DataTables tr.odd-row td
-{
-    background: #f6f6f6;
-}
+    .DataTables tr.odd-row td {
+        background: #f6f6f6;
+    }
 
-.DataTables td.first, th.first
-{
-    text-align: left;
-}
+    .DataTables td.first, th.first {
+        text-align: left;
+    }
 
-.DataTables td.last
-{
-    border-right: none;
-}
+    .DataTables td.last {
+        border-right: none;
+    }
 
-/*
+    /*
 	Background gradients are completely unnecessary but a neat effect.
 	*/
 
-.DataTables td
-{
-    background: -moz-linear-gradient(100% 25% 90deg, #fefefe, #f9f9f9);
-    background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f9f9f9), to(#fefefe));
-}
+    .DataTables td {
+        background: -moz-linear-gradient(100% 25% 90deg, #fefefe, #f9f9f9);
+        background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f9f9f9), to(#fefefe));
+    }
 
-.DataTables tr:first-child td
-{
-    background: -webkit-gradient(linear, 0% 0%, 0% 20%, from(#F5F5F5), to(#ECECEC));
-    text-shadow: 1px 1px 1px #fff;
-    font-weight: bold;
-}
+    .DataTables tr:first-child td {
+        background: -webkit-gradient(linear, 0% 0%, 0% 20%, from(#F5F5F5), to(#ECECEC));
+        text-shadow: 1px 1px 1px #fff;
+        font-weight: bold;
+    }
 
-.DataTables tr.odd-row td
-{
-    background: -moz-linear-gradient(100% 25% 90deg, #f6f6f6, #f1f1f1);
-    background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f1f1f1), to(#f6f6f6));
-}
+    .DataTables tr.odd-row td {
+        background: -moz-linear-gradient(100% 25% 90deg, #f6f6f6, #f1f1f1);
+        background: -webkit-gradient(linear, 0% 0%, 0% 25%, from(#f1f1f1), to(#f6f6f6));
+    }
 
-.DataTables th
-{
-    background: -moz-linear-gradient(100% 20% 90deg, #e8eaeb, #ededed);
-    background: -webkit-gradient(linear, 0% 0%, 0% 20%, from(#ededed), to(#e8eaeb));
-}
+    .DataTables th {
+        background: -moz-linear-gradient(100% 20% 90deg, #e8eaeb, #ededed);
+        background: -webkit-gradient(linear, 0% 0%, 0% 20%, from(#ededed), to(#e8eaeb));
+    }
 
-/*
+    /*
 	I know this is annoying, but we need additional styling so webkit will recognize rounded corners on background elements.
 	Nice write up of this issue: http://www.onenaught.com/posts/266/css-inner-elements-breaking-border-radius
 	
 	And, since we've applied the background colors to td/th element because of IE, Gecko browsers also need it.
 	*/
 
-.DataTables tr:first-child th.first
-{
-    -moz-border-radius-topleft: 5px;
-    -webkit-border-top-left-radius: 5px; /* Saf3-4 */
-}
+    .DataTables tr:first-child th.first {
+        -moz-border-radius-topleft: 5px;
+        -webkit-border-top-left-radius: 5px; /* Saf3-4 */
+    }
 
-.DataTables tr:first-child th.last
-{
-    -moz-border-radius-topright: 5px;
-    -webkit-border-top-right-radius: 5px; /* Saf3-4 */
-}
+    .DataTables tr:first-child th.last {
+        -moz-border-radius-topright: 5px;
+        -webkit-border-top-right-radius: 5px; /* Saf3-4 */
+    }
 
-.DataTables tr:last-child td.first
-{
-    -moz-border-radius-bottomleft: 5px;
-    -webkit-border-bottom-left-radius: 5px; /* Saf3-4 */
-}
+    .DataTables tr:last-child td.first {
+        -moz-border-radius-bottomleft: 5px;
+        -webkit-border-bottom-left-radius: 5px; /* Saf3-4 */
+    }
 
-.DataTables tr:last-child td.last
-{
-    -moz-border-radius-bottomright: 5px;
-    -webkit-border-bottom-right-radius: 5px; /* Saf3-4 */
-}
+    .DataTables tr:last-child td.last {
+        -moz-border-radius-bottomright: 5px;
+        -webkit-border-bottom-right-radius: 5px; /* Saf3-4 */
+    }
